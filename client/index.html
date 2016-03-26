@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Follow people, not platforms.</title>
+    <meta charset="utf-8"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <script>
+      $( document ).ready(function() {
+        var getTweetButton = document.getElementById('get-tweet-button');
+        getTweetButton.addEventListener('click', doSomething);
+
+        doSomething();
+
+        function doSomething() {
+          var testApiBaseUri = 'http://jsonplaceholder.typicode.com';
+
+          $.ajax({
+            url: testApiBaseUri + '/posts/1'
+          })
+          .then(function(data) {
+            console.log(data);
+            $('#response').text( JSON.stringify(data, null, 4) );
+          })
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <h1>Follow</h1>
+    <div>
+      <button id="get-tweet-button" name="Get Tweet Button" type="button" autofocus="true">Get Tweet</button>
+    </div>
+    <pre id="response"/>
+  </body>
+</html>
