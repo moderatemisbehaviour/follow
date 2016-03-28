@@ -5,19 +5,32 @@
     <meta charset="utf-8"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
     <script>
-      $( document ).ready(function() {
+      $( document ).ready(function()
+      {
         var getTweetButton = document.getElementById('get-tweet-button');
         getTweetButton.addEventListener('click', doSomething);
 
-        doSomething();
+        // doSomething();
 
-        function doSomething() {
-          var testApiBaseUri = 'http://jsonplaceholder.typicode.com';
+        function doSomething()
+        {
+          alert('you called me.');
+          var baseUriTestApi = 'http://jsonplaceholder.typicode.com';
+          var baseUriTwitterApi = 'https://api.twitter.com/1.1/';
+          var getTimeline = 'statuses/mentions_timeline.json'
 
-          $.ajax({
-            url: testApiBaseUri + '/posts/1'
+          var authorizationHeaderValue = "Oauth";
+
+          $.ajax(
+          {
+            url: baseUriTwitterApi + getTimeline
+            // headers:
+            // {
+            //   Authorization: authorizationHeaderValue
+            // }
           })
-          .then(function(data) {
+          .then(function(data)
+          {
             console.log(data);
             $('#response').text( JSON.stringify(data, null, 4) );
           })

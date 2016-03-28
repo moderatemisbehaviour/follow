@@ -1,0 +1,29 @@
+{
+  "name": "follow",
+  "version": "0.1.0",
+  "description": "Follow people, not platforms.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moderatemisbehaviour/follow.git"
+  },
+  "keywords": [
+    "follow",
+    "oauth",
+    "api",
+    "twitter",
+    "youtube"
+  ],
+  "author": "Daniel Metcalfe <mrdanielmetcalfe@gmail.com>",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/moderatemisbehaviour/follow/issues"
+  },
+  "homepage": "https://github.com/moderatemisbehaviour/follow#readme",
+  "dependencies": {
+    "httpdispatcher": "^1.0.0"
+  }
+}
