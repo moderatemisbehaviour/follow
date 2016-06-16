@@ -10,32 +10,33 @@
         var getTweetButton = document.getElementById('get-tweet-button');
         getTweetButton.addEventListener('click', doSomething);
 
-        // doSomething();
-
-        function doSomething()
-        {
-          alert('you called me.');
-          var baseUriTestApi = 'http://jsonplaceholder.typicode.com';
-          var baseUriTwitterApi = 'https://api.twitter.com/1.1/';
-          var getTimeline = 'statuses/mentions_timeline.json'
-
-          var authorizationHeaderValue = "Oauth";
-
-          $.ajax(
-          {
-            url: baseUriTwitterApi + getTimeline
-            // headers:
-            // {
-            //   Authorization: authorizationHeaderValue
-            // }
-          })
-          .then(function(data)
-          {
-            console.log(data);
-            $('#response').text( JSON.stringify(data, null, 4) );
-          })
-        }
+        doSomething();
       });
+
+      function doSomething()
+      {
+        alert('you called me.');
+        var baseUriTestApi = 'http://jsonplaceholder.typicode.com';
+        var baseUriTwitterApi = 'https://api.twitter.com/1.1/';
+        var getTimeline = 'statuses/mentions_timeline.json'
+
+        // var authorizationHeaderValue = "Oauth";
+
+        $.ajax(
+        {
+          url: baseUriTestApi
+          // url: baseUriTwitterApi + getTimeline
+          // headers:
+          // {
+          //   Authorization: authorizationHeaderValue
+          // }
+        })
+        .then(function(data)
+        {
+          console.log(data);
+          $('#response').text( JSON.stringify(data, null, 4) );
+        })
+      }
     </script>
   </head>
   <body>
