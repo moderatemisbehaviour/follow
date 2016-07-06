@@ -17,25 +17,34 @@
       {
         alert('you called me.');
         var baseUriTestApi = 'http://jsonplaceholder.typicode.com';
-        var baseUriTwitterApi = 'https://api.twitter.com/1.1/';
         var getTimeline = 'statuses/mentions_timeline.json'
+        var getTweetUrl = buildGetTweetUrl(699139112276729856);
+        var authorizationHeaderValue = 'OAuth oauth_consumer_key="Uz0YyOZRvLx0BcclLv8v9iac0", oauth_nonce="f274af8ea86643341c86e344fed2a68f", oauth_signature="v2kjkBXkIJTy88fi64Z0GMmW6LM%3D", oauth_signature_method="HMAC-SHA1", oauth_timestamp="1467748216", oauth_token="3003292276-64LyMFL1d8GBnxjjZjQClmEVtV5FWY9TOCRLfr8", oauth_version="1.0"';
 
-        // var authorizationHeaderValue = "Oauth";
+        $('#request').text( JSON.stringify(getTweetUrl, null, 4) );
 
         $.ajax(
         {
-          url: baseUriTestApi + '/posts/1'
-          // url: baseUriTwitterApi + getTimeline
-          // headers:
-          // {
-          //   Authorization: authorizationHeaderValue
-          // }
+          url: getTweetUrl,
+          headers:
+          {
+            Authorization: authorizationHeaderValue,
+            Host: 'api.twitter.com',
+            'X-Target-URI': 'https://api.twitter.com',
+            Connection: 'Keep-Alive'
+          }
         })
         .then(function(data)
         {
-          console.log(data);
           $('#response').text( JSON.stringify(data, null, 4) );
         })
+      }
+
+      function buildGetTweetUrl(id)
+      {
+        const baseUriTwitterApi = 'https://api.twitter.com/1.1/';
+        const pathGetTweet = 'statuses/show/';
+        return baseUriTwitterApi + pathGetTweet + id + '.json';
       }
     </script>
   </head>
@@ -44,6 +53,7 @@
     <div>
       <button id="get-tweet-button" name="Get Tweet Button" type="button" autofocus="true">Get Tweet</button>
     </div>
-    <pre id="response"/>
+    <pre id="request"></pre>
+    <pre id="response"></pre>
   </body>
 </html>
