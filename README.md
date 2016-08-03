@@ -1,2 +1,2 @@
 # Getting Started
-run `node index.js`.
+run `node app`.
