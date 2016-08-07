@@ -1,7 +1,7 @@
 const expressSession = require('express-session');
 const passport = require('passport');
 const TwitterStrategy = require('passport-twitter').Strategy;
-const configurationReader = require('./configuration-reader');
+const configurationReader = require('../configuration-reader');
 
 var configuration = configurationReader.read();
 
@@ -30,7 +30,7 @@ exports.setup = function setup(app)
     function(req, res)
     {
       console.log('Twitter authorisation successful.')
-      res.redirect('/dashboard');
+      res.redirect('/suggestions');
     }
   );
 }
@@ -45,7 +45,6 @@ function setupTwitterAuth()
     },
     function(token, tokenSecret, profile, cb)
     {
-      debugger;
       console.log("OAuth successful, now in verify callback.")
       var err = null;
       return cb(err, user);

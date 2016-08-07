@@ -1,2 +1,2 @@
 # Getting Started
-run `node app`.
+run `node index`.

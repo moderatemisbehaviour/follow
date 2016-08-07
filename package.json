@@ -28,6 +28,7 @@
     "express-session": "^1.14.0",
     "httpdispatcher": "^1.0.0",
     "passport": "^0.3.2",
-    "passport-twitter": "^1.0.4"
+    "passport-twitter": "^1.0.4",
+    "twitter": "^1.4.0"
   }
 }
