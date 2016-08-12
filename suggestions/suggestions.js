@@ -6,9 +6,9 @@ function Suggestions(platform, userId)
   this.userId = userId;
 }
 
-Suggestions.prototype.get = function()
+Suggestions.prototype.get = function(callback)
 {
-  return twitterClient.getFriends();
+  twitterClient.getFriends(callback);
 }
 
 module.exports = Suggestions;

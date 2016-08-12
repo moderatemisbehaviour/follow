@@ -16,15 +16,15 @@ var params =
   user_id: configuration.userId
 }
 
-exports.getFriends = function()
+exports.getFriends = function(callback)
 {
-  return client.get('friends/list', params, function(error, friends, response)
+  client.get('friends/list', params, function(error, friends, response)
   {
     logRequestsRemaining(response);
     if (!error)
     {
       // console.log(friends);
-      return friends;
+      callback(friends);
     }
   });
 }

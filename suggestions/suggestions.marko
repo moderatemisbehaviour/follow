@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+html lang="en"
+    head
+        title - Follow Suggestions
+    body
+        h1 - "Here are some suggestions POO based on your Twitter friends."
+        div for(friend in data.friends)
+            img src="${friend.profile_image_url}"
+            h3 - ${friend.name}
+            h4 - ${friend.screen_name}
+            p - ${friend.description}

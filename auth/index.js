@@ -14,7 +14,7 @@ var user =
   id: 'bazza'
 };
 
-exports.setup = function setup(app)
+module.exports = function setup(app)
 {
   app.use(expressSession({ secret: 'flappy doodle wotsit' }));
   app.use(passport.initialize());
