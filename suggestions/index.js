@@ -3,7 +3,7 @@ const template = require('./suggestions.marko');
 const configurationReader = require('../configuration-reader');
 
 module.exports = function(app)
-{
+{  
   app.get('/suggestions', function(req, res)
   {
     var suggestions = new Suggestions('twitter', configurationReader.read().userId);
