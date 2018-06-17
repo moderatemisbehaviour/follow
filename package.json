@@ -2,14 +2,6 @@
   "name": "follow",
   "version": "0.1.0",
   "description": "Follow people, not platforms.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/moderatemisbehaviour/follow.git"
-  },
   "keywords": [
     "follow",
     "oauth",
@@ -17,19 +9,31 @@
     "twitter",
     "youtube"
   ],
-  "author": "Daniel Metcalfe <mrdanielmetcalfe@gmail.com>",
-  "license": "UNLICENSED",
+  "homepage": "https://github.com/moderatemisbehaviour/follow/",
   "bugs": {
     "url": "https://github.com/moderatemisbehaviour/follow/issues"
   },
-  "homepage": "https://github.com/moderatemisbehaviour/follow#readme",
+  "license": "UNLICENSED",
+  "author": {
+    "name": "Daniel Metcalfe",
+    "email": "mrdanielmetcalfe@gmail.com",
+    "url": "http://danielmetcalfe.rocks/"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moderatemisbehaviour/follow.git"
+  },
   "dependencies": {
-    "express": "^4.14.0",
-    "express-session": "^1.14.0",
-    "httpdispatcher": "^1.0.0",
-    "marko": "^3.9.4",
-    "passport": "^0.3.2",
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "httpdispatcher": "^2.1.2",
+    "marko": "^4.10.0",
+    "passport": "^0.4.0",
     "passport-twitter": "^1.0.4",
-    "twitter": "^1.4.0"
+    "twitter": "^1.7.1"
   }
 }

@@ -1,2 +1,2 @@
 # Getting Started
-run `node index`.
+run `node index`
