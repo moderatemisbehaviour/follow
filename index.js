@@ -1,7 +1,15 @@
-const express = require('express')
-const app = express()
+require('marko/node-require')
 
+const express = require('express')
+const markoExpress = require('marko/express')
+const homeTemplate = require('./home/home.marko')
+
+const app = express()
 app.use(express.static('public'))
-app.get('/', (req, res) => res.send('Hello World!'))
+app.use(markoExpress())
+app.get('/', (req, res) => {
+  res.marko(homeTemplate, {})
+})
+
 const port = process.env.PORT || 5000
 app.listen(port)
