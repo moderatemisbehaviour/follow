@@ -20,7 +20,7 @@
     "url": "http://danielmetcalfe.rocks/"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm run cypress:open",
     "start": "node index",
     "cypress:open": "cypress open"
   },
