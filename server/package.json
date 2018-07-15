@@ -1,0 +1,20 @@
+{
+  "name": "follow-server",
+  "version": "0.1.0",
+  "author": {
+    "name": "Daniel Metcalfe",
+    "email": "mrdanielmetcalfe@gmail.com",
+    "url": "http://danielmetcalfe.rocks/"
+  },
+  "scripts": {
+    "start": "node index"
+  },
+  "dependencies": {
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "httpdispatcher": "^2.1.2",
+    "passport": "^0.4.0",
+    "passport-twitter": "^1.0.4",
+    "twitter": "^1.7.1"
+  }
+}

@@ -21,21 +21,11 @@
   },
   "scripts": {
     "test": "npm run cypress:open",
-    "start": "node index",
     "cypress:open": "cypress open"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/moderatemisbehaviour/follow.git"
-  },
-  "dependencies": {
-    "express": "^4.16.3",
-    "express-session": "^1.15.6",
-    "httpdispatcher": "^2.1.2",
-    "marko": "^4.10.0",
-    "passport": "^0.4.0",
-    "passport-twitter": "^1.0.4",
-    "twitter": "^1.7.1"
   },
   "devDependencies": {
     "cypress": "^3.0.1"
