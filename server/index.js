@@ -10,7 +10,7 @@ app.get('/person/search', (req, res) => {
   })
 })
 app.get('/person/:personId', (req, res) => {
-  res.sendFile(__dirname + '/person/person.html')
+  // Not yet implemented.
 })
 
 const port = process.env.PORT || 5000

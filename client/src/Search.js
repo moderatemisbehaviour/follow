@@ -16,6 +16,7 @@ class Search extends Component {
       if (httpRequest.readyState === XMLHttpRequest.DONE) {
         if (httpRequest.status === 200) {
           console.log('SUCCESS!')
+          console.log(httpRequest.responseText)
         } else {
           console.error(`Response returned with status code ${httpRequest.status}.`)
         }

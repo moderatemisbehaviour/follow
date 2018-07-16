@@ -20,6 +20,7 @@
     "url": "http://danielmetcalfe.rocks/"
   },
   "scripts": {
+    "start": "concurrently \"cd server && npm start\" \"cd client && npm start\"",
     "test": "npm run cypress:open",
     "cypress:open": "cypress open"
   },
@@ -28,6 +29,7 @@
     "url": "git+https://github.com/moderatemisbehaviour/follow.git"
   },
   "devDependencies": {
+    "concurrently": "^3.6.0",
     "cypress": "^3.0.2"
   }
 }
