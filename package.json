@@ -28,6 +28,6 @@
     "url": "git+https://github.com/moderatemisbehaviour/follow.git"
   },
   "devDependencies": {
-    "cypress": "^3.0.1"
+    "cypress": "^3.0.2"
   }
 }

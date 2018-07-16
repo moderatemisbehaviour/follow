@@ -1,6 +1,7 @@
-'use strict'
+import React, { Component } from 'react'
+import './Search.css'
 
-class Search extends React.Component {
+class Search extends Component {
   constructor (props) {
     super(props);
     this.state = {
@@ -37,12 +38,11 @@ class SearchInput extends React.Component {
   render () {
     return <input
               onChange={this.props.onChange}
-              id="search"
+              className="Search"
               type="search"
               placeholder="Type a person's name."
               autoFocus/>
   }
 }
 
-const searchContainer = document.querySelector('#search-container');
-ReactDOM.render(<Search/>, searchContainer);
+export default Search

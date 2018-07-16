@@ -2,11 +2,7 @@ const express = require('express')
 const app = express()
 
 app.use(express.static('public'))
-app.use(express.static('home'))
 
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/home/home.html')
-})
 app.get('/person/search', (req, res) => {
   res.json({
     name: 'Siobhan Wilson',
