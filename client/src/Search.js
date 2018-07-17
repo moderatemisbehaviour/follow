@@ -3,43 +3,47 @@ import './Search.css'
 
 class Search extends Component {
   constructor (props) {
-    super(props);
+    super(props)
     this.state = {
-      searching: false
-    };
+      searching: false,
+      searchResults: []
+    }
   }
 
   search (text) {
+    this.setState({
+      searching: true
+    })
     console.log(`Searching for '${text}'.`)
-    let httpRequest = new XMLHttpRequest()
-    httpRequest.onreadystatechange = function (response) {
-      if (httpRequest.readyState === XMLHttpRequest.DONE) {
-        if (httpRequest.status === 200) {
-          console.log('SUCCESS!')
-          console.log(httpRequest.responseText)
-        } else {
-          console.error(`Response returned with status code ${httpRequest.status}.`)
-        }
-      } else {
-        console.error('Not ready yet.')
-      }
-    }
-    httpRequest.open('GET', `/person/search?q=${text}`)
-    httpRequest.send()
+
+    fetch(`/person/search?q=${text}`).then((response) => {
+      return response.json()
+    }).then((searchResultsJson) => {
+      let searchResults = searchResultsJson.map((searchResult, index) =>
+        <SearchResult key={index} personName={searchResult.name}/>
+      )
+      this.setState({
+        searching: false,
+        searchResults: searchResults
+      })
+    })
   }
 
   render () {
     return (
-      <SearchInput onChange={(event) => this.search(event.target.value)}/>
+      <div>
+        <SearchInput onChange={(event) => this.search(event.target.value)}/>
+        <ul className="Search-results">{this.state.searchResults}</ul>
+      </div>
     )
   }
 }
 
-class SearchInput extends React.Component {
+class SearchInput extends Component {
   render () {
     return <input
               onChange={this.props.onChange}
-              className="Search"
+              className="Search-input"
               type="search"
               placeholder="Type a person's name."
               autoFocus/>
@@ -47,3 +51,9 @@ class SearchInput extends React.Component {
 }
 
 export default Search
+
+class SearchResult extends Component {
+  render () {
+    return <li className="SearchResult">{this.props.personName}</li>
+  }
+}
