@@ -17,6 +17,7 @@ class Search extends Component {
     console.log(`Searching for '${text}'.`)
 
     fetch(`/person/search?q=${text}`).then((response) => {
+      console.log(response.text())
       return response.json()
     }).then((searchResultsJson) => {
       let searchResults = searchResultsJson.map((searchResult, index) =>
