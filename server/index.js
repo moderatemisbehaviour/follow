@@ -19,4 +19,5 @@ app.get('/person/:personId', (req, res) => {
   // Not yet implemented.
 })
 
-app.listen(5001)
+const port = process.env.PORT || 5001
+app.listen(port)
