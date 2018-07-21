@@ -16,7 +16,7 @@ class Search extends Component {
     })
     console.log(`Searching for '${text}'.`)
 
-    fetch(`/person/search?q=${text}`).then((response) => {
+    fetch(`http://localhost:5001/person/search?q=${text}`).then((response) => {
       console.log(response.text())
       return response.json()
     }).then((searchResultsJson) => {
