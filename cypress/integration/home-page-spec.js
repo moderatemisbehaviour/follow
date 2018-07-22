@@ -8,7 +8,7 @@ describe('Landing on the home page.', function () {
   })
 
   it('Displays the logo.', function () {
-    cy.get('.App-logo')
+    cy.get('.Avatar')
   })
 
   it('Displays a search box.', function () {
@@ -22,8 +22,13 @@ describe('Landing on the home page.', function () {
 
 describe('Searching for a publisher profile.', function () {
   it('Displays search results when text is entered into the search input.', function () {
-    cy.get('.Search-input').type('Si')
+    cy.get('.Search-input').type('Si').should('have.value', 'Si')
     cy.get('.SearchResult').should('have.length', 2)
+  })
+
+  it('Stops displaying search result when text is cleared from the search input.', function () {
+    cy.get('.Search-input').clear().should('have.value', '')
+    cy.get('.SearchResult').should('have.length', 0)
   })
 })
 

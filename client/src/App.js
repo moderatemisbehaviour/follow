@@ -1,17 +1,35 @@
 import React, { Component } from 'react'
+import Avatar from './Avatar'
 import Search from './Search'
-import logo from './logo.png'
+import SearchResults from './SearchResults'
 import './App.css'
 
 class App extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      searchResults: []
+    }
+  }
+
+  renderSearchResults (searchResults) {
+    console.log(`${searchResults.length} new search results received.`)
+    this.setState({
+      searchResults: searchResults
+    })
+  }
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <Search/>
+          <h1 className="App-title">Follow people, not platforms</h1>
         </header>
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1 className="App-title">Follow people, not platforms</h1>
+        <Avatar/>
+        <Search onNewSearchResults={(searchResults) => this.renderSearchResults(searchResults)}/>
+        {
+          this.state.searchResults.length > 0 && <SearchResults searchResults={this.state.searchResults}/>
+        }
       </div>
     )
   }

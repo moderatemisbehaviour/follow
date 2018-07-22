@@ -1,26 +1,7 @@
-.Search {
-  position: relative;
-  margin: 1rem auto;
-}
-
-.SearchInput {
+.Search-input {
   display: block;
   margin: auto;
   width: 95%;
-}
-
-.Search-results {
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%);
-  width: 95%;
-  background-color: white;
-}
-
-.SearchResult {
-  list-style-type: none;
-}
-
-.SearchResult:hover {
-  background-color: #EEE;
+  border: 1px solid #AAA;
+  border-radius: 0.2rem;
 }

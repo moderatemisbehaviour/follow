@@ -5,54 +5,33 @@ class Search extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      searching: false,
-      searchResults: []
+      searching: false
     }
   }
 
   search (text) {
+    console.log(`Searching for '${text}'.`)
     this.setState({
       searching: true
     })
-    console.log(`Searching for '${text}'.`)
 
     fetch(`/person/search?q=${text}`).then((response) => {
       return response.json()
     }).then((searchResultsJson) => {
-      let searchResults = searchResultsJson.map((searchResult, index) =>
-        <SearchResult key={index} personName={searchResult.name}/>
-      )
+      this.props.onNewSearchResults(searchResultsJson)
       this.setState({
-        searching: false,
-        searchResults: searchResults
+        searching: false
       })
     })
   }
 
   render () {
-    return (
-      <div className="Search">
-        <SearchInput onChange={(event) => this.search(event.target.value)}/>
-        <ul className="Search-results">{this.state.searchResults}</ul>
-      </div>
-    )
-  }
-}
-
-class SearchInput extends Component {
-  render () {
     return <input
-              onChange={this.props.onChange}
-              className="SearchInput"
+              onChange={(event) => this.search(event.target.value)}
+              className="Search-input"
               type="search"
               placeholder="Type a person's name."
               autoFocus/>
-  }
-}
-
-class SearchResult extends Component {
-  render () {
-    return <li className="SearchResult">{this.props.personName}</li>
   }
 }
 
