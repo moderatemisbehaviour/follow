@@ -16,8 +16,7 @@ class Search extends Component {
     })
     console.log(`Searching for '${text}'.`)
 
-    fetch(`http://localhost:5001/person/search?q=${text}`).then((response) => {
-      console.log(response.text())
+    fetch(`/person/search?q=${text}`).then((response) => {
       return response.json()
     }).then((searchResultsJson) => {
       let searchResults = searchResultsJson.map((searchResult, index) =>
@@ -32,7 +31,7 @@ class Search extends Component {
 
   render () {
     return (
-      <div>
+      <div className="Search">
         <SearchInput onChange={(event) => this.search(event.target.value)}/>
         <ul className="Search-results">{this.state.searchResults}</ul>
       </div>
@@ -44,17 +43,17 @@ class SearchInput extends Component {
   render () {
     return <input
               onChange={this.props.onChange}
-              className="Search-input"
+              className="SearchInput"
               type="search"
               placeholder="Type a person's name."
               autoFocus/>
   }
 }
 
-export default Search
-
 class SearchResult extends Component {
   render () {
     return <li className="SearchResult">{this.props.personName}</li>
   }
 }
+
+export default Search

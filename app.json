@@ -1,27 +1,8 @@
 {
   "name": "peoplenotplatforms",
-  "description": "",
-  "scripts": {
-  },
-  "env": {
-  },
-  "formation": {
-    "web": {
-      "quantity": 1
-    },
-    "api": {
-      "quantity": 1
-    }
-  },
-  "addons": [
-
-  ],
   "buildpacks": [
     {
       "url": "heroku/nodejs"
-    },
-    {
-      "url": "https://github.com/heroku/heroku-buildpack-static.git"
     }
   ]
 }

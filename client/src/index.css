@@ -6,3 +6,8 @@
 html {
   font-family: 'Open Sans', sans-serif;
 }
+
+input, li {
+  font-size: 1rem;
+  padding: 0.5rem;
+}
