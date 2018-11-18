@@ -23,7 +23,7 @@
     "preinstall": "(cd server && npm install) && (cd client && npm install)",
     "postinstall": "cd client && npm run build",
     "start": "npm run postinstall && (cd server && npm start)",
-    "start-dev": "concurrently \"cd server && npm start\" \"cd client && npm start\"",
+    "start:dev": "concurrently \"cd server && npm start\" \"cd client && npm start\"",
     "test": "npm run cypress:open",
     "cypress:open": "cypress open"
   },
@@ -33,6 +33,17 @@
   },
   "devDependencies": {
     "concurrently": "^3.6.0",
-    "cypress": "^3.0.2"
+    "cypress": "^3.0.2",
+    "eslint": "^5.9.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^8.0.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0"
+  },
+  "dependencies": {
+    "apollo-datasource": "^0.2.0",
+    "apollo-server": "^2.2.2",
+    "graphql": "^14.0.2"
   }
 }
