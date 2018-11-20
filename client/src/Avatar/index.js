@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './Avatar.css'
-import logo from './logo.png'
+import logo from '../logo.png'
 
 class Avatar extends Component {
   render () {

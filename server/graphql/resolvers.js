@@ -1,6 +1,7 @@
 module.exports = {
   Query: {
-    person: async (_, {id}, {dataSources}) => dataSources.profileDataSource.getPerson(id)
+    person: async (_, {id}, {dataSources}) => dataSources.profileDataSource.getPerson(id),
+    people: async (_, __, {dataSources}) => dataSources.profileDataSource.getPeople()
   },
   Mutation: {
     login: async (_, { email }, { dataSources }) => {

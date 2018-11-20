@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
+
 import SearchResult from './SearchResult'
 import './SearchResults.css'
 
 class SearchResults extends Component {
   render () {
-    let searchResults = this.props.searchResults.map((searchResult, index) =>
+    const {data: {people}} = this.props;
+    let searchResults = people.map((searchResult, index) =>
       <SearchResult key={index} personName={searchResult.name}/>
     )
 
