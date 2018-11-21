@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Avatar from '../Avatar'
-import Search from '../Search'
+import Avatar from '../avatar/Avatar'
+import Search from '../search/Search'
 import './App.css'
 
 class App extends Component {
