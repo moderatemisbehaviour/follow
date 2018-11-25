@@ -1,4 +1,4 @@
-const {DataSource} = require('apollo-datasource');
+const { DataSource } = require('apollo-datasource')
 
 class ProfileDataSource extends DataSource {
   getPerson (id) {
@@ -6,24 +6,26 @@ class ProfileDataSource extends DataSource {
       case '1':
         return {
           id,
-          name: 'Elon Musk',
+          name: 'Siobhan Wilson',
+          photo: 'https://pbs.twimg.com/profile_images/950898677991780353/7sbTf7Wl_400x400.jpg',
           profiles: [
             {
-              id: 1,
+              id: 2,
               platform: 'TWITTER',
-              url: 'https://twitter.com/elonmusk'
+              url: 'https://twitter.com/siobhanisback',
             }
           ]
         }
       case '2':
         return {
           id,
-          name: 'Siobhan Wilson',
+          name: 'Elon Musk',
+          photo: 'https://pbs.twimg.com/profile_images/972170159614906369/0o9cdCOp_400x400.jpg',
           profiles: [
             {
-              id: 2,
+              id: 1,
               platform: 'TWITTER',
-              url: 'https://twitter.com/siobhanisback'
+              url: 'https://twitter.com/elonmusk'
             }
           ]
         }
@@ -40,7 +42,7 @@ class ProfileDataSource extends DataSource {
             id: 1,
             platform: 'TWITTER',
             url: 'https://twitter.com/elonmusk'
-          },
+          }
         ]
       },
       {

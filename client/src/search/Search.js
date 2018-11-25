@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Query } from 'react-apollo'
-import gql from 'graphql-tag';
+import gql from 'graphql-tag'
 
 import './Search.css'
 import SearchResults from './SearchResults'
@@ -9,25 +9,25 @@ class Search extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      showSearchResults: false,
+      showSearchResults: false
     }
   }
 
   search (query) {
     this.setState({
-      showSearchResults: !!query.length,
-    });
+      showSearchResults: !!query.length
+    })
   }
 
   render () {
-    const {showSearchResults} = this.state;
+    const { showSearchResults } = this.state
     const GET_PEOPLE = gql`
       query getPeople {
         people {
           name
         }
       }
-    `;
+    `
 
     return (
       <div>
@@ -37,11 +37,11 @@ class Search extends Component {
           type="search"
           placeholder="Type a person's name."
           autoFocus/>
-        {showSearchResults && 
+        {showSearchResults &&
           <Query query={GET_PEOPLE}>
             {({ data, loading, error }) => {
-              if (loading) return <p>LOADING</p>;
-              if (error) return <p>ERROR</p>;
+              if (loading) return <p>LOADING</p>
+              if (error) return <p>ERROR</p>
 
               return <SearchResults data={data}/>
             }}

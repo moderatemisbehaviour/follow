@@ -10,6 +10,7 @@ const typeDefs = gql`
     id: ID!
     name: String!
     profiles: [Profile]
+    photo: String
   }
 
   type Profile {

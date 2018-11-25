@@ -4,3 +4,7 @@
   max-width: 20%;
   max-height: 20%;
 }
+
+img {
+  border-radius: 50%;
+}

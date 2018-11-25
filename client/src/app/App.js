@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import Avatar from '../avatar/Avatar'
-import Search from '../search/Search'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+
+import PeopleBrowser from '../people-browser/PeopleBrowser'
 import './App.css'
 
 class App extends Component {
@@ -13,13 +14,14 @@ class App extends Component {
 
   render () {
     return (
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Follow people, not platforms</h1>
-        </header>
-        <Avatar/>
-        <Search/>
-      </div>
+      <Router>
+        <Route path={'/person/:id'}>
+          {({ match }) => {
+            const id = match === null ? null : match.params.id
+            return <PeopleBrowser id={id} />
+          }}
+        </Route>
+      </Router>
     )
   }
 }

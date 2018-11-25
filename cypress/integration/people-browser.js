@@ -1,10 +1,12 @@
-describe('User journeys.', function () {
-
-})
+xdescribe('User journeys.', function () {})
 
 describe('Landing on the home page.', function () {
   beforeEach(function () {
     cy.visit('/')
+  })
+
+  it('Displays the slogan', function () {
+    cy.get('.App-title').should('have.text', 'Follow people, not platforms')
   })
 
   it('Displays the logo.', function () {
@@ -37,7 +39,15 @@ describe('Creating a publisher profile.', function () {
 })
 
 describe('Viewing a publisher profile.', function () {
-  it('Does stuff.', function () {
+  beforeEach(() => {
     cy.visit('/person/1')
+  })
+
+  it("Updates the avatar to show the person's profile photo.", function () {
+    cy.get('.App-title').should('have.text', 'Siobhan Wilson')
+  })
+
+  it("Masks the publisher's photo to create a circular frame", function () {
+    cy.get('.Avatar').should('have.css', 'border-radius').should('equal', '50%')
   })
 })

@@ -1,12 +1,12 @@
 module.exports = {
   Query: {
-    person: async (_, {id}, {dataSources}) => dataSources.profileDataSource.getPerson(id),
-    people: async (_, __, {dataSources}) => dataSources.profileDataSource.getPeople()
+    person: async (_, { id }, { dataSources }) => dataSources.profileDataSource.getPerson(id),
+    people: async (_, __, { dataSources }) => dataSources.profileDataSource.getPeople()
   },
   Mutation: {
     login: async (_, { email }, { dataSources }) => {
       // const user = await dataSources.userAPI.findOrCreateUser({ email });
-      const user = {};
+      const user = {}
       if (user) return new Buffer(email).toString('base64');
     }
   }
