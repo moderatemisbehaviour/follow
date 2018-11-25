@@ -1,4 +1,6 @@
-const { ApolloServer } = require('apollo-server')
+const { ApolloServer } = require('apollo-server-express')
+const express = require('express')
+
 const typeDefs = require('../graphql/schema')
 const ProfileDataSource = require('../graphql/datasources/profile')
 const resolvers = require('../graphql/resolvers')
@@ -11,7 +13,12 @@ const server = new ApolloServer({
   })
 })
 
-const port = process.env.PORT || 4000;
-server.listen({port}).then(({ url }) => {
-  console.log(`🚀 Server ready at ${url}`)
-})
+const app = express()
+server.applyMiddleware({ app })
+
+app.use(express.static('../client/build'))
+
+const port = process.env.PORT || 4000
+app.listen({ port }, () =>
+  console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`)
+)

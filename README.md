@@ -5,6 +5,12 @@ Run `npm start` to boot the server.
 
 Run `npm test` to open the Cypress test runner.
 
+# Deployment
+The app can be deployed using Heroku which will run the following.
+1. npm run preinstall
+1. npm run start
+1. npm run postinstall
+
 # Ubiquitous language
 A ubiquitous language allows concepts relating to this application to be discussed unambiguously.
 ### Publisher
