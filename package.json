@@ -23,7 +23,8 @@
     "start": "(cd client && npm run build) && (cd server && npm start)",
     "start:dev": "concurrently \"cd server && nodemon npm start\" \"cd client && npm start\"",
     "test": "npm run cypress:open",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "postinstall": "(cd server && npm install) && (cd client && npm install)"
   },
   "repository": {
     "type": "git",
