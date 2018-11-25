@@ -7,7 +7,7 @@ class SearchResults extends Component {
   render () {
     const {data: {people}} = this.props;
     let searchResults = people.map((searchResult, index) =>
-      <SearchResult key={index} personName={searchResult.name}/>
+      <SearchResult key={index} id={searchResult.id} personName={searchResult.name} />
     )
 
     return (

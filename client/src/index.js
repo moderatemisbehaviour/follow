@@ -13,6 +13,9 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
+    <head>
+      <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,800" rel="stylesheet"></link>
+    </head>
     <App/>
   </ApolloProvider>,
   document.getElementById('root')

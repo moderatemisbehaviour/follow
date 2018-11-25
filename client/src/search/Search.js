@@ -24,6 +24,7 @@ class Search extends Component {
     const GET_PEOPLE = gql`
       query getPeople {
         people {
+          id
           name
         }
       }

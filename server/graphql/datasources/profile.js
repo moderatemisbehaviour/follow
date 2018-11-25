@@ -12,7 +12,7 @@ class ProfileDataSource extends DataSource {
             {
               id: 2,
               platform: 'TWITTER',
-              url: 'https://twitter.com/siobhanisback',
+              url: 'https://twitter.com/siobhanisback'
             }
           ]
         }
@@ -36,23 +36,23 @@ class ProfileDataSource extends DataSource {
     return [
       {
         id: 1,
-        name: 'Elon Musk',
+        name: 'Siobhan Wilson',
         profiles: [
           {
             id: 1,
             platform: 'TWITTER',
-            url: 'https://twitter.com/elonmusk'
+            url: 'https://twitter.com/siobhanisback'
           }
         ]
       },
       {
         id: 2,
-        name: 'Siobhan Wilson',
+        name: 'Elon Musk',
         profiles: [
           {
             id: 2,
             platform: 'TWITTER',
-            url: 'https://twitter.com/siobhanisback'
+            url: 'https://twitter.com/elonmusk'
           }
         ]
       }
