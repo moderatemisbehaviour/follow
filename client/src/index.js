@@ -11,6 +11,7 @@ const client = new ApolloClient({
   uri: 'http://localhost:4000/graphql'
 })
 
+// TODO: Use Helmet to avoid DOM nesting error.
 ReactDOM.render(
   <ApolloProvider client={client}>
     <head>

@@ -1,19 +1,28 @@
-import React, { Component } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 
 import SearchResult from './SearchResult'
 import './SearchResults.css'
 
-class SearchResults extends Component {
-  render () {
-    const {data: {people}} = this.props;
-    let searchResults = people.map((searchResult, index) =>
-      <SearchResult key={index} id={searchResult.id} personName={searchResult.name} />
-    )
-
-    return (
-      <ul className="SearchResults">{searchResults}</ul>
-    )
-  }
+SearchResults.propTypes = {
+  data: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string
+  }).isRequired,
+  firstSearchResultRef: PropTypes.shape({})
 }
+
+function SearchResults (props) {
+  const { data: { people }, firstSearchResultRef } = props
+  let searchResults = people.map((person, index) => {
+    return <SearchResult key={index} id={person.id} personName={person.name} firstSearchResultRef={!index ? firstSearchResultRef : null} />
+  })
+
+  return (
+    <ul className="SearchResults" onKeyDown={onKeyDown}>{searchResults}</ul>
+  )
+}
+
+function onKeyDown () {}
 
 export default SearchResults

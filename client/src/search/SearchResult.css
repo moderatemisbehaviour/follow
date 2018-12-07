@@ -1,14 +1,11 @@
-.SearchResults {
-  margin: 1rem;
-  background-color: white;
-  border: 1px solid #AAA;
-  border-radius: 0.2rem;
-}
-
 .SearchResult {
   list-style-type: none;
 }
 
 .SearchResult:hover {
   background-color: #EEE;
+}
+
+a:focus > .SearchResult { 
+  background-color: #DFDFDF;
 }

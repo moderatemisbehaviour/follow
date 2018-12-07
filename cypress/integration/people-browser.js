@@ -32,6 +32,13 @@ describe('Searching for a publisher profile.', function () {
     cy.get('.Search-input').clear().should('have.value', '')
     cy.get('.SearchResult').should('have.length', 0)
   })
+
+  it('Allows the user to select a search result with the keyboard.', function () {
+    cy.get('.Search-input').type('Si').type('{downarrow}')
+    cy.focused().should('have.text', 'Siobhan Wilson')
+    cy.get('.SearchResult:first').click() // TODO: Find out how to simulate user pressing {enter}
+    cy.url().should('eq', 'http://localhost:4001/person/1')
+  })
 })
 
 describe('Creating a publisher profile.', function () {

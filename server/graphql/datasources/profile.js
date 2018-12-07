@@ -60,7 +60,7 @@ class ProfileDataSource extends DataSource {
   }
 
   updateProfile () {
-    return true;
+    return true
   }
 }
 
