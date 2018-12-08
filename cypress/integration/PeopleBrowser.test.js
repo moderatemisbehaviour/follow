@@ -54,6 +54,13 @@ describe('Viewing a publisher profile.', function () {
     cy.get('.App-name').should('have.text', 'Siobhan Wilson')
   })
 
+  it("Shows links to the publisher's profiles", function () {
+    cy.get('.Profile').should('have.length', 3)
+    cy.get('.Profile').first().contains('TWITTER').should('have.attr', 'href').and('eq', 'https://twitter.com/siobhanisback')
+    cy.get('.Profile').eq(1).contains('YOUTUBE').should('have.attr', 'href').and('eq', 'https://www.youtube.com/user/siobhanwilsonmusic')
+    cy.get('.Profile').eq(2).contains('FACEBOOK').should('have.attr', 'href').and('eq', 'https://www.facebook.com/siobhanwilsonmusic')
+  })
+
   it("Masks the publisher's photo to create a circular frame", function () {
     cy.get('.Avatar').should('have.css', 'border-radius').should('equal', '50%')
   })
