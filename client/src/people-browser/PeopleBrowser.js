@@ -22,22 +22,30 @@ class PeopleBrowser extends Component {
           person(id: $id) {
             name
             photo
+            profiles {
+              id
+              platform
+              url
+            }
           }
         }
       `
 
-      return <Query query={GET_PERSON} variables={{ id }}>
-        {({ data, loading, error }) => {
-          if (error) return <p>ERROR</p>
-          if (loading) {
-            return <PeopleContent title='Loading...' />
-          }
-          const { person: { photo, name } } = data
-          return <PeopleContent title={name} photo={photo} />
-        }}
-      </Query>
+      return (
+        <Query query={GET_PERSON} variables={{ id }}>
+          {({ data, loading, error }) => {
+            if (error) return <p>ERROR</p>
+            if (loading) {
+              return <PeopleContent title='Loading...' />
+            }
+
+            const { person: { name, photo, profiles } } = data
+            return <PeopleContent name={name} photo={photo} profiles={profiles} />
+          }}
+        </Query>
+      )
     } else {
-      return <PeopleContent title='Follow people, not platforms' />
+      return <PeopleContent />
     }
   }
 }

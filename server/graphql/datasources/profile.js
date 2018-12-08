@@ -13,6 +13,16 @@ class ProfileDataSource extends DataSource {
               id: 2,
               platform: 'TWITTER',
               url: 'https://twitter.com/siobhanisback'
+            },
+            {
+              id: 3,
+              platform: 'YOUTUBE',
+              url: 'https://www.youtube.com/user/siobhanwilsonmusic'
+            },
+            {
+              id: 4,
+              platform: 'FACEBOOK',
+              url: 'https://www.facebook.com/siobhanwilsonmusic'
             }
           ]
         }

@@ -7,7 +7,7 @@
     {
       "type": "chrome",
       "request": "launch",
-      "name": "start dev",
+      "name": "dev",
       "url": "http://localhost:4001",
       "webRoot": "${workspaceFolder}/client/src"
     },

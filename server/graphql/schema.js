@@ -23,6 +23,7 @@ const typeDefs = gql`
     TWITTER
     YOUTUBE
     INSTAGRAM
+    FACEBOOK
   }
 
   type Mutation {
