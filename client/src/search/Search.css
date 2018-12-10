@@ -1,0 +1,7 @@
+.Search-input {
+  display: block;
+  margin: auto;
+  width: 95%;
+  border: 1px solid #AAA;
+  border-radius: 0.2rem;
+}

@@ -1,0 +1,24 @@
+{
+  "name": "follow-server",
+  "version": "0.1.0",
+  "author": {
+    "name": "Daniel Metcalfe",
+    "email": "mrdanielmetcalfe@gmail.com",
+    "url": "http://danielmetcalfe.rocks/"
+  },
+  "scripts": {
+    "start": "node src/index"
+  },
+  "dependencies": {
+    "apollo-server": "^2.2.2",
+    "apollo-server-express": "^2.2.2",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "graphql": "^14.0.2",
+    "graphql-tag": "^2.10.0",
+    "httpdispatcher": "^2.1.2",
+    "passport": "^0.4.0",
+    "passport-twitter": "^1.0.4",
+    "twitter": "^1.7.1"
+  }
+}

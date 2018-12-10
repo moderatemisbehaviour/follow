@@ -1,18 +1,5 @@
 {
-  "name": "follow",
-  "description": "",
-  "scripts": {
-  },
-  "env": {
-  },
-  "formation": {
-    "web": {
-      "quantity": 1
-    }
-  },
-  "addons": [
-
-  ],
+  "name": "peoplenotplatforms",
   "buildpacks": [
     {
       "url": "heroku/nodejs"

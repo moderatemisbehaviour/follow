@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1000"
+   height="1000"
+   viewBox="0 0 1000 1000"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="logo.svg"
+   inkscape:export-filename="/home/dan/The Laboratory/Follow/logo with shadows.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90"
+   enable-background="new">
+  <defs
+     id="defs4">
+    <linearGradient
+       id="Instagram-3"
+       osb:paint="solid"
+       gradientTransform="translate(1.5017967,1.5597102)">
+      <stop
+         style="stop-color:#bc2a8d;stop-opacity:1;"
+         offset="0"
+         id="stop4436" />
+    </linearGradient>
+    <linearGradient
+       id="LinkedIn-9"
+       osb:paint="solid"
+       gradientTransform="translate(1.5482718,1.5092889)">
+      <stop
+         style="stop-color:#0077b5;stop-opacity:1;"
+         offset="0"
+         id="stop4424" />
+    </linearGradient>
+    <linearGradient
+       id="Facebook-0"
+       osb:paint="solid"
+       gradientTransform="translate(1.525737,1.5616927)">
+      <stop
+         style="stop-color:#3b5998;stop-opacity:1;"
+         offset="0"
+         id="stop4418" />
+    </linearGradient>
+    <linearGradient
+       id="YouTube-7"
+       osb:paint="solid"
+       gradientTransform="translate(1.501741,1.5649587)">
+      <stop
+         style="stop-color:#e52d27;stop-opacity:1;"
+         offset="0"
+         id="stop4412" />
+    </linearGradient>
+    <linearGradient
+       id="Twitter"
+       osb:paint="solid"
+       gradientTransform="translate(1.5633254,1.5528165)">
+      <stop
+         style="stop-color:#1da1f2;stop-opacity:1;"
+         offset="0"
+         id="stop4400" />
+    </linearGradient>
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter3417">
+      <feBlend
+         inkscape:collect="always"
+         mode="multiply"
+         in2="BackgroundImage"
+         id="feBlend3419" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter3456">
+      <feBlend
+         inkscape:collect="always"
+         mode="multiply"
+         in2="BackgroundImage"
+         id="feBlend3458" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.64"
+     inkscape:cx="602.18914"
+     inkscape:cy="559.30695"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer8"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1366"
+     inkscape:window-height="705"
+     inkscape:window-x="0"
+     inkscape:window-y="30"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:groupmode="layer"
+     id="layer5"
+     inkscape:label="background">
+    <circle
+       style="display:inline;fill:#1a1a1a;stroke:none"
+       id="path3338"
+       cx="500"
+       cy="500.00003"
+       r="375.12195" />
+  </g>
+  <g
+     inkscape:label="horizontal - left"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-52.362161)"
+     style="display:inline">
+    <rect
+       style="fill:#ffffff;stroke:none"
+       id="rect3360"
+       width="230.94011"
+       height="200"
+       x="148.88805"
+       y="641.71014"
+       transform="matrix(-0.8660254,0.5,0.8660254,0.5,0,0)" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="vertical - bottom"
+     style="display:inline">
+    <rect
+       style="display:inline;fill:#ffffff;stroke:none"
+       id="rect3342-3"
+       width="230.94011"
+       height="200"
+       x="461.8782"
+       y="788.02301"
+       transform="matrix(0.8660254,-0.5,0,1,0,0)" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer9"
+     inkscape:label="vertical - bottom - shadow"
+     style="display:inline;filter:url(#filter3456)">
+    <rect
+       style="display:inline;fill:#808080;stroke:none"
+       id="rect3342-3-7"
+       width="230.94011"
+       height="200"
+       x="461.8782"
+       y="788.02301"
+       transform="matrix(0.8660254,-0.5,0,1,0,0)" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="vertical - top"
+     style="display:inline">
+    <rect
+       style="fill:#ffffff;stroke:none"
+       id="rect3342"
+       width="230.94011"
+       height="200"
+       x="461.8782"
+       y="589.3252"
+       transform="matrix(0.8660254,-0.5,0,1,0,0)" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer6"
+     inkscape:label="vertical - cross-section"
+     style="display:inline">
+    <rect
+       style="fill:url(#Twitter);fill-opacity:1;stroke:none"
+       id="rect3509"
+       width="46.188023"
+       height="200"
+       x="646.63232"
+       y="589.32013"
+       transform="matrix(0.8660254,-0.5,0,1,0,0)" />
+    <rect
+       style="display:inline;opacity:1;fill:url(#LinkedIn-9);fill-opacity:1;stroke:none"
+       id="rect3509-6"
+       width="46.188023"
+       height="200"
+       x="600.44403"
+       y="589.32501"
+       transform="matrix(0.8660254,-0.5,0,1,0,0)" />
+    <rect
+       style="display:inline;fill:url(#Facebook-0);fill-opacity:1;stroke:none"
+       id="rect3509-6-2"
+       width="46.188023"
+       height="200"
+       x="554.25598"
+       y="589.32996"
+       transform="matrix(0.8660254,-0.5,0,1,0,0)" />
+    <rect
+       style="display:inline;fill:url(#Instagram-3);fill-opacity:1;stroke:none"
+       id="rect3509-6-2-9"
+       width="46.188023"
+       height="200"
+       x="508.06796"
+       y="589.33496"
+       transform="matrix(0.8660254,-0.5,0,1,0,0)" />
+    <rect
+       style="display:inline;fill:url(#YouTube-7);fill-opacity:1;stroke:none"
+       id="rect3509-6-2-9-1"
+       width="46.188023"
+       height="200"
+       x="461.88022"
+       y="589.34509"
+       transform="matrix(0.8660254,-0.5,0,1,0,0)" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="horizontal - right"
+     style="display:inline">
+    <rect
+       style="display:inline;fill:#ffffff;stroke:none"
+       id="rect3360-6"
+       width="230.94011"
+       height="200"
+       x="96.519691"
+       y="789.34021"
+       transform="matrix(-0.8660254,0.5,0.8660254,0.5,0,0)" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer7"
+     inkscape:label="horizontal - cross-section"
+     style="display:inline">
+    <rect
+       style="opacity:1;fill:url(#Twitter);fill-opacity:1;stroke:none"
+       id="rect4465"
+       width="46.188023"
+       height="200"
+       x="96.49585"
+       y="789.3161"
+       transform="matrix(-0.8660254,0.5,0.8660254,0.5,0,0)" />
+    <rect
+       style="opacity:1;fill:url(#LinkedIn-9);fill-opacity:1;stroke:none"
+       id="rect4465-6"
+       width="46.188023"
+       height="200"
+       x="142.68983"
+       y="789.32214"
+       transform="matrix(-0.8660254,0.5,0.8660254,0.5,0,0)" />
+    <rect
+       style="opacity:1;fill:url(#Facebook-0);fill-opacity:1;stroke:none"
+       id="rect4465-6-7"
+       width="46.188023"
+       height="200"
+       x="188.88382"
+       y="789.32812"
+       transform="matrix(-0.8660254,0.5,0.8660254,0.5,0,0)" />
+    <rect
+       style="opacity:1;fill:url(#Instagram-3);fill-opacity:1;stroke:none"
+       id="rect4465-6-7-5"
+       width="46.188023"
+       height="200"
+       x="235.07787"
+       y="789.33411"
+       transform="matrix(-0.8660254,0.5,0.8660254,0.5,0,0)" />
+    <rect
+       style="opacity:1;fill:url(#YouTube-7);fill-opacity:1;stroke:none"
+       id="rect4465-6-7-5-9"
+       width="46.188023"
+       height="200"
+       x="281.27188"
+       y="789.34009"
+       transform="matrix(-0.8660254,0.5,0.8660254,0.5,0,0)" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer8"
+     inkscape:label="horizontal - right - shadow"
+     style="display:inline;opacity:1;filter:url(#filter3417)">
+    <path
+       style="display:inline;fill:#808080;stroke:none"
+       d="M 600,442.89995 400,558.37 773.20508,542.89995 Z"
+       id="rect3360-6-3"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccc" />
+  </g>
+</svg>
