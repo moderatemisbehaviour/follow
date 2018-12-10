@@ -1,10 +1,6 @@
-.Avatar {
+.Avatar img {
   margin: 1rem auto;
   display: block;
-  max-width: 20%;
-  max-height: 20%;
-}
-
-img {
+  height: 23.96vmax;
   border-radius: 50%;
 }

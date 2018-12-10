@@ -56,12 +56,12 @@ describe('Viewing a publisher profile.', function () {
 
   it("Shows links to the publisher's profiles", function () {
     cy.get('.Profile').should('have.length', 3)
-    cy.get('.Profile').first().contains('TWITTER').should('have.attr', 'href').and('eq', 'https://twitter.com/siobhanisback')
-    cy.get('.Profile').eq(1).contains('YOUTUBE').should('have.attr', 'href').and('eq', 'https://www.youtube.com/user/siobhanwilsonmusic')
-    cy.get('.Profile').eq(2).contains('FACEBOOK').should('have.attr', 'href').and('eq', 'https://www.facebook.com/siobhanwilsonmusic')
+    cy.get('.Profile a').first().should('have.attr', 'href').and('eq', 'https://twitter.com/siobhanisback')
+    cy.get('.Profile a').eq(1).should('have.attr', 'href').and('eq', 'https://www.youtube.com/user/siobhanwilsonmusic')
+    cy.get('.Profile a').eq(2).should('have.attr', 'href').and('eq', 'https://www.facebook.com/siobhanwilsonmusic')
   })
 
   it("Masks the publisher's photo to create a circular frame", function () {
-    cy.get('.Avatar').should('have.css', 'border-radius').should('equal', '50%')
+    cy.get('.Avatar img').should('have.css', 'border-radius').should('equal', '50%')
   })
 })

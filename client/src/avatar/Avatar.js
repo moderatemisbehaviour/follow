@@ -4,7 +4,9 @@ import './Avatar.css'
 function Avatar (props) {
   const { src } = props
   return (
-    <img src={src} className="Avatar" alt="logo" />
+    <div className="Avatar">
+      <img src={src} alt="logo" />
+    </div>
   )
 }
 
