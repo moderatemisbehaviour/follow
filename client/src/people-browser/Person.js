@@ -6,20 +6,21 @@ import logo from '../logo.png'
 import Profiles from '../profiles/Profiles'
 import Search from '../search/Search'
 import '../app/App.css'
+import './Person.css'
 
-PeopleContent.propTypes = {
+Person.propTypes = {
   name: PropTypes.string,
   photo: PropTypes.string,
   profiles: PropTypes.arrayOf(PropTypes.shape({}))
 }
 
-PeopleContent.defaultProps = {
+Person.defaultProps = {
   name: 'Follow people, not platforms',
   photo: logo,
   profiles: []
 }
 
-function PeopleContent (props) {
+function Person (props) {
   const { name, photo, profiles } = props
 
   return <div>
@@ -32,4 +33,4 @@ function PeopleContent (props) {
   </div>
 }
 
-export default PeopleContent
+export default Person

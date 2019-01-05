@@ -7,7 +7,8 @@
     "url": "http://danielmetcalfe.rocks/"
   },
   "scripts": {
-    "start": "node src/index"
+    "start": "node src/index",
+    "test": "jest --watch"
   },
   "dependencies": {
     "apollo-server": "^2.2.2",
@@ -16,9 +17,12 @@
     "express-session": "^1.15.6",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.10.0",
-    "httpdispatcher": "^2.1.2",
+    "mongodb": "^3.1.10",
     "passport": "^0.4.0",
     "passport-twitter": "^1.0.4",
     "twitter": "^1.7.1"
+  },
+  "devDependencies": {
+    "jest": "^23.6.0"
   }
 }
