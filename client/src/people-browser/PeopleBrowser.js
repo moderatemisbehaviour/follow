@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 
@@ -47,6 +48,14 @@ class PeopleBrowser extends Component {
       return <Person />
     }
   }
+}
+
+PeopleBrowser.propTypes = {
+  id: PropTypes.string
+}
+
+PeopleBrowser.defaultProps = {
+  id: undefined
 }
 
 export default PeopleBrowser
