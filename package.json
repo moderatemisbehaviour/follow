@@ -25,7 +25,7 @@
     "test": "npm run cypress:run",
     "test:dev": "npm run cypress:open",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress open",
+    "cypress:run": "cypress run",
     "postinstall": "(cd server && npm install) && (cd client && npm install)"
   },
   "repository": {
