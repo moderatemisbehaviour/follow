@@ -6,7 +6,7 @@ import Profile from './Profile'
 
 Profiles.propTypes = {
   profiles: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     platform: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired
   })).isRequired

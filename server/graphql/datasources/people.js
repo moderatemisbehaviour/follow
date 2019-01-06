@@ -1,6 +1,24 @@
 const { DataSource } = require('apollo-datasource')
 
-class ProfileDataSource extends DataSource {
+class PeopleDataSource extends DataSource {
+  constructor (db) {
+    super()
+    this.db = db
+  }
+
+  // TODO: Use validated collection.
+  async createPerson (person) {
+    this.addPlatformToProfiles(person)
+    const peopleCollection = this.db.collection('people')
+    const result = await peopleCollection.insertOne(person)
+    const insertedDocumentsWithIds = result.ops
+    return insertedDocumentsWithIds
+  }
+
+  addPlatformToProfiles (person) {
+    person.profiles[0].platform = 'TWITTER'
+  }
+
   getPerson (id) {
     switch (id) {
       case '1':
@@ -74,4 +92,4 @@ class ProfileDataSource extends DataSource {
   }
 }
 
-module.exports = ProfileDataSource
+module.exports = PeopleDataSource
