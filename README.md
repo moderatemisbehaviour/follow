@@ -1,3 +1,5 @@
+[![Build Status](https://semaphoreci.com/api/v1/moderatemisbehaviour/follow/branches/master/badge.svg)](https://semaphoreci.com/moderatemisbehaviour/follow)
+
 # Getting Started
 1. Run `npm install` to install the dependencies.
 1. Run `npm run start:dev` to start development.
