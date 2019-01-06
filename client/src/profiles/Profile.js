@@ -23,7 +23,7 @@ function Profile (props) {
   return (
     <span className='Profile' id={platform.toLowerCase()}>
       <a href={url}>
-        <img src={platformIconUrl}/>
+        <img src={platformIconUrl} alt="platform icon" />
       </a>
     </span>
   )
