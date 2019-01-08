@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const createExpressServerForStaticContent = require('./createExpressServerForStaticContent')
 const createMongoDbConnection = require('./createMongoDbConnection')
 const applyApolloServerMiddleware = require('./applyApolloServerMiddleware')

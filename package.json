@@ -26,6 +26,7 @@
     "lint": "eslint client/src server/src",
     "test": "npm run cypress:run",
     "test:dev": "npm run cypress:open",
+    "jest": "(cd client && npm test) && (cd server && npm test)",
     "ci": "start-server-and-test heroku-like http://localhost:4000",
     "heroku-like": "heroku local",
     "cypress:open": "cypress open",
@@ -48,5 +49,7 @@
     "eslint-plugin-standard": "^4.0.0",
     "start-server-and-test": "^1.7.11"
   },
-  "dependencies": {}
+  "dependencies": {
+    "dotenv": "^6.2.0"
+  }
 }

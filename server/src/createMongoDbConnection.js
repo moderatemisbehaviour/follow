@@ -1,12 +1,12 @@
 const MongoClient = require('mongodb').MongoClient
 
 async function createMongoDbConnection () {
-  const url = 'mongodb://localhost:27017'
+  const url = process.env.DATABASE_URL
   const dbName = 'follow'
   const client = new MongoClient(url)
 
   await client.connect()
-  console.log('Connected successfully to server')
+  console.log(`Successfully connected to database at ${url}`)
   const db = client.db(dbName)
   return db
 }
