@@ -26,6 +26,7 @@
     "jest": "^23.6.0"
   },
   "jest": {
-    "globalSetup": "./src/jestGlobalSetup.js"
+    "globalSetup": "./src/jestGlobalSetup.js",
+    "testEnvironment": "node"
   }
 }
