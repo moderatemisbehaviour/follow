@@ -8,6 +8,7 @@ module.exports = {
     "plugin:cypress/recommended"
   ],
   "env": {
-    "cypress/globals": true
+    "cypress/globals": true,
+    "jest": true
   }
 };

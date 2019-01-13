@@ -2,10 +2,10 @@ const PeopleDataSource = require('../datasources/people')
 const dbClient = require('../../getDbClient')
 
 describe('create person', () => {
-  let DB
+  let db
 
   beforeAll(async () => {
-    DB = await dbClient.connectAndGetDatabase()
+    db = await dbClient.connectAndGetDatabase()
   })
 
   test('returns an object', async () => {
@@ -17,7 +17,7 @@ describe('create person', () => {
         }
       ]
     }
-    const peopleDataSource = new PeopleDataSource(DB)
+    const peopleDataSource = new PeopleDataSource(db)
     const actualResponse = await peopleDataSource.createPerson(person)
 
     // TODO: Find out why expect.stringMatching does not work for _id property.
