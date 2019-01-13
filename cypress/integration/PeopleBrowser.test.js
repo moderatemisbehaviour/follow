@@ -47,7 +47,7 @@ describe('Creating a publisher profile.', function () {
 
 })
 
-xdescribe('Viewing a publisher profile.', function () {
+describe('Viewing a publisher profile.', function () {
   beforeEach(() => {
     cy.visit('/person/1') // TODO: Doesn't work until baseUrl is hit...
   })

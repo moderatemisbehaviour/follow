@@ -3,6 +3,7 @@ require('dotenv').config({ path: '../.env' })
 const createExpressServerForStaticContent = require('./createExpressServerForStaticContent')
 const dbClient = require('./getDbClient')
 const applyApolloServerMiddleware = require('./applyApolloServerMiddleware')
+const configureExpressToHandleUrlPaths = require('./configureExpressToHandleUrlPaths')
 
 const expressServer = createExpressServerForStaticContent()
 dbClient.connectAndGetDatabase().then((db) => {
@@ -12,4 +13,6 @@ dbClient.connectAndGetDatabase().then((db) => {
   expressServer.listen({ port }, () =>
     console.log(`🚀 Server ready at http://localhost:${port}${apolloServer.graphqlPath}`)
   )
+
+  configureExpressToHandleUrlPaths(expressServer)
 })
