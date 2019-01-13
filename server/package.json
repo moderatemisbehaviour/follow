@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "node src/index",
-    "test": "jest --watch"
+    "test": "jest"
   },
   "dependencies": {
     "apollo-server": "^2.2.2",
@@ -24,5 +24,9 @@
   },
   "devDependencies": {
     "jest": "^23.6.0"
+  },
+  "jest": {
+    "globalSetup": "./src/jestGlobalSetup.js",
+    "testEnvironment": "node"
   }
 }

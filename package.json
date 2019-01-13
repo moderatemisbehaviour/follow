@@ -20,14 +20,17 @@
     "url": "http://danielmetcalfe.rocks/"
   },
   "scripts": {
-    "start": "(cd client && npm run build) && (cd server && npm start)",
+    "postinstall": "(cd server && npm install) && (cd client && npm install) && (cd client && npm run build)",
+    "start": "cd server && npm start",
     "start:dev": "concurrently \"cd server && nodemon npm start\" \"cd client && npm start\"",
+    "lint": "eslint client/src server/src",
     "test": "npm run cypress:run",
     "test:dev": "npm run cypress:open",
-    "ci": "start-server-and-test http://localhost:4000",
+    "jest": "(cd client && npm test) && (cd server && npm test)",
+    "ci": "start-server-and-test heroku-like http://localhost:4000",
+    "heroku-like": "heroku local",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run --config baseUrl=http://localhost:4000",
-    "postinstall": "(cd server && npm install) && (cd client && npm install)"
+    "cypress:run": "cypress run --config baseUrl=http://localhost:4000"
   },
   "repository": {
     "type": "git",
@@ -43,7 +46,10 @@
     "eslint-plugin-node": "^8.0.0",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-react": "^7.11.1",
-    "eslint-plugin-standard": "^4.0.0"
+    "eslint-plugin-standard": "^4.0.0",
+    "start-server-and-test": "^1.7.11"
   },
-  "dependencies": {}
+  "dependencies": {
+    "dotenv": "^6.2.0"
+  }
 }

@@ -1,7 +1,14 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
 import './SearchResult.css'
+
+SearchResult.propTypes = {
+  firstSearchResultRef: PropTypes.object.isRequired,
+  id: PropTypes.string.isRequired,
+  personName: PropTypes.string.isRequired
+}
 
 function SearchResult (props) {
   const { id, personName, firstSearchResultRef } = props

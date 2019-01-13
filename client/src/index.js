@@ -7,8 +7,10 @@ import App from './app/App'
 import './index.css'
 import registerServiceWorker from './registerServiceWorker'
 
+const port = process.env.PORT || 4000
+
 const client = new ApolloClient({
-  uri: 'http://localhost:4000/graphql'
+  uri: `http://localhost:${port}/graphql`
 })
 
 // TODO: Use Helmet to avoid DOM nesting error.

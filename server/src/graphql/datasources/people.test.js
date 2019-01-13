@@ -1,9 +1,14 @@
 const PeopleDataSource = require('../datasources/people')
-const createMongoDbConnection = require('../../src/createMongoDbConnection')
+const dbClient = require('../../getDbClient')
 
 describe('create person', () => {
+  let db
+
+  beforeAll(async () => {
+    db = await dbClient.connectAndGetDatabase()
+  })
+
   test('returns an object', async () => {
-    const db = await createMongoDbConnection()
     const person = {
       name: 'Siobhan Wilson',
       profiles: [
@@ -15,8 +20,8 @@ describe('create person', () => {
     const peopleDataSource = new PeopleDataSource(db)
     const actualResponse = await peopleDataSource.createPerson(person)
 
-    const expectedResponse = {
-      id: 1,
+    // TODO: Find out why expect.stringMatching does not work for _id property.
+    const expectedResponse = [{
       name: 'Siobhan Wilson',
       profiles: [
         {
@@ -24,8 +29,11 @@ describe('create person', () => {
           platform: 'TWITTER'
         }
       ]
-    }
+    }]
+    expect(actualResponse).toMatchObject(expectedResponse)
+  })
 
-    expect(actualResponse).toEqual(expectedResponse)
+  afterAll(async () => {
+    await dbClient.close()
   })
 })

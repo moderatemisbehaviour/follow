@@ -34,7 +34,7 @@ These types of tests are the only way to _know_ the user will experience what we
 
 Acceptance tests should have 100% coverage.
 
-_Note: Once the API is public it will need to be acceptance tested too because API consumers are users too, even if they don't interact with the app via a UI. At this point an API testing framework should be used in addition to Cypress._
+_Note: Once the API is public it will need to be acceptance tested too because API consumers are also users even if they don't interact with the app via a UI. At this point an API testing framework should be used in addition to Cypress._
 
 ## Unit & Integration tests
 Unit & integration tests are used to give us extra confidence in complex areas of code. They are _not_ acceptance tests. Ideally they should have no bearing on whether or not we ship.
@@ -42,10 +42,13 @@ They are development and maintenance aids that allow us to easily detect _potent
 
 There are no requirements for coverage of unit & integration tests. If we are good developers then we will notice areas of complexity and want to write unit & integration tests for them because we know they are genuinely helpful over time. Specifically which style of test we write should be decided on a case-by-case basis depending on the area we want extra confidence in.
 
+# Continuous Integration
+Semaphore CI.
+
 ## Deployment
 The app can be deployed using Heroku which will run the following.
-1. npm run start
-2. npm run postinstall
+1. npm run postinstall
+2. npm run start
 
 # Ubiquitous language
 A ubiquitous language allows concepts relating to this application to be discussed unambiguously.
