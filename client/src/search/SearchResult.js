@@ -12,9 +12,11 @@ SearchResult.propTypes = {
 
 function SearchResult (props) {
   const { id, personName, firstSearchResultRef } = props
-  return <Link to={`/person/${id}`}>
-    <li className="SearchResult" ref={firstSearchResultRef}>{personName}</li>
-  </Link>
+  return (
+    <Link to={`/person/${id}`}>
+      <li className="SearchResult" ref={firstSearchResultRef}>{personName}</li>
+    </Link>
+  )
 }
 
 export default SearchResult

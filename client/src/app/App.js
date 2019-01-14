@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
-import PeopleBrowser from '../people-browser/PeopleBrowser'
+import PeopleBrowser from '../people/PeopleBrowser'
+import PeopleCreator from '../people/PeopleCreator'
 import './App.css'
+import Footer from './Footer'
 
 class App extends Component {
   constructor (props) {
@@ -14,14 +16,37 @@ class App extends Component {
 
   render () {
     return (
-      <Router>
-        <Route path={'/person/:id'}>
-          {({ match }) => {
-            const id = match === null ? null : match.params.id
-            return <PeopleBrowser id={id} />
-          }}
-        </Route>
-      </Router>
+      <BrowserRouter>
+        <Switch>
+          <Route path={'/person/create'}>
+            {() => (
+              <React.Fragment>
+                <PeopleCreator/>
+                <Footer/>
+              </React.Fragment>
+            )}
+          </Route>
+          <Route path={'/person/:id'}>
+            {({ match }) => {
+              const id = match === null ? null : match.params.id
+              return (
+                <React.Fragment>
+                  <PeopleBrowser id={id}/>
+                  <Footer/>
+                </React.Fragment>
+              )
+            }}
+          </Route>
+          <Route>
+            {() => (
+              <React.Fragment>
+                <PeopleBrowser/>
+                <Footer/>
+              </React.Fragment>
+            )}
+          </Route>
+        </Switch>
+      </BrowserRouter>
     )
   }
 }

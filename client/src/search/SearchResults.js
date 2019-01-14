@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import CreatePersonButton from '../people/CreatePersonButton'
 import SearchResult from './SearchResult'
 import './SearchResults.css'
 
@@ -19,7 +20,10 @@ function SearchResults (props) {
   })
 
   return (
-    <ul className="SearchResults" onKeyDown={onKeyDown}>{searchResults}</ul>
+    <ul className="SearchResults" onKeyDown={onKeyDown}>
+      {searchResults}
+      <CreatePersonButton/>
+    </ul>
   )
 }
 

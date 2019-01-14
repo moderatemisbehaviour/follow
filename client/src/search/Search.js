@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 
@@ -21,9 +22,9 @@ class Search extends Component {
     }
   }
 
-  search (query) {
+  search (inputValue) {
     this.setState({
-      showSearchResults: !!query.length
+      showSearchResults: !!inputValue.length
     })
   }
 
@@ -45,7 +46,7 @@ class Search extends Component {
           className="Search-input"
           onChange={(event) => this.search(event.target.value)}
           onKeyDown={this.onKeyDown}
-          placeholder="Type a person's name."
+          placeholder={this.props.prompt}
           type="search"
         />
         {showSearchResults &&
@@ -61,6 +62,14 @@ class Search extends Component {
       </div>
     )
   }
+}
+
+Search.propTypes = {
+  prompt: PropTypes.string
+}
+
+Search.defaultProps = {
+  prompt: "Type a person's name."
 }
 
 export default Search

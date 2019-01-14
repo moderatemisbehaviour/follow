@@ -1,7 +1,5 @@
 const BASE_URL = Cypress.config('baseUrl')
 
-xdescribe('User journeys.', function () {})
-
 describe('Landing on the home page.', function () {
   beforeEach(function () {
     cy.visit('/')
@@ -22,6 +20,10 @@ describe('Landing on the home page.', function () {
   it('Focuses the search box.', function () {
     cy.get('.Search-input').focused()
   })
+
+  it("Displays a 'learn more' button in the content area", () => {
+
+  })
 })
 
 describe('Searching for a publisher profile.', function () {
@@ -41,15 +43,35 @@ describe('Searching for a publisher profile.', function () {
     cy.get('.SearchResult:first').click() // TODO: Find out how to simulate user pressing {enter}
     cy.url().should('eq', `${BASE_URL}/person/1`)
   })
+
+  it('Closes the search results when one is selected', function () {
+    cy.get('.SearchResults').should('have.length', 0)
+  })
+
+  it('Closes the search results when the search input loses focus', function () {
+
+  })
 })
 
 describe('Creating a publisher profile.', function () {
-
+  it('Happy path', () => {
+    cy.log('A create person button is displayed at the bottom of the search results')
+    cy.log('Clicking the create person button navigates to the create person page')
+    cy.log('Name of person becomes highlighted')
+    cy.log("The input prompts for the person's name")
+    cy.log("Pressing enter clears the input and submits the person's name")
+    cy.log('The first profile becomes highlighted')
+    cy.log('The input prompts for the first profile URL')
+    cy.log("Pressing enter clears the input and submits the person's name")
+    cy.log('The second profile becomes highlighted')
+    cy.log("Pressing enter clears the input and submits the person's name")
+    cy.log('Clicking the save button views the newly created person')
+  })
 })
 
 describe('Viewing a publisher profile.', function () {
   beforeEach(() => {
-    cy.visit('/person/1') // TODO: Doesn't work until baseUrl is hit...
+    cy.visit('/person/1')
   })
 
   it("Updates the avatar to show the person's profile photo.", function () {
@@ -65,5 +87,10 @@ describe('Viewing a publisher profile.', function () {
 
   it("Masks the publisher's photo to create a circular frame", function () {
     cy.get('.Avatar img').should('have.css', 'border-radius').should('equal', '50%')
+  })
+
+  it("Displays a 'return home' button at the bottom of the page", function () {
+    cy.get('.HomeLink').should('have.length', 1).click()
+    cy.url().should('eq', `${BASE_URL}/`)
   })
 })

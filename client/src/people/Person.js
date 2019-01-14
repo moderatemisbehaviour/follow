@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import Avatar from '../avatar/Avatar'
 import logo from '../logo.png'
 import Profiles from '../profiles/Profiles'
-import Search from '../search/Search'
 import '../app/App.css'
 import './Person.css'
 
@@ -29,7 +28,6 @@ function Person (props) {
     </header>
     <Avatar src={photo}/>
     <Profiles profiles={profiles}/>
-    <Search/>
   </div>
 }
 

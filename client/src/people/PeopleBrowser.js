@@ -4,6 +4,7 @@ import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 
 import Person from './Person'
+import Search from '../search/Search'
 
 class PeopleBrowser extends Component {
   constructor (props) {
@@ -40,12 +41,22 @@ class PeopleBrowser extends Component {
             }
 
             const { person: { name, photo, profiles } } = data
-            return <Person name={name} photo={photo} profiles={profiles} />
+            return (
+              <React.Fragment>
+                <Person name={name} photo={photo} profiles={profiles}/>
+                <Search/>
+              </React.Fragment>
+            )
           }}
         </Query>
       )
     } else {
-      return <Person />
+      return (
+        <React.Fragment>
+          <Person/>
+          <Search/>
+        </React.Fragment>
+      )
     }
   }
 }

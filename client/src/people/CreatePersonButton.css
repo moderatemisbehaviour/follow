@@ -1,0 +1,11 @@
+.CreatePersonButton {
+  list-style-type: none;
+}
+
+.CreatePersonButton:hover {
+  background-color: #EEE;
+}
+
+a:focus > .CreatePersonButton { 
+  background-color: #DFDFDF;
+}
