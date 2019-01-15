@@ -1,4 +1,6 @@
 .Profiles {
   display: flex;
+  max-width: 900px;
+  margin: auto;
   text-align: center;
 }

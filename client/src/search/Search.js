@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 
-import './Search.css'
+import Input from '../common/Input'
 import SearchResults from './SearchResults'
 
 class Search extends Component {
@@ -40,13 +40,11 @@ class Search extends Component {
     `
 
     return (
-      <div>
-        <input
-          autoFocus
-          className="Search-input"
+      <div className="Search">
+        <Input
           onChange={(event) => this.search(event.target.value)}
           onKeyDown={this.onKeyDown}
-          placeholder={this.props.prompt}
+          prompt="Type a person's name."
           type="search"
         />
         {showSearchResults &&
@@ -62,14 +60,6 @@ class Search extends Component {
       </div>
     )
   }
-}
-
-Search.propTypes = {
-  prompt: PropTypes.string
-}
-
-Search.defaultProps = {
-  prompt: "Type a person's name."
 }
 
 export default Search

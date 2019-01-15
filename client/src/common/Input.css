@@ -1,7 +1,8 @@
-.Search-input {
+input {
   display: block;
   margin: auto;
-  width: 95%;
+  width: 100%;
+  max-width: 900px;
   border: 1px solid #AAA;
   border-radius: 0.2rem;
 }

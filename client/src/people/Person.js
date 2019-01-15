@@ -23,9 +23,7 @@ function Person (props) {
   const { name, photo, profiles } = props
 
   return <div>
-    <header className="App-header">
-      <h1 className="App-name">{name}</h1>
-    </header>
+    <h1 className={`name ${props.className}`}>{name}</h1>
     <Avatar src={photo}/>
     <Profiles profiles={profiles}/>
   </div>

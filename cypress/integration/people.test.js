@@ -6,7 +6,7 @@ describe('Landing on the home page.', function () {
   })
 
   it('Displays the slogan', function () {
-    cy.get('.App-name').should('have.text', 'Follow people, not platforms')
+    cy.get('.name').should('have.text', 'Follow people, not platforms')
   })
 
   it('Displays the logo.', function () {
@@ -14,11 +14,11 @@ describe('Landing on the home page.', function () {
   })
 
   it('Displays a search box.', function () {
-    cy.get('.Search-input')
+    cy.get('.Search input')
   })
 
   it('Focuses the search box.', function () {
-    cy.get('.Search-input').focused()
+    cy.get('.Search input').focused()
   })
 
   it("Displays a 'learn more' button in the content area", () => {
@@ -28,17 +28,17 @@ describe('Landing on the home page.', function () {
 
 describe('Searching for a publisher profile.', function () {
   it('Displays search results when text is entered into the search input.', function () {
-    cy.get('.Search-input').type('Si').should('have.value', 'Si')
+    cy.get('.Search input').type('Si').should('have.value', 'Si')
     cy.get('.SearchResult').should('have.length', 2)
   })
 
   it('Stops displaying search result when text is cleared from the search input.', function () {
-    cy.get('.Search-input').clear().should('have.value', '')
+    cy.get('.Search input').clear().should('have.value', '')
     cy.get('.SearchResult').should('have.length', 0)
   })
 
   it('Allows the user to select a search result with the keyboard.', function () {
-    cy.get('.Search-input').type('Si').type('{downarrow}')
+    cy.get('.Search input').type('Si').type('{downarrow}')
     cy.focused().should('have.text', 'Siobhan Wilson')
     cy.get('.SearchResult:first').click() // TODO: Find out how to simulate user pressing {enter}
     cy.url().should('eq', `${BASE_URL}/person/1`)
@@ -56,7 +56,12 @@ describe('Searching for a publisher profile.', function () {
 describe('Creating a publisher profile.', function () {
   it('Happy path', () => {
     cy.log('A create person button is displayed at the bottom of the search results')
+    cy.get('input').type('Si').get('.CreatePersonButton')
+
     cy.log('Clicking the create person button navigates to the create person page')
+    cy.get('.CreatePersonButton').click()
+    cy.url().should('eq', `${BASE_URL}/person/create`)
+
     cy.log('Name of person becomes highlighted')
     cy.log("The input prompts for the person's name")
     cy.log("Pressing enter clears the input and submits the person's name")
@@ -75,7 +80,7 @@ describe('Viewing a publisher profile.', function () {
   })
 
   it("Updates the avatar to show the person's profile photo.", function () {
-    cy.get('.App-name').should('have.text', 'Siobhan Wilson')
+    cy.get('.name').should('have.text', 'Siobhan Wilson')
   })
 
   it("Shows links to the publisher's profiles", function () {
