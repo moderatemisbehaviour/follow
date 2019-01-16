@@ -6,7 +6,7 @@ describe('Landing on the home page.', function () {
   })
 
   it('Displays the slogan', function () {
-    cy.get('.name').should('have.text', 'Follow people, not platforms')
+    cy.get('.Name').should('have.text', 'Follow people, not platforms')
   })
 
   it('Displays the logo.', function () {
@@ -80,7 +80,7 @@ describe('Viewing a publisher profile.', function () {
   })
 
   it("Updates the avatar to show the person's profile photo.", function () {
-    cy.get('.name').should('have.text', 'Siobhan Wilson')
+    cy.get('.Name').should('have.text', 'Siobhan Wilson')
   })
 
   it("Shows links to the publisher's profiles", function () {

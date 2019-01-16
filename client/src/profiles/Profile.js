@@ -2,9 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import './Profile.css'
-import twitterLogo from '../twitter.svg'
-import youtubeLogo from '../youtube.png'
-import facebookLogo from '../facebook.svg'
+import twitterLogo from '../common/twitter.svg'
+import youtubeLogo from '../common/youtube.png'
+import facebookLogo from '../common/facebook.svg'
+import placeholderProfileIcon from './placeholderProfileIcon.svg'
 
 Profile.propTypes = {
   id: PropTypes.number.isRequired,
@@ -19,6 +20,7 @@ function Profile (props) {
   if (platform === 'TWITTER') platformIconUrl = twitterLogo
   else if (platform === 'YOUTUBE') platformIconUrl = youtubeLogo
   else if (platform === 'FACEBOOK') platformIconUrl = facebookLogo
+  else if (platform === 'PLACEHOLDER') platformIconUrl = placeholderProfileIcon
 
   return (
     <span className='Profile' id={platform.toLowerCase()}>

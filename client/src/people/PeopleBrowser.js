@@ -53,7 +53,7 @@ class PeopleBrowser extends Component {
     } else {
       return (
         <React.Fragment>
-          <Person/>
+          <Person name="Follow people, not platforms"/>
           <Search/>
         </React.Fragment>
       )

@@ -1,0 +1,9 @@
+.NextSteps {
+  margin: 1em auto;
+  text-align: center;
+  color: grey;
+}
+
+.NextSteps button {
+  margin: 1em;
+}

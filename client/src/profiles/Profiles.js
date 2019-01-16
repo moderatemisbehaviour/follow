@@ -9,13 +9,35 @@ Profiles.propTypes = {
     id: PropTypes.string.isRequired,
     platform: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired
-  })).isRequired
+  }))
+}
+
+const placeholderProfiles = [
+  {
+    id: 1,
+    platform: 'PLACEHOLDER',
+    url: 'http://example.com'
+  },
+  {
+    id: 2,
+    platform: 'PLACEHOLDER',
+    url: 'http://example.com'
+  },
+  {
+    id: 3,
+    platform: 'PLACEHOLDER',
+    url: 'http://example.com'
+  }
+]
+
+Profiles.defaultProps = {
+  profiles: placeholderProfiles
 }
 
 function Profiles (props) {
   const { profiles } = props
   return (
-    <div className='Profiles'>
+    <div className={`Profiles ${profiles === placeholderProfiles && 'placeholder'}`}>
       {profiles.map(({ id, platform, url }) => (
         <Profile key={id} platform={platform} url={url}/>
       ))}

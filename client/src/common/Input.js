@@ -10,6 +10,7 @@ function Input (props) {
       onKeyDown={props.onKeyDown}
       placeholder={props.prompt}
       type={props.type}
+      value={props.value}
     />
   )
 }

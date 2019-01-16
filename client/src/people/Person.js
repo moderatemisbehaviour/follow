@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import Avatar from '../avatar/Avatar'
 import logo from '../logo.png'
+import Name from './Name'
 import Profiles from '../profiles/Profiles'
 import '../app/App.css'
 import './Person.css'
@@ -14,19 +15,19 @@ Person.propTypes = {
 }
 
 Person.defaultProps = {
-  name: 'Follow people, not platforms',
-  photo: logo,
-  profiles: []
+  photo: logo
 }
 
 function Person (props) {
   const { name, photo, profiles } = props
 
-  return <div>
-    <h1 className={`name ${props.className}`}>{name}</h1>
-    <Avatar src={photo}/>
-    <Profiles profiles={profiles}/>
-  </div>
+  return (
+    <React.Fragment>
+      <Name name={name || undefined}/>
+      <Avatar src={photo}/>
+      <Profiles profiles={profiles || undefined}/>
+    </React.Fragment>
+  )
 }
 
 export default Person
