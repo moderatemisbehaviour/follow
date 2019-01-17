@@ -10,12 +10,27 @@ import placeholderProfileImage from './placeholderProfileImage.svg'
 class PeopleBrowser extends Component {
   constructor (props) {
     super(props)
-    this.propertyEditOrder = [
-      'name',
-      'profiles'
+    this.properties = [
+      {
+        name: 'name',
+        getter: () => this.state.person.name,
+        setter: (value) => ({ ...this.state.person, name: value }),
+        next: () => this.properties[1]
+      },
+      {
+        name: 'profiles',
+        getter: () => this.state.person.profiles[this.state.currentlyEditingIndex - 1] || '',
+        setter: (value) => {
+          const updatedPerson = { ...this.state.person }
+          updatedPerson.profiles[this.state.currentlyEditingIndex - 1] = value
+          return updatedPerson
+        },
+        next: () => this.properties[1]
+      }
     ]
     this.state = {
       currentlyEditingIndex: 0,
+      currentProperty: this.properties[0],
       person: {
         name: '',
         profiles: []
@@ -27,15 +42,7 @@ class PeopleBrowser extends Component {
 
   editProperty (event) {
     const { target: { value } } = event
-
-    const updatedPerson = { ...this.state.person }
-    // TODO: When more properties are used we could make this dynamic using something like getters and setters for each property.
-    if (this.getCurrentlyEditingProperty() === 'name') {
-      updatedPerson.name = value
-    } else {
-      updatedPerson.profiles[this.state.currentlyEditingIndex - 1] = value
-    }
-
+    const updatedPerson = this.state.currentProperty.setter(value)
     console.log(updatedPerson)
     this.setState({
       ...this.state,
@@ -44,34 +51,19 @@ class PeopleBrowser extends Component {
   }
 
   editNextProperty (event) {
-    const updatedPerson = { ...this.state.person }
-    updatedPerson.profiles.push('')
     this.setState({
       ...this.state,
-      currentlyEditingIndex: this.state.currentlyEditingIndex + 1
+      currentlyEditingIndex: this.state.currentlyEditingIndex + 1,
+      currentProperty: this.state.currentProperty.next()
     })
   }
 
-  getCurrentlyEditingProperty () {
-    if (this.state.currentlyEditingIndex > 0) {
-      return this.propertyEditOrder[this.propertyEditOrder.length - 1]
-    }
-    return this.propertyEditOrder[this.state.currentlyEditingIndex]
-  }
-
-  getCurrentlyEditingPropertyValue () {
-    if (this.getCurrentlyEditingProperty() === 'name') {
-      return this.state.person.name
-    }
-    return this.state.person.profiles[this.state.currentlyEditingIndex - 1]
-  }
-
   getPrompt () {
-    return `Enter the person's ${this.getCurrentlyEditingProperty()}`
+    return `Enter the person's ${this.state.currentProperty.name}`
   }
 
   render () {
-    const value = this.getCurrentlyEditingPropertyValue()
+    const value = this.state.currentProperty.getter()
     return (
       <React.Fragment>
         <Person className="editing" name={this.state.person.name || null} photo={placeholderProfileImage}/>
