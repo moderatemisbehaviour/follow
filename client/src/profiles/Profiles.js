@@ -37,7 +37,7 @@ Profiles.defaultProps = {
 function Profiles (props) {
   const { profiles } = props
   return (
-    <div className={`Profiles ${profiles === placeholderProfiles && 'placeholder'}`}>
+    <div className={`profiles ${profiles === placeholderProfiles && 'placeholder'}`}>
       {profiles.map(({ id, platform, url }) => (
         <Profile key={id} platform={platform} url={url}/>
       ))}

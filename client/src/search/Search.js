@@ -1,7 +1,6 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
+import React, { Component } from 'react'
+import { Query } from 'react-apollo'
 
 import Input from '../common/Input'
 import SearchResults from './SearchResults'

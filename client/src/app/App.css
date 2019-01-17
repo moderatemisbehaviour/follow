@@ -1,0 +1,13 @@
+input, li {
+  font-size: 1rem;
+  padding: 0.5rem;
+}
+
+input {
+  display: block;
+  margin: auto;
+  width: 100%;
+  max-width: 216px;
+  border: 1px solid #AAA;
+  border-radius: 0.2rem;
+}

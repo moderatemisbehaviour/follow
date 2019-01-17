@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 
 import './NextSteps.css'
@@ -7,10 +8,14 @@ function NextSteps (props) {
     <div className="NextSteps">
       <span>Then press enter or click</span>
       <div>
-        <button onClick={props.onClick}>next</button>
+        <input className="next" onClick={props.onClick} type="button" value="Next"/>
       </div>
     </div>
   )
+}
+
+NextSteps.propTypes = {
+  onClick: PropTypes.func
 }
 
 export default NextSteps

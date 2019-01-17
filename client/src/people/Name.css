@@ -1,11 +1,16 @@
-.Name {
+.name {
   font-weight: 800;
-  margin: 1rem auto;
+  margin: 1em auto;
   max-width: 900px;
   min-height: 1.5em;
   text-align: center;
 }
 
-.Name.placeholder {
+.name.placeholder {
   color: lightgrey;
+}
+
+.name span {
+  padding: 1rem;
+  border-radius: 0.2rem;
 }

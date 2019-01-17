@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 
+import EditorInput from './EditorInput'
 import NextSteps from './NextSteps'
 import './PeopleCreator.css'
 import Person from './Person'
-import EditorInput from './EditorInput'
 import placeholderProfileImage from './placeholderProfileImage.svg'
+import Save from './Save.js'
 
-class PeopleBrowser extends Component {
+class PeopleCreator extends Component {
   constructor (props) {
     super(props)
     this.properties = [
@@ -19,18 +19,18 @@ class PeopleBrowser extends Component {
       },
       {
         name: 'profiles',
-        getter: () => this.state.person.profiles[this.state.currentlyEditingIndex - 1] || '',
+        getter: () => this.state.person.profiles[this.state.propertyBeingEditedIndex - 1] || '',
         setter: (value) => {
           const updatedPerson = { ...this.state.person }
-          updatedPerson.profiles[this.state.currentlyEditingIndex - 1] = value
+          updatedPerson.profiles[this.state.propertyBeingEditedIndex - 1] = value
           return updatedPerson
         },
         next: () => this.properties[1]
       }
     ]
     this.state = {
-      currentlyEditingIndex: 0,
-      currentProperty: this.properties[0],
+      propertyBeingEditedIndex: 0,
+      propertyBeingEdited: this.properties[0],
       person: {
         name: '',
         profiles: []
@@ -42,7 +42,7 @@ class PeopleBrowser extends Component {
 
   editProperty (event) {
     const { target: { value } } = event
-    const updatedPerson = this.state.currentProperty.setter(value)
+    const updatedPerson = this.state.propertyBeingEdited.setter(value)
     console.log(updatedPerson)
     this.setState({
       ...this.state,
@@ -53,25 +53,34 @@ class PeopleBrowser extends Component {
   editNextProperty (event) {
     this.setState({
       ...this.state,
-      currentlyEditingIndex: this.state.currentlyEditingIndex + 1,
-      currentProperty: this.state.currentProperty.next()
+      propertyBeingEditedIndex: this.state.propertyBeingEditedIndex + 1,
+      propertyBeingEdited: this.state.propertyBeingEdited.next()
     })
   }
 
-  getPrompt () {
-    return `Enter the person's ${this.state.currentProperty.name}`
+  get className () {
+    return `editing-${this.propertyBeingEditedName}`
+  }
+
+  get prompt () {
+    return `Enter the person's ${this.propertyBeingEditedName}`
+  }
+
+  get propertyBeingEditedName () {
+    return this.state.propertyBeingEdited.name
   }
 
   render () {
-    const value = this.state.currentProperty.getter()
+    const value = this.state.propertyBeingEdited.getter()
     return (
-      <React.Fragment>
-        <Person className="editing" name={this.state.person.name || null} photo={placeholderProfileImage}/>
-        <EditorInput onChange={this.editProperty} prompt={this.getPrompt()} value={value}/>
+      <div className={'PeopleCreator ' + this.className}>
+        <Person name={this.state.person.name || null} photo={placeholderProfileImage}/>
+        <EditorInput onChange={this.editProperty} prompt={this.prompt} value={value}/>
         <NextSteps onClick={this.editNextProperty}/>
-      </React.Fragment>
+        <Save disabled/>
+      </div>
     )
   }
 }
 
-export default PeopleBrowser
+export default PeopleCreator
