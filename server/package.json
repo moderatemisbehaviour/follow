@@ -8,6 +8,7 @@
   },
   "scripts": {
     "start": "node src/index",
+    "start:dev": "node --inspect src/index",
     "test": "jest",
     "clean": "node cleanDatabase.js"
   },

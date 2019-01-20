@@ -5,6 +5,7 @@
 1. Run `npm run start:dev` to start development.
   - Starts a node server at http://localhost:4000
   - Starts a webpack development server at http://localhost:4001 using React Scripts to host the front-end.
+  - Visit the GraphQL Playground at http://localhost:4000/graphql.
 1. Run `npm test` to open the Cypress test runner.
 1. Run `npm start` to get a production build.
   - Builds an optimised production build using React scripts.

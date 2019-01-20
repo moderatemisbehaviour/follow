@@ -8,16 +8,8 @@ import SearchResults from './SearchResults'
 class Search extends Component {
   constructor (props) {
     super(props)
-    this.firstSearchResultRef = React.createRef()
     this.state = {
       showSearchResults: false
-    }
-    this.onKeyDown = this.onKeyDown.bind(this)
-  }
-
-  onKeyDown ({ key }) {
-    if (key === 'ArrowDown') {
-      this.firstSearchResultRef.current.parentElement.focus()
     }
   }
 
@@ -42,7 +34,6 @@ class Search extends Component {
       <div className="Search">
         <Input
           onChange={(event) => this.search(event.target.value)}
-          onKeyDown={this.onKeyDown}
           prompt="Type a person's name."
           type="search"
         />
@@ -52,7 +43,7 @@ class Search extends Component {
               if (loading) return <p>LOADING</p>
               if (error) return <p>ERROR</p>
 
-              return <SearchResults data={data} firstSearchResultRef={this.firstSearchResultRef} />
+              return <SearchResults data={data}/>
             }}
           </Query>
         }

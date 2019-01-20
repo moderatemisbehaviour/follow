@@ -5,42 +5,21 @@ import './Profiles.css'
 import Profile from './Profile'
 
 Profiles.propTypes = {
-  profiles: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    platform: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired
-  }))
+  profiles: PropTypes.arrayOf(PropTypes.string.isRequired)
 }
 
-const placeholderProfiles = [
-  {
-    id: 1,
-    platform: 'PLACEHOLDER',
-    url: 'http://example.com'
-  },
-  {
-    id: 2,
-    platform: 'PLACEHOLDER',
-    url: 'http://example.com'
-  },
-  {
-    id: 3,
-    platform: 'PLACEHOLDER',
-    url: 'http://example.com'
-  }
-]
-
 Profiles.defaultProps = {
-  profiles: placeholderProfiles
+  profiles: []
 }
 
 function Profiles (props) {
   const { profiles } = props
   return (
-    <div className={`profiles ${profiles === placeholderProfiles && 'placeholder'}`}>
-      {profiles.map(({ id, platform, url }) => (
-        <Profile key={id} platform={platform} url={url}/>
-      ))}
+    <div className="profiles">
+      {profiles.map((url, index) => {
+        const profileId = `profile-${index}`
+        return <Profile key={profileId} id={profileId} url={url}/>
+      })}
     </div>
   )
 }

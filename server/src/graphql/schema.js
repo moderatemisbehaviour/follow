@@ -9,32 +9,17 @@ const typeDefs = gql`
   type Person {
     id: ID!
     name: String!
-    profiles: [Profile]
+    profiles: [String]
     photo: String
   }
 
-  type Profile {
-    id: ID!
-    platform: Platform!
-    url: String!
-  }
-
-  enum Platform {
-    TWITTER
-    YOUTUBE
-    INSTAGRAM
-    FACEBOOK
+  input PersonInput {
+    name: String!
+    profiles: [String]
   }
 
   type Mutation {
-    updateProfile(profileId: ID!, platforn: Platform!, url: String!): UpdateProfileResponse!
-    login(email: String!): String
-  }
-
-  type UpdateProfileResponse {
-    success: Boolean!
-    message: String
-    profile: Profile
+    createPerson(person: PersonInput!): Person
   }
 `
 

@@ -9,24 +9,21 @@ SearchResults.propTypes = {
   data: PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string
-  }).isRequired,
-  firstSearchResultRef: PropTypes.shape({})
+  }).isRequired
 }
 
 function SearchResults (props) {
-  const { data: { people }, firstSearchResultRef } = props
+  const {data: {people}} = props
   let searchResults = people.map((person, index) => {
-    return <SearchResult key={index} id={person.id} personName={person.name} firstSearchResultRef={!index ? firstSearchResultRef : null} />
+    return <SearchResult key={index} id={person.id} personName={person.name}/>
   })
 
   return (
-    <ul className="SearchResults" onKeyDown={onKeyDown}>
+    <ul className="SearchResults">
       {searchResults}
       <CreatePersonButton/>
     </ul>
   )
 }
-
-function onKeyDown () {}
 
 export default SearchResults

@@ -11,6 +11,7 @@ function Input (props) {
       onChange={props.onChange}
       onKeyDown={props.onKeyDown}
       placeholder={props.prompt}
+      ref={props.inputRef}
       type={props.type}
       value={props.value}
     />

@@ -5,6 +5,8 @@ const dbClient = require('./getDbClient')
 const applyApolloServerMiddleware = require('./applyApolloServerMiddleware')
 const configureExpressToHandleUrlPaths = require('./configureExpressToHandleUrlPaths')
 
+// process.on('SIGINT', () => { console.log('Bye bye!'); process.exit() })
+
 const expressServer = createExpressServerForStaticContent()
 dbClient.connectAndGetDatabase().then((db) => {
   const apolloServer = applyApolloServerMiddleware(expressServer, db)

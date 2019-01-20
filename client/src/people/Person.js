@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import Avatar from '../avatar/Avatar'
-import logo from '../logo.png'
 import Name from './Name'
 import Profiles from '../profiles/Profiles'
 import '../app/App.css'
@@ -11,11 +10,7 @@ import './Person.css'
 Person.propTypes = {
   name: PropTypes.string,
   photo: PropTypes.string,
-  profiles: PropTypes.arrayOf(PropTypes.shape({}))
-}
-
-Person.defaultProps = {
-  photo: logo
+  profiles: PropTypes.arrayOf(PropTypes.string.isRequired)
 }
 
 function Person (props) {

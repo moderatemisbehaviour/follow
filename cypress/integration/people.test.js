@@ -37,7 +37,7 @@ describe('Searching for a publisher profile.', function () {
     cy.get('.SearchResult').should('have.length', 0)
   })
 
-  it('Allows the user to select a search result with the keyboard.', function () {
+  xit('Allows the user to select a search result with the keyboard.', function () {
     cy.get('.Search input').type('Si').type('{downarrow}')
     cy.focused().should('have.text', 'Siobhan Wilson')
     cy.get('.SearchResult:first').click() // TODO: Find out how to simulate user pressing {enter}
@@ -57,6 +57,9 @@ describe('Creating a publisher profile.', function () {
   it('Happy path with mouse', () => {
     cy.log('A create person button is displayed at the bottom of the search results')
     cy.get('.the-input').type('Si').get('.CreatePersonButton')
+
+    // Placeholder photo is displayed
+    // Placeholder profile is displayed
 
     cy.log('Clicking the create person button navigates to the create person page')
     cy.get('.CreatePersonButton').click()
@@ -85,7 +88,7 @@ describe('Creating a publisher profile.', function () {
     cy.get('.the-input').should('have.attr', 'placeholder', "Enter the person's profiles")
 
     cy.log('The first profile becomes highlighted')
-    cy.get('.PeopleCreator').should('have.class', 'editing-profile-1')
+    cy.get('.PeopleCreator').should('have.class', 'editing-profiles')
     cy.get('.Profile').eq(0).should('not.have.class', 'editing-name')
 
     cy.log('The input is focused')
@@ -105,7 +108,7 @@ describe('Creating a publisher profile.', function () {
     cy.get('.the-input').should('have.attr', 'placeholder', "Enter the person's profiles")
 
     cy.log('The second profile becomes highlighted')
-    cy.get('.PeopleCreator').should('have.class', 'editing-profile-2')
+    cy.get('.PeopleCreator').should('have.class', 'editing-profiles')
 
     cy.log('The input is focused')
     cy.focused().should('have.class', 'the-input')
@@ -121,7 +124,7 @@ describe('Creating a publisher profile.', function () {
     cy.get('.the-input').should('have.attr', 'placeholder', "Enter the person's profiles")
 
     cy.log('The third profile becomes highlighted')
-    cy.get('.PeopleCreator').should('have.class', 'editing-profile-3')
+    cy.get('.PeopleCreator').should('have.class', 'editing-profiles')
 
     cy.log('The input is focused')
     cy.focused().should('have.class', 'the-input')
@@ -134,6 +137,7 @@ describe('Creating a publisher profile.', function () {
     cy.get('.the-input').should('have.value', '')
 
     cy.log('Clicking the save button views the newly created person')
+    cy.url().should('match', /person\/create/)
     cy.log("The person's name is displayed")
     cy.get('.name').should('have.text', 'Siobhan Wilson')
   })
@@ -166,6 +170,6 @@ describe('Viewing a publisher profile.', function () {
 
   it("Displays a 'return home' button at the bottom of the page", function () {
     cy.get('.HomeLink').should('have.length', 1).click()
-    cy.url().should('eq', `${BASE_URL}/`)
+    cy.url().should('eq', '/')
   })
 })

@@ -8,24 +8,37 @@ import facebookLogo from '../common/facebook.svg'
 import placeholderProfileIcon from './placeholderProfileIcon.svg'
 
 Profile.propTypes = {
-  id: PropTypes.number.isRequired,
-  platform: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired
 }
 
 function Profile (props) {
-  const { platform, url } = props
+  const {id, url: userInputUrl} = props
 
+  let url
   let platformIconUrl
-  if (platform === 'TWITTER') platformIconUrl = twitterLogo
-  else if (platform === 'YOUTUBE') platformIconUrl = youtubeLogo
-  else if (platform === 'FACEBOOK') platformIconUrl = facebookLogo
-  else if (platform === 'PLACEHOLDER') platformIconUrl = placeholderProfileIcon
+  if (!userInputUrl) {
+    platformIconUrl = placeholderProfileIcon
+  } else {
+    try {
+      url = new URL(userInputUrl)
+      const hostname = url.hostname.toUpperCase()
+
+      if (hostname === 'TWITTER') platformIconUrl = twitterLogo
+      else if (hostname === 'YOUTUBE') platformIconUrl = youtubeLogo
+      else if (hostname === 'FACEBOOK') platformIconUrl = facebookLogo
+    } catch (e) {}
+  }
 
   return (
-    <span className='Profile' id={platform.toLowerCase()}>
-      <a href={url}>
-        <img src={platformIconUrl} alt="platform icon" />
+    <span className='Profile' id={id}>
+      <a href={url ? url.href : 'www.example.com'}>
+        {platformIconUrl &&
+          <img src={platformIconUrl} alt="platform icon" />
+        }
+        {!platformIconUrl &&
+          <span>{userInputUrl.charAt(0)}</span>
+        }
       </a>
     </span>
   )
