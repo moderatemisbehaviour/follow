@@ -13,17 +13,17 @@ class Search extends Component {
     }
   }
 
-  search (inputValue) {
+  search (query) {
     this.setState({
-      showSearchResults: !!inputValue.length
+      query
     })
   }
 
   render () {
-    const { showSearchResults } = this.state
+    const {query} = this.state
     const GET_PEOPLE = gql`
-      query getPeople {
-        people {
+      query People($query: String!) {
+        people(query: $query) {
           id
           name
         }
@@ -37,8 +37,8 @@ class Search extends Component {
           prompt="Type a person's name."
           type="search"
         />
-        {showSearchResults &&
-          <Query query={GET_PEOPLE}>
+        {query &&
+          <Query query={GET_PEOPLE} variables={{query}}>
             {({ data, loading, error }) => {
               if (loading) return <p>LOADING</p>
               if (error) return <p>ERROR</p>

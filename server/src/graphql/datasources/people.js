@@ -31,7 +31,7 @@ class PeopleDataSource extends DataSource {
     }
   }
 
-  getPeople () {
+  getPeople (query) {
     return [
       {
         id: 1,
