@@ -16,6 +16,9 @@ async function resetDatabase (databaseUrl) {
     const admin = mongoClient.db().admin()
     const databases = await admin.listDatabases()
     console.log('Remaining databases are:\n', databases)
+
+    const peopleCollection = await followDatabase.createCollection('people')
+    await peopleCollection.createIndex({name: 'text', profiles: 'text'})
   } finally {
     mongoClient.close()
   }

@@ -19,43 +19,26 @@ class PeopleDataSource extends DataSource {
     }
   }
 
+  async getPeople (query) {
+    const peopleCollection = this.db.collection('people')
+    const cursor = peopleCollection.find({name: {$regex: `${query}`, $options: 'i'}})
+    const people = await cursor.toArray()
+    return people.map(this.replaceMongoIdWithApplicationId)
+  }
+
   async getPerson (id) {
     const peopleCollection = this.db.collection('people')
     const objectId = new ObjectID(id)
     const query = {_id: objectId}
-    const result = await peopleCollection.findOne(query)
-
-    return {
-      ...result,
-      id: result._id.toHexString()
-    }
+    const person = await peopleCollection.findOne(query)
+    return this.replaceMongoIdWithApplicationId(person)
   }
 
-  getPeople (query) {
-    return [
-      {
-        id: 1,
-        name: 'Siobhan Wilson',
-        profiles: [
-          {
-            id: 1,
-            platform: 'TWITTER',
-            url: 'https://twitter.com/siobhanisback'
-          }
-        ]
-      },
-      {
-        id: 2,
-        name: 'Elon Musk',
-        profiles: [
-          {
-            id: 2,
-            platform: 'TWITTER',
-            url: 'https://twitter.com/elonmusk'
-          }
-        ]
-      }
-    ]
+  replaceMongoIdWithApplicationId (person) {
+    return {
+      ...person,
+      id: person._id.toHexString()
+    }
   }
 }
 

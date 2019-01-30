@@ -1,8 +1,12 @@
-beforeEach(function () {
-  cy.visit('/')
+before(function () {
+  cy.task('createPerson').as('person')
 })
 
 describe('Landing on the home page.', function () {
+  before(function () {
+    cy.visit('/')
+  })
+
   it('Displays the slogan', function () {
     cy.get('.name').should('have.text', 'Follow people, not platforms')
   })
@@ -25,12 +29,17 @@ describe('Landing on the home page.', function () {
 })
 
 describe('Searching for a publisher profile.', function () {
+  beforeEach(function () {
+    cy.visit('/')
+  })
+
   it('Displays search results when text is entered into the search input.', function () {
     cy.get('.Search input').type('Si').should('have.value', 'Si')
-    cy.get('.SearchResult').should('have.length', 2)
+    cy.get('.SearchResult').should('not.have.length', 0)
   })
 
   it('Stops displaying search results when text is cleared from the search input.', function () {
+    cy.get('.Search input').type('Si').should('have.value', 'Si')
     cy.get('.Search input').clear().should('have.value', '')
     cy.get('.SearchResult').should('have.length', 0)
   })
@@ -39,7 +48,7 @@ describe('Searching for a publisher profile.', function () {
     cy.get('.Search input').type('Si').type('{downarrow}')
     cy.focused().should('have.text', 'Siobhan Wilson')
     cy.get('.SearchResult:first').click() // TODO: Find out how to simulate user pressing {enter}
-    cy.url().should('to.match', /\/person\/1/)
+    cy.location('pathname').should('eq', '/person/1')
   })
 
   it('Closes the search results when one is selected', function () {
@@ -55,9 +64,9 @@ describe('Creating a publisher profile.', function () {
 
 })
 
-describe.only('Viewing a publisher profile.', function () {
-  beforeEach(() => {
-    cy.visit('/person/1')
+describe('Viewing a publisher profile.', function () {
+  beforeEach(function () {
+    cy.visit(`/person/${this.person._id}`)
     cy.get('.name').should('have.text', 'Siobhan Wilson') // TODO: Come up with a better way to wait for render.
   })
 
@@ -78,6 +87,6 @@ describe.only('Viewing a publisher profile.', function () {
 
   it("Displays a 'return home' button at the bottom of the page", function () {
     cy.get('.HomeLink').should('have.length', 1).click()
-    cy.url().should('eq', '/')
+    cy.location('pathname').should('eq', '/')
   })
 })
