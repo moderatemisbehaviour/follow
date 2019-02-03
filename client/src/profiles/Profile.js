@@ -50,7 +50,7 @@ function Profile (props) {
 
   return (
     <div className='Profile' id={id}>
-      <a href={url ? url.href : 'www.example.com'}>
+      <a href={url ? url.href : 'http://www.example.com'}>
         {platformIconUrl &&
           <img className={className} src={platformIconUrl} alt="platform icon" />
         }

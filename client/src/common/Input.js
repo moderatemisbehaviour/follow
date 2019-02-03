@@ -3,11 +3,22 @@ import PropTypes from 'prop-types'
 
 import './Input.css'
 
+Input.propTypes = {
+  inputRef: PropTypes.shape({}),
+  invalid: PropTypes.bool,
+  onChange: PropTypes.func,
+  onKeyDown: PropTypes.func,
+  prompt: PropTypes.string,
+  type: PropTypes.string,
+  value: PropTypes.string
+}
+
 function Input (props) {
   return (
     <input
       autoFocus
-      className="the-input"
+      id="the-input"
+      className={`the-input ${props.invalid && 'invalid'}`} // TODO: Remove this
       onChange={props.onChange}
       onKeyDown={props.onKeyDown}
       placeholder={props.prompt}
@@ -16,14 +27,6 @@ function Input (props) {
       value={props.value}
     />
   )
-}
-
-Input.propTypes = {
-  onChange: PropTypes.func,
-  onKeyDown: PropTypes.func,
-  prompt: PropTypes.string,
-  type: PropTypes.string,
-  value: PropTypes.string
 }
 
 export default Input

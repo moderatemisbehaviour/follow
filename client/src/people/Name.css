@@ -5,16 +5,10 @@
   letter-spacing: 0.05em;
   margin: 0 auto;
   /* max-width: 900px; */
-  height: 12vh;
+  height: 10vh;
   text-align: center;
 }
 
 .name.placeholder {
   color: lightgrey;
-}
-
-.name span {
-  position: relative;
-  top: 10px;
-  border-radius: 0.2rem;
 }

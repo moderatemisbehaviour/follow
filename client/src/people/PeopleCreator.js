@@ -23,7 +23,10 @@ class PeopleCreator extends Component {
             }
           }))
         },
-        next: () => this.properties[1]
+        next: () => this.properties[1],
+        prompt: "Enter the person's name",
+        validate: () => !!this.state.person.name,
+        validationMessage: 'Please provide a name'
       },
       {
         name: 'profiles',
@@ -38,7 +41,19 @@ class PeopleCreator extends Component {
             }
           })
         },
-        next: () => this.properties[1]
+        next: () => this.properties[1],
+        prompt: "Copy-paste the person's profile URL",
+        validate: () => {
+          try {
+            const urlInInput = this.state.person.profiles[this.state.propertyBeingEditedIndex - 1]
+            // eslint-disable-next-line no-new
+            new URL(urlInInput)
+            return true
+          } catch (e) {
+            return false
+          }
+        },
+        validationMessage: 'The URL you have provided is invalid.'
       }
     ]
 
@@ -48,7 +63,8 @@ class PeopleCreator extends Component {
       person: {
         name: '',
         profiles: []
-      }
+      },
+      touched: false
     }
 
     this.input = React.createRef()
@@ -60,6 +76,10 @@ class PeopleCreator extends Component {
   editProperty (event) {
     const {target: {value}} = event
     this.state.propertyBeingEdited.setter(value)
+    this.setState(state => ({
+      ...state,
+      touched: true
+    }))
   }
 
   editNextProperty (event) {
@@ -67,7 +87,8 @@ class PeopleCreator extends Component {
     this.setState(state => ({
       ...state,
       propertyBeingEditedIndex: this.state.propertyBeingEditedIndex + 1,
-      propertyBeingEdited: nextProperty
+      propertyBeingEdited: nextProperty,
+      touched: false
     }))
     nextProperty.setter('')
 
@@ -76,10 +97,6 @@ class PeopleCreator extends Component {
 
   get className () {
     return `editing-${this.propertyBeingEditedName}`
-  }
-
-  get prompt () {
-    return `Enter the person's ${this.propertyBeingEditedName}`
   }
 
   get propertyBeingEditedName () {
@@ -91,14 +108,26 @@ class PeopleCreator extends Component {
   }
 
   render () {
+    const invalid = !this.state.propertyBeingEdited.validate()
+    const prompt = this.state.propertyBeingEdited.prompt
     const value = this.state.propertyBeingEdited.getter()
+
     return (
       <div className={'PeopleCreator ' + this.className}>
         <Person
           name={this.state.person.name || null}
           profiles={this.state.person.profiles}/>
-        <EditorInput onChange={this.editProperty} prompt={this.prompt} inputRef={this.input} value={value}/>
-        <NextSteps onClick={this.editNextProperty}/>
+        <EditorInput
+          onChange={this.editProperty}
+          prompt={prompt}
+          inputRef={this.input}
+          invalid={this.state.touched && invalid}
+          value={value}/>
+        <NextSteps
+          disabled={invalid}
+          invalid={this.state.touched && invalid}
+          message={this.state.touched && invalid ? this.state.propertyBeingEdited.validationMessage : undefined}
+          onClick={this.editNextProperty}/>
         <Save disabled={!this.personValid} person={this.state.person}/>
       </div>
     )

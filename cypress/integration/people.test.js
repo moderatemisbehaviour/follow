@@ -1,7 +1,3 @@
-before(function () {
-  cy.task('createPerson').as('person')
-})
-
 describe('Landing on the home page.', function () {
   before(function () {
     cy.visit('/')
@@ -30,12 +26,24 @@ describe('Landing on the home page.', function () {
 
 describe('Searching for a publisher profile.', function () {
   beforeEach(function () {
+    cy.task('createPerson').as('person')
     cy.visit('/')
   })
 
   it('Displays search results when text is entered into the search input.', function () {
     cy.get('.Search input').type('Si').should('have.value', 'Si')
     cy.get('.SearchResult').should('not.have.length', 0)
+  })
+
+  it('Displays no more than 5 results at a time.', function () {
+    cy.task('createPerson').as('person')
+    cy.task('createPerson').as('person')
+    cy.task('createPerson').as('person')
+    cy.task('createPerson').as('person')
+    cy.task('createPerson').as('person')
+    cy.task('createPerson').as('person')
+    cy.get('.Search input').type('Si').should('have.value', 'Si')
+    cy.get('.SearchResult').should('have.length', 5)
   })
 
   it('Stops displaying search results when text is cleared from the search input.', function () {
@@ -61,13 +69,41 @@ describe('Searching for a publisher profile.', function () {
 })
 
 describe('Creating a publisher profile.', function () {
+  beforeEach(function () {
+    cy.visit('/person/create')
+  })
 
+  describe('validating URLs', function () {
+    it('should disable the input whilst it has an invalid URL', function () {
+      cy.get('#the-input').type('Siobhan Wilson')
+      cy.get('#next').should('not.have.attr', 'disabled')
+      cy.get('#next').click()
+
+      cy.get('#next').should('have.attr', 'disabled')
+      cy.get('#the-input').type('invalid URL')
+      cy.get('#next').should('have.attr', 'disabled')
+
+      cy.get('#the-input').clear().type('http://example.com')
+      cy.get('#next').should('not.have.attr', 'disabled')
+    })
+
+    it('should give the input the invalid style', function () {
+      cy.get('#the-input').type('Siobhan Wilson').should('not.have.class', 'invalid')
+      cy.get('#next').click()
+
+      cy.get('#the-input').should('not.have.class', 'invalid').type('invalid URL').should('have.class', 'invalid')
+
+      cy.get('#the-input').clear().type('http://example.com').should('not.have.class', 'invalid')
+    })
+  })
 })
 
 describe('Viewing a publisher profile.', function () {
   beforeEach(function () {
-    cy.visit(`/person/${this.person._id}`)
-    cy.get('.name').should('have.text', 'Siobhan Wilson') // TODO: Come up with a better way to wait for render.
+    cy.task('createPerson').then((person) => {
+      cy.visit(`/person/${person._id}`)
+      cy.get('.name').should('have.text', 'Siobhan Wilson') // TODO: Come up with a better way to wait for render.
+    })
   })
 
   it("Updates the avatar to show the person's profile photo.", function () {

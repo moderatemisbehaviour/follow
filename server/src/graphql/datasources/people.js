@@ -21,7 +21,7 @@ class PeopleDataSource extends DataSource {
 
   async getPeople (query) {
     const peopleCollection = this.db.collection('people')
-    const cursor = peopleCollection.find({name: {$regex: `${query}`, $options: 'i'}})
+    const cursor = peopleCollection.find({name: {$regex: `${query}`, $options: 'i'}}).skip(0).limit(5)
     const people = await cursor.toArray()
     return people.map(this.replaceMongoIdWithApplicationId)
   }

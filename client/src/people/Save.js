@@ -19,6 +19,7 @@ function Save (props) {
 
         return <input
           className="save"
+          id="save" // TODO: Remove this
           disabled={props.disabled}
           onClick={(e) => {
             createPerson({
