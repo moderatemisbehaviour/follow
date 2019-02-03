@@ -1,6 +1,12 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 
 import './UnknownPlatformIcon.css'
+
+UnknownPlatformIcon.propTypes = {
+  className: PropTypes.string,
+  children: PropTypes.string
+}
 
 function UnknownPlatformIcon (props) {
   return (
