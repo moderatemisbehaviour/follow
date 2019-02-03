@@ -1,19 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import CreatePersonButton from '../people/CreatePersonButton'
 import SearchResult from './SearchResult'
 import './SearchResults.css'
 
-SearchResults.propTypes = {
-  data: PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string
-  }).isRequired
-}
-
 function SearchResults (props) {
-  const {data: {people}} = props
+  const {children, people} = props
   let searchResults = people.map((person, index) => {
     return <SearchResult key={index} id={person.id} personName={person.name}/>
   })
@@ -21,9 +13,22 @@ function SearchResults (props) {
   return (
     <ul className="SearchResults">
       {searchResults}
-      <CreatePersonButton/>
+      {children}
     </ul>
   )
+}
+
+SearchResults.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node)
+  ]),
+  people: PropTypes.arrayOf(PropTypes.shape({}))
+}
+
+SearchResults.defaultProps = {
+  children: null,
+  people: []
 }
 
 export default SearchResults

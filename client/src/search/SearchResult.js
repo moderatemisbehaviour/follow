@@ -5,16 +5,15 @@ import { Link } from 'react-router-dom'
 import './SearchResult.css'
 
 SearchResult.propTypes = {
-  firstSearchResultRef: PropTypes.object.isRequired,
   id: PropTypes.string.isRequired,
   personName: PropTypes.string.isRequired
 }
 
 function SearchResult (props) {
-  const { id, personName, firstSearchResultRef } = props
+  const {id, personName} = props
   return (
     <Link to={`/person/${id}`}>
-      <li className="SearchResult" ref={firstSearchResultRef}>{personName}</li>
+      <li className="SearchResult">{personName}</li>
     </Link>
   )
 }

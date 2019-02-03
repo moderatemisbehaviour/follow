@@ -2,6 +2,7 @@ import gql from 'graphql-tag'
 import React, { Component } from 'react'
 import { Query } from 'react-apollo'
 
+import CreatePersonButton from '../people/CreatePersonButton'
 import Input from '../common/Input'
 import SearchResults from './SearchResults'
 
@@ -40,10 +41,13 @@ class Search extends Component {
         {query &&
           <Query query={GET_PEOPLE} variables={{query}}>
             {({ data, loading, error }) => {
-              if (loading) return <p>LOADING</p>
-              if (error) return <p>ERROR</p>
-
-              return <SearchResults data={data}/>
+              return (
+                <SearchResults people={data && data.people}>
+                  {loading && <li>Loading...</li>}
+                  {error && <li>Error :(</li>}
+                  {data && <CreatePersonButton/>}
+                </SearchResults>
+              )
             }}
           </Query>
         }

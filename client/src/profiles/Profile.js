@@ -6,41 +6,61 @@ import twitterLogo from '../common/twitter.svg'
 import youtubeLogo from '../common/youtube.png'
 import facebookLogo from '../common/facebook.svg'
 import placeholderProfileIcon from './placeholderProfileIcon.svg'
+import UnknownPlatformIcon from './UnknownPlatformIcon'
 
 Profile.propTypes = {
   id: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired
 }
 
+const websiteToPlatformIconMap = {
+  'twitter': twitterLogo,
+  'youtube': youtubeLogo,
+  'facebook': facebookLogo
+}
+
 function Profile (props) {
   const {id, url: userInputUrl} = props
 
-  let url
+  let className
   let platformIconUrl
+  let url
+  let websiteName
   if (!userInputUrl) {
     platformIconUrl = placeholderProfileIcon
+    className = 'platform-icon placeholder'
   } else {
     try {
       url = new URL(userInputUrl)
-      const hostname = url.hostname.toUpperCase()
+      const hostnameParts = url.hostname.split('.')
 
-      if (hostname === 'TWITTER') platformIconUrl = twitterLogo
-      else if (hostname === 'YOUTUBE') platformIconUrl = youtubeLogo
-      else if (hostname === 'FACEBOOK') platformIconUrl = facebookLogo
-    } catch (e) {}
+      const websiteNameIndex = hostnameParts.length >= 2 ? hostnameParts.length - 2 : 0
+      websiteName = hostnameParts[websiteNameIndex]
+
+      const knownPlatform = websiteName in websiteToPlatformIconMap
+      if (knownPlatform) {
+        platformIconUrl = websiteToPlatformIconMap[websiteName]
+      }
+
+      className = `platform-icon ${knownPlatform ? 'known' : 'unknown'}`
+    } catch (e) {
+      className = 'platform-icon unknown invalid'
+    }
   }
 
   return (
-    <span className='Profile' id={id}>
+    <div className='Profile' id={id}>
       <a href={url ? url.href : 'www.example.com'}>
         {platformIconUrl &&
-          <img src={platformIconUrl} alt="platform icon" />
+          <img className={className} src={platformIconUrl} alt="platform icon" />
         }
         {!platformIconUrl &&
-          <span>{userInputUrl.charAt(0)}</span>
+          <UnknownPlatformIcon className={className}>
+            {url ? websiteName.charAt(0) : '?'}
+          </UnknownPlatformIcon>
         }
       </a>
-    </span>
+    </div>
   )
 }
 

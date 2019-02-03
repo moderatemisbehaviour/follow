@@ -1,3 +1,13 @@
+html {
+  font-family: 'Open Sans', sans-serif;
+  height: 100%;
+}
+
+body {
+  min-height: 100%; /* Match viewport size and scroll if necessary */
+  padding: 1rem; /* This is helpful assuming nothing ever wants to touch the sides... */
+}
+
 input, li {
   font-size: 1rem;
   padding: 0.5rem;

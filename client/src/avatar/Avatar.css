@@ -1,6 +1,10 @@
+.Avatar {
+  height: 39vh;
+}
+
 .Avatar img {
-  margin: 1rem auto;
-  display: block;
-  height: 23.96vmax;
   border-radius: 50%;
+  display: block;
+  height: 100%;
+  margin: 0 auto;
 }

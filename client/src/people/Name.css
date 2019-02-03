@@ -3,9 +3,9 @@
   font-weight: 400;
   font-size: 4.17rem;
   letter-spacing: 0.05em;
-  margin: 1rem auto;
-  max-width: 900px;
-  min-height: 1.5em;
+  margin: 0 auto;
+  /* max-width: 900px; */
+  height: 12vh;
   text-align: center;
 }
 

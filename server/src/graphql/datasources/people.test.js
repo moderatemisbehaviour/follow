@@ -1,5 +1,5 @@
 const getDbClient = require('../../getDbClient')
-const PeopleDataSource = require('../datasources/people')
+const PeopleDataSource = require('./people')
 const resetDatabase = require('../../resetDatabase')
 
 // TODO: Get fixtures from a common place.
@@ -44,10 +44,50 @@ describe('get people', () => {
     await db.collection('people').insertMany([siobhan, elon])
   })
 
-  describe('when the letters match the name', () => {
+  describe('when the query matches the name', () => {
     describe('when the query matches the first 2 letters', () => {
       it('should return the person', async () => {
         const query = 'Si'
+        const actualResponse = await peopleDataSource.getPeople(query)
+        expect(actualResponse).toMatchObject([siobhan])
+      })
+    })
+
+    describe('when the query matches the first 2 letters case insensitively', () => {
+      it('should return the person', async () => {
+        const query = 'si'
+        const actualResponse = await peopleDataSource.getPeople(query)
+        expect(actualResponse).toMatchObject([siobhan])
+      })
+    })
+
+    describe('when the query matches the first 2 letters of the second name', () => {
+      it('should return the person', async () => {
+        const query = 'Wi'
+        const actualResponse = await peopleDataSource.getPeople(query)
+        expect(actualResponse).toMatchObject([siobhan])
+      })
+    })
+
+    describe('when the query matches the middle of the name', () => {
+      it('should return the person', async () => {
+        const query = 'han'
+        const actualResponse = await peopleDataSource.getPeople(query)
+        expect(actualResponse).toMatchObject([siobhan])
+      })
+    })
+
+    describe('when the query matches multiple names', () => {
+      it('should return people ordered by earliest match', async () => {
+        const query = 'on'
+        const actualResponse = await peopleDataSource.getPeople(query)
+        expect(actualResponse).toMatchObject([siobhan, elon])
+      })
+    })
+
+    xdescribe('when the query matches but has a typo', () => {
+      it('should return the person', async () => {
+        const query = 'Sibo'
         const actualResponse = await peopleDataSource.getPeople(query)
         expect(actualResponse).toMatchObject([siobhan])
       })

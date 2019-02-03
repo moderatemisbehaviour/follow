@@ -4,16 +4,16 @@
 }
 
 .Profile img {
-  height: 3.56vmax;
+  height: 100%;
   width: auto;
 }
 
 .Profile span {
-    background: black;
-    color: #fff;
-    padding: 5px 20px;
-    border-radius: 50%;
-    font-size: 35px;
+  background: black;
+  color: #fff;
+  padding: 5px 20px;
+  border-radius: 50%;
+  font-size: 35px;
 }
 
 #facebook img {
