@@ -1,5 +1,6 @@
-describe('Landing on the home page.', function () {
+describe.only('Landing on the home page.', function () {
   before(function () {
+    cy.visit('/person/create')
     cy.visit('/')
   })
 
@@ -19,9 +20,7 @@ describe('Landing on the home page.', function () {
     cy.get('.Search input').focused()
   })
 
-  it("Displays a 'learn more' button in the content area", () => {
-
-  })
+  it.skip("Displays a 'learn more' button in the content area", () => {})
 })
 
 describe('Searching for a publisher profile.', function () {

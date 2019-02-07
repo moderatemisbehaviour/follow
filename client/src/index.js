@@ -5,7 +5,8 @@ import { ApolloProvider } from 'react-apollo'
 
 import App from './app/App'
 import './index.css'
-import registerServiceWorker from './registerServiceWorker'
+// TODO: Uncomment this when you figure out how to make it work with Cypress.
+// import registerServiceWorker from './registerServiceWorker'
 
 const port = process.env.PORT || 4000
 
@@ -20,4 +21,4 @@ ReactDOM.render(
   </ApolloProvider>,
   document.getElementById('root')
 )
-registerServiceWorker()
+// registerServiceWorker()
