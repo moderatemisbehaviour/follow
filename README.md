@@ -13,10 +13,10 @@
 
 # Tech Stack
 ## Front-end
-React & Apollo Client
+React & Apollo Client.
 
 ## API
-Node & Apollo Server
+Node & Apollo Server.
 
 ## Database
 MongoDB is used and expected to be running locally on the default port during development.
