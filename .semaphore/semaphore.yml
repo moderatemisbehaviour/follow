@@ -19,6 +19,7 @@ blocks:
             - npm run jest
         - name: e2e test
           commands:
+            - sem-service start mongodb
             - npm run ci
       prologue:
           commands:
