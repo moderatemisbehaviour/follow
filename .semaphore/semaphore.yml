@@ -1,0 +1,28 @@
+version: v1.0
+name: Follow pipeline
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+execution_time_limit:
+  minutes: 10
+
+blocks:
+  - name: setup
+    task:
+      jobs:
+        - name: install dependencies
+          commands:
+            - npm install
+  - name: quality
+    task:
+      jobs:
+        - name: lint
+          commands:
+            - npm run lint
+        - name: unit test
+          commands:
+            - npm run jest
+        - name: e2e test
+          commands:
+            - npm run ci
