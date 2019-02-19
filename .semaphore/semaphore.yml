@@ -21,7 +21,6 @@ blocks:
           commands:
             - npm run ci
       prologue:
-        - name: install dependencies
           commands:
             - checkout
             - npm install
