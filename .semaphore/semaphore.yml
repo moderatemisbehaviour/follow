@@ -13,16 +13,20 @@ blocks:
       jobs:
         - name: install dependencies
           commands:
+            - checkout
             - npm install
   - name: quality
     task:
       jobs:
         - name: lint
           commands:
+            - checkout
             - npm run lint
         - name: unit test
           commands:
+            - checkout
             - npm run jest
         - name: e2e test
           commands:
+            - checkout
             - npm run ci
