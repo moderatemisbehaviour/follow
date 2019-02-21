@@ -8,8 +8,21 @@ execution_time_limit:
   minutes: 10
 
 blocks:
+  - name: Install dependencies
+    task:
+      jobs:
+        - name: npm install and cache
+          commands:
+            - checkout
+            - cache restore node-modules-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json),node-modules-$SEMAPHORE_GIT_BRANCH,node-modules-master
+            - npm install
+            - cache store node-modules-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json) node_modules
   - name: quality
     task:
+      prologue:
+          commands:
+            - checkout
+            - cache restore node-modules-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json),node-modules-$SEMAPHORE_GIT_BRANCH,node-modules-master
       jobs:
         - name: lint
           commands:
@@ -21,7 +34,3 @@ blocks:
           commands:
             - sem-service start mongodb
             - npm run ci
-      prologue:
-          commands:
-            - checkout
-            - npm install
