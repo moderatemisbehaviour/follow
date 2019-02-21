@@ -14,21 +14,28 @@ blocks:
         - name: npm install and cache
           commands:
             - checkout
-            - cache restore node-modules-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json),node-modules-$SEMAPHORE_GIT_BRANCH,node-modules-master
+            - cache restore node-modules-root-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json),node-modules-$SEMAPHORE_GIT_BRANCH,node-modules-master
+            - cache restore node-modules-server-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json),node-modules-$SEMAPHORE_GIT_BRANCH,node-modules-master
+            - cache restore node-modules-client-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json),node-modules-$SEMAPHORE_GIT_BRANCH,node-modules-master
             - npm install
-            - cache store node-modules-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json) node_modules
+            - cache store node-modules-root-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json) node_modules
+            - cache store node-modules-server-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json) server/node_modules
+            - cache store node-modules-client-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json) client/node_modules
   - name: quality
     task:
       prologue:
           commands:
             - checkout
-            - cache restore node-modules-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json),node-modules-$SEMAPHORE_GIT_BRANCH,node-modules-master
+            - cache store node-modules-root-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json) node_modules
+            - cache store node-modules-server-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json) server/node_modules
+            - cache store node-modules-client-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json) client/node_modules
       jobs:
         - name: lint
           commands:
             - npm run lint
         - name: unit test
           commands:
+            - sem-service start mongodb
             - npm run jest
         - name: e2e test
           commands:
