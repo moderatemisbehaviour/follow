@@ -21,6 +21,7 @@ blocks:
             - cache restore client-build-$SEMAPHORE_GIT_SHA
             - cache restore cypress-binary-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json)
             - npm install
+            - git diff
             - cache store node-modules-root-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json) node_modules
             - cache store node-modules-server-$SEMAPHORE_GIT_BRANCH-$(checksum server/package-lock.json) server/node_modules
             - cache store node-modules-client-$SEMAPHORE_GIT_BRANCH-$(checksum client/package-lock.json) client/node_modules
