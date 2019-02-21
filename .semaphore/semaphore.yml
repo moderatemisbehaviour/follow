@@ -8,11 +8,12 @@ execution_time_limit:
   minutes: 10
 
 blocks:
-  - name: Install dependencies
+  - name: install dependencies
     task:
       jobs:
         - name: npm install and cache
           commands:
+            - cache clear
             - checkout
             - cache restore node-modules-root-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json),node-modules-root-$SEMAPHORE_GIT_BRANCH,node-modules-root-master
             - cache restore node-modules-server-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json),node-modules-server-$SEMAPHORE_GIT_BRANCH,node-modules-server-master
