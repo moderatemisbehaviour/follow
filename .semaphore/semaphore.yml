@@ -14,9 +14,9 @@ blocks:
         - name: npm install and cache
           commands:
             - checkout
-            - cache restore node-modules-root-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json),node-modules-$SEMAPHORE_GIT_BRANCH,node-modules-master
-            - cache restore node-modules-server-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json),node-modules-$SEMAPHORE_GIT_BRANCH,node-modules-master
-            - cache restore node-modules-client-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json),node-modules-$SEMAPHORE_GIT_BRANCH,node-modules-master
+            - cache restore node-modules-root-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json),node-modules-root-$SEMAPHORE_GIT_BRANCH,node-modules-root-master
+            - cache restore node-modules-server-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json),node-modules-server-$SEMAPHORE_GIT_BRANCH,node-modules-server-master
+            - cache restore node-modules-client-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json),node-modules-client-$SEMAPHORE_GIT_BRANCH,node-modules-client-master
             - npm install
             - cache store node-modules-root-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json) node_modules
             - cache store node-modules-server-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json) server/node_modules
@@ -26,9 +26,9 @@ blocks:
       prologue:
           commands:
             - checkout
-            - cache store node-modules-root-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json) node_modules
-            - cache store node-modules-server-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json) server/node_modules
-            - cache store node-modules-client-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json) client/node_modules
+            - cache restore node-modules-root-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json),node-modules-root-$SEMAPHORE_GIT_BRANCH,node-modules-root-master
+            - cache restore node-modules-server-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json),node-modules-server-$SEMAPHORE_GIT_BRANCH,node-modules-server-master
+            - cache restore node-modules-client-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json),node-modules-client-$SEMAPHORE_GIT_BRANCH,node-modules-client-master
       jobs:
         - name: lint
           commands:
