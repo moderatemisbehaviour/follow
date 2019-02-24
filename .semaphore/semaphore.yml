@@ -14,6 +14,7 @@ blocks:
         - name: npm install and cache
           commands:
             - checkout
+            - nvm install-latest-npm
             - npm ci
             - cache store node-modules-root-$SEMAPHORE_GIT_SHA node_modules/
             - cache store node-modules-server-$SEMAPHORE_GIT_SHA server/node_modules/
@@ -25,6 +26,7 @@ blocks:
       prologue:
           commands:
             - checkout
+            - nvm install-latest-npm
             - cache restore node-modules-root-$SEMAPHORE_GIT_SHA
             - cache restore node-modules-server-$SEMAPHORE_GIT_SHA
             - cache restore node-modules-client-$SEMAPHORE_GIT_SHA
