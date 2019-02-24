@@ -14,13 +14,16 @@ blocks:
         - name: npm install and cache
           commands:
             - checkout
+            - cache restore user-cache-$SEMAPHORE_GIT_BRANCH
             - npm install
+            - cache store user-cache-$SEMAPHORE_GIT_BRANCH /home/semaphore/.cache/
   - name: quality
     task:
       prologue:
           commands:
             - checkout
             - npm install
+            - cache restore user-cache-$SEMAPHORE_GIT_BRANCH
       jobs:
         - name: lint
           commands:
