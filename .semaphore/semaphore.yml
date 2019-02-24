@@ -44,5 +44,5 @@ blocks:
           commands:
             - sudo apt -y install libgtk2.0-0
             - sem-service start mongodb
-            - npm ci
+            - npm install
             - npm run ci
