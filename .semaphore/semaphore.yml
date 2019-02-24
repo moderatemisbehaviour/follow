@@ -13,20 +13,14 @@ blocks:
       jobs:
         - name: npm install and cache
           commands:
-            - cache clear
             - checkout
-            - cache restore client-build-$SEMAPHORE_GIT_SHA
-            - cache restore cypress-binary-$SEMAPHORE_GIT_SHA
             - npm install
-            - cache store client-build-$SEMAPHORE_GIT_SHA client/build
-            - cache store cypress-binary-$SEMAPHORE_GIT_SHA /home/semaphore/.cache
   - name: quality
     task:
       prologue:
           commands:
             - checkout
             - npm install
-            - cache restore client-build-$SEMAPHORE_GIT_SHA
       jobs:
         - name: lint
           commands:
@@ -37,6 +31,5 @@ blocks:
             - npm run jest
         - name: e2e test
           commands:
-            - cache restore cypress-binary-$SEMAPHORE_GIT_SHA
             - sem-service start mongodb
             - npm run ci
