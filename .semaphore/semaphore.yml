@@ -15,26 +15,17 @@ blocks:
           commands:
             - cache clear
             - checkout
-            - cache restore node-modules-root-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json),node-modules-root-$SEMAPHORE_GIT_BRANCH,node-modules-root-master
-            - cache restore node-modules-server-$SEMAPHORE_GIT_BRANCH-$(checksum server/package-lock.json),node-modules-server-$SEMAPHORE_GIT_BRANCH,node-modules-server-master
-            - cache restore node-modules-client-$SEMAPHORE_GIT_BRANCH-$(checksum client/package-lock.json),node-modules-client-$SEMAPHORE_GIT_BRANCH,node-modules-client-master
             - cache restore client-build-$SEMAPHORE_GIT_SHA
             - cache restore cypress-binary-$SEMAPHORE_GIT_SHA
             - npm install
-            - ls -l /home/semaphore/.cache/Cypress
-            - cache store node-modules-root-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json) node_modules
-            - cache store node-modules-server-$SEMAPHORE_GIT_BRANCH-$(checksum server/package-lock.json) server/node_modules
-            - cache store node-modules-client-$SEMAPHORE_GIT_BRANCH-$(checksum client/package-lock.json) client/node_modules
             - cache store client-build-$SEMAPHORE_GIT_SHA client/build
-            - cache store cypress-binary-$SEMAPHORE_GIT_SHA /home/semaphore/.cache/Cypress
+            - cache store cypress-binary-$SEMAPHORE_GIT_SHA /home/semaphore/.cache
   - name: quality
     task:
       prologue:
           commands:
             - checkout
-            - cache restore node-modules-root-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json),node-modules-root-$SEMAPHORE_GIT_BRANCH,node-modules-root-master
-            - cache restore node-modules-server-$SEMAPHORE_GIT_BRANCH-$(checksum server/package-lock.json),node-modules-server-$SEMAPHORE_GIT_BRANCH,node-modules-server-master
-            - cache restore node-modules-client-$SEMAPHORE_GIT_BRANCH-$(checksum client/package-lock.json),node-modules-client-$SEMAPHORE_GIT_BRANCH,node-modules-client-master
+            - npm install
             - cache restore client-build-$SEMAPHORE_GIT_SHA
       jobs:
         - name: lint
@@ -47,6 +38,5 @@ blocks:
         - name: e2e test
           commands:
             - cache restore cypress-binary-$SEMAPHORE_GIT_SHA
-            - ls -l /home/semaphore/.cache/Cypress
             - sem-service start mongodb
             - npm run ci
