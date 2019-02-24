@@ -14,14 +14,21 @@ blocks:
         - name: npm install and cache
           commands:
             - checkout
-            - cache restore npm-cache-$SEMAPHORE_GIT_SHA
             - npm install
-            - cache store npm-cache-$SEMAPHORE_GIT_SHA ~/.npm
+            - cache store node-modules-root-$SEMAPHORE_GIT_SHA node_modules/
+            - cache store node-modules-server-$SEMAPHORE_GIT_SHA server/node_modules/
+            - cache store node-modules-client-$SEMAPHORE_GIT_SHA client/node_modules/
+            - cache store user-cache-$SEMAPHORE_GIT_SHA ~/.cache/
+            - cache store npm-cache-$SEMAPHORE_GIT_SHA ~/.npm/
   - name: quality
     task:
       prologue:
           commands:
             - checkout
+            - cache restore node-modules-root-$SEMAPHORE_GIT_SHA
+            - cache restore node-modules-server-$SEMAPHORE_GIT_SHA
+            - cache restore node-modules-client-$SEMAPHORE_GIT_SHA
+            - cache restore user-cache-$SEMAPHORE_GIT_SHA
             - cache restore npm-cache-$SEMAPHORE_GIT_SHA
             - npm install
       jobs:
