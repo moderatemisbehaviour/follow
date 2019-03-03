@@ -6,7 +6,10 @@
   - Starts a node server at http://localhost:4000
   - Starts a webpack development server at http://localhost:4001 using React Scripts to host the front-end.
   - Visit the GraphQL Playground at http://localhost:4000/graphql.
-1. Run `npm test` to open the Cypress test runner.
+1. Run `npm test:dev` to open the Cypress test runner.
+
+# Other scripts
+1. Run `npm run ci` to start the server and run Cypress headless.
 1. Run `npm start` to get a production build.
   - Builds an optimised production build using React scripts.
   - Starts a node server at http://localhost:4000 that also statically hosts the front-end.
