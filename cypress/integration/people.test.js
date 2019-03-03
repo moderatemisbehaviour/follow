@@ -1,4 +1,4 @@
-describe.only('Landing on the home page.', function () {
+describe('Landing on the home page.', function () {
   before(function () {
     cy.visit('/person/create')
     cy.visit('/')
