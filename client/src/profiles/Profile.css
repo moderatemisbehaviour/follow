@@ -1,14 +1,14 @@
-.Profile {
+.profile {
   margin: 1em;
   flex-grow: 1;
 }
 
-.Profile img {
+.profile img {
   height: 100%;
   width: auto;
 }
 
-.Profile span {
+.profile span {
   background: black;
   color: #fff;
   padding: 5px 20px;

@@ -72,7 +72,7 @@ describe('Creating a publisher profile.', function () {
     cy.visit('/person/create')
   })
 
-  describe('validating URLs', function () {
+  describe('Validating URLs', function () {
     it('should disable the input whilst it has an invalid URL', function () {
       cy.get('#the-input').type('Siobhan Wilson')
       cy.get('#next').should('not.have.attr', 'disabled')
@@ -110,10 +110,10 @@ describe('Viewing a publisher profile.', function () {
   })
 
   it("Shows links to the publisher's profiles", function () {
-    cy.get('.Profile').should('have.length', 3)
-    cy.get('.Profile a').first().should('have.attr', 'href').and('eq', 'https://twitter.com/siobhanisback')
-    cy.get('.Profile a').eq(1).should('have.attr', 'href').and('eq', 'https://www.youtube.com/user/siobhanwilsonmusic')
-    cy.get('.Profile a').eq(2).should('have.attr', 'href').and('eq', 'https://www.facebook.com/siobhanwilsonmusic')
+    cy.get('.profile').should('have.length', 3)
+    cy.get('.profile a').first().should('have.attr', 'href').and('eq', 'https://twitter.com/siobhanisback')
+    cy.get('.profile a').eq(1).should('have.attr', 'href').and('eq', 'https://www.youtube.com/user/siobhanwilsonmusic')
+    cy.get('.profile a').eq(2).should('have.attr', 'href').and('eq', 'https://www.facebook.com/siobhanwilsonmusic')
   })
 
   it("Masks the publisher's photo to create a circular frame", function () {

@@ -41,7 +41,7 @@ describe('User journeys', function () {
 
       cy.log('The first profile becomes highlighted')
       cy.get('.PeopleCreator').should('have.class', 'editing-profiles')
-      cy.get('.Profile').eq(0).should('not.have.class', 'editing-name')
+      cy.get('.profile').eq(0).should('not.have.class', 'editing-name')
 
       cy.log('The input is focused')
       cy.focused().should('have.class', 'the-input')
@@ -90,8 +90,12 @@ describe('User journeys', function () {
 
       cy.log('Clicking the save button views the newly created person')
       cy.url().should('match', /person\/create/)
+
       cy.log("The person's name is displayed")
       cy.get('.name').should('have.text', 'Siobhan Wilson')
+
+      cy.log("Icons are displayed for the person's profile")
+      cy.get('.profile').should('have.length', 3)
     })
 
     it.skip('Happy path with keyboard', () => {})
