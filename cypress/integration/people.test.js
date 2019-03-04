@@ -1,3 +1,5 @@
+const BASE_URL = Cypress.config('baseUrl')
+
 describe('Landing on the home page.', function () {
   before(function () {
     cy.visit('/person/create')
@@ -65,6 +67,12 @@ describe('Searching for a publisher profile.', function () {
   it('Closes the search results when the search input loses focus', function () {
 
   })
+
+  it("Displays a 'create person' button at the bottom of the search results which is a link to the create person page", function () {
+    cy.get('#the-input').type('Si').get('.CreatePersonButton')
+    cy.get('.CreatePersonButton').click()
+    cy.url().should('eq', `${BASE_URL}/person/create`)
+  })
 })
 
 describe('Creating a publisher profile.', function () {
@@ -72,8 +80,22 @@ describe('Creating a publisher profile.', function () {
     cy.visit('/person/create')
   })
 
+  describe('State on page load', function () {
+    it('Focuses the input', function () {
+      cy.focused().should('have.id', 'the-input')
+    })
+
+    it('Disables the save button', function () {
+      cy.get('.save').should('have.attr', 'disabled')
+    })
+
+    it("Prompts for the person's name in the input", function () {
+      cy.get('#the-input').should('have.attr', 'placeholder', "Enter the person's name")
+    })
+  })
+
   describe('Validating URLs', function () {
-    it('should disable the input whilst it has an invalid URL', function () {
+    it('Disables the input whilst it has an invalid URL', function () {
       cy.get('#the-input').type('Siobhan Wilson')
       cy.get('#next').should('not.have.attr', 'disabled')
       cy.get('#next').click()
@@ -86,13 +108,47 @@ describe('Creating a publisher profile.', function () {
       cy.get('#next').should('not.have.attr', 'disabled')
     })
 
-    it('should give the input the invalid style', function () {
+    it('Gives the input the invalid style', function () {
       cy.get('#the-input').type('Siobhan Wilson').should('not.have.class', 'invalid')
       cy.get('#next').click()
 
       cy.get('#the-input').should('not.have.class', 'invalid').type('invalid URL').should('have.class', 'invalid')
 
       cy.get('#the-input').clear().type('http://example.com').should('not.have.class', 'invalid')
+    })
+  })
+
+  describe('Adding the first profile URL', function () {
+    beforeEach(function () {
+      cy.get('#the-input').type('Siobhan Wilson')
+      cy.get('.next').click()
+    })
+
+    it('Clears the input when the next button is clicked', function () {
+      cy.get('#the-input').should('have.value', '')
+    })
+
+    it("Prompts for the person's first profile URL", function () {
+      cy.get('#the-input').should('have.attr', 'placeholder', "Copy-paste the person's profile URL")
+    })
+
+    it('Enables the save button once the first profile URL is added', function () {
+      cy.get('.save').should('have.attr', 'disabled')
+      cy.get('#the-input').type('https://twitter.com/siobhanisback')
+      cy.get('.next').click()
+      cy.get('.save').should('not.have.attr', 'disabled')
+    })
+  })
+
+  describe('Adding more information', function () {
+    beforeEach(function () {
+      cy.get('#the-input').type('Siobhan Wilson')
+      cy.get('.next').click()
+      cy.get('#the-input').type('https://twitter.com/siobhanisback')
+    })
+
+    it('Enables the save button once the first profile URL is added', function () {
+      cy.get('.save').should('not.have.attr', 'disabled')
     })
   })
 })

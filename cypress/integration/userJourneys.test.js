@@ -1,5 +1,3 @@
-const BASE_URL = Cypress.config('baseUrl')
-
 describe('User journeys', function () {
   beforeEach(function () {
     cy.visit('/')
@@ -7,95 +5,25 @@ describe('User journeys', function () {
 
   describe('Create a new person then search for them', function () {
     it('Happy path with mouse', () => {
-      cy.log('A create person button is displayed at the bottom of the search results')
       cy.get('#the-input').type('Si').get('.CreatePersonButton')
-
-      // Placeholder photo is displayed
-      // Placeholder profile is displayed
-
-      cy.log('Clicking the create person button navigates to the create person page')
       cy.get('.CreatePersonButton').click()
-      cy.url().should('eq', `${BASE_URL}/person/create`)
-
-      cy.log('The input is focused')
-      cy.focused().should('have.class', 'the-input')
-
-      cy.log('The save button is disabled')
-      cy.get('.save').should('have.attr', 'disabled')
-
-      cy.log("The input prompts for the person's name")
-      cy.get('#the-input').should('have.attr', 'placeholder', "Enter the person's name")
-
-      cy.log('Name of person becomes highlighted')
-      cy.get('.PeopleCreator').should('have.class', 'editing-name')
-
-      cy.log('Typing in the input is allowed')
       cy.get('#the-input').type('Siobhan Wilson')
-
-      cy.log('Clicking the next button clears the input')
       cy.get('.next').click()
-      cy.get('#the-input').should('have.value', '')
-
-      cy.log("The input prompts for the peron's first profile URL")
-      cy.get('#the-input').should('have.attr', 'placeholder', "Copy-paste the person's profile URL")
-
-      cy.log('The first profile becomes highlighted')
-      cy.get('.PeopleCreator').should('have.class', 'editing-profiles')
-      cy.get('.profile').eq(0).should('not.have.class', 'editing-name')
-
-      cy.log('The input is focused')
-      cy.focused().should('have.class', 'the-input')
-
-      cy.log('Typing in the input is allowed')
       cy.get('#the-input').type('https://twitter.com/siobhanisback')
-
-      cy.log('Clicking the next button clears the input')
       cy.get('.next').click()
-      cy.get('#the-input').should('have.value', '')
-
-      cy.log('The save button becomes enabled')
-      cy.get('.save').should('not.have.attr', 'disabled')
-
-      cy.log("The input prompts for the peron's second profile URL")
-      cy.get('#the-input').should('have.attr', 'placeholder', "Copy-paste the person's profile URL")
-
-      cy.log('The second profile becomes highlighted')
-      cy.get('.PeopleCreator').should('have.class', 'editing-profiles')
-
-      cy.log('The input is focused')
-      cy.focused().should('have.class', 'the-input')
-
-      cy.log('Typing in the input is allowed')
       cy.get('#the-input').type('https://www.youtube.com/user/siobhanwilsonmusic')
-
-      cy.log('Clicking the next button clears the input')
       cy.get('.next').click()
-      cy.get('#the-input').should('have.value', '')
-
-      cy.log("The input prompts for the peron's third profile URL")
-      cy.get('#the-input').should('have.attr', 'placeholder', "Copy-paste the person's profile URL")
-
-      cy.log('The third profile becomes highlighted')
-      cy.get('.PeopleCreator').should('have.class', 'editing-profiles')
-
-      cy.log('The input is focused')
-      cy.focused().should('have.class', 'the-input')
-
-      cy.log('Typing in the input is allowed')
       cy.get('#the-input').type('https://www.facebook.com/siobhanwilsonmusic')
-
-      cy.log('Clicking the next button clears the input')
       cy.get('.next').click()
-      cy.get('#the-input').should('have.value', '')
+      cy.get('.add-profile-image').click()
+      cy.get('#the-input').type('https://pbs.twimg.com/profile_images/950898677991780353/7sbTf7Wl_400x400.jpg')
+      cy.get('.save').click()
 
-      cy.log('Clicking the save button views the newly created person')
-      cy.url().should('match', /person\/create/)
-
-      cy.log("The person's name is displayed")
+      cy.url().should('match', /person\/create\/\d+/)
       cy.get('.name').should('have.text', 'Siobhan Wilson')
-
-      cy.log("Icons are displayed for the person's profile")
       cy.get('.profile').should('have.length', 3)
+
+      // Search for them
     })
 
     it.skip('Happy path with keyboard', () => {})
