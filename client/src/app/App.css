@@ -31,7 +31,5 @@ input.invalid {
 }
 
 input:disabled {
-  border: 1px solid #AAA;
-  background-color: grey;
-  color: lightgrey;
+  filter: grayscale(100%);
 }
