@@ -31,12 +31,12 @@ class PeopleCreator extends Component {
         validationMessage: 'Please provide a name'
       },
       profiles: {
-        name: 'profiles',
-        getter: () => this.state.person.profiles[this.state.propertyBeingEditedIndex - 1],
+        name: 'profile',
+        getter: () => this.state.person.profiles[this.state.profileIndex],
         setter: (value) => {
           this.setState(state => {
             const updatedPerson = { ...state.person }
-            updatedPerson.profiles[state.propertyBeingEditedIndex - 1] = value
+            updatedPerson.profiles[state.profileIndex] = value
             return {
               ...state,
               person: updatedPerson
@@ -48,7 +48,7 @@ class PeopleCreator extends Component {
         prompt: "Copy-paste the person's profile URL",
         validate: () => {
           try {
-            const urlInInput = this.state.person.profiles[this.state.propertyBeingEditedIndex - 1]
+            const urlInInput = this.state.person.profiles[this.state.profileIndex]
             // eslint-disable-next-line no-new
             new URL(urlInInput)
             return true
@@ -89,11 +89,12 @@ class PeopleCreator extends Component {
     }
 
     this.state = {
-      propertyBeingEdited: this.properties.name,
       person: {
-        name: '',
+        name: props.name || '',
         profiles: []
       },
+      propertyBeingEdited: this.properties.name,
+      profileIndex: 0,
       touched: false
     }
 
@@ -112,25 +113,25 @@ class PeopleCreator extends Component {
   }
 
   editNextProperty (nextProperty) {
-    this.setState({
+    this.setState(prevState => ({
       propertyBeingEdited: nextProperty,
+      profileIndex: ++prevState.profileIndex,
       touched: false
-    })
+    }))
     nextProperty.setter('')
 
     this.input.current.focus()
   }
 
   get personValid () {
-    console.log(this.state.person.name, this.state.person.profiles)
     return this.state.person.name && this.state.person.profiles.some((p) => !!p)
   }
 
   render () {
-    const invalid = !this.state.propertyBeingEdited.validate()
+    const value = this.state.propertyBeingEdited.getter()
+    const invalid = value && !this.state.propertyBeingEdited.validate()
     const nextOptions = this.state.propertyBeingEdited.next()
     const prompt = this.state.propertyBeingEdited.prompt
-    const value = this.state.propertyBeingEdited.getter()
 
     return (
       <div className={'PeopleCreator ' + this.className}>
@@ -155,6 +156,7 @@ class PeopleCreator extends Component {
                 disabled={invalid}
                 key={`add-${nextProperty.name}-button`}
                 label={nextProperty.nextButtonLabel}
+                name={nextProperty.name}
                 onClick={() => this.editNextProperty(nextProperty)}/>
             ))
           }

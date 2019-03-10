@@ -5,8 +5,8 @@ describe('User journeys', function () {
 
   describe('Create a new person then search for them', function () {
     it('Happy path with mouse', () => {
-      cy.get('#the-input').type('Si').get('.CreatePersonButton')
-      cy.get('.CreatePersonButton').click()
+      cy.get('#the-input').type('Si').get('.create-person-button')
+      cy.get('.create-person-button').click()
       cy.get('#the-input').type('Siobhan Wilson')
       cy.get('.next').click()
       cy.get('#the-input').type('https://twitter.com/siobhanisback')

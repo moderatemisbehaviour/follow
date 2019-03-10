@@ -8,12 +8,13 @@ body {
   padding: 1rem; /* This is helpful assuming nothing ever wants to touch the sides... */
 }
 
-input, li {
-  font-size: 1rem;
+li {
   padding: 0.5rem;
 }
 
 input {
+  font-size: 1rem;
+  padding: 0.5rem;
   display: block;
   margin: 1rem auto;
   width: 100%;
@@ -32,4 +33,5 @@ input.invalid {
 
 input:disabled {
   filter: grayscale(100%);
+  cursor: not-allowed;
 }

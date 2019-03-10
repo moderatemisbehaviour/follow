@@ -2,8 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import Avatar from '../avatar/Avatar'
+import Profiles from '../common/profiles/Profiles'
 import Name from './Name'
-import Profiles from '../profiles/Profiles'
+
 import '../app/App.css'
 import './Person.css'
 
@@ -17,11 +18,11 @@ function Person (props) {
   const { name, photo, profiles } = props
 
   return (
-    <React.Fragment>
+    <div className="person">
       <Name name={name || undefined}/>
       <Avatar src={photo}/>
       <Profiles profiles={profiles || undefined}/>
-    </React.Fragment>
+    </div>
   )
 }
 

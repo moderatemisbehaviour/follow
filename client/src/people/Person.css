@@ -1,0 +1,73 @@
+.name {
+  font-family: 'Vidaloka', serif;
+  font-weight: 400;
+  font-size: 4.17rem;
+  letter-spacing: 0.05em;
+  margin: 0 auto;
+  /* max-width: 900px; */
+  height: 10vh;
+  text-align: center;
+}
+
+.name.placeholder {
+  color: lightgrey;
+}
+
+li .name {
+  display: inline;
+  font-size: unset;
+  margin: 0.5rem;
+}
+
+.Avatar {
+  height: 39vh;
+}
+
+.Avatar img {
+  border-radius: 50%;
+  display: block;
+  height: 100%;
+  margin: 0 auto;
+}
+
+li .Avatar {
+  display: unset;
+  float: left;
+  /* TODO: This is just a guess to line up the text and image vertically,
+     come up with a more deterministic way. */
+  height: 1.5rem;
+}
+
+.profiles {
+  display: flex;
+  height: 10vh;
+  max-width: 900px;
+  margin: auto;
+  text-align: center;
+}
+
+li .profiles {
+  display: none;
+}
+
+.profile {
+  margin: 1em;
+  flex-grow: 1;
+}
+
+.profile img {
+  height: 100%;
+  width: auto;
+}
+
+.profile span {
+  background: black;
+  color: #fff;
+  padding: 5px 20px;
+  border-radius: 50%;
+  font-size: 35px;
+}
+
+#facebook img {
+  border-radius: 50%;
+}

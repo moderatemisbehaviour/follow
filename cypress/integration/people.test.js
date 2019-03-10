@@ -47,35 +47,58 @@ describe('Searching for a publisher profile.', function () {
     cy.get('.SearchResult').should('have.length', 5)
   })
 
+  it.only('Displays mini person images in the search results', function () {
+    cy.get('#the-input').type('Si')
+    cy.get('.SearchResult').first().get('img').should('have.attr', 'src', this.person.photo)
+  })
+
+  it.skip('Allows the user to select a search result with the keyboard.', function () {
+    cy.get('.Search input').type('Si').type('{downarrow}')
+    cy.focused().should('have.text', 'Siobhan Wilson')
+    cy.get('.SearchResult').first().click() // TODO: Find out how to simulate user pressing {enter}
+    cy.location('pathname').should('eq', '/person/1')
+  })
+
+  it('Closes the search results when one is selected', function () {
+    cy.get('.Search input').type('Si') // TODO: Use #the-input selector instead
+    cy.get('.SearchResult').first().click()
+    cy.get('.SearchResults').should('have.length', 0)
+  })
+
   it('Stops displaying search results when text is cleared from the search input.', function () {
     cy.get('.Search input').type('Si').should('have.value', 'Si')
     cy.get('.Search input').clear().should('have.value', '')
     cy.get('.SearchResult').should('have.length', 0)
   })
 
-  it.skip('Allows the user to select a search result with the keyboard.', function () {
-    cy.get('.Search input').type('Si').type('{downarrow}')
-    cy.focused().should('have.text', 'Siobhan Wilson')
-    cy.get('.SearchResult:first').click() // TODO: Find out how to simulate user pressing {enter}
-    cy.location('pathname').should('eq', '/person/1')
-  })
-
-  it('Closes the search results when one is selected', function () {
-    cy.get('.SearchResults').should('have.length', 0)
-  })
-
-  it('Closes the search results when the search input loses focus', function () {
-
-  })
-
-  it("Displays a 'create person' button at the bottom of the search results which is a link to the create person page", function () {
-    cy.get('#the-input').type('Si').get('.CreatePersonButton')
-    cy.get('.CreatePersonButton').click()
-    cy.url().should('eq', `${BASE_URL}/person/create`)
-  })
+  it.skip('Closes the search results when the search input loses focus', function () {})
 })
 
 describe('Creating a publisher profile.', function () {
+  describe('Getting to the create person page', function () {
+    beforeEach(function () {
+      cy.visit('/')
+    })
+
+    it('Has options for creating a person in the bottom search result', function () {
+      cy.get('#the-input').type('Siob')
+      cy.get('li').last().should('have.id', 'create-person')
+      cy.get('#create-person').should('have.text', 'Create Siob... or someone else.')
+    })
+
+    it('Has a create person link based on the current search query', function () {
+      cy.get('#the-input').type('Siob')
+      cy.get('#create-suggested-person').click()
+      cy.url().should('eq', `${BASE_URL}/person/create?name=Siob`)
+    })
+
+    it('Has a create person link for a new person', function () {
+      cy.get('#the-input').type('Siob')
+      cy.get('#create-new-person').click()
+      cy.url().should('eq', `${BASE_URL}/person/create`)
+    })
+  })
+
   beforeEach(function () {
     cy.visit('/person/create')
   })
@@ -97,20 +120,23 @@ describe('Creating a publisher profile.', function () {
   describe('Validating URLs', function () {
     it('Disables the input whilst it has an invalid URL', function () {
       cy.get('#the-input').type('Siobhan Wilson')
-      cy.get('#next').should('not.have.attr', 'disabled')
-      cy.get('#next').click()
+      cy.get('#add-profile').should('not.have.attr', 'disabled')
+      cy.get('#add-profile').click()
 
-      cy.get('#next').should('have.attr', 'disabled')
+      cy.get('#add-profile').should('not.have.attr', 'disabled')
+      cy.get('#add-image').should('not.have.attr', 'disabled')
       cy.get('#the-input').type('invalid URL')
-      cy.get('#next').should('have.attr', 'disabled')
+      cy.get('#add-profile').should('have.attr', 'disabled')
+      cy.get('#add-image').should('have.attr', 'disabled')
 
       cy.get('#the-input').clear().type('http://example.com')
-      cy.get('#next').should('not.have.attr', 'disabled')
+      cy.get('#add-profile').should('not.have.attr', 'disabled')
+      cy.get('#add-image').should('not.have.attr', 'disabled')
     })
 
     it('Gives the input the invalid style', function () {
       cy.get('#the-input').type('Siobhan Wilson').should('not.have.class', 'invalid')
-      cy.get('#next').click()
+      cy.get('#add-profile').click()
 
       cy.get('#the-input').should('not.have.class', 'invalid').type('invalid URL').should('have.class', 'invalid')
 
@@ -135,7 +161,7 @@ describe('Creating a publisher profile.', function () {
     it('Enables the save button once the first profile URL is added', function () {
       cy.get('.save').should('have.attr', 'disabled')
       cy.get('#the-input').type('https://twitter.com/siobhanisback')
-      cy.get('.next').click()
+      cy.get('#add-profile').click()
       cy.get('.save').should('not.have.attr', 'disabled')
     })
   })

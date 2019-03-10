@@ -1,11 +1,11 @@
-.CreatePersonButton {
+.SearchResult {
   list-style-type: none;
 }
 
-.CreatePersonButton:hover {
+.SearchResult:hover {
   background-color: #EEE;
 }
 
-a:focus > .CreatePersonButton { 
+a:focus > .SearchResult { 
   background-color: #DFDFDF;
 }

@@ -1,8 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import './Name.css'
-
 function Name (props) {
   return (
     <h1 className={`name ${props.name === 'Awesome Person' ? 'placeholder' : ''}`}>

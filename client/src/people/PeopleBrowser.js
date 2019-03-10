@@ -5,7 +5,7 @@ import gql from 'graphql-tag'
 
 import logo from '../common/logo.png'
 import Person from './Person'
-import Search from '../search/Search'
+import Search from '../common/search/Search'
 
 class PeopleBrowser extends Component {
   constructor (props) {
