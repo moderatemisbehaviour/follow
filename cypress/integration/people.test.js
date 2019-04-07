@@ -47,7 +47,7 @@ describe('Searching for a publisher profile.', function () {
     cy.get('.SearchResult').should('have.length', 5)
   })
 
-  it.only('Displays mini person images in the search results', function () {
+  it('Displays mini person images in the search results', function () {
     cy.get('#the-input').type('Si')
     cy.get('.SearchResult').first().get('img').should('have.attr', 'src', this.person.photo)
   })
@@ -72,6 +72,12 @@ describe('Searching for a publisher profile.', function () {
   })
 
   it.skip('Closes the search results when the search input loses focus', function () {})
+
+  it("Navigates to the person's profile when a search result is clicked", function () {
+    cy.get('#the-input').type('Si')
+    cy.get('.SearchResult').first().click()
+    cy.url().should('match', /.+\/person\/\d+/)
+  })
 })
 
 describe('Creating a publisher profile.', function () {

@@ -22,7 +22,7 @@ function SearchResults (props) {
       {data && data.people &&
         <React.Fragment>
           {data.people.map((person) => (
-            <SearchResult key={person.id}>
+            <SearchResult key={person.id} id={person.id}>
               <Person {...person}/>
             </SearchResult>
           ))
