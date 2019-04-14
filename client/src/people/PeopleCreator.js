@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
 import EditorInput from './EditorInput'
@@ -28,7 +29,7 @@ class PeopleCreator extends Component {
         nextButtonLabel: "Add the person's name",
         prompt: "Enter the person's name",
         validate: () => !!this.state.person.name,
-        validationMessage: 'Please provide a name'
+        validationMessage: 'Please provide a name',
       },
       profiles: {
         name: 'profile',
@@ -56,7 +57,8 @@ class PeopleCreator extends Component {
             return false
           }
         },
-        validationMessage: 'The URL you have provided is invalid.'
+        validationMessage: 'The URL you have provided is invalid.',
+        complete: () => this.setState(state => ({profileIndex: ++state.profileIndex}))
       },
       image: {
         name: 'image',
@@ -113,11 +115,17 @@ class PeopleCreator extends Component {
   }
 
   editNextProperty (nextProperty) {
-    this.setState(prevState => ({
+    const {
+      propertyBeingEdited: {
+        complete
+      }
+    } = this.state
+    complete && complete()
+
+    this.setState({
       propertyBeingEdited: nextProperty,
-      profileIndex: ++prevState.profileIndex,
       touched: false
-    }))
+    })
     nextProperty.setter('')
 
     this.input.current.focus()
@@ -129,7 +137,7 @@ class PeopleCreator extends Component {
 
   render () {
     const value = this.state.propertyBeingEdited.getter()
-    const invalid = value && !this.state.propertyBeingEdited.validate()
+    const invalid = !!value && !this.state.propertyBeingEdited.validate()
     const nextOptions = this.state.propertyBeingEdited.next()
     const prompt = this.state.propertyBeingEdited.prompt
 
@@ -165,6 +173,10 @@ class PeopleCreator extends Component {
       </div>
     )
   }
+}
+
+PeopleCreator.propTypes = {
+  name: PropTypes.string.isRequired
 }
 
 export default PeopleCreator

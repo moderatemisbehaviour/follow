@@ -49,7 +49,7 @@ describe('Searching for a publisher profile.', function () {
 
   it('Displays mini person images in the search results', function () {
     cy.get('#the-input').type('Si')
-    cy.get('.SearchResult').first().get('img').should('have.attr', 'src', this.person.photo)
+    cy.get('.SearchResult').first().find('img').should('have.attr', 'src', this.person.photo)
   })
 
   it.skip('Allows the user to select a search result with the keyboard.', function () {
@@ -89,7 +89,7 @@ describe('Creating a publisher profile.', function () {
     it('Has options for creating a person in the bottom search result', function () {
       cy.get('#the-input').type('Siob')
       cy.get('li').last().should('have.id', 'create-person')
-      cy.get('#create-person').should('have.text', 'Create Siob... or someone else.')
+      cy.get('#create-person').should('have.text', 'Create Siob or someone else.')
     })
 
     it('Has a create person link based on the current search query', function () {

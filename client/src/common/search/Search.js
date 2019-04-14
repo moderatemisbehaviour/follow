@@ -26,6 +26,7 @@ class Search extends Component {
         people(query: $query) {
           id
           name
+          photo
         }
       }
     `

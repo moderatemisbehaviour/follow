@@ -6,7 +6,7 @@ import './SearchResult.css'
 
 SearchResult.propTypes = {
   children: PropTypes.shape({}),
-  id: PropTypes.number.isRequired
+  id: PropTypes.string.isRequired
 }
 
 function SearchResult (props) {

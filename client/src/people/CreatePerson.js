@@ -10,17 +10,19 @@ import './CreatePerson.css'
 function CreatePerson (props) {
   return (
     <li id="create-person">
-      <img src={createPersonIcon}/>
-      <span id="create-suggested-person">
-        <span>Create </span>
-        <Link to={`/person/create?name=${props.personName}`}>
+      <img src={createPersonIcon} alt="create person icon"/>
+      <Link to={`/person/create?name=${props.personName}`}>
+        <span id="create-suggested-person">
+          <span>Create </span>
           <Name name={props.personName}/>
-        </Link>
-      </span>
+        </span>
+      </Link>
       <span> or </span>
-      <span id="create-new-person">
-        <Link to="/person/create">someone else.</Link>
-      </span>
+      <Link to="/person/create">
+        <span id="create-new-person">
+          someone else.
+        </span>
+      </Link>
     </li>
   )
 }

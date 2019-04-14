@@ -1,4 +1,4 @@
-.the-input {
+#the-input {
   max-width: 900px;
   outline: none; /* Remove default blue glow outline for focused element */
 }

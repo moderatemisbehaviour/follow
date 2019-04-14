@@ -18,7 +18,7 @@ function Input (props) {
     <input
       autoFocus
       id="the-input"
-      className={`the-input${props.invalid ? ' invalid' : ''}`} // TODO: Remove this
+      className={`${props.invalid ? ' invalid' : ''}`} // TODO: Remove this
       onChange={props.onChange}
       onKeyDown={props.onKeyDown}
       placeholder={props.prompt}
