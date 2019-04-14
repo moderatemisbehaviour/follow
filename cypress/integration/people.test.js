@@ -179,8 +179,14 @@ describe('Creating a publisher profile.', function () {
       cy.get('#the-input').type('https://twitter.com/siobhanisback')
     })
 
-    it('Enables the save button once the first profile URL is added', function () {
-      cy.get('.save').should('not.have.attr', 'disabled')
+    it('Allows a second profile URL and image to be added', function () {
+      cy.get('#add-profile').click()
+      cy.get('#the-input').type('https://www.youtube.com/user/siobhanwilsonmusic')
+      cy.get('.profile').eq('1').find('a').should('have.attr', 'href', 'https://www.youtube.com/user/siobhanwilsonmusic')
+
+      cy.get('#add-image').click()
+      cy.get('#the-input').type('https://pbs.twimg.com/profile_images/1102783358973677569/qEt61Ej8_400x400.jpg')
+      cy.get('.person img').should('have.attr', 'src', 'https://pbs.twimg.com/profile_images/1102783358973677569/qEt61Ej8_400x400.jpg')
     })
   })
 })

@@ -16,6 +16,7 @@ const typeDefs = gql`
   input PersonInput {
     name: String!
     profiles: [String]
+    photo: String
   }
 
   type Mutation {
