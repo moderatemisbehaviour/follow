@@ -4,6 +4,7 @@ import React from 'react'
 import './NextSteps.css'
 
 NextSteps.propTypes = {
+  children: PropTypes.arrayOf(PropTypes.element),
   disabled: PropTypes.bool,
   invalid: PropTypes.bool,
   invalidMessage: PropTypes.string,
