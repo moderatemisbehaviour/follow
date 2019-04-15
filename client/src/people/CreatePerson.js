@@ -11,9 +11,9 @@ function CreatePerson (props) {
   return (
     <li id="create-person">
       <img src={createPersonIcon} alt="create person icon"/>
+      <span>Create </span>
       <Link to={`/person/create?name=${props.personName}`}>
         <span id="create-suggested-person">
-          <span>Create </span>
           <Name name={props.personName}/>
         </span>
       </Link>

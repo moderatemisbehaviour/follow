@@ -18,7 +18,6 @@ class PeopleCreator extends Component {
         getter: () => this.state.person.name,
         setter: (value) => {
           this.setState(state => ({
-            ...state,
             person: {
               ...state.person,
               name: value
@@ -30,13 +29,15 @@ class PeopleCreator extends Component {
         prompt: "Enter the person's name",
         validate: () => !!this.state.person.name,
         validationMessage: 'Please provide a name',
+        complete: () => null,
+        discard: () => delete this.state.person.name
       },
       profiles: {
         name: 'profile',
         getter: () => this.state.person.profiles[this.state.profileIndex],
         setter: (value) => {
           this.setState(state => {
-            const updatedPerson = { ...state.person }
+            const updatedPerson = {...state.person}
             updatedPerson.profiles[state.profileIndex] = value
             return {
               ...state,
@@ -58,14 +59,15 @@ class PeopleCreator extends Component {
           }
         },
         validationMessage: 'The URL you have provided is invalid.',
-        complete: () => this.setState(state => ({profileIndex: ++state.profileIndex}))
+        complete: () => this.setState(state => ({profileIndex: ++state.profileIndex})),
+        discard: () => this.state.person.profiles.splice(this.state.profileIndex, 1)
       },
       image: {
         name: 'image',
         getter: () => this.state.person.photo,
         setter: (value) => {
           this.setState(state => {
-            const updatedPerson = { ...state.person }
+            const updatedPerson = {...state.person}
             updatedPerson.photo = value
             return {
               ...state,
@@ -86,7 +88,9 @@ class PeopleCreator extends Component {
             return false
           }
         },
-        validationMessage: 'The URL you have provided is invalid.'
+        validationMessage: 'The URL you have provided is invalid.',
+        complete: () => null,
+        discard: () => delete this.state.person.photo
       }
     }
 
@@ -115,12 +119,11 @@ class PeopleCreator extends Component {
   }
 
   editNextProperty (nextProperty) {
-    const {
-      propertyBeingEdited: {
-        complete
-      }
-    } = this.state
-    complete && complete()
+    if (this.state.propertyBeingEdited.validate()) {
+      this.state.propertyBeingEdited.complete()
+    } else {
+      this.state.propertyBeingEdited.discard()
+    }
 
     this.setState({
       propertyBeingEdited: nextProperty,

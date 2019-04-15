@@ -188,6 +188,17 @@ describe('Creating a publisher profile.', function () {
       cy.get('#the-input').type('https://pbs.twimg.com/profile_images/1102783358973677569/qEt61Ej8_400x400.jpg')
       cy.get('.person img').should('have.attr', 'src', 'https://pbs.twimg.com/profile_images/1102783358973677569/qEt61Ej8_400x400.jpg')
     })
+
+    it('Discards invalid profiles or images currently being edited when the user decides to edit something else', function () {
+      cy.get('#add-profile').click()
+      // Leave input blank
+      cy.get('.profile').should('have.length', 2)
+      cy.get('#add-image').click()
+      cy.get('.profile').should('have.length', 1)
+
+      // Leave input blank
+      cy.get('.person img').should('have.attr', 'src').and('match', /\/static\/media\/placeholderProfileImage..*.svg/)
+    })
   })
 })
 
