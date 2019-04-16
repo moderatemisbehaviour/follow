@@ -31,7 +31,8 @@ let databaseUrl
 
 if (process.env.CI) {
   databaseUrl = process.env.DATABASE_URL
-} else if (process.env.NODE_ENV === 'review') {
+// TODO: This is set even for review apps because the NODE_ENV set in app.json is not picked up.
+} else if (process.env.NODE_ENV === 'production') {
   databaseUrl = process.env.MONGODB_URI
 } else {
   throw new Error(`Do not know which environment variable to use for the database connection string when NODE_ENV is ${process.env.NODE_ENV}`)
