@@ -27,6 +27,16 @@ class DatabaseClient {
   }
 }
 
-const databaseClient = new DatabaseClient(process.env.DATABASE_URL, process.env.DATABASE_NAME)
+let databaseUrl
+
+if (process.env.CI) {
+  databaseUrl = process.env.DATABASE_URL
+} else if (process.env.NODE_ENV === 'review') {
+  databaseUrl = process.env.MONGODB_URI
+} else {
+  throw new Error(`Do not know which environment variable to use for the database connection string when NODE_ENV is ${process.env.NODE_ENV}`)
+}
+
+const databaseClient = new DatabaseClient(databaseUrl, process.env.DATABASE_NAME)
 
 module.exports = databaseClient

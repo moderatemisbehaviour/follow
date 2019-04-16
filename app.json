@@ -1,13 +1,19 @@
 {
   "name": "peoplenotplatforms",
+  "addons": [
+    {
+      "plan": "mongolab"
+    }
+  ],
   "buildpacks": [
     {
       "url": "heroku/nodejs"
     }
   ],
-  "addons": [
-    {
-      "plan": "mongolab"
+  "env": {
+    "NODE_ENV": {
+      "description": "The type of environment the code is running in.",
+      "value": "review"
     }
-  ]
+  }
 }
