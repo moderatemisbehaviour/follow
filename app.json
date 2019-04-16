@@ -7,7 +7,7 @@
   ],
   "addons": [
     {
-      "plan": "semaphore:nano"
+      "plan": "mongolab"
     }
   ]
 }
