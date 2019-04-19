@@ -1,3 +1,6 @@
+console.log('NODE_ENV is', process.env.NODE_ENV)
+console.log('CI is', process.env.CI)
+
 require('dotenv').config({ path: '../.env' })
 
 const createExpressServerForStaticContent = require('./createExpressServerForStaticContent')
