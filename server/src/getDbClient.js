@@ -1,10 +1,22 @@
 const MongoClient = require('mongodb').MongoClient
+const getClientOptionsFromMongoDbUri = require('./getClientOptionsFromMongoDbUri')
 
 class DatabaseClient {
-  constructor (url, defaultDatabaseName) {
+  constructor ({url, username, password}, defaultDatabaseName) {
     this.url = url
     this.defaultDatabaseName = defaultDatabaseName
-    this.client = new MongoClient(this.url)
+
+    let options = {}
+    if (username && password) {
+      options = {
+        auth: {
+          user: username,
+          password
+        }
+      }
+    }
+
+    this.client = new MongoClient(this.url, options)
   }
 
   async connectAndGetDatabase () {
@@ -27,14 +39,23 @@ class DatabaseClient {
   }
 }
 
-let databaseUrl
+let clientOptions = {}
 // TODO: This is set even for review apps because the NODE_ENV set in app.json is not picked up.
 if (process.env.NODE_ENV === 'production') {
-  databaseUrl = process.env.MONGODB_URI
+  const uriParts = process.env.MONGODB_URI.split('@')
+  if (uriParts.length !== 2) {
+    throw new Error(`
+      The Mongo DB URI is not in the expected format, 
+      it has more than one '@' character: ${process.env.MONGODB_URI}
+    `)
+  }
+  const [username, password, url] = uriParts
+  clientOptions = {url, username, password}
+  clientOptions = getClientOptionsFromMongoDbUri(process.env.MONGODB_URI)
 } else {
-  databaseUrl = process.env.DATABASE_URL
+  clientOptions.url = process.env.DATABASE_URL
 }
 
-const databaseClient = new DatabaseClient(databaseUrl, process.env.DATABASE_NAME)
+const databaseClient = new DatabaseClient(clientOptions, process.env.DATABASE_NAME)
 
 module.exports = databaseClient
