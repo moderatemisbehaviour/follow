@@ -42,15 +42,6 @@ class DatabaseClient {
 let clientOptions = {}
 // TODO: This is set even for review apps because the NODE_ENV set in app.json is not picked up.
 if (process.env.NODE_ENV === 'production') {
-  const uriParts = process.env.MONGODB_URI.split('@')
-  if (uriParts.length !== 2) {
-    throw new Error(`
-      The Mongo DB URI is not in the expected format, 
-      it has more than one '@' character: ${process.env.MONGODB_URI}
-    `)
-  }
-  const [username, password, url] = uriParts
-  clientOptions = {url, username, password}
   clientOptions = getClientOptionsFromMongoDbUri(process.env.MONGODB_URI)
 } else {
   clientOptions.url = process.env.DATABASE_URL
