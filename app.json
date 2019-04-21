@@ -1,9 +1,7 @@
 {
   "name": "peoplenotplatforms",
   "addons": [
-    {
-      "plan": "mongolab"
-    }
+    "mongolab"
   ],
   "buildpacks": [
     {
