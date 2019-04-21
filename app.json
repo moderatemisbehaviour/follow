@@ -7,11 +7,5 @@
     {
       "url": "heroku/nodejs"
     }
-  ],
-  "env": {
-    "NODE_ENV": {
-      "description": "The type of environment the code is running in.",
-      "value": "review"
-    }
-  }
+  ]
 }
