@@ -52,6 +52,7 @@ describe('Searching for a publisher profile.', function () {
     cy.get('.SearchResult').first().find('img').should('have.attr', 'src', this.person.photo)
   })
 
+  // TODO: Use PayPal dropdown component?
   it.skip('Allows the user to select a search result with the keyboard.', function () {
     cy.get('.Search input').type('Si').type('{downarrow}')
     cy.focused().should('have.text', 'Siobhan Wilson')
