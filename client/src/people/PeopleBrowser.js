@@ -3,7 +3,9 @@ import PropTypes from 'prop-types'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 
+import logo from '../common/logo.png'
 import Person from './Person'
+import Search from '../common/search/Search'
 
 class PeopleBrowser extends Component {
   constructor (props) {
@@ -22,11 +24,7 @@ class PeopleBrowser extends Component {
           person(id: $id) {
             name
             photo
-            profiles {
-              id
-              platform
-              url
-            }
+            profiles
           }
         }
       `
@@ -40,12 +38,22 @@ class PeopleBrowser extends Component {
             }
 
             const { person: { name, photo, profiles } } = data
-            return <Person name={name} photo={photo} profiles={profiles} />
+            return (
+              <React.Fragment>
+                <Person name={name} photo={photo || undefined} profiles={profiles}/>
+                <Search/>
+              </React.Fragment>
+            )
           }}
         </Query>
       )
     } else {
-      return <Person />
+      return (
+        <React.Fragment>
+          <Person name="Follow people, not platforms" photo={logo}/>
+          <Search/>
+        </React.Fragment>
+      )
     }
   }
 }

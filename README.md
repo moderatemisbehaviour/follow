@@ -5,17 +5,21 @@
 1. Run `npm run start:dev` to start development.
   - Starts a node server at http://localhost:4000
   - Starts a webpack development server at http://localhost:4001 using React Scripts to host the front-end.
-1. Run `npm test` to open the Cypress test runner.
+  - Visit the GraphQL Playground at http://localhost:4000/graphql.
+1. Run `npm test:dev` to open the Cypress test runner.
+
+# Other scripts
+1. Run `npm run ci` to start the server and run Cypress headless.
 1. Run `npm start` to get a production build.
   - Builds an optimised production build using React scripts.
   - Starts a node server at http://localhost:4000 that also statically hosts the front-end.
 
 # Tech Stack
 ## Front-end
-React & Apollo
+React & Apollo Client.
 
 ## API
-Node & GraphQL
+Node & Apollo Server.
 
 ## Database
 MongoDB is used and expected to be running locally on the default port during development.
@@ -42,8 +46,22 @@ They are development and maintenance aids that allow us to easily detect _potent
 
 There are no requirements for coverage of unit & integration tests. If we are good developers then we will notice areas of complexity and want to write unit & integration tests for them because we know they are genuinely helpful over time. Specifically which style of test we write should be decided on a case-by-case basis depending on the area we want extra confidence in.
 
-# Continuous Integration
-Semaphore CI.
+# SDLC
+## Development
+This occurs on the developer's local machine.
+React scripts can be used to start the app as it provides a helpful hot-reloading development server.
+Alternatively the `heroku local` command can be used for a slightly more live-like startup.
+Regardless of the method for starting the app, `dotenv` is used to read the `.env` file which contains sane defaults like localhost:12707 for MongoDB which work both locally and on the CI environment.
+
+## CI
+Uses the default config in the `.env` file as services run locally.
+
+## Review
+Reads environment variables from `app.json` which sets `NODE_ENV` to `review`.
+The app can then inspect this variable and choose to override defaults loaded from `.env`.
+
+## Staging
+To be filled in.
 
 ## Deployment
 The app can be deployed using Heroku which will run the following.

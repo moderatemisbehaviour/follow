@@ -8,10 +8,32 @@
 // https://on.cypress.io/plugins-guide
 // ***********************************************************
 
+const loadedEnvVars = require('dotenv').config()
+const resetDatabase = require('../../server/src/resetDatabase')
+const getDbClient = require('../../server/src/getDbClient')
+const fs = require('fs')
+
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
-
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
+  on('task', {
+    async resetDb () {
+      await resetDatabase()
+      return null // Tell Cypress we do not intend to yield a value.
+    },
+    async createPerson () {
+      const dbClient = getDbClient
+      const db = await dbClient.connectAndGetDatabase()
+      const peopleCollection = db.collection('people')
+      const siobhan = JSON.parse(fs.readFileSync('cypress/fixtures/siobhan.json', 'utf8'))
+      const result = await peopleCollection.insertOne(siobhan)
+      const person = result.ops[0]
+      return person
+    }
+  })
+
+  config.env.DATABASE_URL = loadedEnvVars.parsed.DATABASE_URL
+  return config
 }

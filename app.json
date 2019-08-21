@@ -1,5 +1,8 @@
 {
   "name": "peoplenotplatforms",
+  "addons": [
+    "mongolab"
+  ],
   "buildpacks": [
     {
       "url": "heroku/nodejs"

@@ -1,0 +1,50 @@
+version: v1.0
+name: Follow pipeline
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+execution_time_limit:
+  minutes: 10
+
+blocks:
+  - name: install dependencies
+    task:
+      jobs:
+        - name: npm install and cache
+          commands:
+            - checkout
+            - nvm use
+            - npm ci
+            - cache store node-modules-root-$SEMAPHORE_GIT_SHA node_modules/
+            - cache store node-modules-server-$SEMAPHORE_GIT_SHA server/node_modules/
+            - cache store node-modules-client-$SEMAPHORE_GIT_SHA client/node_modules/
+            - cache store user-cache-$SEMAPHORE_GIT_SHA ~/.cache/
+            - cache store npm-cache-$SEMAPHORE_GIT_SHA ~/.npm/
+            - cache store client-build-$SEMAPHORE_GIT_SHA client/build
+  - name: quality
+    task:
+      prologue:
+          commands:
+            - checkout
+            - nvm use
+            - cache restore node-modules-root-$SEMAPHORE_GIT_SHA
+            - cache restore node-modules-server-$SEMAPHORE_GIT_SHA
+            - cache restore node-modules-client-$SEMAPHORE_GIT_SHA
+            - cache restore user-cache-$SEMAPHORE_GIT_SHA
+            - cache restore npm-cache-$SEMAPHORE_GIT_SHA
+            - cache restore client-build-$SEMAPHORE_GIT_SHA
+      jobs:
+        - name: lint
+          commands:
+            - npm run lint
+        - name: unit test
+          commands:
+            - sem-service start mongodb
+            - npm run jest
+        - name: e2e test
+          commands:
+            - sudo apt -y install libgtk2.0-0
+            - sem-service start mongodb
+            - npm ci
+            - npm run ci

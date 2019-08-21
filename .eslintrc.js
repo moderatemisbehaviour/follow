@@ -10,5 +10,8 @@ module.exports = {
   "env": {
     "cypress/globals": true,
     "jest": true
+  },
+  "rules": {
+    "object-curly-spacing": "off"
   }
 };

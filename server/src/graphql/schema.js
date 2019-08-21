@@ -1,40 +1,26 @@
-const { gql } = require('apollo-server')
+const {gql} = require('apollo-server')
 
 const typeDefs = gql`
   type Query {
-    people: [Person]!
+    people(query: String!): [Person]!
     person(id: ID!): Person
   }
 
   type Person {
     id: ID!
     name: String!
-    profiles: [Profile]
+    profiles: [String]
     photo: String
   }
 
-  type Profile {
-    id: ID!
-    platform: Platform!
-    url: String!
-  }
-
-  enum Platform {
-    TWITTER
-    YOUTUBE
-    INSTAGRAM
-    FACEBOOK
+  input PersonInput {
+    name: String!
+    profiles: [String]
+    photo: String
   }
 
   type Mutation {
-    updateProfile(profileId: ID!, platforn: Platform!, url: String!): UpdateProfileResponse!
-    login(email: String!): String
-  }
-
-  type UpdateProfileResponse {
-    success: Boolean!
-    message: String
-    profile: Profile
+    createPerson(person: PersonInput!): Person
   }
 `
 

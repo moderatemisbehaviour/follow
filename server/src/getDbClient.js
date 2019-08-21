@@ -1,10 +1,22 @@
 const MongoClient = require('mongodb').MongoClient
+const getClientOptionsFromMongoDbUri = require('./getClientOptionsFromMongoDbUri')
 
 class DatabaseClient {
-  constructor (url, defaultDatabaseName) {
+  constructor ({url, username, password}, defaultDatabaseName) {
     this.url = url
     this.defaultDatabaseName = defaultDatabaseName
-    this.client = new MongoClient(this.url)
+
+    let options = {}
+    if (username && password) {
+      options = {
+        auth: {
+          user: username,
+          password
+        }
+      }
+    }
+
+    this.client = new MongoClient(this.url, options)
   }
 
   async connectAndGetDatabase () {
@@ -27,6 +39,15 @@ class DatabaseClient {
   }
 }
 
-const databaseClient = new DatabaseClient(process.env.DATABASE_URL, process.env.DATABASE_NAME)
+let clientOptions = {}
+// TODO: This is set even for review apps because the NODE_ENV set in app.json is not picked up.
+if (process.env.NODE_ENV === 'production') {
+  console.log('env', process.env)
+  clientOptions = getClientOptionsFromMongoDbUri(process.env.MONGODB_URI)
+} else {
+  clientOptions.url = process.env.DATABASE_URL
+}
+
+const databaseClient = new DatabaseClient(clientOptions, process.env.DATABASE_NAME)
 
 module.exports = databaseClient

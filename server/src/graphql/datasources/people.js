@@ -1,4 +1,5 @@
-const { DataSource } = require('apollo-datasource')
+const {DataSource} = require('apollo-datasource')
+const {ObjectID} = require('mongodb')
 
 class PeopleDataSource extends DataSource {
   constructor (db) {
@@ -8,87 +9,36 @@ class PeopleDataSource extends DataSource {
 
   // TODO: Use validated collection.
   async createPerson (person) {
-    this.addPlatformToProfiles(person)
     const peopleCollection = this.db.collection('people')
     const result = await peopleCollection.insertOne(person)
-    const insertedDocumentsWithIds = result.ops
-    return insertedDocumentsWithIds
-  }
+    const insertedDocumentWithIds = result.ops[0]
 
-  addPlatformToProfiles (person) {
-    person.profiles[0].platform = 'TWITTER'
-  }
-
-  getPerson (id) {
-    switch (id) {
-      case '1':
-        return {
-          id,
-          name: 'Siobhan Wilson',
-          photo: 'https://pbs.twimg.com/profile_images/950898677991780353/7sbTf7Wl_400x400.jpg',
-          profiles: [
-            {
-              id: 2,
-              platform: 'TWITTER',
-              url: 'https://twitter.com/siobhanisback'
-            },
-            {
-              id: 3,
-              platform: 'YOUTUBE',
-              url: 'https://www.youtube.com/user/siobhanwilsonmusic'
-            },
-            {
-              id: 4,
-              platform: 'FACEBOOK',
-              url: 'https://www.facebook.com/siobhanwilsonmusic'
-            }
-          ]
-        }
-      case '2':
-        return {
-          id,
-          name: 'Elon Musk',
-          photo: 'https://pbs.twimg.com/profile_images/972170159614906369/0o9cdCOp_400x400.jpg',
-          profiles: [
-            {
-              id: 1,
-              platform: 'TWITTER',
-              url: 'https://twitter.com/elonmusk'
-            }
-          ]
-        }
+    return {
+      ...insertedDocumentWithIds,
+      id: insertedDocumentWithIds._id.toHexString()
     }
   }
 
-  getPeople () {
-    return [
-      {
-        id: 1,
-        name: 'Siobhan Wilson',
-        profiles: [
-          {
-            id: 1,
-            platform: 'TWITTER',
-            url: 'https://twitter.com/siobhanisback'
-          }
-        ]
-      },
-      {
-        id: 2,
-        name: 'Elon Musk',
-        profiles: [
-          {
-            id: 2,
-            platform: 'TWITTER',
-            url: 'https://twitter.com/elonmusk'
-          }
-        ]
-      }
-    ]
+  async getPeople (query) {
+    const peopleCollection = this.db.collection('people')
+    const cursor = peopleCollection.find({name: {$regex: `${query}`, $options: 'i'}}).skip(0).limit(5)
+    const people = await cursor.toArray()
+    return people.map(this.replaceMongoIdWithApplicationId)
   }
 
-  updateProfile () {
-    return true
+  async getPerson (id) {
+    const peopleCollection = this.db.collection('people')
+    const objectId = new ObjectID(id)
+    const query = {_id: objectId}
+    const person = await peopleCollection.findOne(query)
+    return this.replaceMongoIdWithApplicationId(person)
+  }
+
+  replaceMongoIdWithApplicationId (person) {
+    return {
+      ...person,
+      id: person._id.toHexString()
+    }
   }
 }
 

@@ -5,7 +5,8 @@ import { ApolloProvider } from 'react-apollo'
 
 import App from './app/App'
 import './index.css'
-import registerServiceWorker from './registerServiceWorker'
+// TODO: Uncomment this when you figure out how to make it work with Cypress.
+// import registerServiceWorker from './registerServiceWorker'
 
 const port = process.env.PORT || 4000
 
@@ -16,11 +17,8 @@ const client = new ApolloClient({
 // TODO: Use Helmet to avoid DOM nesting error.
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <head>
-      <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,800" rel="stylesheet"></link>
-    </head>
     <App/>
   </ApolloProvider>,
   document.getElementById('root')
 )
-registerServiceWorker()
+// registerServiceWorker()

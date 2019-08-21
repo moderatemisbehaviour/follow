@@ -1,0 +1,37 @@
+html {
+  font-family: 'Open Sans', sans-serif;
+  height: 100%;
+}
+
+body {
+  min-height: 100%; /* Match viewport size and scroll if necessary */
+  padding: 1rem; /* This is helpful assuming nothing ever wants to touch the sides... */
+}
+
+li {
+  padding: 0.5rem;
+}
+
+input {
+  font-size: 1rem;
+  padding: 0.5rem;
+  display: block;
+  margin: 1rem auto;
+  width: 100%;
+  max-width: 13rem;
+  border: 1px solid #AAA;
+  border-radius: 0.2rem;
+}
+
+input[type="button"], input[type="submit"] {
+  cursor: pointer;
+}
+
+input.invalid {
+  border-color: red;
+}
+
+input:disabled {
+  filter: grayscale(100%);
+  cursor: not-allowed;
+}

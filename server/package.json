@@ -8,7 +8,9 @@
   },
   "scripts": {
     "start": "node src/index",
-    "test": "jest"
+    "start:dev": "nodemon node --inspect src/index",
+    "test": "jest",
+    "clean": "node cleanDatabase.js"
   },
   "dependencies": {
     "apollo-server": "^2.2.2",
