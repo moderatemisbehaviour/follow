@@ -204,30 +204,45 @@ describe('Creating a publisher profile.', function () {
 })
 
 describe('Viewing a publisher profile.', function () {
-  beforeEach(function () {
-    cy.task('createPerson').then((person) => {
-      cy.visit(`/person/${person._id}`)
-      cy.get('.name').should('have.text', 'Siobhan Wilson') // TODO: Come up with a better way to wait for render.
+  describe('That has all optional fields', function () {
+    beforeEach(function () {
+      cy.task('createPerson').as('person').then((person) => {
+        cy.visit(`/person/${person._id}`)
+        cy.get('.name').should('have.text', 'Siobhan Wilson') // TODO: Come up with a better way to wait for render.
+      })
+    })
+
+    it("Shows the person's profile photo.", function () {
+      cy.get('.Avatar img').should('have.attr', 'src').and('eq', this.person.photo)
+    })
+
+    it("Shows links to the publisher's profiles", function () {
+      cy.get('.profile').should('have.length', 3)
+      cy.get('.profile a').first().should('have.attr', 'href').and('eq', 'https://twitter.com/siobhanisback')
+      cy.get('.profile a').eq(1).should('have.attr', 'href').and('eq', 'https://www.youtube.com/user/siobhanwilsonmusic')
+      cy.get('.profile a').eq(2).should('have.attr', 'href').and('eq', 'https://www.facebook.com/siobhanwilsonmusic')
+    })
+
+    it("Masks the publisher's photo to create a circular frame", function () {
+      cy.get('.Avatar img').should('have.css', 'border-radius').should('equal', '50%')
+    })
+
+    it("Displays a 'return home' button at the bottom of the page", function () {
+      cy.get('.HomeLink').should('have.length', 1).click()
+      cy.location('pathname').should('eq', '/')
     })
   })
 
-  it("Updates the avatar to show the person's profile photo.", function () {
-    // TODO: Decide how we are going to create test fixtures.
-  })
+  describe('That has no profile photo', function () {
+    beforeEach(function () {
+      cy.task('createPerson', {photo: null}).then((person) => {
+        cy.visit(`/person/${person._id}`)
+        cy.get('.name').should('have.text', 'Siobhan Wilson') // TODO: Come up with a better way to wait for render.
+      })
+    })
 
-  it("Shows links to the publisher's profiles", function () {
-    cy.get('.profile').should('have.length', 3)
-    cy.get('.profile a').first().should('have.attr', 'href').and('eq', 'https://twitter.com/siobhanisback')
-    cy.get('.profile a').eq(1).should('have.attr', 'href').and('eq', 'https://www.youtube.com/user/siobhanwilsonmusic')
-    cy.get('.profile a').eq(2).should('have.attr', 'href').and('eq', 'https://www.facebook.com/siobhanwilsonmusic')
-  })
-
-  it("Masks the publisher's photo to create a circular frame", function () {
-    cy.get('.Avatar img').should('have.css', 'border-radius').should('equal', '50%')
-  })
-
-  it("Displays a 'return home' button at the bottom of the page", function () {
-    cy.get('.HomeLink').should('have.length', 1).click()
-    cy.location('pathname').should('eq', '/')
+    it.only('Fallsback to the placeholder profile photo', function () {
+      cy.get('.Avatar img').should('have.attr', 'src').and('contains', 'placeholderProfileImage')
+    })
   })
 })

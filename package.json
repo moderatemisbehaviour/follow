@@ -31,7 +31,8 @@
     "ci": "start-server-and-test heroku-like http://localhost:4000",
     "heroku-like": "heroku local",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run --config baseUrl=http://localhost:4000"
+    "cypress:run": "cypress run --config baseUrl=http://localhost:4000",
+    "reset-database": "node -e \"require('./server/src/resetDatabase')('mongodb://localhost:27017')\""
   },
   "repository": {
     "type": "git",

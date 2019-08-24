@@ -1,7 +1,7 @@
 const MongoClient = require('mongodb').MongoClient
 
 async function resetDatabase (databaseUrl) {
-  if (process.env.NODE_ENV === 'prod') {
+  if (process.env.NODE_ENV === 'production') {
     throw new Error('Unsafe to clean database in production.')
   }
 

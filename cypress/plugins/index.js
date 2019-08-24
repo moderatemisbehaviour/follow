@@ -23,11 +23,15 @@ module.exports = (on, config) => {
       await resetDatabase()
       return null // Tell Cypress we do not intend to yield a value.
     },
-    async createPerson () {
+    async createPerson (overrides) {
       const dbClient = getDbClient
       const db = await dbClient.connectAndGetDatabase()
       const peopleCollection = db.collection('people')
-      const siobhan = JSON.parse(fs.readFileSync('cypress/fixtures/siobhan.json', 'utf8'))
+      let siobhan = JSON.parse(fs.readFileSync('cypress/fixtures/siobhan.json', 'utf8'))
+      siobhan = {
+        ...siobhan,
+        ...overrides
+      }
       const result = await peopleCollection.insertOne(siobhan)
       const person = result.ops[0]
       return person
