@@ -16,6 +16,7 @@ blocks:
             - checkout
             - nvm use
             - npm ci
+            - npm build
             - cache store node-modules-root-$SEMAPHORE_GIT_SHA node_modules/
             - cache store node-modules-server-$SEMAPHORE_GIT_SHA server/node_modules/
             - cache store node-modules-client-$SEMAPHORE_GIT_SHA client/node_modules/
