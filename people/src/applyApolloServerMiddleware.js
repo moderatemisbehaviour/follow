@@ -1,7 +1,7 @@
 const {ApolloServer} = require('apollo-server-express')
 
 const typeDefs = require('./graphql/schema')
-const PeopleDataSource = require('./graphql/datasources/people')
+const PeopleDataSource = require('../../database/src/datasources/people')
 const resolvers = require('./graphql/resolvers')
 
 function applyApolloServerMiddleware (expressServer, db) {

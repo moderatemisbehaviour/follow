@@ -20,7 +20,7 @@
         "start:dev"
       ],
       "port": 9229,
-      "cwd": "${workspaceFolder}/server"
+      "cwd": "${workspaceFolder}/people"
     },
     {
       "type": "chrome",

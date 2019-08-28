@@ -1,21 +1,10 @@
-const getDbClient = require('../../getDbClient')
+const getDbClient = require('../getDbClient')
 const PeopleDataSource = require('./people')
-const resetDatabase = require('../../resetDatabase')
+const resetDatabase = require('../resetDatabase')
 
-// TODO: Get fixtures from a common place.
-const siobhan = {
-  name: 'Siobhan Wilson',
-  profiles: [
-    'https://twitter.com/SiobhanIsBack'
-  ]
-}
-const elon = {
-  name: 'Elon Musk',
-  photo: 'https: //pbs.twimg.com/profile_images/972170159614906369/0o9cdCOp_400x400.jpg',
-  profiles: [
-    'https: //twitter.com/elonmusk'
-  ]
-}
+// TODO: Use a clone of the object rather than the node cache.
+const siobhan = require('../../../cypress/fixtures/siobhan.json')
+const elon = require('../../../cypress/fixtures/elon.json')
 
 let db
 let peopleDataSource
@@ -31,10 +20,23 @@ afterAll(async () => {
 })
 
 describe('create person', () => {
-  it('returns an object', async () => {
-    const actualResponse = await peopleDataSource.createPerson(siobhan)
-    // TODO: Find out why expect.stringMatching does not work for _id property.
-    expect(actualResponse).toMatchObject(siobhan)
+  describe('when the object is valid', () => {
+    it('returns an object', async () => {
+      const actualResponse = await peopleDataSource.createPerson(siobhan)
+      await peopleDataSource.createPerson(siobhan)
+      // TODO: Find out why expect.stringMatching does not work for _id property.
+      expect(actualResponse).toMatchObject(siobhan)
+    })
+  })
+
+  describe('when the object is invalid', () => {
+    describe('because the person has no name', () => {
+      it('should throw a validation error', async () => {
+        const siobhanInvalid = {...siobhan}
+        delete siobhanInvalid.name
+        await expect(peopleDataSource.createPerson(siobhanInvalid)).rejects.toThrow(Error)
+      })
+    })
   })
 })
 

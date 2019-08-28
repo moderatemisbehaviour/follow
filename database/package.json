@@ -1,0 +1,27 @@
+{
+  "name": "follow-database",
+  "version": "0.1.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "mongo src/index.js"
+  },
+  "author": {
+    "name": "Daniel Metcalfe",
+    "email": "mrdanielmetcalfe@gmail.com",
+    "url": "http://danielmetcalfe.rocks/"
+  },
+  "license": "UNLICENSED",
+  "dependencies": {
+    "apollo-datasource": "^0.6.1",
+    "mongodb": "^3.3.1"
+  },
+  "devDependencies": {
+    "jest": "^24.9.0"
+  },
+  "jest": {
+    "globalSetup": "./src/jestGlobalSetup.js",
+    "testEnvironment": "node"
+  }
+}
