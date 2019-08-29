@@ -1,4 +1,3 @@
-require('dotenv').config({ path: '../.env' })
 const client = require('./getDatabaseClient')
 const setupDatabase = require('./setupDatabase')
 

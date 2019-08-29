@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "test": "jest",
+    "test": "nodenv -E ../.env --exec jest",
     "start": "mongo src/index.js"
   },
   "author": {
@@ -18,10 +18,10 @@
     "mongodb": "^3.3.1"
   },
   "devDependencies": {
-    "jest": "^24.9.0"
+    "jest": "^24.9.0",
+    "node-env-run": "^3.0.2"
   },
   "jest": {
-    "globalSetup": "./src/jestGlobalSetup.js",
     "testEnvironment": "node"
   }
 }

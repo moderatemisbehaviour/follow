@@ -1,4 +1,4 @@
-const MongoClient = require('mongodb').MongoClient
+const {MongoClient} = require('mongodb')
 const setupDatabase = require('./setupDatabase')
 
 async function resetDatabase (databaseUrl) {

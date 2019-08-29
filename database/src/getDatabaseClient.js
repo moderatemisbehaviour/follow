@@ -42,7 +42,6 @@ class DatabaseClient {
 let clientOptions = {}
 // TODO: This is set even for review apps because the NODE_ENV set in app.json is not picked up.
 if (process.env.NODE_ENV === 'production') {
-  console.log('env', process.env)
   clientOptions = getClientOptionsFromMongoDbUri(process.env.MONGODB_URI)
 } else {
   clientOptions.url = process.env.DATABASE_URL

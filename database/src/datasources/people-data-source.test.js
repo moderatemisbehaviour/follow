@@ -1,5 +1,5 @@
 const getDatabaseClient = require('../getDatabaseClient')
-const PeopleDataSource = require('./people')
+const PeopleDataSource = require('./people-data-source')
 const resetDatabase = require('../resetDatabase')
 
 // TODO: Use a clone of the object rather than the node cache.

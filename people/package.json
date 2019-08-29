@@ -1,5 +1,5 @@
 {
-  "name": "follow-server",
+  "name": "follow-people",
   "version": "0.1.0",
   "author": {
     "name": "Daniel Metcalfe",
@@ -7,10 +7,9 @@
     "url": "http://danielmetcalfe.rocks/"
   },
   "scripts": {
-    "start": "node src/index",
-    "start:dev": "nodemon node --inspect src/index",
-    "test": "jest",
-    "clean": "node cleanDatabase.js"
+    "start": "nodenv --E ../.env src/index.js",
+    "start:dev": "nodemon --exec 'nodenv --E ../.env' src/index.js",
+    "test": "jest"
   },
   "dependencies": {
     "apollo-server": "^2.2.2",
@@ -25,10 +24,10 @@
     "twitter": "^1.7.1"
   },
   "devDependencies": {
-    "jest": "^23.6.0"
+    "jest": "^23.6.0",
+    "node-env-run": "^3.0.2"
   },
   "jest": {
-    "globalSetup": "./src/jestGlobalSetup.js",
     "testEnvironment": "node"
   }
 }

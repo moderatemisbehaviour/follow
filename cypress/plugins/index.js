@@ -8,7 +8,6 @@
 // https://on.cypress.io/plugins-guide
 // ***********************************************************
 
-const loadedEnvVars = require('dotenv').config()
 const resetDatabase = require('../../database/src/resetDatabase')
 const getDatabaseClient = require('../../database/src/getDatabaseClient')
 const fs = require('fs')
@@ -34,6 +33,6 @@ module.exports = (on, config) => {
     }
   })
 
-  config.env.DATABASE_URL = loadedEnvVars.parsed.DATABASE_URL
+  // config.env.DATABASE_URL = loadedEnvVars.parsed.DATABASE_URL
   return config
 }
