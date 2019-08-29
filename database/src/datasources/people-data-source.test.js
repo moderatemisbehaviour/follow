@@ -1,4 +1,4 @@
-const getDbClient = require('../getDbClient')
+const getDatabaseClient = require('../getDatabaseClient')
 const PeopleDataSource = require('./people')
 const resetDatabase = require('../resetDatabase')
 
@@ -10,13 +10,12 @@ let db
 let peopleDataSource
 
 beforeAll(async () => {
-  db = await getDbClient.connectAndGetDatabase()
+  db = await getDatabaseClient.connectAndGetDatabase()
   peopleDataSource = new PeopleDataSource(db)
-  // TODO: Create test documents
 })
 
 afterAll(async () => {
-  await getDbClient.close()
+  await getDatabaseClient.close()
 })
 
 describe('create person', () => {

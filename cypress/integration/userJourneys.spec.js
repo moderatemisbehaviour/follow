@@ -1,6 +1,6 @@
 describe('User journeys', function () {
   beforeEach(function () {
-    cy.task('resetDb')
+    cy.task('resetDatabase')
     cy.visit('/')
   })
 

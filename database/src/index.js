@@ -1,11 +1,11 @@
 require('dotenv').config({ path: '../.env' })
-const dbClient = require('./getDbClient')
-const setupDb = require('./setupDb')
+const client = require('./getDatabaseClient')
+const setupDatabase = require('./setupDatabase')
 
-async function getDb () {
-  const db = await dbClient.connectAndGetDatabase()
-  await setupDb(db)
-  return db
+async function getDatabaseClient () {
+  const database = await client.connectAndGetDatabase()
+  await setupDatabase(database)
+  return database
 }
 
-module.exports = getDb
+module.exports = getDatabaseClient

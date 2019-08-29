@@ -1,5 +1,5 @@
 const MongoClient = require('mongodb').MongoClient
-const setupDb = require('./setupDb')
+const setupDatabase = require('./setupDatabase')
 
 async function resetDatabase (databaseUrl) {
   if (process.env.NODE_ENV === 'production') {
@@ -12,7 +12,7 @@ async function resetDatabase (databaseUrl) {
   try {
     const followDatabase = mongoClient.db('follow')
     await followDatabase.dropDatabase()
-    await setupDb(followDatabase)
+    await setupDatabase(followDatabase)
   } finally {
     mongoClient.close()
   }

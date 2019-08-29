@@ -1,5 +1,9 @@
 const BASE_URL = Cypress.config('baseUrl')
 
+before(function () {
+  cy.task('resetDatabase')
+})
+
 describe('Landing on the home page.', function () {
   before(function () {
     cy.visit('/person/create')
@@ -208,7 +212,6 @@ describe('Viewing a publisher profile.', function () {
     beforeEach(function () {
       cy.task('createPerson').as('person').then((person) => {
         cy.visit(`/person/${person._id}`)
-        cy.get('.name').should('have.text', 'Siobhan Wilson') // TODO: Come up with a better way to wait for render.
       })
     })
 
@@ -235,13 +238,15 @@ describe('Viewing a publisher profile.', function () {
 
   describe('That has no profile photo', function () {
     beforeEach(function () {
-      cy.task('createPerson', {photo: null}).then((person) => {
+      cy.fixture('siobhan.json').then((siobhan) => {
+        delete siobhan.photo
+        return cy.task('createPerson', siobhan)
+      }).then((person) => {
         cy.visit(`/person/${person._id}`)
-        cy.get('.name').should('have.text', 'Siobhan Wilson') // TODO: Come up with a better way to wait for render.
       })
     })
 
-    it.only('Fallsback to the placeholder profile photo', function () {
+    it('Fallsback to the placeholder profile photo', function () {
       cy.get('.Avatar img').should('have.attr', 'src').and('contains', 'placeholderProfileImage')
     })
   })
