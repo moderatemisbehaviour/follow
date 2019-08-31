@@ -17,22 +17,14 @@ blocks:
             - nvm use
             - npm ci
             - npm run build
-            - cache store node-modules-root-$SEMAPHORE_GIT_SHA node_modules/
-            - cache store node-modules-people-$SEMAPHORE_GIT_SHA people/node_modules/
-            - cache store node-modules-client-$SEMAPHORE_GIT_SHA client/node_modules/
-            - cache store user-cache-$SEMAPHORE_GIT_SHA ~/.cache/
-            - cache store client-build-$SEMAPHORE_GIT_SHA client/build
   - name: quality
     task:
       prologue:
           commands:
             - checkout
             - nvm use
-            - cache restore node-modules-root-$SEMAPHORE_GIT_SHA
-            - cache restore node-modules-people-$SEMAPHORE_GIT_SHA
-            - cache restore node-modules-client-$SEMAPHORE_GIT_SHA
-            - cache restore user-cache-$SEMAPHORE_GIT_SHA
-            - cache restore client-build-$SEMAPHORE_GIT_SHA
+            - npm ci
+            - npm run build
       jobs:
         - name: lint
           commands:
