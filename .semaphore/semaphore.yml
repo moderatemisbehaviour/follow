@@ -32,11 +32,11 @@ blocks:
         - name: unit test
           commands:
             - sem-service start mongodb
-            - npm run setup-database
+            - npm run reset-database
             - npm run jest
         - name: e2e test
           commands:
             - sudo apt -y install libgtk2.0-0
             - sem-service start mongodb
-            - npm run setup-database
+            - npm run reset-database
             - npm run ci

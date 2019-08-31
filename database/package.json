@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "test": "nodenv -E ../.env --exec jest",
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "reset-database": "nodenv -E ../.env --exec \"node -e 'require(\\\"./src/resetDatabase.js\\\")()'\""
   },
   "author": {
     "name": "Daniel Metcalfe",
