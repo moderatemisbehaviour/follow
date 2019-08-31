@@ -21,7 +21,6 @@ blocks:
             - cache store node-modules-people-$SEMAPHORE_GIT_SHA people/node_modules/
             - cache store node-modules-client-$SEMAPHORE_GIT_SHA client/node_modules/
             - cache store user-cache-$SEMAPHORE_GIT_SHA ~/.cache/
-            - cache store npm-cache-$SEMAPHORE_GIT_SHA ~/.npm/
             - cache store client-build-$SEMAPHORE_GIT_SHA client/build
   - name: quality
     task:
@@ -33,7 +32,6 @@ blocks:
             - cache restore node-modules-people-$SEMAPHORE_GIT_SHA
             - cache restore node-modules-client-$SEMAPHORE_GIT_SHA
             - cache restore user-cache-$SEMAPHORE_GIT_SHA
-            - cache restore npm-cache-$SEMAPHORE_GIT_SHA
             - cache restore client-build-$SEMAPHORE_GIT_SHA
       jobs:
         - name: lint
@@ -47,5 +45,4 @@ blocks:
           commands:
             - sudo apt -y install libgtk2.0-0
             - sem-service start mongodb
-            - npm ci
             - npm run ci
