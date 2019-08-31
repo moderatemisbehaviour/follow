@@ -7,8 +7,6 @@ const createExpressServerForStaticContent = require('./createExpressServerForSta
 const applyApolloServerMiddleware = require('./applyApolloServerMiddleware')
 const configureExpressToHandleUrlPaths = require('./configureExpressToHandleUrlPaths')
 
-// process.on('SIGINT', () => { console.log('Bye bye!'); process.exit() })
-
 const expressServer = createExpressServerForStaticContent()
 getDatabase().then((db) => {
   const apolloServer = applyApolloServerMiddleware(expressServer, db)

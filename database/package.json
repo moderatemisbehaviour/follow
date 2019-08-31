@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "nodenv -E ../.env --exec jest",
-    "start": "mongo src/index.js"
+    "start": "node src/index.js"
   },
   "author": {
     "name": "Daniel Metcalfe",
