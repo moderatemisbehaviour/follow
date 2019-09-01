@@ -13,14 +13,20 @@ blocks:
       jobs:
         - name: npm install and cache
           commands:
+            - cache restore node-modules-root-$(checksum package-lock.json)
+            - cache restore node-modules-database-$(checksum database/package-lock.json)
+            - cache restore node-modules-people-$(checksum people/package-lock.json)
+            - cache restore node-modules-client-$(checksum client/package-lock.json)
+            - cache restore user-cache-$SEMAPHORE_GIT_SHA ~/.cache/
+            - cache restore client-build-$SEMAPHORE_GIT_SHA client/build
             - checkout
             - nvm use
             - npm ci
             - npm run build
-            - cache store node-modules-root-$SEMAPHORE_GIT_SHA node_modules/
-            - cache store node-modules-database-$SEMAPHORE_GIT_SHA database/node_modules/
-            - cache store node-modules-people-$SEMAPHORE_GIT_SHA people/node_modules/
-            - cache store node-modules-client-$SEMAPHORE_GIT_SHA client/node_modules/
+            - cache store node-modules-root-$(checksum package-lock.json) node_modules/
+            - cache store node-modules-database-$(checksum database/package-lock.json) database/node_modules/
+            - cache store node-modules-people-$(checksum people/package-lock.json) people/node_modules/
+            - cache store node-modules-client-$(checksum client/package-lock.json) client/node_modules/
             - cache store user-cache-$SEMAPHORE_GIT_SHA ~/.cache/
             - cache store client-build-$SEMAPHORE_GIT_SHA client/build
   - name: quality
@@ -29,12 +35,12 @@ blocks:
           commands:
             - checkout
             - nvm use
-            - cache restore node-modules-root-$SEMAPHORE_GIT_SHA
-            - cache restore node-modules-database-$SEMAPHORE_GIT_SHA
-            - cache restore node-modules-people-$SEMAPHORE_GIT_SHA
-            - cache restore node-modules-client-$SEMAPHORE_GIT_SHA
-            - cache restore user-cache-$SEMAPHORE_GIT_SHA
-            - cache restore client-build-$SEMAPHORE_GIT_SHA
+            - cache restore node-modules-root-$(checksum package-lock.json)
+            - cache restore node-modules-database-$(checksum database/package-lock.json)
+            - cache restore node-modules-people-$(checksum people/package-lock.json)
+            - cache restore node-modules-client-$(checksum client/package-lock.json)
+            - cache restore user-cache-$SEMAPHORE_GIT_SHA ~/.cache/
+            - cache restore client-build-$SEMAPHORE_GIT_SHA client/build
       jobs:
         - name: lint
           commands:
