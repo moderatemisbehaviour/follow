@@ -16,11 +16,11 @@
   "license": "UNLICENSED",
   "dependencies": {
     "apollo-datasource": "^0.6.1",
-    "mongodb": "^3.3.1"
+    "mongodb": "^3.3.1",
+    "node-env-run": "^3.0.2"
   },
   "devDependencies": {
-    "jest": "^24.9.0",
-    "node-env-run": "^3.0.2"
+    "jest": "^24.9.0"
   },
   "jest": {
     "testEnvironment": "node"

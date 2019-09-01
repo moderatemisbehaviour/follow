@@ -19,13 +19,13 @@
     "follow-database": "file:../database",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.10.0",
+    "node-env-run": "^3.0.2",
     "passport": "^0.4.0",
     "passport-twitter": "^1.0.4",
     "twitter": "^1.7.1"
   },
   "devDependencies": {
-    "jest": "^23.6.0",
-    "node-env-run": "^3.0.2"
+    "jest": "^23.6.0"
   },
   "jest": {
     "testEnvironment": "node"
