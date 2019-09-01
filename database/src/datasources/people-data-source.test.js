@@ -1,4 +1,4 @@
-const getDatabaseClient = require('../getDatabaseClient')
+const DatabaseClient = require('../DatabaseClient')
 const PeopleDataSource = require('./people-data-source')
 const resetDatabase = require('../resetDatabase')
 
@@ -6,16 +6,18 @@ const resetDatabase = require('../resetDatabase')
 const siobhan = require('../../../cypress/fixtures/siobhan.json')
 const elon = require('../../../cypress/fixtures/elon.json')
 
-let db
+let databaseClient
+let database
 let peopleDataSource
 
 beforeAll(async () => {
-  db = await getDatabaseClient.connectAndGetDatabase()
-  peopleDataSource = new PeopleDataSource(db)
+  databaseClient = await new DatabaseClient(process.env.MONGODB_URI)
+  database = await databaseClient.connectAndGetDatabase()
+  peopleDataSource = new PeopleDataSource(database)
 })
 
 afterAll(async () => {
-  await getDatabaseClient.close()
+  await databaseClient.close()
 })
 
 describe('create person', () => {
@@ -42,7 +44,7 @@ describe('create person', () => {
 describe('get people', () => {
   beforeEach(async () => {
     await resetDatabase()
-    await db.collection('people').insertMany([siobhan, elon])
+    await database.collection('people').insertMany([siobhan, elon])
   })
 
   describe('when the query matches the name', () => {

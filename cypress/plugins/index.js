@@ -9,7 +9,7 @@
 // ***********************************************************
 
 const resetDatabase = require('../../database/src/resetDatabase')
-const getDatabaseClient = require('../../database/src/getDatabaseClient')
+const DatabaseClient = require('../../database/src/DatabaseClient')
 const fs = require('fs')
 
 // This function is called when a project is opened or re-opened (e.g. due to
@@ -23,7 +23,7 @@ module.exports = (on, config) => {
       return null // Tell Cypress we do not intend to yield a value.
     },
     async createPerson (fixture) {
-      const dbClient = getDatabaseClient
+      const dbClient = new DatabaseClient(process.env.MONGODB_URI)
       const db = await dbClient.connectAndGetDatabase()
       const peopleCollection = db.collection('people')
       fixture = fixture || JSON.parse(fs.readFileSync('cypress/fixtures/siobhan.json', 'utf8'))
