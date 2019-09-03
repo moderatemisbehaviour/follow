@@ -6,7 +6,6 @@ before(function () {
 
 describe('Landing on the home page.', function () {
   before(function () {
-    cy.visit('/person/create')
     cy.visit('/')
   })
 
@@ -27,6 +26,20 @@ describe('Landing on the home page.', function () {
   })
 
   it.skip("Displays a 'learn more' button in the content area", () => {})
+
+  it('does not display a home icon button', function () {
+    cy.get('#home').should('not.exist')
+  })
+})
+
+describe('every page other than the home page', function () {
+  before(function () {
+    cy.visit('/person/create')
+  })
+
+  it('should display a home icon button', function () {
+    cy.get('#home').find('img').should('have.attr', 'src').and('contains', 'home')
+  })
 })
 
 describe('Searching for a publisher profile.', function () {
@@ -202,7 +215,7 @@ describe('Creating a publisher profile.', function () {
       cy.get('.profile').should('have.length', 1)
 
       // Leave input blank
-      cy.get('.person img').should('have.attr', 'src').and('match', /\/static\/media\/placeholderProfileImage..*.svg/)
+      cy.get('.person img').should('have.attr', 'src').and('match', /\/static\/media\/placeholderPersonImage..*.svg/)
     })
   })
 })
@@ -247,7 +260,7 @@ describe('Viewing a publisher profile.', function () {
     })
 
     it('Fallsback to the placeholder profile photo', function () {
-      cy.get('.Avatar img').should('have.attr', 'src').and('contains', 'placeholderProfileImage')
+      cy.get('.Avatar img').should('have.attr', 'src').and('contains', 'placeholderPersonImage')
     })
   })
 })

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import './Avatar.css'
-import placeholderProfileImage from '../people/placeholderProfileImage.svg'
+import placeholderPersonImage from '../people/placeholderPersonImage.svg'
 
 function Avatar (props) { // TODO: Rename, it doesn't make sense.
   const {src} = props
@@ -18,7 +18,7 @@ Avatar.propTypes = {
 }
 
 Avatar.defaultProps = {
-  src: placeholderProfileImage
+  src: placeholderPersonImage
 }
 
 export default Avatar
