@@ -1,3 +1,6 @@
+const fs = require('fs')
+const path = require('path')
+
 module.exports = async function (db) {
   await db.createCollection('people')
   await db.command({
@@ -24,4 +27,7 @@ module.exports = async function (db) {
       }
     }
   })
+  const siobhan = JSON.parse(fs.readFileSync(path.resolve(`${__dirname}/../../cypress/fixtures/siobhan.json`), 'utf8'))
+  const elon = JSON.parse(fs.readFileSync(path.resolve(`${__dirname}/../../cypress/fixtures/elon.json`), 'utf8'))
+  await db.collection('people').insertMany([siobhan, elon])
 }
