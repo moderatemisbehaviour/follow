@@ -1,0 +1,27 @@
+.profiles {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 1rem auto;
+  max-width: 900px;
+}
+
+.profile {
+
+}
+
+.profile img {
+  height: 5vh;
+  width: auto;
+}
+
+.profile span {
+  background: black;
+  color: #fff;
+  padding: 5px 20px;
+  border-radius: 50%;
+  font-size: 35px;
+}
+
+li .profiles {
+  display: none;
+}

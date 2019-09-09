@@ -13,7 +13,7 @@ Profiles.defaultProps = {
 }
 
 function Profiles (props) {
-  const { profiles } = props
+  const {profiles} = props
   return (
     <div className="profiles">
       {profiles.map((url, index) => {

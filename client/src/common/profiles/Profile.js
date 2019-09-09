@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import './Profile.css'
 import twitterLogo from '../twitter.svg'
 import youtubeLogo from '../youtube.png'
 import facebookLogo from '../facebook.svg'

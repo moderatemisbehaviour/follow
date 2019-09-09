@@ -38,36 +38,6 @@ li .Avatar {
   height: 1.5rem;
 }
 
-.profiles {
-  display: flex;
-  height: 10vh;
-  max-width: 900px;
-  margin: auto;
-  text-align: center;
-}
-
-li .profiles {
-  display: none;
-}
-
-.profile {
-  margin: 1em;
-  flex-grow: 1;
-}
-
-.profile img {
-  height: 100%;
-  width: auto;
-}
-
-.profile span {
-  background: black;
-  color: #fff;
-  padding: 5px 20px;
-  border-radius: 50%;
-  font-size: 35px;
-}
-
 #facebook img {
   border-radius: 50%;
 }
