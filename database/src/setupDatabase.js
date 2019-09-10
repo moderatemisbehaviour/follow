@@ -15,6 +15,10 @@ module.exports = async function (db) {
           },
           profiles: {
             type: 'array',
+            items: {
+              type: 'string',
+              minLength: 1
+            },
             minItems: 1,
             maxItems: 50,
             uniqueItems: true

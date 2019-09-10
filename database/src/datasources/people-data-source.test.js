@@ -1,14 +1,15 @@
+const fs = require('fs')
+const path = require('path')
+
 const DatabaseClient = require('../DatabaseClient')
 const PeopleDataSource = require('./people-data-source')
 const resetDatabase = require('../resetDatabase')
 
-// TODO: Use a clone of the object rather than the node cache.
-const siobhan = require('../../../cypress/fixtures/siobhan.json')
-const elon = require('../../../cypress/fixtures/elon.json')
-
 let databaseClient
 let database
 let peopleDataSource
+let elon
+let siobhan
 
 beforeAll(async () => {
   databaseClient = await new DatabaseClient(process.env.MONGODB_URI)
@@ -18,6 +19,11 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await databaseClient.close()
+})
+
+beforeEach(() => {
+  siobhan = JSON.parse(fs.readFileSync(path.resolve(`${__dirname}/../../../cypress/fixtures/siobhan.json`), 'utf8'))
+  elon = JSON.parse(fs.readFileSync(path.resolve(`${__dirname}/../../../cypress/fixtures/elon.json`), 'utf8'))
 })
 
 describe('create person', () => {
@@ -38,13 +44,28 @@ describe('create person', () => {
         await expect(peopleDataSource.createPerson(siobhanInvalid)).rejects.toThrow(Error)
       })
     })
+
+    describe('because there are no profiles', () => {
+      it('should throw a validation error', async () => {
+        const siobhanInvalid = {...siobhan}
+        delete siobhanInvalid.profiles
+        await expect(peopleDataSource.createPerson(siobhanInvalid)).rejects.toThrow(Error)
+      })
+    })
+
+    describe('because one of the profiles is an empty string', () => {
+      it('should throw a validation error', async () => {
+        const siobhanInvalid = {...siobhan}
+        siobhanInvalid.profiles[0] = ''
+        await expect(peopleDataSource.createPerson(siobhanInvalid)).rejects.toThrow(Error)
+      })
+    })
   })
 })
 
 describe('get people', () => {
   beforeEach(async () => {
     await resetDatabase()
-    await database.collection('people').insertMany([siobhan, elon])
   })
 
   describe('when the query matches the name', () => {

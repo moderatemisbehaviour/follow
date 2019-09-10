@@ -10,9 +10,9 @@ async function resetDatabase (databaseUrl) {
   await mongoClient.connect()
 
   try {
-    const followDatabase = mongoClient.db('follow')
-    await followDatabase.dropDatabase()
-    await setupDatabase(followDatabase)
+    const database = mongoClient.db('follow')
+    await database.dropDatabase()
+    await setupDatabase(database)
   } finally {
     mongoClient.close()
   }
