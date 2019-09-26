@@ -1,4 +1,6 @@
 #the-input {
-  max-width: 900px;
-  outline: none; /* Remove default blue glow outline for focused element */
+  /* Remove default blue glow outline for focused element */
+  outline: none;
+  /* Inherited margin: 1rem auto from input styling but this caused it to meet left and right edges in Search. */
+  margin: unset;
 }

@@ -21,7 +21,7 @@ function Person (props) {
     <div className="person">
       <Name name={name || undefined}/>
       <Avatar src={photo}/>
-      <Profiles profiles={profiles || undefined}/>
+      {profiles && <Profiles profiles={profiles}/>}
     </div>
   )
 }

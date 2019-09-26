@@ -1,16 +1,17 @@
 .profiles {
   display: flex;
   justify-content: space-evenly;
-  margin: 1rem auto;
-  max-width: 900px;
+  margin: 1rem;
 }
 
 .profile {
-
+  flex-grow: 1;
 }
 
 .profile img {
+  display: block;
   height: 5vh;
+  margin: auto;
   width: auto;
 }
 

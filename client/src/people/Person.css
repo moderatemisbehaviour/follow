@@ -1,41 +1,54 @@
+.person {
+  display: flex;
+  flex-direction: column;
+  height: 62%;
+  max-width: 900px;
+}
+
+li .person {
+  flex-direction: row-reverse;
+}
+
 .name {
+  flex-grow: 1;
   font-family: 'Vidaloka', serif;
   font-weight: 400;
-  font-size: 4.17rem;
+  font-size: 6vmin;
   letter-spacing: 0.05em;
-  margin: 0 auto;
-  /* max-width: 900px; */
-  height: 10vh;
+  margin: 1rem;
   text-align: center;
+}
+
+li .name {
+  flex-grow: 6;
+  font-size: unset;
+  margin: 0;
+  margin-left: 0.5rem;
+  text-align: left;
 }
 
 .name.placeholder {
   color: lightgrey;
 }
 
-li .name {
-  display: inline;
-  font-size: unset;
-  margin: 0.5rem;
+.Avatar {
+  flex-grow: 0;
+  height: 62%;
+  margin: 1rem;
+  width: auto;
 }
 
-.Avatar {
-  height: 39vh;
+li .Avatar {
+  height: 1.5rem;
+  margin: 0;
 }
 
 .Avatar img {
   border-radius: 50%;
   display: block;
   height: 100%;
+  width: auto;
   margin: 0 auto;
-}
-
-li .Avatar {
-  display: unset;
-  float: left;
-  /* TODO: This is just a guess to line up the text and image vertically,
-     come up with a more deterministic way. */
-  height: 1.5rem;
 }
 
 #facebook img {
