@@ -168,6 +168,7 @@ describe('creating a publisher profile.', function () {
     })
 
     it('activates the validation if the user tries to proceed with a blank (and therefore invalid) profile URL', function () {
+
     })
   })
 
@@ -210,15 +211,47 @@ describe('creating a publisher profile.', function () {
       cy.get('.person img').should('have.attr', 'src', 'https://pbs.twimg.com/profile_images/1102783358973677569/qEt61Ej8_400x400.jpg')
     })
 
-    it('discards invalid profiles or images currently being edited when the user decides to edit something else', function () {
+    it('discards blank profiles or images currently being edited when the user decides to edit something else', function () {
       cy.get('#add-profile').click()
       // Leave input blank
       cy.get('.profile').should('have.length', 2)
       cy.get('#add-image').click()
       cy.get('.profile').should('have.length', 1)
-
       // Leave input blank
       cy.get('.person img').should('have.attr', 'src').and('match', /\/static\/media\/placeholderPersonImage..*.svg/)
+    })
+  })
+
+  describe.only('saving the person', function () {
+    beforeEach(function () {
+      cy.fixture('siobhan.json').as('siobhan').then((siobhan) => {
+        cy.get('#the-input').type(siobhan.name)
+        cy.get('.next').click()
+        cy.get('#the-input').type(siobhan.profiles[0])
+        cy.get('#add-image').click()
+        cy.get('#the-input').type(siobhan.photo)
+        cy.get('#add-profile').click()
+        cy.get('#the-input').type(siobhan.profiles[1])
+      })
+    })
+
+    it('save successfully and view the person', function () {
+      cy.get('#save').click()
+
+      cy.url().should('match', /\/person\/\w+/)
+      cy.get('.profile').should('have.length', 2)
+      cy.get('.person img').should('have.attr', 'src').and('eq', this.siobhan.photo)
+    })
+
+    describe('and there is a blank profile being edited', function () {
+      it('save successfully and view the person', function () {
+        cy.get('#add-profile').click()
+        cy.get('#save').click()
+
+        cy.url().should('match', /\/person\/\w+/)
+        cy.get('.profile').should('have.length', 2)
+        cy.get('.person img').should('have.attr', 'src').and('eq', this.siobhan.photo)
+      })
     })
   })
 })
