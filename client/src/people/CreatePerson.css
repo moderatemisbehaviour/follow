@@ -1,9 +1,9 @@
-#create-person {
-  list-style-type: none;
-}
-
 #create-person img {
   height: 1.3rem;
+}
+
+#create-suggested-person h1 {
+  display: inline;
 }
 
 #create-person:hover {

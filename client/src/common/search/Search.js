@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { Query } from 'react-apollo'
 
 import Input from '../Input'
+import './Search.css'
 import SearchResults from './SearchResults'
 
 class Search extends Component {

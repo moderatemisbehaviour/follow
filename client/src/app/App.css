@@ -19,14 +19,6 @@ body {
   height: 100vh;
 }
 
-.Search {
-  height: 38%;
-  margin: 1rem;
-  max-width: 900px;
-   /* Had to add this in combination with 'align-items: center' otherwise the input width went really small. */
-  width: 100%;
-}
-
 button {
   border-radius: 0.2rem;
   font-size: 1rem;
@@ -36,6 +28,7 @@ button {
 }
 
 li {
+  list-style-type: none;
   padding: 0.5rem;
 }
 
@@ -44,7 +37,7 @@ input {
   padding: 0.5rem;
   display: block;
   margin: 1rem auto;
-  width: 100%;
+  min-width: 13rem;
   border: 1px solid #AAA;
   border-radius: 0.2rem;
 }
