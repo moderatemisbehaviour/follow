@@ -11,14 +11,15 @@ EditorInput.propTypes = {
   value: PropTypes.string.isRequired
 }
 
-function EditorInput (props) {
+function EditorInput(props) {
   return (
     <Input
       inputRef={props.inputRef}
       onChange={props.onChange}
       prompt={props.prompt}
       invalid={props.invalid}
-      value={props.value}/>
+      value={props.value}
+    />
   )
 }
 

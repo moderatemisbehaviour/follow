@@ -7,29 +7,26 @@ import Person from '../../people/Person'
 import SearchResult from './SearchResult'
 import './SearchResults.css'
 
-function SearchResults (props) {
+function SearchResults(props) {
   const {
     query,
-    results: {
-      data, loading, error
-    }
+    results: { data, loading, error }
   } = props
 
   return (
     <ul className="SearchResults">
       {loading && <li>Loading...</li>}
       {error && <li>Error :(</li>}
-      {data && data.people &&
+      {data && data.people && (
         <React.Fragment>
-          {data.people.map((person) => (
+          {data.people.map(person => (
             <SearchResult key={person.id} id={person.id}>
-              <Person {...person}/>
+              <Person {...person} />
             </SearchResult>
-          ))
-          }
-          <CreatePerson personName={query}/>
+          ))}
+          <CreatePerson personName={query} />
         </React.Fragment>
-      }
+      )}
     </ul>
   )
 }

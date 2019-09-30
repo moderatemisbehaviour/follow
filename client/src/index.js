@@ -15,7 +15,7 @@ const client = new ApolloClient({
 // TODO: Use Helmet to avoid DOM nesting error.
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <App/>
+    <App />
   </ApolloProvider>,
   document.getElementById('root')
 )

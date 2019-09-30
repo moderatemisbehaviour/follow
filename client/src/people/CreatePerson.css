@@ -7,11 +7,11 @@
 }
 
 #create-person:hover {
-  background-color: #EEE;
+  background-color: #eee;
 }
 
-a:focus > #create-person { 
-  background-color: #DFDFDF;
+a:focus > #create-person {
+  background-color: #dfdfdf;
 }
 
 #create-suggested-person {

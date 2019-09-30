@@ -38,11 +38,12 @@ input {
   display: block;
   margin: 1rem auto;
   min-width: 13rem;
-  border: 1px solid #AAA;
+  border: 1px solid #aaa;
   border-radius: 0.2rem;
 }
 
-input[type="button"], input[type="submit"] {
+input[type='button'],
+input[type='submit'] {
   cursor: pointer;
 }
 

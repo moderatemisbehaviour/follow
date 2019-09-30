@@ -15,10 +15,7 @@
       "request": "launch",
       "name": "dev server",
       "runtimeExecutable": "npm",
-      "runtimeArgs": [
-        "run-script",
-        "start:dev"
-      ],
+      "runtimeArgs": ["run-script", "start:dev"],
       "port": 9229,
       "cwd": "${workspaceFolder}/people"
     },
@@ -28,6 +25,6 @@
       "name": "dev client",
       "url": "http://localhost:4001",
       "webRoot": "${workspaceFolder}/client/src"
-    },
+    }
   ]
 }

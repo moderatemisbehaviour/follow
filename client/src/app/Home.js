@@ -8,12 +8,12 @@ import Name from '../people/Name'
 import '../app/App.css'
 import '../people/Person.css'
 
-function Home () {
+function Home() {
   return (
     <div className="person">
-      <Name name="Follow people, not platforms"/>
-      <Avatar src={logo}/>
-      <Announcement/>
+      <Name name="Follow people, not platforms" />
+      <Avatar src={logo} />
+      <Announcement />
     </div>
   )
 }

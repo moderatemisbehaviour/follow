@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import home from '../common/home.svg'
 import './HomeLink.css'
 
-function HomeLink (props) {
+function HomeLink(props) {
   return (
     <div className="HomeLink">
       <Link to="/">

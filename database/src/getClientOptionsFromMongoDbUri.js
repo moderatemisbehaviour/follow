@@ -1,6 +1,6 @@
 const mongoDbUri = require('mongodb-uri')
 
-function getClientOptionsFromMongoDbUri (uri) {
+function getClientOptionsFromMongoDbUri(uri) {
   return mongoDbUri.parse(uri)
 }
 

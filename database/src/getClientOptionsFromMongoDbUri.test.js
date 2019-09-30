@@ -5,7 +5,9 @@ describe('when a valid Heroku mLab MongoDB URI is passed in', () => {
     let clientOptions
 
     beforeAll(() => {
-      clientOptions = getClientOptionsFromMongoDbUri('mongodb://heroku_12345678:random_password@ds029017.mLab.com:29017/heroku_12345678')
+      clientOptions = getClientOptionsFromMongoDbUri(
+        'mongodb://heroku_12345678:random_password@ds029017.mLab.com:29017/heroku_12345678'
+      )
     })
 
     it('returns the scheme', () => {
@@ -21,7 +23,9 @@ describe('when a valid Heroku mLab MongoDB URI is passed in', () => {
     })
 
     it('returns the hosts', () => {
-      expect(clientOptions.hosts).toEqual([{host: 'ds029017.mLab.com', port: 29017}])
+      expect(clientOptions.hosts).toEqual([
+        { host: 'ds029017.mLab.com', port: 29017 }
+      ])
     })
 
     it('returns the database', () => {
@@ -33,7 +37,9 @@ describe('when a valid Heroku mLab MongoDB URI is passed in', () => {
     let clientOptions
 
     beforeAll(() => {
-      clientOptions = getClientOptionsFromMongoDbUri('mongodb://localhost:27017/follow')
+      clientOptions = getClientOptionsFromMongoDbUri(
+        'mongodb://localhost:27017/follow'
+      )
     })
 
     it('returns the scheme', () => {
@@ -49,7 +55,7 @@ describe('when a valid Heroku mLab MongoDB URI is passed in', () => {
     })
 
     it('returns the hosts', () => {
-      expect(clientOptions.hosts).toEqual([{host: 'localhost', port: 27017}])
+      expect(clientOptions.hosts).toEqual([{ host: 'localhost', port: 27017 }])
     })
 
     it('returns the database', () => {

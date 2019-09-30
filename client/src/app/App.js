@@ -7,44 +7,44 @@ import './App.css'
 import Footer from './Footer'
 
 class App extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       searchResults: []
     }
   }
 
-  render () {
+  render() {
     return (
       <BrowserRouter>
         <Switch>
           <Route path={'/person/create'}>
-            {({location}) => {
+            {({ location }) => {
               const name = location.search.replace('?name=', '')
               return (
                 <React.Fragment>
-                  <PeopleCreator name={name}/>
-                  <Footer location={location}/>
+                  <PeopleCreator name={name} />
+                  <Footer location={location} />
                 </React.Fragment>
               )
             }}
           </Route>
           <Route path={'/person/:id'}>
-            {({location, match}) => {
+            {({ location, match }) => {
               const id = match === null ? null : match.params.id
               return (
                 <React.Fragment>
-                  <PeopleBrowser id={id}/>
-                  <Footer location={location}/>
+                  <PeopleBrowser id={id} />
+                  <Footer location={location} />
                 </React.Fragment>
               )
             }}
           </Route>
           <Route>
-            {({location}) => (
+            {({ location }) => (
               <React.Fragment>
-                <PeopleBrowser/>
-                <Footer location={location}/>
+                <PeopleBrowser />
+                <Footer location={location} />
               </React.Fragment>
             )}
           </Route>

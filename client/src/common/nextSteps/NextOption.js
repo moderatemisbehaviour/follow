@@ -8,14 +8,16 @@ NextOption.propTypes = {
   label: PropTypes.string.isRequired
 }
 
-function NextOption (props) {
+function NextOption(props) {
   return (
     <input
       id={`add-${props.name}`}
       className="next"
       disabled={props.disabled}
       onClick={props.onClick}
-      type="button" value={props.label}/>
+      type="button"
+      value={props.label}
+    />
   )
 }
 

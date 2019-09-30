@@ -8,14 +8,14 @@ import Person from './Person'
 import Search from '../common/search/Search'
 
 class PeopleBrowser extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       searchResults: []
     }
   }
 
-  render () {
+  render() {
     const { id } = this.props
 
     if (id) {
@@ -34,14 +34,20 @@ class PeopleBrowser extends Component {
           {({ data, loading, error }) => {
             if (error) return <p>ERROR</p>
             if (loading) {
-              return <Person title='Loading...' />
+              return <Person title="Loading..." />
             }
 
-            const { person: { name, photo, profiles } } = data
+            const {
+              person: { name, photo, profiles }
+            } = data
             return (
               <React.Fragment>
-                <Person name={name} photo={photo || undefined} profiles={profiles}/>
-                <Search/>
+                <Person
+                  name={name}
+                  photo={photo || undefined}
+                  profiles={profiles}
+                />
+                <Search />
               </React.Fragment>
             )
           }}
@@ -50,8 +56,8 @@ class PeopleBrowser extends Component {
     } else {
       return (
         <React.Fragment>
-          <Home/>
-          <Search/>
+          <Home />
+          <Search />
         </React.Fragment>
       )
     }

@@ -14,14 +14,14 @@ Person.propTypes = {
   profiles: PropTypes.arrayOf(PropTypes.string.isRequired)
 }
 
-function Person (props) {
+function Person(props) {
   const { name, photo, profiles } = props
 
   return (
     <div className="person">
-      <Name name={name || undefined}/>
-      <Avatar src={photo}/>
-      {profiles && <Profiles profiles={profiles}/>}
+      <Name name={name || undefined} />
+      <Avatar src={photo} />
+      {profiles && <Profiles profiles={profiles} />}
     </div>
   )
 }

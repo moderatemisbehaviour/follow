@@ -11,13 +11,13 @@ NextSteps.propTypes = {
   message: PropTypes.string
 }
 
-function NextSteps (props) {
+function NextSteps(props) {
   return (
     <div className={`next-steps ${props.invalid ? 'invalid' : ''}`}>
-      <span className='message'>{props.invalid ? props.invalidMessage : props.message}</span>
-      <div>
-        {props.children}
-      </div>
+      <span className="message">
+        {props.invalid ? props.invalidMessage : props.message}
+      </span>
+      <div>{props.children}</div>
     </div>
   )
 }

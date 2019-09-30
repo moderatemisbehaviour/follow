@@ -7,21 +7,19 @@ import Name from '../people/Name'
 
 import './CreatePerson.css'
 
-function CreatePerson (props) {
+function CreatePerson(props) {
   return (
     <li id="create-person">
-      <img src={createPersonIcon} alt="create person icon"/>
+      <img src={createPersonIcon} alt="create person icon" />
       <span>Create </span>
       <Link to={`/person/create?name=${props.personName}`}>
         <span id="create-suggested-person">
-          <Name name={props.personName}/>
+          <Name name={props.personName} />
         </span>
       </Link>
       <span> or </span>
       <Link to="/person/create">
-        <span id="create-new-person">
-          someone else.
-        </span>
+        <span id="create-new-person">someone else.</span>
       </Link>
     </li>
   )

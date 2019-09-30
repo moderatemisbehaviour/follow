@@ -22,8 +22,18 @@ afterAll(async () => {
 })
 
 beforeEach(() => {
-  siobhan = JSON.parse(fs.readFileSync(path.resolve(`${__dirname}/../../../cypress/fixtures/siobhan.json`), 'utf8'))
-  elon = JSON.parse(fs.readFileSync(path.resolve(`${__dirname}/../../../cypress/fixtures/elon.json`), 'utf8'))
+  siobhan = JSON.parse(
+    fs.readFileSync(
+      path.resolve(`${__dirname}/../../../cypress/fixtures/siobhan.json`),
+      'utf8'
+    )
+  )
+  elon = JSON.parse(
+    fs.readFileSync(
+      path.resolve(`${__dirname}/../../../cypress/fixtures/elon.json`),
+      'utf8'
+    )
+  )
 })
 
 describe('create person', () => {
@@ -39,25 +49,31 @@ describe('create person', () => {
   describe('when the object is invalid', () => {
     describe('because the person has no name', () => {
       it('should throw a validation error', async () => {
-        const siobhanInvalid = {...siobhan}
+        const siobhanInvalid = { ...siobhan }
         delete siobhanInvalid.name
-        await expect(peopleDataSource.createPerson(siobhanInvalid)).rejects.toThrow(Error)
+        await expect(
+          peopleDataSource.createPerson(siobhanInvalid)
+        ).rejects.toThrow(Error)
       })
     })
 
     describe('because there are no profiles', () => {
       it('should throw a validation error', async () => {
-        const siobhanInvalid = {...siobhan}
+        const siobhanInvalid = { ...siobhan }
         delete siobhanInvalid.profiles
-        await expect(peopleDataSource.createPerson(siobhanInvalid)).rejects.toThrow(Error)
+        await expect(
+          peopleDataSource.createPerson(siobhanInvalid)
+        ).rejects.toThrow(Error)
       })
     })
 
     describe('because one of the profiles is an empty string', () => {
       it('should throw a validation error', async () => {
-        const siobhanInvalid = {...siobhan}
+        const siobhanInvalid = { ...siobhan }
         siobhanInvalid.profiles[0] = ''
-        await expect(peopleDataSource.createPerson(siobhanInvalid)).rejects.toThrow(Error)
+        await expect(
+          peopleDataSource.createPerson(siobhanInvalid)
+        ).rejects.toThrow(Error)
       })
     })
   })

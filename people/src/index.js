@@ -8,12 +8,14 @@ const applyApolloServerMiddleware = require('./applyApolloServerMiddleware')
 const configureExpressToHandleUrlPaths = require('./configureExpressToHandleUrlPaths')
 
 const expressServer = createExpressServerForStaticContent()
-getDatabase().then((db) => {
+getDatabase().then(db => {
   const apolloServer = applyApolloServerMiddleware(expressServer, db)
 
   const port = process.env.PORT || 4000
   expressServer.listen({ port }, () =>
-    console.log(`🚀 Server ready at http://localhost:${port}${apolloServer.graphqlPath}`)
+    console.log(
+      `🚀 Server ready at http://localhost:${port}${apolloServer.graphqlPath}`
+    )
   )
 
   configureExpressToHandleUrlPaths(expressServer)

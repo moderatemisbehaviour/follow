@@ -13,13 +13,13 @@ Profile.propTypes = {
 }
 
 const websiteToPlatformIconMap = {
-  'twitter': twitterLogo,
-  'youtube': youtubeLogo,
-  'facebook': facebookLogo
+  twitter: twitterLogo,
+  youtube: youtubeLogo,
+  facebook: facebookLogo
 }
 
-function Profile (props) {
-  const {id, url: userInputUrl} = props
+function Profile(props) {
+  const { id, url: userInputUrl } = props
 
   let className
   let platformIconUrl
@@ -33,7 +33,8 @@ function Profile (props) {
       url = new URL(userInputUrl)
       const hostnameParts = url.hostname.split('.')
 
-      const websiteNameIndex = hostnameParts.length >= 2 ? hostnameParts.length - 2 : 0
+      const websiteNameIndex =
+        hostnameParts.length >= 2 ? hostnameParts.length - 2 : 0
       websiteName = hostnameParts[websiteNameIndex]
 
       const knownPlatform = websiteName in websiteToPlatformIconMap
@@ -48,16 +49,20 @@ function Profile (props) {
   }
 
   return (
-    <div className='profile' id={id}>
+    <div className="profile" id={id}>
       <a href={url ? url.href : 'http://www.example.com'}>
-        {platformIconUrl &&
-          <img className={className} src={platformIconUrl} alt="platform icon" />
-        }
-        {!platformIconUrl &&
+        {platformIconUrl && (
+          <img
+            className={className}
+            src={platformIconUrl}
+            alt="platform icon"
+          />
+        )}
+        {!platformIconUrl && (
           <UnknownPlatformIcon className={className}>
             {url ? websiteName.charAt(0) : '?'}
           </UnknownPlatformIcon>
-        }
+        )}
       </a>
     </div>
   )

@@ -3,9 +3,9 @@
 }
 
 .SearchResult:hover {
-  background-color: #EEE;
+  background-color: #eee;
 }
 
-a:focus > .SearchResult { 
-  background-color: #DFDFDF;
+a:focus > .SearchResult {
+  background-color: #dfdfdf;
 }

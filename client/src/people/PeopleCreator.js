@@ -9,14 +9,14 @@ import Person from './Person'
 import Save from './Save.js'
 
 class PeopleCreator extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.properties = {
       name: {
         name: 'name',
         getter: () => this.state.person.name,
-        setter: (value) => {
+        setter: value => {
           this.setState(state => ({
             person: {
               ...state.person,
@@ -35,9 +35,9 @@ class PeopleCreator extends Component {
       profiles: {
         name: 'profile',
         getter: () => this.state.person.profiles[this.state.profileIndex],
-        setter: (value) => {
+        setter: value => {
           this.setState(state => {
-            const updatedPerson = {...state.person}
+            const updatedPerson = { ...state.person }
             updatedPerson.profiles[state.profileIndex] = value
             return {
               ...state,
@@ -50,7 +50,9 @@ class PeopleCreator extends Component {
         prompt: "Copy-paste the person's profile URL",
         validate: () => {
           try {
-            const urlInInput = this.state.person.profiles[this.state.profileIndex]
+            const urlInInput = this.state.person.profiles[
+              this.state.profileIndex
+            ]
             // eslint-disable-next-line no-new
             new URL(urlInInput)
             return true
@@ -59,15 +61,17 @@ class PeopleCreator extends Component {
           }
         },
         validationMessage: 'The URL you have provided is invalid.',
-        complete: () => this.setState(state => ({profileIndex: ++state.profileIndex})),
-        discard: () => this.state.person.profiles.splice(this.state.profileIndex, 1)
+        complete: () =>
+          this.setState(state => ({ profileIndex: ++state.profileIndex })),
+        discard: () =>
+          this.state.person.profiles.splice(this.state.profileIndex, 1)
       },
       image: {
         name: 'image',
         getter: () => this.state.person.photo,
-        setter: (value) => {
+        setter: value => {
           this.setState(state => {
-            const updatedPerson = {...state.person}
+            const updatedPerson = { ...state.person }
             updatedPerson.photo = value
             return {
               ...state,
@@ -110,15 +114,17 @@ class PeopleCreator extends Component {
     this.editNextProperty = this.editNextProperty.bind(this)
   }
 
-  editProperty (event) {
-    const {target: {value}} = event
+  editProperty(event) {
+    const {
+      target: { value }
+    } = event
     this.state.propertyBeingEdited.setter(value)
     this.setState({
       touched: true
     })
   }
 
-  editNextProperty (nextProperty) {
+  editNextProperty(nextProperty) {
     if (this.state.propertyBeingEdited.validate()) {
       this.state.propertyBeingEdited.complete()
     } else {
@@ -134,11 +140,11 @@ class PeopleCreator extends Component {
     this.input.current.focus()
   }
 
-  get personValid () {
-    return this.state.person.name && this.state.person.profiles.some((p) => !!p)
+  get personValid() {
+    return this.state.person.name && this.state.person.profiles.some(p => !!p)
   }
 
-  render () {
+  render() {
     const value = this.state.propertyBeingEdited.getter()
     const invalid = !!value && !this.state.propertyBeingEdited.validate()
     const nextOptions = this.state.propertyBeingEdited.next()
@@ -149,35 +155,39 @@ class PeopleCreator extends Component {
         <Person
           name={this.state.person.name || null}
           photo={this.state.person.photo ? this.state.person.photo : undefined}
-          profiles={this.state.person.profiles}/>
+          profiles={this.state.person.profiles}
+        />
         <EditorInput
           onChange={this.editProperty}
           prompt={prompt}
           inputRef={this.input}
           invalid={this.state.touched && invalid}
-          value={value}/>
+          value={value}
+        />
         <NextSteps
           invalid={this.state.touched && invalid}
           message="Continue adding information then press save to complete! You can also easily make more changes later."
           invalidMessage={this.state.propertyBeingEdited.validationMessage}
         >
-          {
-            nextOptions.map((nextProperty) => (
-              <NextOption
-                disabled={invalid}
-                key={`add-${nextProperty.name}-button`}
-                label={nextProperty.nextButtonLabel}
-                name={nextProperty.name}
-                onClick={() => this.editNextProperty(nextProperty)}/>
-            ))
-          }
+          {nextOptions.map(nextProperty => (
+            <NextOption
+              disabled={invalid}
+              key={`add-${nextProperty.name}-button`}
+              label={nextProperty.nextButtonLabel}
+              name={nextProperty.name}
+              onClick={() => this.editNextProperty(nextProperty)}
+            />
+          ))}
         </NextSteps>
-        <Save disabled={!this.personValid} getPersonToSave={() => {
-          if (!this.state.propertyBeingEdited.validate()) {
-            this.state.propertyBeingEdited.discard()
-          }
-          return this.state.person
-        }}/>
+        <Save
+          disabled={!this.personValid}
+          getPersonToSave={() => {
+            if (!this.state.propertyBeingEdited.validate()) {
+              this.state.propertyBeingEdited.discard()
+            }
+            return this.state.person
+          }}
+        />
       </div>
     )
   }

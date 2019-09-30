@@ -12,13 +12,13 @@ Profiles.defaultProps = {
   profiles: []
 }
 
-function Profiles (props) {
-  const {profiles} = props
+function Profiles(props) {
+  const { profiles } = props
   return (
     <div className="profiles">
       {profiles.map((url, index) => {
         const profileId = `profile-${index}`
-        return <Profile key={profileId} id={profileId} url={url}/>
+        return <Profile key={profileId} id={profileId} url={url} />
       })}
     </div>
   )

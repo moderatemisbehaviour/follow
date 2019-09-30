@@ -7,7 +7,7 @@ Footer.propTypes = {
   location: PropTypes.shape().isRequired
 }
 
-function Footer (props) {
+function Footer(props) {
   return props.location.pathname === '/' ? null : <HomeLink />
 }
 

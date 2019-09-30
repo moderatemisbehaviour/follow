@@ -7,21 +7,21 @@ import './Search.css'
 import SearchResults from './SearchResults'
 
 class Search extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       showSearchResults: false
     }
   }
 
-  search (query) {
+  search(query) {
     this.setState({
       query
     })
   }
 
-  render () {
-    const {query} = this.state
+  render() {
+    const { query } = this.state
     const GET_PEOPLE = gql`
       query People($query: String!) {
         people(query: $query) {
@@ -35,15 +35,15 @@ class Search extends Component {
     return (
       <div className="Search">
         <Input
-          onChange={(event) => this.search(event.target.value)}
+          onChange={event => this.search(event.target.value)}
           prompt="Type a person's name."
           type="search"
         />
-        {query &&
-          <Query query={GET_PEOPLE} variables={{query}}>
-            {(results) => <SearchResults results={results} query={query}/>}
+        {query && (
+          <Query query={GET_PEOPLE} variables={{ query }}>
+            {results => <SearchResults results={results} query={query} />}
           </Query>
-        }
+        )}
       </div>
     )
   }
