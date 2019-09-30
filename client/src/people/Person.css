@@ -1,71 +1,55 @@
+.person {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  max-width: 900px;
+  padding: 1rem 0;
+  justify-content: space-between;
+}
+
+li .person {
+  flex-direction: row-reverse;
+  padding: 0;
+}
+
 .name {
   font-family: 'Vidaloka', serif;
   font-weight: 400;
-  font-size: 4.17rem;
+  font-size: 6vmin;
   letter-spacing: 0.05em;
-  margin: 0 auto;
-  /* max-width: 900px; */
-  height: 10vh;
   text-align: center;
+}
+
+li .name {
+  flex-grow: 1;
+  font-size: unset;
+  text-align: left;
 }
 
 .name.placeholder {
   color: lightgrey;
 }
 
-li .name {
-  display: inline;
-  font-size: unset;
-  margin: 0.5rem;
+.Avatar {
+  flex-grow: 0.62;
+  /* TODO: Come up with a better solution for shrinking the avatar. */
+  height: 20vmax;
+  max-height: 20vmax;
+  width: auto;
 }
 
-.Avatar {
-  height: 39vh;
+li .Avatar {
+  flex-grow: 0;
+  height: 1.5rem;
+  margin-right: 0.5rem;
 }
 
 .Avatar img {
   border-radius: 50%;
   display: block;
   height: 100%;
-  margin: 0 auto;
-}
-
-li .Avatar {
-  display: unset;
-  float: left;
-  /* TODO: This is just a guess to line up the text and image vertically,
-     come up with a more deterministic way. */
-  height: 1.5rem;
-}
-
-.profiles {
-  display: flex;
-  height: 10vh;
-  max-width: 900px;
-  margin: auto;
-  text-align: center;
-}
-
-li .profiles {
-  display: none;
-}
-
-.profile {
-  margin: 1em;
-  flex-grow: 1;
-}
-
-.profile img {
-  height: 100%;
   width: auto;
-}
-
-.profile span {
-  background: black;
-  color: #fff;
-  padding: 5px 20px;
-  border-radius: 50%;
-  font-size: 35px;
+  margin: 0 auto;
 }
 
 #facebook img {

@@ -1,16 +1,16 @@
 const {DataSource} = require('apollo-datasource')
 const {ObjectID} = require('mongodb')
 
+// TODO: Replace with Mongo community data source
 class PeopleDataSource extends DataSource {
   constructor (db) {
     super()
     this.db = db
   }
 
-  // TODO: Use validated collection.
   async createPerson (person) {
     const peopleCollection = this.db.collection('people')
-    const result = await peopleCollection.insertOne(person)
+    const result = await peopleCollection.insertOne({...person}) // Have to shallow clone the object becase insertOne mutates the original to add _id.
     const insertedDocumentWithIds = result.ops[0]
 
     return {

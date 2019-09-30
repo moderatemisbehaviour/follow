@@ -172,7 +172,12 @@ class PeopleCreator extends Component {
             ))
           }
         </NextSteps>
-        <Save disabled={!this.personValid} person={this.state.person}/>
+        <Save disabled={!this.personValid} getPersonToSave={() => {
+          if (!this.state.propertyBeingEdited.validate()) {
+            this.state.propertyBeingEdited.discard()
+          }
+          return this.state.person
+        }}/>
       </div>
     )
   }

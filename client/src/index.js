@@ -8,10 +8,8 @@ import './index.css'
 // TODO: Uncomment this when you figure out how to make it work with Cypress.
 // import registerServiceWorker from './registerServiceWorker'
 
-const port = process.env.PORT || 4000
-
 const client = new ApolloClient({
-  uri: `http://localhost:${port}/graphql`
+  uri: `${window.location.origin}/graphql`
 })
 
 // TODO: Use Helmet to avoid DOM nesting error.

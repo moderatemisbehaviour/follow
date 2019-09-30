@@ -1,47 +1,71 @@
-const getDbClient = require('../../getDbClient')
-const PeopleDataSource = require('./people')
-const resetDatabase = require('../../resetDatabase')
+const fs = require('fs')
+const path = require('path')
 
-// TODO: Get fixtures from a common place.
-const siobhan = {
-  name: 'Siobhan Wilson',
-  profiles: [
-    'https://twitter.com/SiobhanIsBack'
-  ]
-}
-const elon = {
-  name: 'Elon Musk',
-  photo: 'https: //pbs.twimg.com/profile_images/972170159614906369/0o9cdCOp_400x400.jpg',
-  profiles: [
-    'https: //twitter.com/elonmusk'
-  ]
-}
+const DatabaseClient = require('../DatabaseClient')
+const PeopleDataSource = require('./people-data-source')
+const resetDatabase = require('../resetDatabase')
 
-let db
+let databaseClient
+let database
 let peopleDataSource
+let elon
+let siobhan
 
 beforeAll(async () => {
-  db = await getDbClient.connectAndGetDatabase()
-  peopleDataSource = new PeopleDataSource(db)
-  // TODO: Create test documents
+  databaseClient = await new DatabaseClient(process.env.MONGODB_URI)
+  database = await databaseClient.connectAndGetDatabase()
+  peopleDataSource = new PeopleDataSource(database)
 })
 
 afterAll(async () => {
-  await getDbClient.close()
+  await databaseClient.close()
+})
+
+beforeEach(() => {
+  siobhan = JSON.parse(fs.readFileSync(path.resolve(`${__dirname}/../../../cypress/fixtures/siobhan.json`), 'utf8'))
+  elon = JSON.parse(fs.readFileSync(path.resolve(`${__dirname}/../../../cypress/fixtures/elon.json`), 'utf8'))
 })
 
 describe('create person', () => {
-  it('returns an object', async () => {
-    const actualResponse = await peopleDataSource.createPerson(siobhan)
-    // TODO: Find out why expect.stringMatching does not work for _id property.
-    expect(actualResponse).toMatchObject(siobhan)
+  describe('when the object is valid', () => {
+    it('returns an object', async () => {
+      const actualResponse = await peopleDataSource.createPerson(siobhan)
+      await peopleDataSource.createPerson(siobhan)
+      // TODO: Find out why expect.stringMatching does not work for _id property.
+      expect(actualResponse).toMatchObject(siobhan)
+    })
+  })
+
+  describe('when the object is invalid', () => {
+    describe('because the person has no name', () => {
+      it('should throw a validation error', async () => {
+        const siobhanInvalid = {...siobhan}
+        delete siobhanInvalid.name
+        await expect(peopleDataSource.createPerson(siobhanInvalid)).rejects.toThrow(Error)
+      })
+    })
+
+    describe('because there are no profiles', () => {
+      it('should throw a validation error', async () => {
+        const siobhanInvalid = {...siobhan}
+        delete siobhanInvalid.profiles
+        await expect(peopleDataSource.createPerson(siobhanInvalid)).rejects.toThrow(Error)
+      })
+    })
+
+    describe('because one of the profiles is an empty string', () => {
+      it('should throw a validation error', async () => {
+        const siobhanInvalid = {...siobhan}
+        siobhanInvalid.profiles[0] = ''
+        await expect(peopleDataSource.createPerson(siobhanInvalid)).rejects.toThrow(Error)
+      })
+    })
   })
 })
 
 describe('get people', () => {
   beforeEach(async () => {
     await resetDatabase()
-    await db.collection('people').insertMany([siobhan, elon])
   })
 
   describe('when the query matches the name', () => {

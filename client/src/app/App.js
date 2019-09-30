@@ -19,36 +19,32 @@ class App extends Component {
       <BrowserRouter>
         <Switch>
           <Route path={'/person/create'}>
-            {({
-              location: {
-                search
-              }
-            }) => {
-              const name = search.replace('?name=', '')
+            {({location}) => {
+              const name = location.search.replace('?name=', '')
               return (
                 <React.Fragment>
                   <PeopleCreator name={name}/>
-                  <Footer/>
+                  <Footer location={location}/>
                 </React.Fragment>
               )
             }}
           </Route>
           <Route path={'/person/:id'}>
-            {({ match }) => {
+            {({location, match}) => {
               const id = match === null ? null : match.params.id
               return (
                 <React.Fragment>
                   <PeopleBrowser id={id}/>
-                  <Footer/>
+                  <Footer location={location}/>
                 </React.Fragment>
               )
             }}
           </Route>
           <Route>
-            {() => (
+            {({location}) => (
               <React.Fragment>
                 <PeopleBrowser/>
-                <Footer/>
+                <Footer location={location}/>
               </React.Fragment>
             )}
           </Route>

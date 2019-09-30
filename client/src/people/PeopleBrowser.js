@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 
-import logo from '../common/logo.png'
+import Home from '../app/Home'
 import Person from './Person'
 import Search from '../common/search/Search'
 
@@ -50,7 +50,7 @@ class PeopleBrowser extends Component {
     } else {
       return (
         <React.Fragment>
-          <Person name="Follow people, not platforms" photo={logo}/>
+          <Home/>
           <Search/>
         </React.Fragment>
       )

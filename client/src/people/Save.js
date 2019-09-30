@@ -7,7 +7,7 @@ import {Redirect} from 'react-router-dom'
 import './Save.css'
 
 function Save (props) {
-  const {person} = props
+  const {getPersonToSave} = props
 
   return (
     <Mutation mutation={CREATE_PERSON}>
@@ -24,7 +24,7 @@ function Save (props) {
           onClick={(e) => {
             createPerson({
               variables: {
-                person
+                person: getPersonToSave()
               }
             })
           }}
@@ -46,7 +46,7 @@ const CREATE_PERSON = gql`
 
 Save.propTypes = {
   disabled: PropTypes.bool,
-  person: PropTypes.shape({})
+  getPersonToSave: PropTypes.function
 }
 
 export default Save

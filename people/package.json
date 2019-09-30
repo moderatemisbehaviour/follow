@@ -1,5 +1,5 @@
 {
-  "name": "follow-server",
+  "name": "follow-people",
   "version": "0.1.0",
   "author": {
     "name": "Daniel Metcalfe",
@@ -7,19 +7,19 @@
     "url": "http://danielmetcalfe.rocks/"
   },
   "scripts": {
-    "start": "node src/index",
-    "start:dev": "nodemon node --inspect src/index",
-    "test": "jest",
-    "clean": "node cleanDatabase.js"
+    "start": "nodenv --E ../.env src/index.js",
+    "start:dev": "nodemon --exec 'nodenv --E ../.env' src/index.js",
+    "test": "jest"
   },
   "dependencies": {
     "apollo-server": "^2.2.2",
     "apollo-server-express": "^2.2.2",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
+    "follow-database": "file:../database",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.10.0",
-    "mongodb": "^3.1.10",
+    "node-env-run": "^3.0.2",
     "passport": "^0.4.0",
     "passport-twitter": "^1.0.4",
     "twitter": "^1.7.1"
@@ -28,7 +28,6 @@
     "jest": "^23.6.0"
   },
   "jest": {
-    "globalSetup": "./src/jestGlobalSetup.js",
     "testEnvironment": "node"
   }
 }

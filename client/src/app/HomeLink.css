@@ -1,7 +1,8 @@
 .HomeLink {
   bottom: 0;
-  padding: 1rem;
+  left: 0; /* Horizontal scroll bar without this. */
   position: absolute;
   text-align: center;
   width: 100%;
+  z-index: 0;
 }

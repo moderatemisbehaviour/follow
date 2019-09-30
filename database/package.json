@@ -1,0 +1,29 @@
+{
+  "name": "follow-database",
+  "version": "0.1.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "nodenv -E ../.env --exec jest",
+    "start": "node src/index.js",
+    "reset-database": "nodenv -E ../.env --exec \"node -e 'require(\\\"./src/resetDatabase.js\\\")()'\""
+  },
+  "author": {
+    "name": "Daniel Metcalfe",
+    "email": "mrdanielmetcalfe@gmail.com",
+    "url": "http://danielmetcalfe.rocks/"
+  },
+  "license": "UNLICENSED",
+  "dependencies": {
+    "apollo-datasource": "^0.6.1",
+    "mongodb": "^3.3.1",
+    "mongodb-uri": "^0.9.7",
+    "node-env-run": "^3.0.2"
+  },
+  "devDependencies": {
+    "jest": "^24.9.0"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  }
+}
