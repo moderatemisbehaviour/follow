@@ -2,7 +2,7 @@ import gql from 'graphql-tag'
 import React, { Component } from 'react'
 import { Query } from 'react-apollo'
 
-import Input from '../Input'
+import Input from '../common/Input'
 import './Search.css'
 import SearchResults from './SearchResults'
 
@@ -27,7 +27,7 @@ class Search extends Component {
         people(query: $query) {
           id
           name
-          photo
+          image
         }
       }
     `

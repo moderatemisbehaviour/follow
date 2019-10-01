@@ -1,11 +1,11 @@
-const getClientOptionsFromMongoDbUri = require('./getClientOptionsFromMongoDbUri')
+const parseMongoDbUri = require('./parseMongoDbUri')
 
 describe('when a valid Heroku mLab MongoDB URI is passed in', () => {
   describe('when the URI contains the username and password', () => {
     let clientOptions
 
     beforeAll(() => {
-      clientOptions = getClientOptionsFromMongoDbUri(
+      clientOptions = parseMongoDbUri(
         'mongodb://heroku_12345678:random_password@ds029017.mLab.com:29017/heroku_12345678'
       )
     })
@@ -37,9 +37,7 @@ describe('when a valid Heroku mLab MongoDB URI is passed in', () => {
     let clientOptions
 
     beforeAll(() => {
-      clientOptions = getClientOptionsFromMongoDbUri(
-        'mongodb://localhost:27017/follow'
-      )
+      clientOptions = parseMongoDbUri('mongodb://localhost:27017/follow')
     })
 
     it('returns the scheme', () => {

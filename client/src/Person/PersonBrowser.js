@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 
-import Home from '../app/Home'
+import Home from '../common/Home'
 import Person from './Person'
-import Search from '../common/search/Search'
+import Search from '../Search/Search'
 
-class PeopleBrowser extends Component {
+class PersonBrowser extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -23,7 +23,7 @@ class PeopleBrowser extends Component {
         query getPerson($id: ID!) {
           person(id: $id) {
             name
-            photo
+            image
             profiles
           }
         }
@@ -38,13 +38,13 @@ class PeopleBrowser extends Component {
             }
 
             const {
-              person: { name, photo, profiles }
+              person: { name, image, profiles }
             } = data
             return (
               <React.Fragment>
                 <Person
                   name={name}
-                  photo={photo || undefined}
+                  image={image || undefined}
                   profiles={profiles}
                 />
                 <Search />
@@ -64,12 +64,12 @@ class PeopleBrowser extends Component {
   }
 }
 
-PeopleBrowser.propTypes = {
+PersonBrowser.propTypes = {
   id: PropTypes.string
 }
 
-PeopleBrowser.defaultProps = {
+PersonBrowser.defaultProps = {
   id: undefined
 }
 
-export default PeopleBrowser
+export default PersonBrowser

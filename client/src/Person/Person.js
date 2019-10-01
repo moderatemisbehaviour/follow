@@ -1,26 +1,26 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import Avatar from '../avatar/Avatar'
-import Profiles from '../common/profiles/Profiles'
+import Image from './Image'
+import Profiles from '../Profiles/Profiles'
 import Name from './Name'
 
-import '../app/App.css'
+import '../App.css'
 import './Person.css'
 
 Person.propTypes = {
   name: PropTypes.string,
-  photo: PropTypes.string,
+  image: PropTypes.string,
   profiles: PropTypes.arrayOf(PropTypes.string.isRequired)
 }
 
 function Person(props) {
-  const { name, photo, profiles } = props
+  const { name, image, profiles } = props
 
   return (
     <div className="person">
       <Name name={name || undefined} />
-      <Avatar src={photo} />
+      <Image src={image} />
       {profiles && <Profiles profiles={profiles} />}
     </div>
   )

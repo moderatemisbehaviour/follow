@@ -23,9 +23,9 @@ module.exports = async function(db) {
             maxItems: 50,
             uniqueItems: true
           },
-          photo: {
+          image: {
             type: 'string',
-            description: 'A photo or avatar representing the person.'
+            description: 'An image representing the person.'
           }
         }
       }

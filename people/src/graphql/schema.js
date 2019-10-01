@@ -10,13 +10,13 @@ const typeDefs = gql`
     id: ID!
     name: String!
     profiles: [String]
-    photo: String
+    image: String
   }
 
   input PersonInput {
     name: String!
     profiles: [String]
-    photo: String
+    image: String
   }
 
   type Mutation {

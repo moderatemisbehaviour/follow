@@ -14,7 +14,7 @@ describe('landing on the home page.', function() {
   })
 
   it('displays the logo.', function() {
-    cy.get('.Avatar')
+    cy.get('.image')
   })
 
   it('displays a search box.', function() {
@@ -76,7 +76,7 @@ describe('searching for a publisher profile.', function() {
     cy.get('.SearchResult')
       .first()
       .find('img')
-      .should('have.attr', 'src', this.person.photo)
+      .should('have.attr', 'src', this.person.image)
   })
 
   // TODO: Use PayPal dropdown component?
@@ -282,7 +282,7 @@ describe('creating a publisher profile.', function() {
     })
   })
 
-  describe.only('saving the person', function() {
+  describe('saving the person', function() {
     beforeEach(function() {
       cy.fixture('siobhan.json')
         .as('siobhan')
@@ -291,7 +291,7 @@ describe('creating a publisher profile.', function() {
           cy.get('.next').click()
           cy.get('#the-input').type(siobhan.profiles[0])
           cy.get('#add-image').click()
-          cy.get('#the-input').type(siobhan.photo)
+          cy.get('#the-input').type(siobhan.image)
           cy.get('#add-profile').click()
           cy.get('#the-input').type(siobhan.profiles[1])
         })
@@ -304,7 +304,7 @@ describe('creating a publisher profile.', function() {
       cy.get('.profile').should('have.length', 2)
       cy.get('.person img')
         .should('have.attr', 'src')
-        .and('eq', this.siobhan.photo)
+        .and('eq', this.siobhan.image)
     })
 
     describe('and there is a blank profile being edited', function() {
@@ -316,7 +316,7 @@ describe('creating a publisher profile.', function() {
         cy.get('.profile').should('have.length', 2)
         cy.get('.person img')
           .should('have.attr', 'src')
-          .and('eq', this.siobhan.photo)
+          .and('eq', this.siobhan.image)
       })
     })
   })
@@ -332,10 +332,10 @@ describe('viewing a publisher profile.', function() {
         })
     })
 
-    it("shows the person's profile photo.", function() {
-      cy.get('.Avatar img')
+    it("shows the person's profile image.", function() {
+      cy.get('.image img')
         .should('have.attr', 'src')
-        .and('eq', this.person.photo)
+        .and('eq', this.person.image)
     })
 
     it("shows links to the publisher's profiles", function() {
@@ -354,8 +354,8 @@ describe('viewing a publisher profile.', function() {
         .and('eq', 'https://www.facebook.com/siobhanwilsonmusic')
     })
 
-    it("masks the publisher's photo to create a circular frame", function() {
-      cy.get('.Avatar img')
+    it("masks the publisher's image to create a circular frame", function() {
+      cy.get('.image img')
         .should('have.css', 'border-radius')
         .should('equal', '50%')
     })
@@ -368,11 +368,11 @@ describe('viewing a publisher profile.', function() {
     })
   })
 
-  describe('that has no profile photo', function() {
+  describe('that has no profile image', function() {
     beforeEach(function() {
       cy.fixture('siobhan.json')
         .then(siobhan => {
-          delete siobhan.photo
+          delete siobhan.image
           return cy.task('createPerson', siobhan)
         })
         .then(person => {
@@ -380,8 +380,8 @@ describe('viewing a publisher profile.', function() {
         })
     })
 
-    it('fallsback to the placeholder profile photo', function() {
-      cy.get('.Avatar img')
+    it('fallsback to the placeholder profile image', function() {
+      cy.get('.image img')
         .should('have.attr', 'src')
         .and('contains', 'placeholderPersonImage')
     })

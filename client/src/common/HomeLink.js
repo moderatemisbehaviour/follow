@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import home from '../common/home.svg'
+import home from '../common/icons/home.svg'
 import './HomeLink.css'
 
 function HomeLink(props) {

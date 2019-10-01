@@ -30,21 +30,21 @@ li .name {
   color: lightgrey;
 }
 
-.Avatar {
+.image {
   flex-grow: 0.62;
-  /* TODO: Come up with a better solution for shrinking the avatar. */
+  /* TODO: Come up with a better solution for shrinking the image. */
   height: 20vmax;
   max-height: 20vmax;
   width: auto;
 }
 
-li .Avatar {
+li .image {
   flex-grow: 0;
   height: 1.5rem;
   margin-right: 0.5rem;
 }
 
-.Avatar img {
+.image img {
   border-radius: 50%;
   display: block;
   height: 100%;

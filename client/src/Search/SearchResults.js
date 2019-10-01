@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import CreatePerson from '../../people/CreatePerson'
-import Person from '../../people/Person'
+import CreatePersonButton from '../Person/CreatePersonButton'
+import Person from '../Person/Person'
 
 import SearchResult from './SearchResult'
 import './SearchResults.css'
@@ -24,7 +24,7 @@ function SearchResults(props) {
               <Person {...person} />
             </SearchResult>
           ))}
-          <CreatePerson personName={query} />
+          <CreatePersonButton personName={query} />
         </React.Fragment>
       )}
     </ul>

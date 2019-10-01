@@ -1,12 +1,10 @@
 const MongoClient = require('mongodb').MongoClient
-const getClientOptionsFromMongoDbUri = require('./getClientOptionsFromMongoDbUri')
+const parseMongoDbUri = require('./parseMongoDbUri')
 
 class DatabaseClient {
   constructor(uriConnectionString) {
     this.uriConnectionString = uriConnectionString
-    const { hosts, database } = getClientOptionsFromMongoDbUri(
-      this.uriConnectionString
-    )
+    const { hosts, database } = parseMongoDbUri(this.uriConnectionString)
     this.hosts = hosts
     this.database = database
     this.client = new MongoClient(this.uriConnectionString)

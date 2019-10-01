@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import twitterLogo from '../twitter.svg'
-import youtubeLogo from '../youtube.png'
-import facebookLogo from '../facebook.svg'
+import twitterLogo from '../common/icons/twitter.svg'
+import youtubeLogo from '../common/icons/youtube.png'
+import facebookLogo from '../common/icons/facebook.svg'
 import placeholderProfileIcon from './placeholderProfileIcon.svg'
 import UnknownPlatformIcon from './UnknownPlatformIcon'
 

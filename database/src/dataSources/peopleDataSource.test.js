@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 
 const DatabaseClient = require('../DatabaseClient')
-const PeopleDataSource = require('./people-data-source')
+const PeopleDataSource = require('./peopleDataSource')
 const resetDatabase = require('../resetDatabase')
 
 let databaseClient

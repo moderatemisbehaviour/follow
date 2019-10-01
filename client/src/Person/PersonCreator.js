@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
-import EditorInput from './EditorInput'
-import NextOption from '../common/nextSteps/NextOption'
-import NextSteps from '../common/nextSteps/NextSteps'
-import './PeopleCreator.css'
+import EditorInput from '../common/EditorInput'
+import NextOption from '../common/NextSteps/NextOption'
+import NextSteps from '../common/NextSteps/NextSteps'
+import './PersonCreator.css'
 import Person from './Person'
-import Save from './Save.js'
+import Save from '../common/Save.js'
 
 class PeopleCreator extends Component {
   constructor(props) {
@@ -68,11 +68,11 @@ class PeopleCreator extends Component {
       },
       image: {
         name: 'image',
-        getter: () => this.state.person.photo,
+        getter: () => this.state.person.image,
         setter: value => {
           this.setState(state => {
             const updatedPerson = { ...state.person }
-            updatedPerson.photo = value
+            updatedPerson.image = value
             return {
               ...state,
               person: updatedPerson
@@ -84,7 +84,7 @@ class PeopleCreator extends Component {
         prompt: "Copy-paste the person's image URL",
         validate: () => {
           try {
-            const urlInInput = this.state.person.photo
+            const urlInInput = this.state.person.image
             // eslint-disable-next-line no-new
             new URL(urlInInput)
             return true
@@ -94,7 +94,7 @@ class PeopleCreator extends Component {
         },
         validationMessage: 'The URL you have provided is invalid.',
         complete: () => null,
-        discard: () => delete this.state.person.photo
+        discard: () => delete this.state.person.image
       }
     }
 
@@ -154,7 +154,7 @@ class PeopleCreator extends Component {
       <div className={'PeopleCreator ' + this.className}>
         <Person
           name={this.state.person.name || null}
-          photo={this.state.person.photo ? this.state.person.photo : undefined}
+          image={this.state.person.image ? this.state.person.image : undefined}
           profiles={this.state.person.profiles}
         />
         <EditorInput

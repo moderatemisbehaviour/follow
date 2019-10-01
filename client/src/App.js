@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
-import PeopleBrowser from '../people/PeopleBrowser'
-import PeopleCreator from '../people/PeopleCreator'
+import PersonBrowser from './Person/PersonBrowser'
+import PeopleCreator from './Person/PersonCreator'
 import './App.css'
-import Footer from './Footer'
+import Footer from './common/Footer'
 
 class App extends Component {
   constructor(props) {
@@ -34,7 +34,7 @@ class App extends Component {
               const id = match === null ? null : match.params.id
               return (
                 <React.Fragment>
-                  <PeopleBrowser id={id} />
+                  <PersonBrowser id={id} />
                   <Footer location={location} />
                 </React.Fragment>
               )
@@ -43,7 +43,7 @@ class App extends Component {
           <Route>
             {({ location }) => (
               <React.Fragment>
-                <PeopleBrowser />
+                <PersonBrowser />
                 <Footer location={location} />
               </React.Fragment>
             )}

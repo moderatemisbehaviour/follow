@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from 'react-apollo'
 
-import App from './app/App'
+import App from './App'
 import './index.css'
 // TODO: Uncomment this when you figure out how to make it work with Cypress.
 // import registerServiceWorker from './registerServiceWorker'
