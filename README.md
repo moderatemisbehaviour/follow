@@ -112,4 +112,4 @@ E.g. Twitter, YouTube, Facebook.
 ESLint is used to enforce quality and Prettier is used to enforce style.
 The **eslint-config-prettier~** package is used to disable all formatting-related ESLint rules so that Prettier can do its thing.
 The **eslint-plugin-prettier** package is used to run Prettier when ESLint is run.
-So in short ESLint auto-fix is all that needs to be run on a file to ensure general consistency.
+So in short, ESLint auto-fix is all that needs to be run on a file to ensure general consistency.
