@@ -1,4 +1,4 @@
-const {gql} = require('apollo-server')
+const { gql } = require('apollo-server')
 
 const typeDefs = gql`
   type Query {
@@ -10,13 +10,13 @@ const typeDefs = gql`
     id: ID!
     name: String!
     profiles: [String]
-    photo: String
+    image: String
   }
 
   input PersonInput {
     name: String!
     profiles: [String]
-    photo: String
+    image: String
   }
 
   type Mutation {

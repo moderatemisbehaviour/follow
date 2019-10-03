@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 
-module.exports = async function (db) {
+module.exports = async function(db) {
   await db.createCollection('people')
   await db.command({
     collMod: 'people',
@@ -23,15 +23,25 @@ module.exports = async function (db) {
             maxItems: 50,
             uniqueItems: true
           },
-          photo: {
+          image: {
             type: 'string',
-            description: 'A photo or avatar representing the person.'
+            description: 'An image representing the person.'
           }
         }
       }
     }
   })
-  const siobhan = JSON.parse(fs.readFileSync(path.resolve(`${__dirname}/../../cypress/fixtures/siobhan.json`), 'utf8'))
-  const elon = JSON.parse(fs.readFileSync(path.resolve(`${__dirname}/../../cypress/fixtures/elon.json`), 'utf8'))
+  const siobhan = JSON.parse(
+    fs.readFileSync(
+      path.resolve(`${__dirname}/../../cypress/fixtures/siobhan.json`),
+      'utf8'
+    )
+  )
+  const elon = JSON.parse(
+    fs.readFileSync(
+      path.resolve(`${__dirname}/../../cypress/fixtures/elon.json`),
+      'utf8'
+    )
+  )
   await db.collection('people').insertMany([siobhan, elon])
 }

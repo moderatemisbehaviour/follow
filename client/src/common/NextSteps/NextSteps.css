@@ -1,0 +1,19 @@
+.next-steps {
+  margin: 0 auto;
+  text-align: center;
+  color: grey;
+}
+
+.next-steps.invalid .message {
+  color: red;
+}
+
+.next {
+  border: 1px solid hsl(210, 80%, 50%);
+  color: hsl(210, 80%, 50%);
+}
+
+input.next {
+  display: unset;
+  margin: 1rem 0.5rem;
+}

@@ -1,0 +1,11 @@
+.SearchResult {
+  list-style-type: none;
+}
+
+.SearchResult:hover {
+  background-color: #eee;
+}
+
+a:focus > .SearchResult {
+  background-color: #dfdfdf;
+}

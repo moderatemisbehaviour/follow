@@ -1,0 +1,7 @@
+.Search {
+  /* flex-grow: 1; */
+  height: 19rem;
+  max-width: 900px;
+  /* Had to add this in combination with 'align-items: center' otherwise the input width went really small. */
+  width: 100%;
+}

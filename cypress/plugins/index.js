@@ -18,15 +18,17 @@ module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
   on('task', {
-    async resetDatabase () {
+    async resetDatabase() {
       await resetDatabase()
       return null // Tell Cypress we do not intend to yield a value.
     },
-    async createPerson (fixture) {
+    async createPerson(fixture) {
       const dbClient = new DatabaseClient(process.env.MONGODB_URI)
       const db = await dbClient.connectAndGetDatabase()
       const peopleCollection = db.collection('people')
-      fixture = fixture || JSON.parse(fs.readFileSync('cypress/fixtures/siobhan.json', 'utf8'))
+      fixture =
+        fixture ||
+        JSON.parse(fs.readFileSync('cypress/fixtures/siobhan.json', 'utf8'))
       const result = await peopleCollection.insertOne(fixture)
       const person = result.ops[0]
       return person

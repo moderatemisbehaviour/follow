@@ -1,17 +1,18 @@
 module.exports = {
-  "plugins": [
-    "cypress"
+  plugins: ['cypress', 'prettier'],
+  extends: [
+    'standard',
+    'plugin:cypress/recommended',
+    'plugin:react/recommended',
+    'plugin:prettier/recommended',
+    'prettier/react',
+    'prettier/standard'
   ],
-  "extends": [
-    "standard",
-    "plugin:react/recommended",
-    "plugin:cypress/recommended"
-  ],
-  "env": {
-    "cypress/globals": true,
-    "jest": true
+  env: {
+    'cypress/globals': true,
+    jest: true
   },
-  "rules": {
-    "object-curly-spacing": "off"
+  rules: {
+    'object-curly-spacing': 'off'
   }
-};
+}

@@ -1,9 +1,12 @@
 module.exports = {
   Query: {
-    person: async (_, {id}, {dataSources}) => dataSources.peopleDataSource.getPerson(id),
-    people: async (_, {query}, {dataSources}) => dataSources.peopleDataSource.getPeople(query)
+    person: async (_, { id }, { dataSources }) =>
+      dataSources.peopleDataSource.getPerson(id),
+    people: async (_, { query }, { dataSources }) =>
+      dataSources.peopleDataSource.getPeople(query)
   },
   Mutation: {
-    createPerson: async (_, {person}, {dataSources}) => dataSources.peopleDataSource.createPerson(person)
+    createPerson: async (_, { person }, { dataSources }) =>
+      dataSources.peopleDataSource.createPerson(person)
   }
 }

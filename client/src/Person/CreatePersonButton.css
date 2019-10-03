@@ -1,0 +1,25 @@
+#create-person img {
+  height: 1.3rem;
+}
+
+#create-suggested-person h1 {
+  display: inline;
+}
+
+#create-person:hover {
+  background-color: #eee;
+}
+
+a:focus > #create-person {
+  background-color: #dfdfdf;
+}
+
+#create-suggested-person {
+  margin-left: 0.5rem;
+}
+
+/* Find a more elegant way to unset this without screwing up SearchResult styles. */
+#create-person a {
+  text-decoration: underline;
+  color: blue;
+}

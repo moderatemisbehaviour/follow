@@ -32,15 +32,15 @@ blocks:
   - name: quality
     task:
       prologue:
-          commands:
-            - checkout
-            - nvm use
-            - cache restore node-modules-root-$(checksum package-lock.json),node-modules-root
-            - cache restore node-modules-database-$(checksum database/package-lock.json),node-modules-database
-            - cache restore node-modules-people-$(checksum people/package-lock.json),node-modules-people
-            - cache restore node-modules-client-$(checksum client/package-lock.json),node-modules-client
-            - cache restore user-cache-$SEMAPHORE_GIT_SHA,user-cache
-            - cache restore client-build-$SEMAPHORE_GIT_SHA,client-build
+        commands:
+          - checkout
+          - nvm use
+          - cache restore node-modules-root-$(checksum package-lock.json),node-modules-root
+          - cache restore node-modules-database-$(checksum database/package-lock.json),node-modules-database
+          - cache restore node-modules-people-$(checksum people/package-lock.json),node-modules-people
+          - cache restore node-modules-client-$(checksum client/package-lock.json),node-modules-client
+          - cache restore user-cache-$SEMAPHORE_GIT_SHA,user-cache
+          - cache restore client-build-$SEMAPHORE_GIT_SHA,client-build
       jobs:
         - name: lint
           commands:

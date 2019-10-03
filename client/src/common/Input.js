@@ -13,7 +13,7 @@ Input.propTypes = {
   value: PropTypes.string
 }
 
-function Input (props) {
+function Input(props) {
   return (
     <input
       autoFocus

@@ -1,7 +1,7 @@
-const {MongoClient} = require('mongodb')
+const { MongoClient } = require('mongodb')
 const setupDatabase = require('./setupDatabase')
 
-async function resetDatabase (databaseUrl) {
+async function resetDatabase(databaseUrl) {
   if (process.env.NODE_ENV === 'production') {
     throw new Error('Unsafe to reset database in production.')
   }

@@ -1,23 +1,29 @@
-describe('User journeys', function () {
-  beforeEach(function () {
+describe('User journeys', function() {
+  beforeEach(function() {
     cy.task('resetDatabase')
     cy.visit('/')
   })
 
-  describe('Create a new person then search for them', function () {
+  describe('Create a new person then search for them', function() {
     it('Happy path with mouse', () => {
-      cy.get('#the-input').type('Si').get('#create-suggested-person')
+      cy.get('#the-input')
+        .type('Si')
+        .get('#create-suggested-person')
       cy.get('#create-suggested-person').click()
 
       cy.get('#the-input').type('obhan Wilson')
       cy.get('#add-profile').click()
       cy.get('#the-input').type('https://twitter.com/siobhanisback')
       cy.get('#add-profile').click()
-      cy.get('#the-input').type('https://www.youtube.com/user/siobhanwilsonmusic')
+      cy.get('#the-input').type(
+        'https://www.youtube.com/user/siobhanwilsonmusic'
+      )
       cy.get('#add-profile').click()
       cy.get('#the-input').type('https://www.facebook.com/siobhanwilsonmusic')
       cy.get('#add-image').click()
-      cy.get('#the-input').type('https://pbs.twimg.com/profile_images/1102783358973677569/qEt61Ej8_400x400.jpg')
+      cy.get('#the-input').type(
+        'https://pbs.twimg.com/profile_images/1102783358973677569/qEt61Ej8_400x400.jpg'
+      )
       cy.get('#save').click()
 
       cy.url().should('match', /person\/[\d\w]+/)
@@ -27,7 +33,9 @@ describe('User journeys', function () {
 
       cy.visit('/')
       cy.get('#the-input').type('Si')
-      cy.get('.SearchResult').its('length').should('be.greaterThan', 0)
+      cy.get('.SearchResult')
+        .its('length')
+        .should('be.greaterThan', 0)
     })
 
     it.skip('Happy path with keyboard', () => {})

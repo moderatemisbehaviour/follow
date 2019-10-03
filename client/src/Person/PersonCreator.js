@@ -1,0 +1,200 @@
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+
+import EditorInput from '../common/EditorInput'
+import NextOption from '../common/NextSteps/NextOption'
+import NextSteps from '../common/NextSteps/NextSteps'
+import './PersonCreator.css'
+import Person from './Person'
+import Save from '../common/Save.js'
+
+class PeopleCreator extends Component {
+  constructor(props) {
+    super(props)
+
+    this.properties = {
+      name: {
+        name: 'name',
+        getter: () => this.state.person.name,
+        setter: value => {
+          this.setState(state => ({
+            person: {
+              ...state.person,
+              name: value
+            }
+          }))
+        },
+        next: () => [this.properties.profiles],
+        nextButtonLabel: "Add the person's name",
+        prompt: "Enter the person's name",
+        validate: () => !!this.state.person.name,
+        validationMessage: 'Please provide a name',
+        complete: () => null,
+        discard: () => delete this.state.person.name
+      },
+      profiles: {
+        name: 'profile',
+        getter: () => this.state.person.profiles[this.state.profileIndex],
+        setter: value => {
+          this.setState(state => {
+            const updatedPerson = { ...state.person }
+            updatedPerson.profiles[state.profileIndex] = value
+            return {
+              ...state,
+              person: updatedPerson
+            }
+          })
+        },
+        next: () => [this.properties.profiles, this.properties.image],
+        nextButtonLabel: 'Add a profile',
+        prompt: "Copy-paste the person's profile URL",
+        validate: () => {
+          try {
+            const urlInInput = this.state.person.profiles[
+              this.state.profileIndex
+            ]
+            // eslint-disable-next-line no-new
+            new URL(urlInInput)
+            return true
+          } catch (e) {
+            return false
+          }
+        },
+        validationMessage: 'The URL you have provided is invalid.',
+        complete: () =>
+          this.setState(state => ({ profileIndex: ++state.profileIndex })),
+        discard: () =>
+          this.state.person.profiles.splice(this.state.profileIndex, 1)
+      },
+      image: {
+        name: 'image',
+        getter: () => this.state.person.image,
+        setter: value => {
+          this.setState(state => {
+            const updatedPerson = { ...state.person }
+            updatedPerson.image = value
+            return {
+              ...state,
+              person: updatedPerson
+            }
+          })
+        },
+        next: () => [this.properties.profiles],
+        nextButtonLabel: 'Add a profile image',
+        prompt: "Copy-paste the person's image URL",
+        validate: () => {
+          try {
+            const urlInInput = this.state.person.image
+            // eslint-disable-next-line no-new
+            new URL(urlInInput)
+            return true
+          } catch (e) {
+            return false
+          }
+        },
+        validationMessage: 'The URL you have provided is invalid.',
+        complete: () => null,
+        discard: () => delete this.state.person.image
+      }
+    }
+
+    this.state = {
+      person: {
+        name: props.name || '',
+        profiles: []
+      },
+      propertyBeingEdited: this.properties.name,
+      profileIndex: 0,
+      touched: false
+    }
+
+    this.input = React.createRef()
+
+    this.editProperty = this.editProperty.bind(this)
+    this.editNextProperty = this.editNextProperty.bind(this)
+  }
+
+  editProperty(event) {
+    const {
+      target: { value }
+    } = event
+    this.state.propertyBeingEdited.setter(value)
+    this.setState({
+      touched: true
+    })
+  }
+
+  editNextProperty(nextProperty) {
+    if (this.state.propertyBeingEdited.validate()) {
+      this.state.propertyBeingEdited.complete()
+    } else {
+      this.state.propertyBeingEdited.discard()
+    }
+
+    this.setState({
+      propertyBeingEdited: nextProperty,
+      touched: false
+    })
+    nextProperty.setter('')
+
+    this.input.current.focus()
+  }
+
+  get personValid() {
+    return this.state.person.name && this.state.person.profiles.some(p => !!p)
+  }
+
+  render() {
+    const value = this.state.propertyBeingEdited.getter()
+    const invalid = !!value && !this.state.propertyBeingEdited.validate()
+    const nextOptions = this.state.propertyBeingEdited.next()
+    const prompt = this.state.propertyBeingEdited.prompt
+
+    return (
+      <div className={'PeopleCreator ' + this.className}>
+        <Person
+          name={this.state.person.name || null}
+          image={this.state.person.image ? this.state.person.image : undefined}
+          profiles={this.state.person.profiles}
+        />
+        <EditorInput
+          onChange={this.editProperty}
+          prompt={prompt}
+          inputRef={this.input}
+          invalid={this.state.touched && invalid}
+          value={value}
+        />
+        <NextSteps
+          invalid={this.state.touched && invalid}
+          message="Continue adding information then press save to complete! You can also easily make more changes later."
+          invalidMessage={this.state.propertyBeingEdited.validationMessage}
+        >
+          {nextOptions.map(nextProperty => (
+            <NextOption
+              disabled={invalid}
+              key={`add-${nextProperty.name}-button`}
+              label={nextProperty.nextButtonLabel}
+              name={nextProperty.name}
+              onClick={() => this.editNextProperty(nextProperty)}
+            />
+          ))}
+        </NextSteps>
+        <Save
+          disabled={!this.personValid}
+          getPersonToSave={() => {
+            if (!this.state.propertyBeingEdited.validate()) {
+              this.state.propertyBeingEdited.discard()
+            }
+            return this.state.person
+          }}
+        />
+      </div>
+    )
+  }
+}
+
+PeopleCreator.propTypes = {
+  name: PropTypes.string.isRequired
+}
+
+export default PeopleCreator
