@@ -1,9 +1,11 @@
+import { Link } from 'react-router-dom'
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 
 import Home from '../common/Home'
+import NextOption from '../common/NextSteps/NextOption'
 import Person from './Person'
 import Search from '../Search/Search'
 
@@ -34,7 +36,7 @@ class PersonBrowser extends Component {
           {({ data, loading, error }) => {
             if (error) return <p>ERROR</p>
             if (loading) {
-              return <Person title="Loading..." />
+              return <Person name="Loading..." />
             }
 
             const {
@@ -48,6 +50,9 @@ class PersonBrowser extends Component {
                   profiles={profiles}
                 />
                 <Search />
+                <Link to={`/person/${id}/edit`}>
+                  <NextOption label={`Edit ${name}`} id={`edit-person`} />
+                </Link>
               </React.Fragment>
             )
           }}

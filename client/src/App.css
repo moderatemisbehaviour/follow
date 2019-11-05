@@ -19,6 +19,10 @@ body {
   height: 100vh;
 }
 
+#root > .person {
+  max-height: 50%;
+}
+
 button {
   border-radius: 0.2rem;
   font-size: 1rem;
@@ -37,7 +41,7 @@ input {
   padding: 0.5rem;
   display: block;
   margin: 1rem auto;
-  min-width: 13rem;
+  min-width: 10rem;
   border: 1px solid #aaa;
   border-radius: 0.2rem;
 }

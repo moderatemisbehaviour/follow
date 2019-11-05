@@ -2,7 +2,8 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 NextOption.propTypes = {
-  name: PropTypes.string.isRequired,
+  id: PropTypes.string,
+  className: PropTypes.string,
   disabled: PropTypes.bool,
   onClick: PropTypes.func,
   label: PropTypes.string.isRequired
@@ -11,8 +12,8 @@ NextOption.propTypes = {
 function NextOption(props) {
   return (
     <input
-      id={`add-${props.name}`}
-      className="next"
+      id={props.id}
+      className={`next ${props.className}`}
       disabled={props.disabled}
       onClick={props.onClick}
       type="button"

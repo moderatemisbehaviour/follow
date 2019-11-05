@@ -1,7 +1,16 @@
 .next-steps {
   margin: 0 auto;
+  /* Without this the next steps was growing to 1000px or more in width.
+     This in turn increased the size of PersonCreator which as the parent of
+     Person somehow caused it to no longer be centered. */
+  max-width: 900px;
+  padding: 0.5rem;
   text-align: center;
   color: grey;
+}
+
+.next-steps a {
+  text-decoration: none;
 }
 
 .next-steps.invalid .message {
@@ -15,5 +24,5 @@
 
 input.next {
   display: unset;
-  margin: 1rem 0.5rem;
+  margin: 0.5rem;
 }

@@ -23,7 +23,7 @@
       "type": "chrome",
       "request": "launch",
       "name": "dev client",
-      "url": "http://localhost:4001",
+      "url": "http://localhost:4001/person/create?name=Siob",
       "webRoot": "${workspaceFolder}/client/src"
     }
   ]

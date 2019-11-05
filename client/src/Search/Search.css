@@ -1,7 +1,38 @@
 .Search {
-  /* flex-grow: 1; */
-  height: 19rem;
+  margin: 0.5rem;
   max-width: 900px;
   /* Had to add this in combination with 'align-items: center' otherwise the input width went really small. */
   width: 100%;
+}
+
+.SearchResults {
+  background-color: white;
+  border: 1px solid #aaa;
+  border-radius: 0.2rem;
+  margin: 0.5rem 0;
+  position: absolute;
+  width: 900px;
+  z-index: 1;
+}
+
+.SearchResult {
+  list-style-type: none;
+}
+
+.SearchResults a {
+  text-decoration: none;
+  color: black;
+}
+
+.SearchResults li {
+  list-style-type: none;
+}
+
+
+.SearchResult:hover {
+  background-color: #eee;
+}
+
+a:focus > .SearchResult {
+  background-color: #dfdfdf;
 }
