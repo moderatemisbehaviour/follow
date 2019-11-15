@@ -21,16 +21,6 @@ class PersonBrowser extends Component {
     const { id } = this.props
 
     if (id) {
-      const GET_PERSON = gql`
-        query getPerson($id: ID!) {
-          person(id: $id) {
-            name
-            image
-            profiles
-          }
-        }
-      `
-
       return (
         <Query query={GET_PERSON} variables={{ id }}>
           {({ data, loading, error }) => {
@@ -76,5 +66,15 @@ PersonBrowser.propTypes = {
 PersonBrowser.defaultProps = {
   id: undefined
 }
+
+const GET_PERSON = gql`
+  query GetPerson($id: ID!) {
+    person(id: $id) {
+      name
+      image
+      profiles
+    }
+  }
+`
 
 export default PersonBrowser

@@ -6,6 +6,7 @@ import NextOption from '../NextSteps/NextOption'
 
 NextSteps.propTypes = {
   children: PropTypes.arrayOf(PropTypes.element),
+  className: PropTypes.string,
   disabled: PropTypes.bool,
   invalid: PropTypes.bool,
   invalidMessage: PropTypes.string,
@@ -20,11 +21,19 @@ function NextSteps(props) {
         {props.invalid ? props.invalidMessage : props.message}
       </span>
       <div>
-        {props.nextOptions.map((rowOfNextOptions, index) =>
-          rowOfNextOptions.map(nextOption => (
-            <NextOption key={nextOption.key} {...nextOption} />
-          ))
-        )}
+        {props.nextOptions.map((rowOfNextOptions, index) => (
+          <div key={index}>
+            {rowOfNextOptions.map(nextOption => (
+              <NextOption
+                key={nextOption.key}
+                {...nextOption}
+                className={`${nextOption.className} ${
+                  index === 0 ? 'primary' : 'secondary'
+                }`}
+              />
+            ))}
+          </div>
+        ))}
       </div>
     </div>
   )

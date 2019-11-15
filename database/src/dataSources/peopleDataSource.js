@@ -15,7 +15,27 @@ class PeopleDataSource extends DataSource {
 
     return {
       ...insertedDocumentWithIds,
-      id: insertedDocumentWithIds._id.toHexString()
+      id: result.insertedId
+    }
+  }
+
+  async editPerson(id, person) {
+    const peopleCollection = this.db.collection('people')
+    const result = await peopleCollection.replaceOne(
+      { _id: new ObjectID(id) },
+      { ...person }
+    ) // Have to shallow clone the object becase insertOne mutates the original to add _id.
+    const replacedDocumentWithIds = result.ops[0]
+
+    console.log(result)
+
+    if (result.modifiedCount < 1) {
+      throw new Error('The edit had no effect!')
+    }
+
+    return {
+      ...replacedDocumentWithIds,
+      id
     }
   }
 

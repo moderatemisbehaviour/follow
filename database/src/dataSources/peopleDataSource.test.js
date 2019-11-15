@@ -6,15 +6,15 @@ const PeopleDataSource = require('./peopleDataSource')
 const resetDatabase = require('../resetDatabase')
 
 let databaseClient
-let database
+let db
 let peopleDataSource
 let elon
 let siobhan
 
 beforeAll(async () => {
   databaseClient = await new DatabaseClient(process.env.MONGODB_URI)
-  database = await databaseClient.connectAndGetDatabase()
-  peopleDataSource = new PeopleDataSource(database)
+  db = await databaseClient.connectAndGetDatabase()
+  peopleDataSource = new PeopleDataSource(db)
 })
 
 afterAll(async () => {
@@ -131,6 +131,32 @@ describe('get people', () => {
         const actualResponse = await peopleDataSource.getPeople(query)
         expect(actualResponse).toMatchObject([siobhan])
       })
+    })
+  })
+})
+
+describe('edit person', () => {
+  beforeEach(async () => {
+    await resetDatabase()
+  })
+
+  describe('when the object is valid', () => {
+    it('returns an object', async () => {
+      const peopleCollection = db.collection('people')
+      const { insertedId } = await peopleCollection.insertOne({ ...siobhan })
+      siobhan.name = 'Siob'
+
+      const personReturned = await peopleDataSource.editPerson(
+        insertedId,
+        siobhan
+      )
+
+      expect(personReturned).toMatchObject(siobhan)
+      const personInDatabase = await peopleCollection.findOne({
+        _id: insertedId
+      })
+      expect(personInDatabase).toMatchObject(siobhan)
+      expect(personInDatabase.name).toEqual('Siob')
     })
   })
 })

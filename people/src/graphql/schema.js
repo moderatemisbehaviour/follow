@@ -21,6 +21,7 @@ const typeDefs = gql`
 
   type Mutation {
     createPerson(person: PersonInput!): Person
+    editPerson(id: ID!, person: PersonInput!): Person
   }
 `
 

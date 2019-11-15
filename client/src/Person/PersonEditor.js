@@ -11,16 +11,6 @@ import Save from '../common/Save'
 function PersonEditor(props) {
   const { id } = props
 
-  const GET_PERSON = gql`
-    query getPerson($id: ID!) {
-      person(id: $id) {
-        name
-        image
-        profiles
-      }
-    }
-  `
-
   return (
     <Query query={GET_PERSON} variables={{ id }}>
       {({ data, loading, error }) => {
@@ -33,19 +23,27 @@ function PersonEditor(props) {
         return (
           <PersonBuilder person={person} propertyBeingEdited="image">
             {(getPerson, isValid) => (
-              <Mutation mutation={CREATE_PERSON}>
-                {(createPerson, { data, error, loading }) => {
+              <Mutation mutation={EDIT_PERSON}>
+                {(editPerson, { data, error, loading }) => {
                   if (data) {
-                    const id = data.createPerson.id
+                    const id = data.editPerson.id
                     return <Redirect to={`/person/${id}`} />
                   }
+
+                  // TODO: Find a better solution for this.
+                  // Mutation fails because person has __typename property from the query that was used to retrieve it.
+                  // This property is not in the GraphQL schema so Apollo throws an error.
+                  //
+                  // https://github.com/apollographql/apollo-client/issues/1913
+                  const person = getPerson()
+                  delete person.__typename
 
                   return (
                     <Save
                       disabled={!isValid}
                       onClick={e => {
-                        createPerson({
-                          variables: { person: getPerson() }
+                        editPerson({
+                          variables: { id, person: getPerson() }
                         })
                       }}
                     />
@@ -64,11 +62,20 @@ PersonEditor.propTypes = {
   id: PropTypes.string
 }
 
-const CREATE_PERSON = gql`
-  mutation CreatePerson($person: PersonInput!) {
-    createPerson(person: $person) {
+const EDIT_PERSON = gql`
+  mutation EditPerson($id: ID!, $person: PersonInput!) {
+    editPerson(id: $id, person: $person) {
       id
+    }
+  }
+`
+
+const GET_PERSON = gql`
+  query GetPerson($id: ID!) {
+    person(id: $id) {
       name
+      image
+      profiles
     }
   }
 `

@@ -24,7 +24,8 @@ class PersonBuilder extends Component {
             }
           }))
         },
-        next: () => [this.properties.profiles],
+        primaryOptions: () => this.getDefaultNextOptions(this.properties.name),
+        secondaryOptions: () => [],
         prompt: "Enter the person's name",
         validate: () => !!this.state.person.name,
         validationMessage: 'Please provide a name',
@@ -44,7 +45,8 @@ class PersonBuilder extends Component {
             }
           })
         },
-        next: () => [this.properties.profiles],
+        primaryOptions: () => this.getDefaultNextOptions(this.properties.image),
+        secondaryOptions: () => [],
         prompt: "Copy-paste the person's image URL",
         validate: () => {
           try {
@@ -73,7 +75,46 @@ class PersonBuilder extends Component {
             }
           })
         },
-        next: () => [this.properties.profiles, this.properties.image],
+        primaryOptions: () => {
+          const nextOptions = []
+          const currentlyBeingEdited =
+            this.state.propertyBeingEdited === this.properties.profiles
+
+          if (this.state.person.profiles.length > 0) {
+            nextOptions.push({
+              className: `edit-profiles ${
+                currentlyBeingEdited ? 'currently-being-edited' : ''
+              }`,
+              disabled: currentlyBeingEdited,
+              key: `edit-profiles-button`,
+              label: `Edit profiles`,
+              onClick: () => this.editNextProperty(this.properties.profiles)
+            })
+          }
+          nextOptions.push({
+            className: `add-profile`,
+            key: `add-profile-button`,
+            label: `Add profile`,
+            onClick: () => {
+              this.currentProfileIndex = this.state.person.profiles.length
+              this.editNextProperty(this.properties.profiles)
+            }
+          })
+
+          return nextOptions
+        },
+        secondaryOptions: () =>
+          this.state.person.profiles.map((profile, index) => ({
+            className: `edit-profile-${index} ${
+              index === this.currentProfileIndex ? 'currently-being-edited' : ''
+            }`,
+            key: `edit-profile-${index}`,
+            label: `${index + 1}`,
+            onClick: () => {
+              this.currentProfileIndex = index
+              this.editNextProperty(this.properties.profiles)
+            }
+          })),
         prompt: "Copy-paste the person's profile URL",
         validate: () => {
           try {
@@ -91,8 +132,9 @@ class PersonBuilder extends Component {
         complete: () => {
           this.currentProfileIndex = ++this.currentProfileIndex
         },
-        discard: () =>
+        discard: () => {
           this.state.person.profiles.splice(this.currentProfileIndex, 1)
+        }
       }
     }
 
@@ -129,11 +171,8 @@ class PersonBuilder extends Component {
   }
 
   editNextProperty(nextProperty) {
-    if (this.state.propertyBeingEdited.validate()) {
-      this.state.propertyBeingEdited.complete()
-    } else {
+    if (!this.state.propertyBeingEdited.validate())
       this.state.propertyBeingEdited.discard()
-    }
 
     if (nextProperty.getter() === undefined) {
       nextProperty.setter('')
@@ -152,46 +191,37 @@ class PersonBuilder extends Component {
     return this.state.person.name && this.state.person.profiles.some(p => !!p)
   }
 
-  getNextOptions(object) {
-    const firstRow = []
-    const secondRow = []
+  get nextOptions() {
+    const firstRow = Object.values(this.properties).reduce(
+      (nextOptionsAll, property) =>
+        nextOptionsAll.concat(property.primaryOptions()),
+      []
+    )
+
+    const secondRow = this.state.propertyBeingEdited.secondaryOptions()
     const nextOptions = [firstRow, secondRow]
+    return nextOptions
+  }
 
-    Object.values(this.properties).forEach(property => {
-      if (property.name === 'profile') {
-        if (this.state.person.profiles.length > 0) {
-          nextOptions[0].push({
-            className: `edit-profiles`,
-            key: `edit-profiles-button`,
-            label: `Edit profiles`,
-            onClick: () => this.editNextProperty(property)
-          })
-        }
+  getDefaultNextOptions(property) {
+    const nextOptions = []
 
-        nextOptions[0].push({
-          className: `add-${property.name}`,
-          key: `add-${property.name}-button`,
-          label: `Add ${property.name}`,
-          onClick: () => this.editNextProperty(property)
-        })
-      } else {
-        const propertyValue = property.getter()
-        const propertyHasExistingValue = !!propertyValue
-        const verb =
-          propertyHasExistingValue ||
-          property === this.state.propertyBeingEdited
-            ? 'edit'
-            : 'add'
-        const disabled = property === this.state.propertyBeingEdited
+    const propertyValue = property.getter()
+    const propertyHasExistingValue = !!propertyValue
+    const verb =
+      propertyHasExistingValue || property === this.state.propertyBeingEdited
+        ? 'edit'
+        : 'add'
+    const currentlyBeingEdited = property === this.state.propertyBeingEdited
 
-        nextOptions[0].push({
-          className: `${verb}-${property.name}`,
-          disabled,
-          key: `${verb}-${property.name}-button`,
-          label: `${this.capitalizeFirstLetter(verb)} ${property.name}`,
-          onClick: () => this.editNextProperty(property)
-        })
-      }
+    nextOptions.push({
+      className: `${verb}-${property.name} ${
+        currentlyBeingEdited ? 'currently-being-edited' : ''
+      }`,
+      disabled: currentlyBeingEdited,
+      key: `${verb}-${property.name}-button`,
+      label: `${this.capitalizeFirstLetter(verb)} ${property.name}`,
+      onClick: () => this.editNextProperty(property)
     })
 
     return nextOptions
@@ -231,7 +261,7 @@ class PersonBuilder extends Component {
           invalid={this.state.touched && invalid}
           message="Continue adding information then press save to complete! You can also easily make more changes later."
           invalidMessage={this.state.propertyBeingEdited.validationMessage}
-          nextOptions={this.getNextOptions(this.state.person)}
+          nextOptions={this.nextOptions}
         />
         {this.props.children(
           () => this.personWithCurrentInvalidPropertyDiscarded,
