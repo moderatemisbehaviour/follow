@@ -10,13 +10,10 @@ class PeopleDataSource extends DataSource {
 
   async createPerson(person) {
     const peopleCollection = this.db.collection('people')
-    const result = await peopleCollection.insertOne({ ...person }) // Have to shallow clone the object becase insertOne mutates the original to add _id.
-    const insertedDocumentWithIds = result.ops[0]
+    const result = await peopleCollection.insertOne({ ...person }) // Have to shallow clone the object because insertOne mutates the original to add _id.
+    const createdPerson = result.ops[0]
 
-    return {
-      ...insertedDocumentWithIds,
-      id: result.insertedId
-    }
+    return PeopleDataSource.replaceMongoIdWithApplicationId(createdPerson)
   }
 
   async editPerson(id, person) {
@@ -25,16 +22,14 @@ class PeopleDataSource extends DataSource {
       { _id: new ObjectID(id) },
       { ...person }
     ) // Have to shallow clone the object becase insertOne mutates the original to add _id.
-    const replacedDocumentWithIds = result.ops[0]
-
-    console.log(result)
+    const editedPerson = result.ops[0]
 
     if (result.modifiedCount < 1) {
       throw new Error('The edit had no effect!')
     }
 
     return {
-      ...replacedDocumentWithIds,
+      ...editedPerson,
       id
     }
   }
@@ -46,7 +41,7 @@ class PeopleDataSource extends DataSource {
       .skip(0)
       .limit(5)
     const people = await cursor.toArray()
-    return people.map(this.replaceMongoIdWithApplicationId)
+    return people.map(PeopleDataSource.replaceMongoIdWithApplicationId)
   }
 
   async getPerson(id) {
@@ -54,14 +49,13 @@ class PeopleDataSource extends DataSource {
     const objectId = new ObjectID(id)
     const query = { _id: objectId }
     const person = await peopleCollection.findOne(query)
-    return this.replaceMongoIdWithApplicationId(person)
+    return PeopleDataSource.replaceMongoIdWithApplicationId(person)
   }
 
-  replaceMongoIdWithApplicationId(person) {
-    return {
-      ...person,
-      id: person._id.toHexString()
-    }
+  static replaceMongoIdWithApplicationId(person) {
+    person.id = person._id.toHexString()
+    delete person._id
+    return person
   }
 }
 

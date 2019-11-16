@@ -231,10 +231,11 @@ class PersonBuilder extends Component {
     return string.charAt(0).toUpperCase() + string.slice(1)
   }
 
-  get personWithCurrentInvalidPropertyDiscarded() {
+  getPersonWithCurrentInvalidPropertyDiscarded() {
     if (!this.state.propertyBeingEdited.validate()) {
       this.state.propertyBeingEdited.discard()
     }
+
     return this.state.person
   }
 
@@ -264,7 +265,7 @@ class PersonBuilder extends Component {
           nextOptions={this.nextOptions}
         />
         {this.props.children(
-          () => this.personWithCurrentInvalidPropertyDiscarded,
+          () => this.getPersonWithCurrentInvalidPropertyDiscarded(),
           this.personValid
         )}
       </div>

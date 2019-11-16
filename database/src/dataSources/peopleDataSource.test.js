@@ -41,8 +41,8 @@ describe('create person', () => {
     it('returns an object', async () => {
       const actualResponse = await peopleDataSource.createPerson(siobhan)
       await peopleDataSource.createPerson(siobhan)
-      // TODO: Find out why expect.stringMatching does not work for _id property.
       expect(actualResponse).toMatchObject(siobhan)
+      expect(actualResponse.id).toMatch(/[\d\w]{24}/)
     })
   })
 

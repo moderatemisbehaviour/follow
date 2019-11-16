@@ -1,5 +1,7 @@
 const BASE_URL = Cypress.config('baseUrl')
 
+const personUrlRegex = /.+\/person\/[\d\w]{24}$/
+
 before(function() {
   cy.task('resetDatabase')
 })
@@ -322,22 +324,22 @@ describe('creating a publisher profile.', function() {
         })
     })
 
-    it('save successfully and view the person', function() {
+    it('views the person after a successful save', function() {
       cy.get('.save').click()
 
-      cy.url().should('match', /\/person\/\w+/)
+      cy.url().should('match', personUrlRegex)
       cy.get('.profile').should('have.length', 2)
       cy.get('.person img')
         .should('have.attr', 'src')
         .and('eq', this.siobhan.image)
     })
 
-    describe('and there is a blank profile being edited', function() {
-      it('save successfully and view the person', function() {
+    describe('blank profile being edited', function() {
+      it('discards the blank profile and saves', function() {
         cy.get('.add-profile').click()
         cy.get('.save').click()
 
-        cy.url().should('match', /\/person\/\w+/)
+        cy.url().should('match', personUrlRegex)
         cy.get('.profile').should('have.length', 2)
         cy.get('.person img')
           .should('have.attr', 'src')
@@ -457,9 +459,9 @@ describe('editing a publisher profile', function() {
   it('displays the publisher profile in its current state', function() {
     cy.get('.name').should('have.text', this.person.name)
     cy.get('.image img').should('have.attr', 'src', this.person.image)
-    cy.get('#profile-0 a').should('have.attr', 'href', this.person.profiles[0])
-    cy.get('#profile-1 a').should('have.attr', 'href', this.person.profiles[1])
-    cy.get('#profile-2 a').should('have.attr', 'href', this.person.profiles[2])
+    cy.get('.profile-0 a').should('have.attr', 'href', this.person.profiles[0])
+    cy.get('.profile-1 a').should('have.attr', 'href', this.person.profiles[1])
+    cy.get('.profile-2 a').should('have.attr', 'href', this.person.profiles[2])
   })
 
   it('has edit buttons for existing properties', function() {
@@ -489,7 +491,7 @@ describe('editing a publisher profile', function() {
   })
 
   describe('editing a profile and saving the changes', function() {
-    it.only('views the updated person', function() {
+    it('views the updated person', function() {
       cy.get('.edit-profiles').click()
       cy.get('.edit-profile-0').click()
       cy.get('#the-input')
@@ -497,7 +499,7 @@ describe('editing a publisher profile', function() {
         .type('https://twitter.com/siobhansnewprofile')
       cy.get('.save').click()
 
-      cy.url().should('match', /.+\/person\/[\d\w]+$/)
+      cy.url().should('match', personUrlRegex)
       cy.get('.name').should('have.text', this.person.name)
       cy.get('.image img').should('have.attr', 'src', this.person.image)
       cy.get('.profile-0 a').should(

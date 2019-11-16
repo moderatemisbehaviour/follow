@@ -16,10 +16,13 @@ function Profiles(props) {
   const { profiles } = props
   return (
     <div className="profiles">
-      {profiles.map((url, index) => {
-        const profileId = `profile-${index}`
-        return <Profile key={profileId} id={profileId} url={url} />
-      })}
+      {profiles.map((url, index) => (
+        <Profile
+          key={`profile-${index}`}
+          className={`profile-${index}`}
+          url={url}
+        />
+      ))}
     </div>
   )
 }
