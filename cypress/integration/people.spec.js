@@ -6,7 +6,7 @@ before(function() {
   cy.task('resetDatabase')
 })
 
-describe('landing on the home page.', function() {
+describe('the home page.', function() {
   before(function() {
     cy.visit('/')
   })
@@ -47,7 +47,7 @@ describe('every page other than the home page', function() {
   })
 })
 
-describe('searching for a publisher profile.', function() {
+describe('searching for a person', function() {
   beforeEach(function() {
     cy.task('createPerson').as('person')
     cy.visit('/')
@@ -122,7 +122,7 @@ describe('searching for a publisher profile.', function() {
   })
 })
 
-describe('creating a publisher profile.', function() {
+describe('creating a person', function() {
   beforeEach(function() {
     cy.visit('/person/create')
   })
@@ -368,7 +368,7 @@ describe('creating a publisher profile.', function() {
   })
 })
 
-describe('viewing a publisher profile.', function() {
+describe('viewing a person', function() {
   it('has an edit button below the input', function() {
     cy.task('createPerson')
       .as('person')
@@ -397,7 +397,7 @@ describe('viewing a publisher profile.', function() {
         .and('eq', this.person.image)
     })
 
-    it("shows links to the publisher's profiles", function() {
+    it("shows links to the person's profiles", function() {
       cy.get('.profile').should('have.length', 3)
       cy.get('.profile a')
         .first()
@@ -413,7 +413,7 @@ describe('viewing a publisher profile.', function() {
         .and('eq', 'https://www.facebook.com/siobhanwilsonmusic')
     })
 
-    it("masks the publisher's image to create a circular frame", function() {
+    it("masks the person's image to create a circular frame", function() {
       cy.get('.image img')
         .should('have.css', 'border-radius')
         .should('equal', '50%')
@@ -447,7 +447,7 @@ describe('viewing a publisher profile.', function() {
   })
 })
 
-describe('editing a publisher profile', function() {
+describe('editing a person', function() {
   beforeEach(function() {
     cy.task('createPerson')
       .as('person')
@@ -456,7 +456,7 @@ describe('editing a publisher profile', function() {
       })
   })
 
-  it('displays the publisher profile in its current state', function() {
+  it('displays the person in its current state', function() {
     cy.get('.name').should('have.text', this.person.name)
     cy.get('.image img').should('have.attr', 'src', this.person.image)
     cy.get('.profile-0 a').should('have.attr', 'href', this.person.profiles[0])
@@ -491,7 +491,7 @@ describe('editing a publisher profile', function() {
   })
 
   describe('editing a profile and saving the changes', function() {
-    it('views the updated person', function() {
+    it.only('views the updated person', function() {
       cy.get('.edit-profiles').click()
       cy.get('.edit-profile-0').click()
       cy.get('#the-input')
@@ -518,6 +518,16 @@ describe('editing a publisher profile', function() {
         this.person.profiles[2]
       )
       cy.get('.profile-3 a').should('not.exist')
+    })
+
+    describe('when a blank profile is being edited', function() {
+      it('discards the blank profile and saves', function() {
+        cy.get('.add-profile').click()
+        cy.get('.save').click()
+
+        cy.url().should('match', personUrlRegex)
+        cy.get('.profile').should('have.length', 3)
+      })
     })
   })
 })
