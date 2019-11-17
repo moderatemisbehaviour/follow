@@ -70,6 +70,7 @@ PersonBrowser.defaultProps = {
 const GET_PERSON = gql`
   query GetPerson($id: ID!) {
     person(id: $id) {
+      id
       name
       image
       profiles

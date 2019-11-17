@@ -65,6 +65,9 @@ const EDIT_PERSON = gql`
   mutation EditPerson($id: ID!, $person: PersonInput!) {
     editPerson(id: $id, person: $person) {
       id
+      name
+      image
+      profiles
     }
   }
 `

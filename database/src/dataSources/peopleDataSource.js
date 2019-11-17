@@ -46,8 +46,7 @@ class PeopleDataSource extends DataSource {
 
   async getPerson(id) {
     const peopleCollection = this.db.collection('people')
-    const objectId = new ObjectID(id)
-    const query = { _id: objectId }
+    const query = { _id: new ObjectID(id) }
     const person = await peopleCollection.findOne(query)
     return PeopleDataSource.replaceMongoIdWithApplicationId(person)
   }

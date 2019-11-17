@@ -490,23 +490,28 @@ describe('editing a person', function() {
     cy.get('#the-input').should('have.attr', 'value', this.person.image)
   })
 
-  describe('editing a profile and saving the changes', function() {
+  describe('editing a person and saving the changes', function() {
     it.only('views the updated person', function() {
+      const newName = 'Siobhan Wilson 2.0'
+      const newTwitterProfileUrl = 'https://twitter.com/siobhansnewprofile'
+
+      cy.get('.edit-name').click()
+      cy.get('#the-input')
+        .clear()
+        .type(newName)
+
       cy.get('.edit-profiles').click()
       cy.get('.edit-profile-0').click()
       cy.get('#the-input')
         .clear()
-        .type('https://twitter.com/siobhansnewprofile')
+        .type(newTwitterProfileUrl)
       cy.get('.save').click()
 
       cy.url().should('match', personUrlRegex)
-      cy.get('.name').should('have.text', this.person.name)
+
+      cy.get('.name').should('have.text', newName)
       cy.get('.image img').should('have.attr', 'src', this.person.image)
-      cy.get('.profile-0 a').should(
-        'have.attr',
-        'href',
-        'https://twitter.com/siobhansnewprofile'
-      )
+      cy.get('.profile-0 a').should('have.attr', 'href', newTwitterProfileUrl)
       cy.get('.profile-1 a').should(
         'have.attr',
         'href',
