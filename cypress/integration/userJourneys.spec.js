@@ -24,7 +24,7 @@ describe('User journeys', function() {
       cy.get('#the-input').type(
         'https://pbs.twimg.com/profile_images/1102783358973677569/qEt61Ej8_400x400.jpg'
       )
-      cy.get('#save').click()
+      cy.get('.save').click()
 
       cy.url().should('match', /person\/[\d\w]+/)
       cy.get('.name').should('have.text', 'Siobhan Wilson')
