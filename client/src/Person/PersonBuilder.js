@@ -118,11 +118,8 @@ class PersonBuilder extends Component {
         prompt: "Copy-paste the person's profile URL",
         validate: () => {
           try {
-            const urlInInput = this.state.person.profiles[
-              this.currentProfileIndex
-            ]
+            this.state.person.profiles.forEach(profile => new URL(profile))
             // eslint-disable-next-line no-new
-            new URL(urlInInput)
             return true
           } catch (e) {
             return false
@@ -133,7 +130,12 @@ class PersonBuilder extends Component {
           this.currentProfileIndex = ++this.currentProfileIndex
         },
         discard: () => {
-          this.state.person.profiles.splice(this.currentProfileIndex, 1)
+          this.setState(prevState => ({
+            person: {
+              ...prevState.person,
+              profiles: prevState.person.profiles.filter(profile => !!profile)
+            }
+          }))
         }
       }
     }
@@ -171,8 +173,9 @@ class PersonBuilder extends Component {
   }
 
   editNextProperty(nextProperty) {
-    if (!this.state.propertyBeingEdited.validate())
+    if (!this.state.propertyBeingEdited.validate()) {
       this.state.propertyBeingEdited.discard()
+    }
 
     if (nextProperty.getter() === undefined) {
       nextProperty.setter('')
@@ -231,11 +234,10 @@ class PersonBuilder extends Component {
     return string.charAt(0).toUpperCase() + string.slice(1)
   }
 
-  getPersonWithCurrentInvalidPropertyDiscarded() {
-    if (!this.state.propertyBeingEdited.validate()) {
-      this.state.propertyBeingEdited.discard()
-    }
-
+  getValidPerson() {
+    Object.values(this.properties).forEach(property => {
+      !property.validate() && property.discard()
+    })
     return this.state.person
   }
 
@@ -264,10 +266,7 @@ class PersonBuilder extends Component {
           invalidMessage={this.state.propertyBeingEdited.validationMessage}
           nextOptions={this.nextOptions}
         />
-        {this.props.children(
-          () => this.getPersonWithCurrentInvalidPropertyDiscarded(),
-          this.personValid
-        )}
+        {this.props.children(() => this.getValidPerson(), this.personValid)}
       </div>
     )
   }
