@@ -7,6 +7,8 @@ module.exports = {
   },
   Mutation: {
     createPerson: async (_, { person }, { dataSources }) =>
-      dataSources.peopleDataSource.createPerson(person)
+      dataSources.peopleDataSource.createPerson(person),
+    editPerson: async (_, { id, person }, { dataSources }) =>
+      dataSources.peopleDataSource.editPerson(id, person)
   }
 }

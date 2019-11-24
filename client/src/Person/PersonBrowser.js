@@ -1,9 +1,11 @@
+import { Link } from 'react-router-dom'
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 
 import Home from '../common/Home'
+import NextOption from '../common/NextSteps/NextOption'
 import Person from './Person'
 import Search from '../Search/Search'
 
@@ -19,22 +21,12 @@ class PersonBrowser extends Component {
     const { id } = this.props
 
     if (id) {
-      const GET_PERSON = gql`
-        query getPerson($id: ID!) {
-          person(id: $id) {
-            name
-            image
-            profiles
-          }
-        }
-      `
-
       return (
         <Query query={GET_PERSON} variables={{ id }}>
           {({ data, loading, error }) => {
             if (error) return <p>ERROR</p>
             if (loading) {
-              return <Person title="Loading..." />
+              return <Person name="Loading..." />
             }
 
             const {
@@ -48,6 +40,9 @@ class PersonBrowser extends Component {
                   profiles={profiles}
                 />
                 <Search />
+                <Link to={`/person/${id}/edit`}>
+                  <NextOption label={`Edit ${name}`} id={`edit-person`} />
+                </Link>
               </React.Fragment>
             )
           }}
@@ -71,5 +66,16 @@ PersonBrowser.propTypes = {
 PersonBrowser.defaultProps = {
   id: undefined
 }
+
+const GET_PERSON = gql`
+  query GetPerson($id: ID!) {
+    person(id: $id) {
+      id
+      name
+      image
+      profiles
+    }
+  }
+`
 
 export default PersonBrowser

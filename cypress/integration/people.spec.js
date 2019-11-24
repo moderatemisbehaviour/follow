@@ -1,10 +1,12 @@
 const BASE_URL = Cypress.config('baseUrl')
 
+const personUrlRegex = /.+\/person\/[\d\w]{24}$/
+
 before(function() {
   cy.task('resetDatabase')
 })
 
-describe('landing on the home page.', function() {
+describe('the home page.', function() {
   before(function() {
     cy.visit('/')
   })
@@ -37,7 +39,7 @@ describe('every page other than the home page', function() {
     cy.visit('/person/create')
   })
 
-  it('should display a home icon button', function() {
+  it('displays a home icon button', function() {
     cy.get('#home')
       .find('img')
       .should('have.attr', 'src')
@@ -45,7 +47,7 @@ describe('every page other than the home page', function() {
   })
 })
 
-describe('searching for a publisher profile.', function() {
+describe('searching for a person', function() {
   beforeEach(function() {
     cy.task('createPerson').as('person')
     cy.visit('/')
@@ -120,14 +122,25 @@ describe('searching for a publisher profile.', function() {
   })
 })
 
-describe('creating a publisher profile.', function() {
+describe('creating a person', function() {
+  beforeEach(function() {
+    cy.visit('/person/create')
+  })
+
+  it('highlights the property currently being edited', function() {
+    cy.get('.edit-name').should('have.class', 'currently-being-edited')
+    cy.get('.add-profile').click()
+    cy.get('.edit-profile-0').should('have.class', 'currently-being-edited')
+  })
+
   describe('getting to the create person page', function() {
     beforeEach(function() {
       cy.visit('/')
     })
 
-    it('Has options for creating a person in the bottom search result', function() {
+    it.only('has options for creating a person in the bottom search result', function() {
       cy.get('#the-input').type('Siob')
+      cy.get('.SearchResult') // Wait until search results appear to avoid Cypress failing because li with loading message gets detached from the DOM.
       cy.get('li')
         .last()
         .should('have.id', 'create-person')
@@ -150,10 +163,6 @@ describe('creating a publisher profile.', function() {
     })
   })
 
-  beforeEach(function() {
-    cy.visit('/person/create')
-  })
-
   describe('state on page load', function() {
     it('focuses the input', function() {
       cy.focused().should('have.id', 'the-input')
@@ -170,55 +179,43 @@ describe('creating a publisher profile.', function() {
         "Enter the person's name"
       )
     })
-  })
 
-  describe('validating URLs', function() {
-    it('disables the input whilst it has an invalid URL', function() {
-      cy.get('#the-input').type('Siobhan Wilson')
-      cy.get('#add-profile').should('not.have.attr', 'disabled')
-      cy.get('#add-profile').click()
-
-      cy.get('#add-profile').should('not.have.attr', 'disabled')
-      cy.get('#add-image').should('not.have.attr', 'disabled')
-      cy.get('#the-input').type('invalid URL')
-      cy.get('#add-profile').should('have.attr', 'disabled')
-      cy.get('#add-image').should('have.attr', 'disabled')
-
-      cy.get('#the-input')
-        .clear()
-        .type('http://example.com')
-      cy.get('#add-profile').should('not.have.attr', 'disabled')
-      cy.get('#add-image').should('not.have.attr', 'disabled')
+    it('has an add property buttons in the same order as they appear on the person', function() {
+      cy.get('.next')
+        .eq(0)
+        .should('have.class', 'edit-name')
+      cy.get('.next')
+        .eq(1)
+        .should('have.class', 'add-image')
+      cy.get('.next')
+        .eq(2)
+        .should('have.class', 'add-profile')
     })
-
-    it('gives the input the invalid style', function() {
-      cy.get('#the-input')
-        .type('Siobhan Wilson')
-        .should('not.have.class', 'invalid')
-      cy.get('#add-profile').click()
-
-      cy.get('#the-input')
-        .should('not.have.class', 'invalid')
-        .type('invalid URL')
-        .should('have.class', 'invalid')
-
-      cy.get('#the-input')
-        .clear()
-        .type('http://example.com')
-        .should('not.have.class', 'invalid')
-    })
-
-    it('activates the validation if the user tries to proceed with a blank (and therefore invalid) profile URL', function() {})
   })
 
   describe('adding the first profile URL', function() {
     beforeEach(function() {
       cy.get('#the-input').type('Siobhan Wilson')
-      cy.get('.next').click()
+      cy.get('.add-profile').click()
     })
 
     it('clears the input when the next button is clicked', function() {
       cy.get('#the-input').should('have.value', '')
+    })
+
+    it('should have add and edit property buttons in the same order as they appear on the person', function() {
+      cy.get('.next')
+        .eq(0)
+        .should('have.class', 'edit-name')
+      cy.get('.next')
+        .eq(1)
+        .should('have.class', 'add-image')
+      cy.get('.next')
+        .eq(2)
+        .should('have.class', 'edit-profiles')
+      cy.get('.next')
+        .eq(3)
+        .should('have.class', 'add-profile')
     })
 
     it("prompts for the person's first profile URL", function() {
@@ -232,7 +229,7 @@ describe('creating a publisher profile.', function() {
     it('enables the save button once the first profile URL is added', function() {
       cy.get('.save').should('have.attr', 'disabled')
       cy.get('#the-input').type('https://twitter.com/siobhanisback')
-      cy.get('#add-profile').click()
+      cy.get('.add-profile').click()
       cy.get('.save').should('not.have.attr', 'disabled')
     })
   })
@@ -240,12 +237,12 @@ describe('creating a publisher profile.', function() {
   describe('adding more information', function() {
     beforeEach(function() {
       cy.get('#the-input').type('Siobhan Wilson')
-      cy.get('.next').click()
+      cy.get('.add-profile').click()
       cy.get('#the-input').type('https://twitter.com/siobhanisback')
     })
 
     it('allows a second profile URL and image to be added', function() {
-      cy.get('#add-profile').click()
+      cy.get('.add-profile').click()
       cy.get('#the-input').type(
         'https://www.youtube.com/user/siobhanwilsonmusic'
       )
@@ -258,7 +255,7 @@ describe('creating a publisher profile.', function() {
           'https://www.youtube.com/user/siobhanwilsonmusic'
         )
 
-      cy.get('#add-image').click()
+      cy.get('.add-image').click()
       cy.get('#the-input').type(
         'https://pbs.twimg.com/profile_images/1102783358973677569/qEt61Ej8_400x400.jpg'
       )
@@ -270,15 +267,46 @@ describe('creating a publisher profile.', function() {
     })
 
     it('discards blank profiles or images currently being edited when the user decides to edit something else', function() {
-      cy.get('#add-profile').click()
+      cy.get('.add-profile').click()
       // Leave input blank
       cy.get('.profile').should('have.length', 2)
-      cy.get('#add-image').click()
+      cy.get('.add-image').click()
       cy.get('.profile').should('have.length', 1)
       // Leave input blank
       cy.get('.person img')
         .should('have.attr', 'src')
         .and('match', /\/static\/media\/placeholderPersonImage..*.svg/)
+    })
+  })
+
+  describe('editing properties that have already been created', function() {
+    beforeEach(function() {
+      cy.fixture('siobhan.json')
+        .as('siobhan')
+        .then(siobhan => {
+          cy.get('#the-input').type(siobhan.name)
+          cy.get('.add-profile').click()
+          cy.get('#the-input').type(siobhan.profiles[0])
+          cy.get('.add-profile').click()
+          cy.get('#the-input').type(siobhan.profiles[1])
+          cy.get('.add-profile').click()
+          cy.get('#the-input').type(siobhan.profiles[2])
+          cy.get('.add-image').click()
+        })
+    })
+
+    describe('editing profiles that have already been created', function() {
+      it('has an edit profiles button that prompts for the profile number to edit', function() {
+        cy.get('.edit-profile-0').should('not.exist')
+        cy.get('.edit-profile-1').should('not.exist')
+        cy.get('.edit-profile-2').should('not.exist')
+
+        cy.get('.edit-profiles').click()
+
+        cy.get('.edit-profile-0')
+        cy.get('.edit-profile-1')
+        cy.get('.edit-profile-2')
+      })
     })
   })
 
@@ -288,31 +316,31 @@ describe('creating a publisher profile.', function() {
         .as('siobhan')
         .then(siobhan => {
           cy.get('#the-input').type(siobhan.name)
-          cy.get('.next').click()
+          cy.get('.add-profile').click()
           cy.get('#the-input').type(siobhan.profiles[0])
-          cy.get('#add-image').click()
+          cy.get('.add-image').click()
           cy.get('#the-input').type(siobhan.image)
-          cy.get('#add-profile').click()
+          cy.get('.add-profile').click()
           cy.get('#the-input').type(siobhan.profiles[1])
         })
     })
 
-    it('save successfully and view the person', function() {
-      cy.get('#save').click()
+    it('views the person after a successful save', function() {
+      cy.get('.save').click()
 
-      cy.url().should('match', /\/person\/\w+/)
+      cy.url().should('match', personUrlRegex)
       cy.get('.profile').should('have.length', 2)
       cy.get('.person img')
         .should('have.attr', 'src')
         .and('eq', this.siobhan.image)
     })
 
-    describe('and there is a blank profile being edited', function() {
-      it('save successfully and view the person', function() {
-        cy.get('#add-profile').click()
-        cy.get('#save').click()
+    describe('blank profile being edited', function() {
+      it('discards the blank profile before saving', function() {
+        cy.get('.add-profile').click()
+        cy.get('.save').click()
 
-        cy.url().should('match', /\/person\/\w+/)
+        cy.url().should('match', personUrlRegex)
         cy.get('.profile').should('have.length', 2)
         cy.get('.person img')
           .should('have.attr', 'src')
@@ -320,10 +348,42 @@ describe('creating a publisher profile.', function() {
       })
     })
   })
+
+  describe('validating URLs', function() {
+    it('gives the input the invalid style', function() {
+      cy.get('#the-input')
+        .type('Siobhan Wilson')
+        .should('not.have.class', 'invalid')
+      cy.get('.add-profile').click()
+
+      cy.get('#the-input')
+        .should('not.have.class', 'invalid')
+        .type('invalid URL')
+        .should('have.class', 'invalid')
+
+      cy.get('#the-input')
+        .clear()
+        .type('http://example.com')
+        .should('not.have.class', 'invalid')
+    })
+  })
 })
 
-describe('viewing a publisher profile.', function() {
-  describe('that has all optional fields', function() {
+describe('viewing a person', function() {
+  it('has an edit button below the input', function() {
+    cy.task('createPerson')
+      .as('person')
+      .then(person => {
+        cy.visit(`/person/${person._id}`)
+      })
+
+    cy.get('#edit-person')
+      .should('have.attr', 'value', 'Edit Siobhan Wilson')
+      .click()
+    cy.url().should('match', /\/person\/\w+\/edit/)
+  })
+
+  describe('that has all optional properties', function() {
     beforeEach(function() {
       cy.task('createPerson')
         .as('person')
@@ -338,7 +398,7 @@ describe('viewing a publisher profile.', function() {
         .and('eq', this.person.image)
     })
 
-    it("shows links to the publisher's profiles", function() {
+    it("shows links to the person's profiles", function() {
       cy.get('.profile').should('have.length', 3)
       cy.get('.profile a')
         .first()
@@ -354,7 +414,7 @@ describe('viewing a publisher profile.', function() {
         .and('eq', 'https://www.facebook.com/siobhanwilsonmusic')
     })
 
-    it("masks the publisher's image to create a circular frame", function() {
+    it("masks the person's image to create a circular frame", function() {
       cy.get('.image img')
         .should('have.css', 'border-radius')
         .should('equal', '50%')
@@ -384,6 +444,141 @@ describe('viewing a publisher profile.', function() {
       cy.get('.image img')
         .should('have.attr', 'src')
         .and('contains', 'placeholderPersonImage')
+    })
+  })
+})
+
+describe('editing a person', function() {
+  beforeEach(function() {
+    cy.task('createPerson')
+      .as('person')
+      .then(person => {
+        cy.visit(`/person/${person._id}/edit`)
+      })
+  })
+
+  describe('the state on page load', function() {
+    it('displays the person in its current state', function() {
+      cy.get('.name').should('have.text', this.person.name)
+      cy.get('.image img').should('have.attr', 'src', this.person.image)
+      cy.get('.profile-0 a').should(
+        'have.attr',
+        'href',
+        this.person.profiles[0]
+      )
+      cy.get('.profile-1 a').should(
+        'have.attr',
+        'href',
+        this.person.profiles[1]
+      )
+      cy.get('.profile-2 a').should(
+        'have.attr',
+        'href',
+        this.person.profiles[2]
+      )
+    })
+
+    it('has edit buttons for existing properties', function() {
+      cy.get('.edit-name')
+      cy.get('.edit-image')
+      cy.get('.edit-profiles')
+      cy.get('.next').should('have.length', 4) // Including add profile button.
+    })
+
+    it('disables the edit button for the property currently being edited', function() {
+      cy.get('.edit-image').should('have.attr', 'disabled')
+      cy.get('.edit-profiles')
+        .click()
+        .should('have.attr', 'disabled')
+    })
+
+    it('has an add profile button', function() {
+      cy.get('.add-profile')
+    })
+
+    it('has a save button', function() {
+      cy.get('.save')
+    })
+
+    it('starts by editing the profile image because this would be common', function() {
+      cy.get('#the-input').should('have.attr', 'value', this.person.image)
+    })
+  })
+
+  describe('editing properties and saving', function() {
+    describe('editing name and existing profiles', function() {
+      it('views the updated person after saving', function() {
+        const newName = 'Siobhan Wilson 2.0'
+        const newTwitterProfileUrl = 'https://twitter.com/siobhansnewprofile'
+
+        cy.get('.edit-name').click()
+        cy.get('#the-input')
+          .clear()
+          .type(newName)
+
+        cy.get('.edit-profiles').click()
+        cy.get('.edit-profile-0').click()
+        cy.get('#the-input')
+          .clear()
+          .type(newTwitterProfileUrl)
+        cy.get('.save').click()
+
+        cy.url().should('match', personUrlRegex)
+
+        cy.get('.name').should('have.text', newName)
+        cy.get('.image img').should('have.attr', 'src', this.person.image)
+        cy.get('.profile-0 a').should('have.attr', 'href', newTwitterProfileUrl)
+        cy.get('.profile-1 a').should(
+          'have.attr',
+          'href',
+          this.person.profiles[1]
+        )
+        cy.get('.profile-2 a').should(
+          'have.attr',
+          'href',
+          this.person.profiles[2]
+        )
+        cy.get('.profile-3 a').should('not.exist')
+      })
+    })
+
+    describe('adding profiles', function() {
+      describe('when a blank profile is being edited', function() {
+        it('discards the blank profile before saving', function() {
+          cy.get('.add-profile').click()
+          cy.get('.save').click()
+
+          cy.url().should('match', personUrlRegex)
+          cy.get('.profile').should('have.length', 3)
+        })
+      })
+
+      describe('adding a blank profile then editing another one', function() {
+        it('discards the blank profile before saving', function() {
+          cy.get('.add-profile').click()
+          cy.get('.edit-profile-2').click()
+
+          cy.get('.save').click()
+          cy.url().should('match', personUrlRegex)
+          cy.get('.profile').should('have.length', 3)
+        })
+      })
+
+      describe('adding a blank profile then attempting to add another one', function() {
+        it('does not allow another profile to be added whilst one is invalid', function() {
+          cy.get('.add-profile').click()
+          cy.get('.add-profile').should('have.attr', 'disabled')
+          cy.get('#the-input').type('invalid profile URL')
+          cy.get('.add-profile').should('have.attr', 'disabled')
+          cy.get('#the-input')
+            .clear()
+            .type('https://google.com')
+
+          cy.get('.save').click()
+          cy.url().should('match', personUrlRegex)
+          cy.get('.profile').should('have.length', 4)
+        })
+      })
     })
   })
 })

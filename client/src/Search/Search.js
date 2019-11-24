@@ -41,7 +41,7 @@ class Search extends Component {
         />
         {query && (
           <Query query={GET_PEOPLE} variables={{ query }}>
-            {results => <SearchResults results={results} query={query} />}
+            {results => <SearchResults query={query} results={results} />}
           </Query>
         )}
       </div>

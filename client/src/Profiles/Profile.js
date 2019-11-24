@@ -8,7 +8,7 @@ import placeholderProfileIcon from './placeholderProfileIcon.svg'
 import UnknownPlatformIcon from './UnknownPlatformIcon'
 
 Profile.propTypes = {
-  id: PropTypes.string.isRequired,
+  className: PropTypes.string,
   url: PropTypes.string.isRequired
 }
 
@@ -19,15 +19,15 @@ const websiteToPlatformIconMap = {
 }
 
 function Profile(props) {
-  const { id, url: userInputUrl } = props
+  const { className, url: userInputUrl } = props
 
-  let className
+  let platformIconClassName
   let platformIconUrl
   let url
   let websiteName
   if (!userInputUrl) {
     platformIconUrl = placeholderProfileIcon
-    className = 'platform-icon placeholder'
+    platformIconClassName = 'platform-icon placeholder'
   } else {
     try {
       url = new URL(userInputUrl)
@@ -42,24 +42,26 @@ function Profile(props) {
         platformIconUrl = websiteToPlatformIconMap[websiteName]
       }
 
-      className = `platform-icon ${knownPlatform ? 'known' : 'unknown'}`
+      platformIconClassName = `platform-icon ${
+        knownPlatform ? 'known' : 'unknown'
+      }`
     } catch (e) {
-      className = 'platform-icon unknown invalid'
+      platformIconClassName = 'platform-icon unknown invalid'
     }
   }
 
   return (
-    <div className="profile" id={id}>
+    <div className={`profile ${className}`}>
       <a href={url ? url.href : 'http://www.example.com'}>
         {platformIconUrl && (
           <img
-            className={className}
+            className={platformIconClassName}
             src={platformIconUrl}
             alt="platform icon"
           />
         )}
         {!platformIconUrl && (
-          <UnknownPlatformIcon className={className}>
+          <UnknownPlatformIcon className={platformIconClassName}>
             {url ? websiteName.charAt(0) : '?'}
           </UnknownPlatformIcon>
         )}

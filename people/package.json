@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "nodenv --E ../.env src/index.js",
-    "start:dev": "nodemon --exec 'nodenv --E ../.env' src/index.js",
+    "start:dev": "nodemon -w ../database/ --exec 'nodenv --E ../.env' src/index.js",
     "test": "jest"
   },
   "dependencies": {

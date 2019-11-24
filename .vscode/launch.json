@@ -5,10 +5,12 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "node",
+      "type": "chrome",
       "request": "attach",
-      "name": "attach to server",
-      "port": 9229
+      "name": "Attach to Chrome",
+      "port": 9222,
+      "urlFilter": "http://localhost:4001/*",
+      "webRoot": "${workspaceFolder}/client/src"
     },
     {
       "type": "node",
@@ -23,7 +25,7 @@
       "type": "chrome",
       "request": "launch",
       "name": "dev client",
-      "url": "http://localhost:4001",
+      "url": "http://localhost:4001/person/create?name=Siob",
       "webRoot": "${workspaceFolder}/client/src"
     }
   ]

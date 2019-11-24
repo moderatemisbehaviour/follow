@@ -12,19 +12,19 @@ describe('User journeys', function() {
       cy.get('#create-suggested-person').click()
 
       cy.get('#the-input').type('obhan Wilson')
-      cy.get('#add-profile').click()
+      cy.get('.add-profile').click()
       cy.get('#the-input').type('https://twitter.com/siobhanisback')
-      cy.get('#add-profile').click()
+      cy.get('.add-profile').click()
       cy.get('#the-input').type(
         'https://www.youtube.com/user/siobhanwilsonmusic'
       )
-      cy.get('#add-profile').click()
+      cy.get('.add-profile').click()
       cy.get('#the-input').type('https://www.facebook.com/siobhanwilsonmusic')
-      cy.get('#add-image').click()
+      cy.get('.add-image').click()
       cy.get('#the-input').type(
         'https://pbs.twimg.com/profile_images/1102783358973677569/qEt61Ej8_400x400.jpg'
       )
-      cy.get('#save').click()
+      cy.get('.save').click()
 
       cy.url().should('match', /person\/[\d\w]+/)
       cy.get('.name').should('have.text', 'Siobhan Wilson')

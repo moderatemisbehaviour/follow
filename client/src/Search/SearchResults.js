@@ -3,9 +3,7 @@ import PropTypes from 'prop-types'
 
 import CreatePersonButton from '../Person/CreatePersonButton'
 import Person from '../Person/Person'
-
 import SearchResult from './SearchResult'
-import './SearchResults.css'
 
 function SearchResults(props) {
   const {
