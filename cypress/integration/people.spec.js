@@ -335,7 +335,7 @@ describe('creating a person', function() {
     })
 
     describe('blank profile being edited', function() {
-      it('discards the blank profile and saves', function() {
+      it('discards the blank profile before saving', function() {
         cy.get('.add-profile').click()
         cy.get('.save').click()
 
@@ -553,13 +553,29 @@ describe('editing a person', function() {
       })
 
       describe('adding a blank profile then editing another one', function() {
-        it.only('discards the blank profile before saving', function() {
+        it('discards the blank profile before saving', function() {
           cy.get('.add-profile').click()
           cy.get('.edit-profile-2').click()
 
           cy.get('.save').click()
           cy.url().should('match', personUrlRegex)
           cy.get('.profile').should('have.length', 3)
+        })
+      })
+
+      describe('adding a blank profile then attempting to add another one', function() {
+        it('does not allow another profile to be added whilst one is invalid', function() {
+          cy.get('.add-profile').click()
+          cy.get('.add-profile').should('have.attr', 'disabled')
+          cy.get('#the-input').type('invalid profile URL')
+          cy.get('.add-profile').should('have.attr', 'disabled')
+          cy.get('#the-input')
+            .clear()
+            .type('https://google.com')
+
+          cy.get('.save').click()
+          cy.url().should('match', personUrlRegex)
+          cy.get('.profile').should('have.length', 4)
         })
       })
     })

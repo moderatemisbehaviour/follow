@@ -29,8 +29,7 @@ class PersonBuilder extends Component {
         prompt: "Enter the person's name",
         validate: () => !!this.state.person.name,
         validationMessage: 'Please provide a name',
-        complete: () => null,
-        discard: () => delete this.state.person.name
+        discard: async () => delete this.state.person.name
       },
       image: {
         name: 'image',
@@ -59,8 +58,7 @@ class PersonBuilder extends Component {
           }
         },
         validationMessage: 'The URL you have provided is invalid.',
-        complete: () => null,
-        discard: () => delete this.state.person.image
+        discard: async () => delete this.state.person.image
       },
       profiles: {
         name: 'profile',
@@ -93,6 +91,7 @@ class PersonBuilder extends Component {
           }
           nextOptions.push({
             className: `add-profile`,
+            disabled: !this.properties.profiles.validate(),
             key: `add-profile-button`,
             label: `Add profile`,
             onClick: () => {
@@ -126,16 +125,28 @@ class PersonBuilder extends Component {
           }
         },
         validationMessage: 'The URL you have provided is invalid.',
-        complete: () => {
-          this.currentProfileIndex = ++this.currentProfileIndex
-        },
         discard: () => {
-          this.setState(prevState => ({
-            person: {
-              ...prevState.person,
-              profiles: prevState.person.profiles.filter(profile => !!profile)
-            }
-          }))
+          return new Promise(resolve => {
+            this.setState(
+              prevState => {
+                const person = {
+                  ...prevState.person,
+                  profiles: prevState.person.profiles.filter(
+                    profile => !!profile
+                  )
+                }
+
+                this.currentProfileIndex = person.profiles.length - 1
+
+                const newState = {
+                  ...prevState,
+                  person
+                }
+                return newState
+              },
+              () => resolve(this.state.person)
+            )
+          })
         }
       }
     }
@@ -172,7 +183,7 @@ class PersonBuilder extends Component {
     })
   }
 
-  editNextProperty(nextProperty) {
+  async editNextProperty(nextProperty) {
     if (!this.state.propertyBeingEdited.validate()) {
       this.state.propertyBeingEdited.discard()
     }
@@ -234,15 +245,17 @@ class PersonBuilder extends Component {
     return string.charAt(0).toUpperCase() + string.slice(1)
   }
 
-  getValidPerson() {
-    Object.values(this.properties).forEach(property => {
-      !property.validate() && property.discard()
-    })
+  async getPerson() {
+    const promises = Object.values(this.properties)
+      .filter(property => !property.validate())
+      .map(property => property.discard())
+    await Promise.all(promises)
     return this.state.person
   }
 
   render() {
     const value = this.state.propertyBeingEdited.getter()
+    console.log(this.currentProfileIndex, value)
     const invalid = !!value && !this.state.propertyBeingEdited.validate()
     const prompt = this.state.propertyBeingEdited.prompt
 
@@ -266,7 +279,7 @@ class PersonBuilder extends Component {
           invalidMessage={this.state.propertyBeingEdited.validationMessage}
           nextOptions={this.nextOptions}
         />
-        {this.props.children(() => this.getValidPerson(), this.personValid)}
+        {this.props.children(() => this.getPerson(), this.personValid)}
       </div>
     )
   }

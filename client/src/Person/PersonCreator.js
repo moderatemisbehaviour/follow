@@ -22,9 +22,9 @@ function PersonCreator(props) {
               return (
                 <Save
                   disabled={!isValid}
-                  onClick={e => {
+                  onClick={async e => {
                     createPerson({
-                      variables: { person: getPerson() }
+                      variables: { person: await getPerson() }
                     })
                   }}
                 />

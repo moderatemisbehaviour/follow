@@ -33,13 +33,13 @@ function PersonEditor(props) {
                   return (
                     <Save
                       disabled={!isValid}
-                      onClick={e => {
+                      onClick={async e => {
                         // TODO: Find a better solution for this.
                         // Mutation fails because person has __typename property from the query that was used to retrieve it.
                         // This property is not in the GraphQL schema so Apollo throws an error.
                         //
                         // https://github.com/apollographql/apollo-client/issues/1913
-                        const person = getPerson()
+                        const person = await getPerson()
                         delete person.__typename
                         editPerson({
                           variables: { id, person }
