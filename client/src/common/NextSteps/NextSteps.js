@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import './NextSteps.css'
-import NextOption from '../NextSteps/NextOption'
+import NextOption from './NextOption'
 
 NextSteps.propTypes = {
   children: PropTypes.arrayOf(PropTypes.element),

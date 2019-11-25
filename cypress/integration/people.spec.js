@@ -138,7 +138,7 @@ describe('creating a person', function() {
       cy.visit('/')
     })
 
-    it.only('has options for creating a person in the bottom search result', function() {
+    it('has options for creating a person in the bottom search result', function() {
       cy.get('#the-input').type('Siob')
       cy.get('.SearchResult') // Wait until search results appear to avoid Cypress failing because li with loading message gets detached from the DOM.
       cy.get('li')
