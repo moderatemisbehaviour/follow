@@ -470,7 +470,7 @@ describe('viewing a person', function() {
   })
 })
 
-describe.only('editing a person', function() {
+describe('editing a person', function() {
   beforeEach(function() {
     cy.task('createPerson')
       .as('person')

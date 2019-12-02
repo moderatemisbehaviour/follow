@@ -11,28 +11,23 @@ import Save from '../common/Save'
 function PersonEditor(props) {
   const { id } = props
 
-  const [person, setPerson] = useState()
+  const [personName, setPersonName] = useState()
 
   useEffect(() => {
-    document.title = `Edit ${(person && person.name) || 'person'}`
+    document.title = `Edit ${personName || 'person'}`
   })
 
   return (
     <Query query={GET_PERSON} variables={{ id }}>
       {({ data, loading, error }) => {
         if (error) return <p>ERROR</p>
-        // TODO: These next few lines are horrible, make it more elegant
-        //
-        // These lines came about because we wanted to update the document title using person name but that is not
-        // available until it has been retrieved using the ID prop. Setting the state is therefore only being used as
-        // a way to move person into the closure scope of the useEffect function when it has been found.
-        if (data) setPerson(data.person)
-        if (loading || !person) {
+        if (loading) {
           return <Person name="Loading..." />
         }
+        setPersonName(data.person.name)
 
         return (
-          <PersonBuilder person={person} propertyBeingEdited="image">
+          <PersonBuilder person={data.person} propertyBeingEdited="image">
             {(getPerson, isValid) => (
               <Mutation mutation={EDIT_PERSON}>
                 {(editPerson, { data, error, loading }) => {
