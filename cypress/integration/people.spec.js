@@ -1,6 +1,7 @@
 const BASE_URL = Cypress.config('baseUrl')
 
 const personUrlRegex = /.+\/person\/[\d\w]{24}$/
+const slogan = 'Follow people, not platforms'
 
 before(function() {
   cy.task('resetDatabase')
@@ -11,8 +12,16 @@ describe('the home page.', function() {
     cy.visit('/')
   })
 
-  it('displays the slogan', function() {
-    cy.get('.name').should('have.text', 'Follow people, not platforms')
+  it('displays the slogan even after coming back from another page', function() {
+    cy.title().should('eq', slogan)
+    cy.visit('/person/create')
+    cy.title().should('not.eq', slogan)
+    cy.visit('/')
+    cy.title().should('eq', slogan)
+  })
+
+  it('has the slogan as the page title', function() {
+    cy.title().should('eq', slogan)
   })
 
   it('displays the logo.', function() {
@@ -27,7 +36,9 @@ describe('the home page.', function() {
     cy.get('.Search input').focused()
   })
 
-  it.skip("displays a 'learn more' button in the content area", () => {})
+  it("displays a 'learn more' button in the content area", () => {
+    cy.get('a').contains('Learn more')
+  })
 
   it('does not display a home icon button', function() {
     cy.get('#home').should('not.exist')
@@ -51,6 +62,13 @@ describe('searching for a person', function() {
   beforeEach(function() {
     cy.task('createPerson').as('person')
     cy.visit('/')
+  })
+
+  it.skip('updates the document title to "Searching for [query]', function() {
+    cy.get('.Search input')
+      .type('Si')
+      .should('have.value', 'Si')
+    cy.title().should('eq', 'Searching for Si')
   })
 
   it('displays search results when text is entered into the search input.', function() {
@@ -125,6 +143,12 @@ describe('searching for a person', function() {
 describe('creating a person', function() {
   beforeEach(function() {
     cy.visit('/person/create')
+  })
+
+  it("updates the document title, using the 'name' query param if it exists", function() {
+    cy.title().should('eq', 'Create person')
+    cy.visit('/person/create?name=Siobhan')
+    cy.title().should('eq', 'Create Siobhan')
   })
 
   it('highlights the property currently being edited', function() {
@@ -370,13 +394,19 @@ describe('creating a person', function() {
 })
 
 describe('viewing a person', function() {
-  it('has an edit button below the input', function() {
+  beforeEach(function() {
     cy.task('createPerson')
       .as('person')
       .then(person => {
         cy.visit(`/person/${person._id}`)
       })
+  })
 
+  it("updates the document title to the person's name", function() {
+    cy.title().should('eq', this.person.name)
+  })
+
+  it('has an edit button below the input', function() {
     cy.get('#edit-person')
       .should('have.attr', 'value', 'Edit Siobhan Wilson')
       .click()
@@ -384,14 +414,6 @@ describe('viewing a person', function() {
   })
 
   describe('that has all optional properties', function() {
-    beforeEach(function() {
-      cy.task('createPerson')
-        .as('person')
-        .then(person => {
-          cy.visit(`/person/${person._id}`)
-        })
-    })
-
     it("shows the person's profile image.", function() {
       cy.get('.image img')
         .should('have.attr', 'src')
@@ -455,6 +477,10 @@ describe('editing a person', function() {
       .then(person => {
         cy.visit(`/person/${person._id}/edit`)
       })
+  })
+
+  it("updates the document title using the person's name", function() {
+    cy.title().should('eq', `Edit ${this.person.name}`)
   })
 
   describe('the state on page load', function() {

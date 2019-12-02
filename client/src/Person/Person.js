@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 import Image from './Image'
@@ -16,6 +16,10 @@ Person.propTypes = {
 
 function Person(props) {
   const { name, image, profiles } = props
+
+  useEffect(() => {
+    document.title = name
+  })
 
   return (
     <div className="person">

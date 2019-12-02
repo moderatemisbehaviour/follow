@@ -1,11 +1,17 @@
+import { createBrowserHistory } from 'history'
 import React, { Component } from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { Router, Route, Switch } from 'react-router-dom'
 
 import './App.css'
 import Footer from './common/Footer'
 import PersonBrowser from './Person/PersonBrowser'
 import PersonCreator from './Person/PersonCreator'
 import PersonEditor from './Person/PersonEditor'
+
+const history = createBrowserHistory()
+history.listen(() => {
+  window.analytics.page()
+})
 
 class App extends Component {
   constructor(props) {
@@ -17,7 +23,7 @@ class App extends Component {
 
   render() {
     return (
-      <BrowserRouter>
+      <Router history={history}>
         <Switch>
           <Route path={'/person/create'}>
             {({ location }) => {
@@ -61,7 +67,7 @@ class App extends Component {
             )}
           </Route>
         </Switch>
-      </BrowserRouter>
+      </Router>
     )
   }
 }

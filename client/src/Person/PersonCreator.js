@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Mutation } from 'react-apollo'
 import { Redirect } from 'react-router-dom'
@@ -8,6 +8,10 @@ import PersonBuilder from './PersonBuilder'
 import Save from '../common/Save'
 
 function PersonCreator(props) {
+  useEffect(() => {
+    document.title = `Create ${props.person.name || 'person'}`
+  })
+
   return (
     <PersonBuilder person={props.person}>
       {(getPerson, isValid) => {
