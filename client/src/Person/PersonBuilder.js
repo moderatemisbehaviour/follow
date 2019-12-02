@@ -255,7 +255,6 @@ class PersonBuilder extends Component {
 
   render() {
     const value = this.state.propertyBeingEdited.getter()
-    console.log(this.currentProfileIndex, value)
     const invalid = !!value && !this.state.propertyBeingEdited.validate()
     const prompt = this.state.propertyBeingEdited.prompt
 

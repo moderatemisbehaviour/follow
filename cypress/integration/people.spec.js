@@ -470,7 +470,7 @@ describe('viewing a person', function() {
   })
 })
 
-describe('editing a person', function() {
+describe.only('editing a person', function() {
   beforeEach(function() {
     cy.task('createPerson')
       .as('person')
@@ -484,7 +484,7 @@ describe('editing a person', function() {
   })
 
   describe('the state on page load', function() {
-    it('displays the person in its current state', function() {
+    it('displays the person in their current state', function() {
       cy.get('.name').should('have.text', this.person.name)
       cy.get('.image img').should('have.attr', 'src', this.person.image)
       cy.get('.profile-0 a').should(
