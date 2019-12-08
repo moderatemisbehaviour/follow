@@ -33,6 +33,7 @@ function PersonEditor(props) {
                 {(editPerson, { data, error, loading }) => {
                   if (data) {
                     const id = data.editPerson.id
+                    window.analytics.track('Edited person', { id })
                     return <Redirect to={`/person/${id}`} />
                   }
 
