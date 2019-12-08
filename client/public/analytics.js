@@ -17,6 +17,7 @@ function createAnalyticsGlobal(environment, segmentWriteKey) {
 
 function useMockAnalytics() {
   var analytics = {
+    page: () => null,
     track: () => null
   }
 }
