@@ -20,6 +20,7 @@ function PersonCreator(props) {
             {(createPerson, { data, error, loading }) => {
               if (data) {
                 const id = data.createPerson.id
+                window.analytics.track('Created person', { id })
                 return <Redirect to={`/person/${id}`} />
               }
 
@@ -27,7 +28,7 @@ function PersonCreator(props) {
                 <Save
                   disabled={!isValid}
                   onClick={async e => {
-                    createPerson({
+                    await createPerson({
                       variables: { person: await getPerson() }
                     })
                   }}

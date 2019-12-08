@@ -17,8 +17,8 @@ function createAnalyticsGlobal(environment, segmentWriteKey) {
 
 function useMockAnalytics() {
   window.analytics = {
-    page: () => null,
-    track: () => null
+    page: () => console.debug('Analtics page called.'),
+    track: () => console.debug('Analytics track called.')
   }
 }
 
