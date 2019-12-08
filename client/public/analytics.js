@@ -22,7 +22,7 @@ function useMockAnalytics() {
   }
 }
 
-function useSegment(writeKey) {
+function useSegment(segmentWriteKey) {
   // This code is a copy-paste from the Segment website except for the addition of the writeKey argument.
   !(function() {
     var analytics = (window.analytics = window.analytics || [])
@@ -74,7 +74,7 @@ function useSegment(writeKey) {
           analytics._loadOptions = e
         }
         analytics.SNIPPET_VERSION = '4.1.0'
-        analytics.load(writeKey)
+        analytics.load(segmentWriteKey)
         analytics.page()
       }
   })()
