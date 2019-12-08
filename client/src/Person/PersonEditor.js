@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Query, Mutation } from 'react-apollo'
 import { Redirect } from 'react-router-dom'
@@ -11,6 +11,12 @@ import Save from '../common/Save'
 function PersonEditor(props) {
   const { id } = props
 
+  const [personName, setPersonName] = useState()
+
+  useEffect(() => {
+    document.title = `Edit ${personName || 'person'}`
+  })
+
   return (
     <Query query={GET_PERSON} variables={{ id }}>
       {({ data, loading, error }) => {
@@ -18,10 +24,10 @@ function PersonEditor(props) {
         if (loading) {
           return <Person name="Loading..." />
         }
+        setPersonName(data.person.name)
 
-        const { person } = data
         return (
-          <PersonBuilder person={person} propertyBeingEdited="image">
+          <PersonBuilder person={data.person} propertyBeingEdited="image">
             {(getPerson, isValid) => (
               <Mutation mutation={EDIT_PERSON}>
                 {(editPerson, { data, error, loading }) => {

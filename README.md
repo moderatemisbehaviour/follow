@@ -75,7 +75,7 @@ Regardless of the method for starting the app, `dotenv` is used to read the `.en
 
 Uses the default config in the `.env` file as services run locally.
 
-## Review
+## Feature
 
 Reads environment variables from `app.json` which sets `NODE_ENV` to `review`.
 The app can then inspect this variable and choose to override defaults loaded from `.env`.
@@ -84,12 +84,12 @@ The app can then inspect this variable and choose to override defaults loaded fr
 
 To be filled in.
 
-## Deployment
+## Production
 
-The app can be deployed using Heroku which will run the following.
+The staging environment must be manually promoted to production.
 
-1. npm run postinstall
-2. npm run start
+# Analytics
+Segment is used for analytics. For it to work a SEGMENT_WRITE_KEY environment variable must be set as well as NODE_ENV (see `client/public/analytics.js`).
 
 # Ubiquitous language
 

@@ -5,7 +5,7 @@ import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 
 import Home from '../common/Home'
-import NextOption from '../common/NextSteps/NextOption'
+import NextOption from '../common/nextSteps/NextOption'
 import Person from './Person'
 import Search from '../Search/Search'
 

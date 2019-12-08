@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
 import EditorInput from '../common/EditorInput'
-import NextSteps from '../common/NextSteps/NextSteps'
+import NextSteps from '../common/nextSteps/NextSteps'
 import './PersonBuilder.css'
 import Person from './Person'
 
@@ -255,7 +255,6 @@ class PersonBuilder extends Component {
 
   render() {
     const value = this.state.propertyBeingEdited.getter()
-    console.log(this.currentProfileIndex, value)
     const invalid = !!value && !this.state.propertyBeingEdited.validate()
     const prompt = this.state.propertyBeingEdited.prompt
 
