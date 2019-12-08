@@ -22,7 +22,7 @@
   },
   "scripts": {
     "postinstall": "(cd database && npm install) && (cd people && npm install) && (cd client && npm install)",
-    "build": "cd client && npm run build",
+    "build": "nodenv --exec '(cd client && npm run build)'",
     "dev": "concurrently 'npm run start:dev' 'npm run test:dev'",
     "reset-database": "cd database && npm run reset-database",
     "start": "cd people && npm start",
