@@ -4,7 +4,7 @@ function createAnalyticsGlobal(environment, segmentWriteKey) {
   if (environment === 'staging' || environment === 'production') {
     if (!segmentWriteKey) {
       throw new Error(
-        `Environment is ${environment} but there is SEGMENT_WRITE_KEY env var.`
+        `Environment is ${environment} but SEGMENT_WRITE_KEY env var is not set.`
       )
     }
     console.log(`Environment is ${environment} so using Segment analytics.`)
@@ -23,6 +23,7 @@ function useMockAnalytics() {
 }
 
 function useSegment(writeKey) {
+  // This code is a copy-paste from the Segment website except for the addition of the writeKey argument.
   !(function() {
     var analytics = (window.analytics = window.analytics || [])
     if (!analytics.initialize)
