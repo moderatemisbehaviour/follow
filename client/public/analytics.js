@@ -1,12 +1,8 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-unused-vars */
 function createAnalyticsGlobal(environment, segmentWriteKey) {
+  console.log(segmentWriteKey)
   if (environment === 'staging' || environment === 'production') {
-    if (!segmentWriteKey) {
-      throw new Error(
-        `Environment is ${environment} but SEGMENT_WRITE_KEY env var is not set.`
-      )
-    }
     console.log(`Environment is ${environment} so using Segment analytics.`)
     useSegment(segmentWriteKey)
   } else {
