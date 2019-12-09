@@ -14,24 +14,10 @@ class Search extends Component {
     }
   }
 
-  search(query) {
-    this.setState({
-      query
-    })
-  }
-
   render() {
     const { query } = this.state
-    const GET_PEOPLE = gql`
-      query People($query: String!) {
-        people(query: $query) {
-          id
-          name
-          image
-        }
-      }
-    `
 
+    // TODO: Add a debounce to the search.
     return (
       <div className="Search">
         <Input
@@ -47,6 +33,22 @@ class Search extends Component {
       </div>
     )
   }
+
+  search(query) {
+    this.setState({
+      query
+    })
+  }
 }
+
+const GET_PEOPLE = gql`
+  query People($query: String!) {
+    people(query: $query) {
+      id
+      name
+      image
+    }
+  }
+`
 
 export default Search

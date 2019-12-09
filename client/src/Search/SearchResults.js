@@ -30,7 +30,7 @@ function SearchResults(props) {
 }
 
 SearchResults.propTypes = {
-  query: PropTypes.string,
+  query: PropTypes.string.isRequired,
   results: PropTypes.shape({})
 }
 
