@@ -10,7 +10,7 @@ SearchResult.propTypes = {
 function SearchResult(props) {
   return (
     <Link to={`/person/${props.id}`}>
-      <li className="SearchResult">{props.children}</li>
+      <li className="search-result">{props.children}</li>
     </Link>
   )
 }
