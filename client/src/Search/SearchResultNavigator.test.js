@@ -1,5 +1,5 @@
-import React from 'react'
 import { shallow } from 'enzyme'
+import React from 'react'
 import SearchResultsNavigator from './SearchResultsNavigator'
 
 describe('page buttons', () => {
@@ -8,13 +8,15 @@ describe('page buttons', () => {
       <SearchResultsNavigator
         currentPage={1}
         numberOfResults={5}
+        onNavigation={() => null}
         resultsPerPage={5}
       />
     )
     const navigationButtons = wrapper.find('button')
 
-    expect(navigationButtons).toHaveLength(1)
-    expect(navigationButtons.text()).toEqual('1')
+    expect(
+      navigationButtons.map(navigationButton => navigationButton.text())
+    ).toEqual(['1', 'more'])
   })
 
   it('displays two buttons for two pages of results', () => {
@@ -22,6 +24,7 @@ describe('page buttons', () => {
       <SearchResultsNavigator
         currentPage={1}
         numberOfResults={10}
+        onNavigation={() => null}
         resultsPerPage={5}
       />
     )
@@ -29,7 +32,7 @@ describe('page buttons', () => {
 
     expect(
       navigationButtons.map(navigationButton => navigationButton.text())
-    ).toEqual(['1', '2'])
+    ).toEqual(['1', '2', 'more'])
   })
 
   it('displays three buttons for three pages of results', () => {
@@ -37,6 +40,7 @@ describe('page buttons', () => {
       <SearchResultsNavigator
         currentPage={1}
         numberOfResults={15}
+        onNavigation={() => null}
         resultsPerPage={5}
       />
     )
@@ -44,7 +48,7 @@ describe('page buttons', () => {
 
     expect(
       navigationButtons.map(navigationButton => navigationButton.text())
-    ).toEqual(['1', '2', '3'])
+    ).toEqual(['1', '2', '3', 'more'])
   })
 
   it('displays one button for one partial page', () => {
@@ -52,6 +56,7 @@ describe('page buttons', () => {
       <SearchResultsNavigator
         currentPage={1}
         numberOfResults={1}
+        onNavigation={() => null}
         resultsPerPage={5}
       />
     )
@@ -59,7 +64,7 @@ describe('page buttons', () => {
 
     expect(
       navigationButtons.map(navigationButton => navigationButton.text())
-    ).toEqual(['1'])
+    ).toEqual(['1', 'more'])
   })
 
   it('displays 2 buttons for one full page and one partial page', () => {
@@ -67,6 +72,7 @@ describe('page buttons', () => {
       <SearchResultsNavigator
         currentPage={1}
         numberOfResults={8}
+        onNavigation={() => null}
         resultsPerPage={5}
       />
     )
@@ -74,7 +80,7 @@ describe('page buttons', () => {
 
     expect(
       navigationButtons.map(navigationButton => navigationButton.text())
-    ).toEqual(['1', '2'])
+    ).toEqual(['1', '2', 'more'])
   })
 })
 
@@ -84,11 +90,12 @@ describe('highlighting the current page', () => {
       <SearchResultsNavigator
         currentPage={1}
         numberOfResults={5}
+        onNavigation={() => null}
         resultsPerPage={5}
       />
     )
     const navigationButtons = wrapper.find('button')
-    expect(navigationButtons.hasClass('current-page')).toBeTruthy()
+    expect(navigationButtons.at(0).hasClass('current-page')).toBeTruthy()
   })
 
   it('sets the current-page class on the second button', () => {
@@ -96,6 +103,7 @@ describe('highlighting the current page', () => {
       <SearchResultsNavigator
         currentPage={2}
         numberOfResults={10}
+        onNavigation={() => null}
         resultsPerPage={5}
       />
     )
@@ -108,6 +116,7 @@ describe('highlighting the current page', () => {
       <SearchResultsNavigator
         currentPage={3}
         numberOfResults={15}
+        onNavigation={() => null}
         resultsPerPage={5}
       />
     )
