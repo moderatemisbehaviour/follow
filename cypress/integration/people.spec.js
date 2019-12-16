@@ -29,11 +29,11 @@ describe('the home page.', function() {
   })
 
   it('displays a search box.', function() {
-    cy.get('.Search input')
+    cy.get('.search input')
   })
 
   it('focuses the search box.', function() {
-    cy.get('.Search input').focused()
+    cy.get('.search input').focused()
   })
 
   it("displays a 'learn more' button in the content area", () => {
@@ -65,17 +65,17 @@ describe('searching for a person', function() {
   })
 
   it.skip('updates the document title to "Searching for [query]', function() {
-    cy.get('.Search input')
+    cy.get('.search input')
       .type('Si')
       .should('have.value', 'Si')
     cy.title().should('eq', 'Searching for Si')
   })
 
   it('displays search results when text is entered into the search input.', function() {
-    cy.get('.Search input')
+    cy.get('.search input')
       .type('Si')
       .should('have.value', 'Si')
-    cy.get('.SearchResult').should('not.have.length', 0)
+    cy.get('.searchResult').should('not.have.length', 0)
   })
 
   it('displays no more than 5 results at a time.', function() {
@@ -85,15 +85,15 @@ describe('searching for a person', function() {
     cy.task('createPerson').as('person')
     cy.task('createPerson').as('person')
     cy.task('createPerson').as('person')
-    cy.get('.Search input')
+    cy.get('.search input')
       .type('Si')
       .should('have.value', 'Si')
-    cy.get('.SearchResult').should('have.length', 5)
+    cy.get('.searchResult').should('have.length', 5)
   })
 
   it('displays mini person images in the search results', function() {
     cy.get('#the-input').type('Si')
-    cy.get('.SearchResult')
+    cy.get('.searchResult')
       .first()
       .find('img')
       .should('have.attr', 'src', this.person.image)
@@ -101,39 +101,39 @@ describe('searching for a person', function() {
 
   // TODO: Use PayPal dropdown component?
   it.skip('allows the user to select a search result with the keyboard.', function() {
-    cy.get('.Search input')
+    cy.get('.search input')
       .type('Si')
       .type('{downarrow}')
     cy.focused().should('have.text', 'Siobhan Wilson')
-    cy.get('.SearchResult')
+    cy.get('.searchResult')
       .first()
       .click() // TODO: Find out how to simulate user pressing {enter}
     cy.location('pathname').should('eq', '/person/1')
   })
 
   it('closes the search results when one is selected', function() {
-    cy.get('.Search input').type('Si') // TODO: Use #the-input selector instead
-    cy.get('.SearchResult')
+    cy.get('.search input').type('Si') // TODO: Use #the-input selector instead
+    cy.get('.searchResult')
       .first()
       .click()
-    cy.get('.SearchResults').should('have.length', 0)
+    cy.get('.searchResults').should('have.length', 0)
   })
 
   it('stops displaying search results when text is cleared from the search input.', function() {
-    cy.get('.Search input')
+    cy.get('.search input')
       .type('Si')
       .should('have.value', 'Si')
-    cy.get('.Search input')
+    cy.get('.search input')
       .clear()
       .should('have.value', '')
-    cy.get('.SearchResult').should('have.length', 0)
+    cy.get('.searchResult').should('have.length', 0)
   })
 
   it.skip('closes the search results when the search input loses focus', function() {})
 
   it("navigates to the person's profile when a search result is clicked", function() {
     cy.get('#the-input').type('Si')
-    cy.get('.SearchResult')
+    cy.get('.searchResult')
       .first()
       .click()
     cy.url().should('match', /.+\/person\/\d+/)
@@ -164,7 +164,7 @@ describe('creating a person', function() {
 
     it('has options for creating a person in the bottom search result', function() {
       cy.get('#the-input').type('Siob')
-      cy.get('.SearchResult') // Wait until search results appear to avoid Cypress failing because li with loading message gets detached from the DOM.
+      cy.get('.searchResult') // Wait until search results appear to avoid Cypress failing because li with loading message gets detached from the DOM.
       cy.get('li')
         .last()
         .should('have.id', 'create-person')

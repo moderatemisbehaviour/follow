@@ -1,63 +1,12 @@
-import { Link } from 'react-router-dom'
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { Query } from 'react-apollo'
+import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
-
+import PropTypes from 'prop-types'
+import React from 'react'
+import { Link } from 'react-router-dom'
 import Home from '../common/Home'
 import NextOption from '../common/nextSteps/NextOption'
-import Person from './Person'
 import Search from '../Search/Search'
-
-class PersonBrowser extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      searchResults: []
-    }
-  }
-
-  render() {
-    const { id } = this.props
-
-    if (id) {
-      return (
-        <Query query={GET_PERSON} variables={{ id }}>
-          {({ data, loading, error }) => {
-            if (error) return <p>ERROR</p>
-            if (loading) {
-              return <Person name="Loading..." />
-            }
-
-            const {
-              person: { name, image, profiles }
-            } = data
-            return (
-              <React.Fragment>
-                <Person
-                  name={name}
-                  image={image || undefined}
-                  profiles={profiles}
-                />
-                <Search />
-                <Link to={`/person/${id}/edit`}>
-                  <NextOption label={`Edit ${name}`} id={`edit-person`} />
-                </Link>
-              </React.Fragment>
-            )
-          }}
-        </Query>
-      )
-    } else {
-      return (
-        <React.Fragment>
-          <Home />
-          <Search />
-        </React.Fragment>
-      )
-    }
-  }
-}
+import Person from './Person'
 
 PersonBrowser.propTypes = {
   id: PropTypes.string
@@ -65,6 +14,40 @@ PersonBrowser.propTypes = {
 
 PersonBrowser.defaultProps = {
   id: undefined
+}
+
+function PersonBrowser(props) {
+  const { id } = props
+
+  const { loading, error, data } = useQuery(GET_PERSON, {
+    variables: { id },
+    skip: !id
+  })
+
+  if (error) return <p>ERROR</p>
+  if (loading) return <Person name="Loading..." />
+  if (id) {
+    const {
+      person: { name, image, profiles }
+    } = data
+
+    return (
+      <React.Fragment>
+        <Person name={name} image={image || undefined} profiles={profiles} />
+        <Search />
+        <Link to={`/person/${id}/edit`}>
+          <NextOption label={`Edit ${name}`} id={`edit-person`} />
+        </Link>
+      </React.Fragment>
+    )
+  }
+
+  return (
+    <React.Fragment>
+      <Home />
+      <Search />
+    </React.Fragment>
+  )
 }
 
 const GET_PERSON = gql`

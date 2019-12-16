@@ -4,6 +4,7 @@ import React from 'react'
 SearchResultsNavigator.propTypes = {
   currentPage: PropTypes.number.isRequired,
   numberOfResults: PropTypes.number.isRequired,
+  onNavigation: PropTypes.func.isRequired,
   resultsPerPage: PropTypes.number.isRequired
 }
 
@@ -22,11 +23,17 @@ function SearchResultsNavigator(props) {
             ${index + 1 === props.currentPage ? 'current-page' : undefined}
           `}
           key={index + 1}
+          onClick={() => props.onNavigation(index + 1)}
         >
           {index + 1}
         </button>
       ))}
-      <button className="more">more</button>
+      <button
+        className="more"
+        onClick={() => props.onNavigation(numberOfPages + 1)}
+      >
+        more
+      </button>
     </div>
   )
 }

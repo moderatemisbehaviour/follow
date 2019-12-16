@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 
 import Person from '../Person/Person'
 import SearchResult from './SearchResult'
-import SearchResultNavigator from './SearchResultsNavigator'
 
 function SearchResults(props) {
   return (
@@ -15,11 +14,6 @@ function SearchResults(props) {
           </SearchResult>
         ))}
         {props.children}
-        <SearchResultNavigator
-          currentPage={1}
-          resultsPerPage={props.resultsPerPage}
-          numberOfResults={props.searchResults.length}
-        />
       </React.Fragment>
     </ul>
   )

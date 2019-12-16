@@ -33,7 +33,7 @@ describe('User journeys', function() {
 
       cy.visit('/')
       cy.get('#the-input').type('Si')
-      cy.get('.SearchResult')
+      cy.get('.search-result')
         .its('length')
         .should('be.greaterThan', 0)
     })
