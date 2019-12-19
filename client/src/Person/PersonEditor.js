@@ -26,11 +26,10 @@ function PersonEditor(props) {
   if (getPersonResult.loading) return <Person name="Loading..." />
   // TODO: Try mutation onCompleted callback instead?
   if (editPersonResult.data) {
-    const id = getPersonResult.data.editPerson.id
     return <Redirect to={`/person/${id}`} />
   }
 
-  setPersonName(getPersonResult.data.person.name)
+  !personName && setPersonName(getPersonResult.data.person.name)
 
   return (
     <PersonBuilder

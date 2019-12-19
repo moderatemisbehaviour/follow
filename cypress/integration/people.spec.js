@@ -75,7 +75,7 @@ describe('searching for a person', function() {
     cy.get('.search input')
       .type('Si')
       .should('have.value', 'Si')
-    cy.get('.searchResult').should('not.have.length', 0)
+    cy.get('.search-result').should('not.have.length', 0)
   })
 
   it('displays no more than 5 results at a time.', function() {
@@ -88,12 +88,12 @@ describe('searching for a person', function() {
     cy.get('.search input')
       .type('Si')
       .should('have.value', 'Si')
-    cy.get('.searchResult').should('have.length', 5)
+    cy.get('.search-result').should('have.length', 5)
   })
 
   it('displays mini person images in the search results', function() {
     cy.get('#the-input').type('Si')
-    cy.get('.searchResult')
+    cy.get('.search-result')
       .first()
       .find('img')
       .should('have.attr', 'src', this.person.image)
@@ -105,7 +105,7 @@ describe('searching for a person', function() {
       .type('Si')
       .type('{downarrow}')
     cy.focused().should('have.text', 'Siobhan Wilson')
-    cy.get('.searchResult')
+    cy.get('.search-result')
       .first()
       .click() // TODO: Find out how to simulate user pressing {enter}
     cy.location('pathname').should('eq', '/person/1')
@@ -113,10 +113,10 @@ describe('searching for a person', function() {
 
   it('closes the search results when one is selected', function() {
     cy.get('.search input').type('Si') // TODO: Use #the-input selector instead
-    cy.get('.searchResult')
+    cy.get('.search-result')
       .first()
       .click()
-    cy.get('.searchResults').should('have.length', 0)
+    cy.get('.search-results').should('have.length', 0)
   })
 
   it('stops displaying search results when text is cleared from the search input.', function() {
@@ -126,14 +126,14 @@ describe('searching for a person', function() {
     cy.get('.search input')
       .clear()
       .should('have.value', '')
-    cy.get('.searchResult').should('have.length', 0)
+    cy.get('.search-result').should('have.length', 0)
   })
 
   it.skip('closes the search results when the search input loses focus', function() {})
 
   it("navigates to the person's profile when a search result is clicked", function() {
     cy.get('#the-input').type('Si')
-    cy.get('.searchResult')
+    cy.get('.search-result')
       .first()
       .click()
     cy.url().should('match', /.+\/person\/\d+/)
@@ -164,7 +164,7 @@ describe('creating a person', function() {
 
     it('has options for creating a person in the bottom search result', function() {
       cy.get('#the-input').type('Siob')
-      cy.get('.searchResult') // Wait until search results appear to avoid Cypress failing because li with loading message gets detached from the DOM.
+      cy.get('.search-result') // Wait until search results appear to avoid Cypress failing because li with loading message gets detached from the DOM.
       cy.get('li')
         .last()
         .should('have.id', 'create-person')

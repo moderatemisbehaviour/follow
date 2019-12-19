@@ -19,7 +19,11 @@ Search.defaultProps = {
 function Search(props) {
   const [query, setQuery] = useState()
   const { loading, error, data, fetchMore } = useQuery(GET_PEOPLE, {
-    variables: { query },
+    variables: {
+      query,
+      resultsPerPage: props.resultsPerPage,
+      startingPopularity: 0
+    },
     skip: !query
   })
 
@@ -47,6 +51,8 @@ function Search(props) {
               onNavigation={pageNumber => {
                 fetchMore({
                   variables: {
+                    query,
+                    resultsPerPage: props.resultsPerPage,
                     startingPopularity: calculateStartingPopularity(
                       props.resultsPerPage,
                       pageNumber
