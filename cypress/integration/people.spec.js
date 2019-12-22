@@ -608,3 +608,13 @@ describe('editing a person', function() {
     })
   })
 })
+
+describe('search for people', () => {
+  beforeEach(function() {
+    cy.task('createPerson')
+      .as('person')
+      .then(person => {
+        cy.visit(`/person/${person._id}/edit`)
+      })
+  })
+})

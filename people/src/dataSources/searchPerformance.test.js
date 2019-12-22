@@ -1,12 +1,7 @@
-const databaseClient = require('follow-database')
+const setupDatabaseAndGetClient = require('follow-database')
 
 // Run this with MONGODB_URI=mongodb://localhost:27017/follow npx jest searchPerformance --watch --verbose=false
 
-// Create a function to populate the database with n documents
-// Check skip + limit
-// Check > popularity + limit
-// Check with index added
-// Reset the database in between each test (obviously)
 describe('Database search performance', () => {
   const query = 'Siob'
   let db
@@ -15,7 +10,9 @@ describe('Database search performance', () => {
   let hrend
 
   beforeAll(async () => {
-    db = await databaseClient()
+    const databaseClient = await setupDatabaseAndGetClient()
+    db = databaseClient.db
+
     await db.dropDatabase()
     await db.createCollection('people')
     peopleCollection = db.collection('people')

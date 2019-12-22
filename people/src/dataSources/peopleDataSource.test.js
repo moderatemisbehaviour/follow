@@ -1,19 +1,20 @@
 const fs = require('fs')
 const path = require('path')
-
-const DatabaseClient = require('../../../database/src/DatabaseClient')
+const setupDatabaseAndGetClient = require('follow-database')
+const resetDatabase = require('follow-database/src/resetDatabase')
 const PeopleDataSource = require('./peopleDataSource')
-const resetDatabase = require('../../../database/src/resetDatabase')
 
 let databaseClient
 let db
+let peopleCollection
 let peopleDataSource
 let elon
 let siobhan
 
 beforeAll(async () => {
-  databaseClient = await new DatabaseClient(process.env.MONGODB_URI)
-  db = await databaseClient.connectAndGetDatabase()
+  databaseClient = await setupDatabaseAndGetClient()
+  db = databaseClient.db
+  peopleCollection = db.collection('people')
   peopleDataSource = new PeopleDataSource(db)
 })
 
@@ -21,7 +22,8 @@ afterAll(async () => {
   await databaseClient.close()
 })
 
-beforeEach(() => {
+beforeEach(async () => {
+  await resetDatabase()
   siobhan = JSON.parse(
     fs.readFileSync(
       path.resolve(`${__dirname}/../../../cypress/fixtures/siobhan.json`),
@@ -34,6 +36,7 @@ beforeEach(() => {
       'utf8'
     )
   )
+  await peopleCollection.insertMany([{ ...siobhan }, { ...elon }])
 })
 
 describe('create person', () => {
@@ -80,10 +83,6 @@ describe('create person', () => {
 })
 
 describe('get people', () => {
-  beforeEach(async () => {
-    await resetDatabase()
-  })
-
   describe('when the query matches the name', () => {
     describe('when the query matches the first 2 letters', () => {
       it('should return the person', async () => {
@@ -136,13 +135,9 @@ describe('get people', () => {
 })
 
 describe('edit person', () => {
-  beforeEach(async () => {
-    await resetDatabase()
-  })
-
   describe('when the object is valid', () => {
     it('returns an object', async () => {
-      const peopleCollection = db.collection('people')
+      const peopleCollection = databaseClient.db.collection('people')
       const { insertedId } = await peopleCollection.insertOne({ ...siobhan })
       siobhan.name = 'Siob'
 
@@ -159,8 +154,4 @@ describe('edit person', () => {
       expect(personInDatabase.name).toEqual('Siob')
     })
   })
-})
-
-describe('search people', () => {
-  it('can search lots of people very quickly')
 })

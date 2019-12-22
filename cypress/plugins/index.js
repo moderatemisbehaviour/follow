@@ -24,7 +24,7 @@ module.exports = (on, config) => {
     },
     async createPerson(fixture) {
       const dbClient = new DatabaseClient(process.env.MONGODB_URI)
-      const db = await dbClient.connectAndGetDatabase()
+      const db = await dbClient.connect()
       const peopleCollection = db.collection('people')
       fixture =
         fixture ||

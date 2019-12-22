@@ -27,6 +27,21 @@
       "name": "dev client",
       "url": "http://localhost:4001/person/create?name=Siob",
       "webRoot": "${workspaceFolder}/client/src"
+    },
+    {
+      "name": "Debug 'people' tests",
+      "type": "node",
+      "request": "launch",
+      "runtimeArgs": [
+        "--inspect-brk",
+        "${workspaceRoot}/people/node_modules/.bin/jest",
+        "--runInBand",
+        "peopleDataSource"
+      ],
+      "env": {"MONGODB_URI": "mongodb://localhost:27017/follow"},
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "port": 9229
     }
   ]
 }
