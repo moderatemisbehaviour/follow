@@ -23,9 +23,9 @@ module.exports = (on, config) => {
       return null // Tell Cypress we do not intend to yield a value.
     },
     async createPerson(fixture) {
-      const dbClient = new DatabaseClient(process.env.MONGODB_URI)
-      const db = await dbClient.connect()
-      const peopleCollection = db.collection('people')
+      const databaseClient = new DatabaseClient(process.env.MONGODB_URI)
+      await databaseClient.connect()
+      const peopleCollection = databaseClient.db.collection('people')
       fixture =
         fixture ||
         JSON.parse(fs.readFileSync('cypress/fixtures/siobhan.json', 'utf8'))

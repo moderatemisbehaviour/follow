@@ -1,7 +1,8 @@
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import PropTypes from 'prop-types'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useHistory, useLocation } from 'react-router-dom'
 import Input from '../common/Input'
 import CreatePersonButton from '../Person/CreatePersonButton'
 import './Search.css'
@@ -17,7 +18,34 @@ Search.defaultProps = {
 }
 
 function Search(props) {
-  const [query, setQuery] = useState()
+  const [query, setQuery] = useState('')
+  const [touched, setTouched] = useState()
+
+  const location = useLocation()
+  if (!touched && location.search) {
+    setTouched(true)
+    const queryFromParam = location.search.split('?')[1]
+    setQuery(queryFromParam)
+  }
+
+  const history = useHistory()
+
+  useEffect(
+    () => {
+      document.title = `Searching for ${query}`
+      history.push({ search: query })
+    },
+    // Only update when query changes otherwise history push re-renders cause an infinite loop!
+    [history, query]
+  )
+  // TODO: Make it so this update only happens when the query changes.
+  //
+  // Had it that way before but found that the setting of document.title in Home was overriding it here because it was
+  // always running whereas this one was waiting for query to change.
+  useEffect(() => {
+    if (query) document.title = `Searching for ${query}`
+  })
+
   const { loading, error, data, fetchMore } = useQuery(GET_PEOPLE, {
     variables: {
       query,
@@ -34,6 +62,7 @@ function Search(props) {
         onChange={event => setQuery(event.target.value)}
         prompt="Type a person's name."
         type="search"
+        value={query}
       />
       {query && (
         <SearchResults

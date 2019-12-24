@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
-
-import Image from './Image'
-import Profiles from '../Profiles/Profiles'
-import Name from './Name'
-
+import React, { useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import '../App.css'
+import Profiles from '../Profiles/Profiles'
+import Image from './Image'
+import Name from './Name'
 import './Person.css'
 
 Person.propTypes = {
@@ -16,9 +15,12 @@ Person.propTypes = {
 
 function Person(props) {
   const { name, image, profiles } = props
+  const location = useLocation()
 
   useEffect(() => {
-    document.title = name
+    if (location.pathname.match(/person\/[\d\w]{24}$/)) {
+      document.title = name
+    }
   })
 
   return (

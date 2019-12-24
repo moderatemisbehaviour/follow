@@ -64,11 +64,23 @@ describe('searching for a person', function() {
     cy.visit('/')
   })
 
-  it.skip('updates the document title to "Searching for [query]', function() {
+  it('updates the document title to "Searching for [query]', function() {
     cy.get('.search input')
       .type('Si')
       .should('have.value', 'Si')
     cy.title().should('eq', 'Searching for Si')
+  })
+
+  it('updates the search query param', function() {
+    cy.get('.search input')
+      .type('Si')
+      .should('have.value', 'Si')
+    cy.url().should('match', /\/?Si/)
+  })
+
+  it('uses the query param if there is nothing in the input', function() {
+    cy.visit('/?Si')
+    cy.get('.search input').should('have.value', 'Si')
   })
 
   it('displays search results when text is entered into the search input.', function() {
@@ -606,15 +618,5 @@ describe('editing a person', function() {
         })
       })
     })
-  })
-})
-
-describe('search for people', () => {
-  beforeEach(function() {
-    cy.task('createPerson')
-      .as('person')
-      .then(person => {
-        cy.visit(`/person/${person._id}/edit`)
-      })
   })
 })
