@@ -4,13 +4,13 @@ module.exports = {
       dataSources.peopleDataSource.getPerson(id),
     people: async (
       _,
-      { query, resultsPerPage, startingPopulairty },
+      { query, resultsPerPage, startingPopularity },
       { dataSources }
     ) =>
       dataSources.peopleDataSource.getPeople(
         query,
         resultsPerPage,
-        startingPopulairty
+        startingPopularity
       )
   },
   Mutation: {

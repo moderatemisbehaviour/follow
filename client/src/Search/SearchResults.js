@@ -1,18 +1,22 @@
-import React from 'react'
 import PropTypes from 'prop-types'
-
+import React from 'react'
 import Person from '../Person/Person'
 import SearchResult from './SearchResult'
 
 function SearchResults(props) {
+  console.log(props.children)
   return (
     <ul className="search-results">
       <React.Fragment>
-        {props.searchResults.map(searchResult => (
-          <SearchResult key={searchResult.id} id={searchResult.id}>
-            <Person {...searchResult} />
-          </SearchResult>
-        ))}
+        {props.searchResults &&
+          props.searchResults.map(searchResult => (
+            <SearchResult key={searchResult.id} id={searchResult.id}>
+              <Person {...searchResult} />
+            </SearchResult>
+          ))}
+        {props.searchResults && props.searchResults.length === 0 && (
+          <li className="placeholder">No people found.</li>
+        )}
         {props.children}
       </React.Fragment>
     </ul>
@@ -26,7 +30,7 @@ SearchResults.propTypes = {
 }
 
 SearchResults.defaultProps = {
-  results: {}
+  searchResults: null
 }
 
 export default SearchResults

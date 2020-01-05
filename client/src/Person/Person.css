@@ -26,10 +26,6 @@ li .name {
   text-align: left;
 }
 
-.name.placeholder {
-  color: lightgrey;
-}
-
 .image {
   flex-grow: 0.62;
   /* TODO: Come up with a better solution for shrinking the image. */

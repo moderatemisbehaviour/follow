@@ -1,10 +1,11 @@
 import { useQuery } from '@apollo/react-hooks'
+import { debounce } from 'debounce'
 import gql from 'graphql-tag'
 import PropTypes from 'prop-types'
 import React, { useEffect, useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import Input from '../common/Input'
-import CreatePersonButton from '../Person/CreatePersonButton'
+import CreatePersonPrompt from '../Person/CreatePersonPrompt'
 import './Search.css'
 import SearchResults from './SearchResults'
 import SearchResultsNavigator from './SearchResultsNavigator'
@@ -18,18 +19,19 @@ Search.defaultProps = {
 }
 
 function Search(props) {
-  const [query, setQuery] = useState('')
   const [touched, setTouched] = useState()
+  const [inputValue, setInputValue] = useState('')
+  const [query, setQuery] = useState('')
 
   const location = useLocation()
   if (!touched && location.search) {
     setTouched(true)
     const queryFromParam = location.search.split('?')[1]
+    setInputValue(queryFromParam)
     setQuery(queryFromParam)
   }
 
   const history = useHistory()
-
   useEffect(
     () => {
       document.title = `Searching for ${query}`
@@ -55,30 +57,33 @@ function Search(props) {
     skip: !query
   })
 
-  // TODO: Add a debounce to the search.
   return (
     <div className="search">
       <Input
-        onChange={event => setQuery(event.target.value)}
+        onChange={event => {
+          setInputValue(event.target.value)
+          setQueryDebounced(setQuery, event.target.value)
+        }}
         prompt="Type a person's name."
         type="search"
-        value={query}
+        value={inputValue}
       />
       {query && (
         <SearchResults
           resultsPerPage={props.resultsPerPage}
-          searchResults={(data && data.people) || []}
+          searchResults={data ? data.people : null}
         >
           {loading ? <li>Loading...</li> : undefined}
           {error ? <li>Error :(</li> : undefined}
-          <CreatePersonButton personName={query} />
-          {data && (
+          <CreatePersonPrompt personName={query} />
+          {!loading && !error && !!data.people.length ? (
             <SearchResultsNavigator
               currentPage={1}
               resultsPerPage={props.resultsPerPage}
               numberOfResults={data.people.length}
               onNavigation={pageNumber => {
                 fetchMore({
+                  query: GET_PEOPLE,
                   variables: {
                     query,
                     resultsPerPage: props.resultsPerPage,
@@ -86,16 +91,29 @@ function Search(props) {
                       props.resultsPerPage,
                       pageNumber
                     )
+                  },
+                  updateQuery: (previousResult, { fetchMoreResult }) => {
+                    return {
+                      people: previousResult.people.concat(
+                        fetchMoreResult.people
+                      )
+                    }
                   }
                 })
               }}
             />
+          ) : (
+            undefined
           )}
         </SearchResults>
       )}
     </div>
   )
 }
+
+const setQueryDebounced = debounce((setQuery, query) => {
+  setQuery(query)
+}, 200)
 
 function calculateStartingPopularity(resultsPerPage, pageNumber) {
   return resultsPerPage * (pageNumber - 1) + 1

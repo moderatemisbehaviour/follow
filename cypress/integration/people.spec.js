@@ -1,6 +1,7 @@
 const BASE_URL = Cypress.config('baseUrl')
 
 const personUrlRegex = /.+\/person\/[\d\w]{24}$/
+// TODO: Move to a meta package or root package.json?
 const slogan = 'Follow people, not platforms'
 
 before(function() {
@@ -59,56 +60,102 @@ describe('every page other than the home page', function() {
 })
 
 describe('searching for a person', function() {
-  beforeEach(function() {
-    cy.task('createPerson').as('person')
-    cy.visit('/')
+  describe('state on page load', function() {
+    beforeEach(function() {
+      cy.task('createPerson').as('person')
+      cy.visit('/')
+    })
+
+    it('updates the document title to "Searching for [query]', function() {
+      cy.get('.search input')
+        .type('Si')
+        .should('have.value', 'Si')
+      cy.title().should('eq', 'Searching for Si')
+    })
+
+    it('updates the search query param', function() {
+      cy.get('.search input')
+        .type('Si')
+        .should('have.value', 'Si')
+      cy.url().should('match', /\/?Si/)
+    })
+
+    it('uses the query param if there is nothing in the input', function() {
+      cy.visit('/?Si')
+      cy.get('.search input').should('have.value', 'Si')
+    })
   })
 
-  it('updates the document title to "Searching for [query]', function() {
-    cy.get('.search input')
-      .type('Si')
-      .should('have.value', 'Si')
-    cy.title().should('eq', 'Searching for Si')
+  describe('contacting the server', function() {
+    beforeEach(function() {
+      cy.task('createPerson').as('person')
+    })
+
+    it('debounces the searching to save on network requests', function() {
+      cy.visit('/', {
+        onBeforeLoad(win) {
+          cy.spy(win, 'fetch')
+        }
+      })
+      cy.get('#the-input')
+        .type('Siob')
+        .get('.search-results')
+      cy.window().then(window => {
+        expect(window.fetch).to.be.calledOnce
+      })
+    })
   })
 
-  it('updates the search query param', function() {
-    cy.get('.search input')
-      .type('Si')
-      .should('have.value', 'Si')
-    cy.url().should('match', /\/?Si/)
+  describe('one or more search results', function() {
+    beforeEach(function() {
+      // TODO: Find a way to use before.
+      cy.task('resetDatabase')
+      cy.task('createPeople').as('people')
+      cy.visit('/')
+      cy.get('#the-input').type('Si')
+    })
+
+    it('displays search results when text is entered into the search input.', function() {
+      cy.get('.search-result').should('not.have.length', 0)
+    })
+
+    it('displays no more than 5 results at a time.', function() {
+      cy.get('.search-result').should('have.length', 5)
+    })
+
+    it('displays mini person images in the search results', function() {
+      cy.get('.search-result')
+        .first()
+        .find('img')
+        .should('have.attr', 'src', this.people[0].image)
+    })
+
+    it.only('provides buttons for navigating through pages of search results', function() {
+      cy.get('.search-result')
+        .eq(0)
+        .should('have.text', 'Siobhan Wilson 1')
+      cy.get('.more').click()
+      cy.get('.search-result')
+        .eq(5)
+        .should('have.text', 'Siobhan Wilson 6')
+    })
   })
 
-  it('uses the query param if there is nothing in the input', function() {
-    cy.visit('/?Si')
-    cy.get('.search input').should('have.value', 'Si')
-  })
+  describe('no search results', function() {
+    beforeEach(function() {
+      cy.get('#the-input').type('xfh')
+      cy.get('.search-results')
+      cy.get('.search-result').should('not.exist')
+    })
 
-  it('displays search results when text is entered into the search input.', function() {
-    cy.get('.search input')
-      .type('Si')
-      .should('have.value', 'Si')
-    cy.get('.search-result').should('not.have.length', 0)
-  })
+    it('displays a placeholder message if there are no search results', function() {
+      cy.get('.search-results').contains('No people found.')
+    })
 
-  it('displays no more than 5 results at a time.', function() {
-    cy.task('createPerson').as('person')
-    cy.task('createPerson').as('person')
-    cy.task('createPerson').as('person')
-    cy.task('createPerson').as('person')
-    cy.task('createPerson').as('person')
-    cy.task('createPerson').as('person')
-    cy.get('.search input')
-      .type('Si')
-      .should('have.value', 'Si')
-    cy.get('.search-result').should('have.length', 5)
-  })
-
-  it('displays mini person images in the search results', function() {
-    cy.get('#the-input').type('Si')
-    cy.get('.search-result')
-      .first()
-      .find('img')
-      .should('have.attr', 'src', this.person.image)
+    it('does not display the search results navigator', function() {
+      cy.get('.search-results').contains('No people found.')
+      cy.get('.search-results-navigator').should('not.exist')
+    })
   })
 
   // TODO: Use PayPal dropdown component?

@@ -28,4 +28,5 @@ module.exports = async function(db) {
       }
     }
   })
+  await db.collection('people').createIndex('popularity')
 }

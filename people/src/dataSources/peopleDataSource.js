@@ -36,11 +36,15 @@ class PeopleDataSource extends DataSource {
 
   async getPeople(query, resultsPerPage, startingPopularity) {
     const peopleCollection = this.db.collection('people')
-    const cursor = peopleCollection
-      .find({ name: { $regex: `${query}`, $options: 'i' } })
-      .skip(0)
-      .limit(5)
+    const cursor = await peopleCollection
+      .find({
+        name: { $regex: query, $options: 'i' },
+        popularity: { $gt: startingPopularity }
+      })
+      .sort({ popularity: 1 })
+      .limit(resultsPerPage)
     const people = await cursor.toArray()
+    console.log(resultsPerPage, startingPopularity, people)
     return people.map(PeopleDataSource.replaceMongoIdWithApplicationId)
   }
 

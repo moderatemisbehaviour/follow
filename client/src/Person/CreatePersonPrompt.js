@@ -1,13 +1,13 @@
-import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import React from 'react'
-
+import { Link } from 'react-router-dom'
 import createPersonIcon from './createPerson.svg'
+import './CreatePersonPrompt.css'
 import Name from './Name'
 
-import './CreatePersonButton.css'
 
-function CreatePersonButton(props) {
+
+function CreatePersonPrompt(props) {
   return (
     <li id="create-person">
       <img src={createPersonIcon} alt="create person icon" />
@@ -25,8 +25,8 @@ function CreatePersonButton(props) {
   )
 }
 
-CreatePersonButton.propTypes = {
+CreatePersonPrompt.propTypes = {
   personName: PropTypes.string
 }
 
-export default CreatePersonButton
+export default CreatePersonPrompt

@@ -17,6 +17,7 @@ describe('Database search performance', () => {
     await db.createCollection('people')
     peopleCollection = db.collection('people')
 
+    // TODO: Replace with Cypress plugin
     const people = []
     for (let i = 1; i <= 100000; i++) {
       people.push({

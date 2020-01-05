@@ -14,24 +14,45 @@ const fs = require('fs')
 
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
-module.exports = (on, config) => {
+module.exports = async (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
+
+  const databaseClient = new DatabaseClient(process.env.MONGODB_URI)
+  await databaseClient.connect()
+  const peopleCollection = databaseClient.db.collection('people')
+
   on('task', {
     async resetDatabase() {
       await resetDatabase()
       return null // Tell Cypress we do not intend to yield a value.
     },
     async createPerson(fixture) {
-      const databaseClient = new DatabaseClient(process.env.MONGODB_URI)
-      await databaseClient.connect()
-      const peopleCollection = databaseClient.db.collection('people')
       fixture =
         fixture ||
         JSON.parse(fs.readFileSync('cypress/fixtures/siobhan.json', 'utf8'))
       const result = await peopleCollection.insertOne(fixture)
       const person = result.ops[0]
       return person
+    },
+    async createPeople() {
+      const numberOfPeople = 13
+      const siobhan = JSON.parse(
+        fs.readFileSync('cypress/fixtures/siobhan.json', 'utf8')
+      )
+
+      const siobhans = []
+      for (let i = 1; i <= numberOfPeople; i++) {
+        siobhans.push({
+          ...siobhan,
+          name: `${siobhan.name} ${i}`,
+          popularity: i
+        })
+      }
+      const result = await peopleCollection.insertMany(siobhans)
+      const people = result.ops
+
+      return people
     }
   })
 
@@ -42,6 +63,5 @@ module.exports = (on, config) => {
     }
   })
 
-  // config.env.DATABASE_URL = loadedEnvVars.parsed.DATABASE_URL
   return config
 }
