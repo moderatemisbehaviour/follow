@@ -3,9 +3,9 @@ import React from 'react'
 
 SearchResultsNavigator.propTypes = {
   currentPage: PropTypes.number.isRequired,
+  resultsPerPage: PropTypes.number.isRequired,
   numberOfResults: PropTypes.number.isRequired,
-  onNavigation: PropTypes.func.isRequired,
-  resultsPerPage: PropTypes.number.isRequired
+  onNavigation: PropTypes.func.isRequired
 }
 
 function SearchResultsNavigator(props) {
@@ -19,8 +19,7 @@ function SearchResultsNavigator(props) {
       {Array.from({ length: numberOfPages }, (_, index) => (
         <button
           className={`
-            page
-            ${index + 1 === props.currentPage ? 'current-page' : undefined}
+            page ${index + 1 === props.currentPage ? 'current-page' : ''}
           `}
           key={index + 1}
           onClick={() => props.onNavigation(index + 1)}
@@ -28,12 +27,9 @@ function SearchResultsNavigator(props) {
           {index + 1}
         </button>
       ))}
-      <button
-        className="more"
-        onClick={() => props.onNavigation(numberOfPages + 1)}
-      >
-        more
-      </button>
+      <span className="search-results-count">
+        {props.numberOfResults} search results
+      </span>
     </div>
   )
 }

@@ -4,7 +4,6 @@ import Person from '../Person/Person'
 import SearchResult from './SearchResult'
 
 function SearchResults(props) {
-  console.log(props.children)
   return (
     <ul className="search-results">
       <React.Fragment>
@@ -14,9 +13,6 @@ function SearchResults(props) {
               <Person {...searchResult} />
             </SearchResult>
           ))}
-        {props.searchResults && props.searchResults.length === 0 && (
-          <li className="placeholder">No people found.</li>
-        )}
         {props.children}
       </React.Fragment>
     </ul>

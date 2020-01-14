@@ -79,7 +79,13 @@ describe('Database search performance', () => {
       })
       .sort({ popularity: 1 })
       .limit(10000)
-    await cursor.toArray()
+
+    await Promise.all([
+      cursor.toArray(),
+      await peopleCollection.count({
+        name: { $regex: `${query}`, $options: 'i' }
+      })
+    ])
 
     hrend = process.hrtime(hrstart)
     console.info('Execution time (hr): %ds %dms', hrend[0], hrend[1] / 1000000)

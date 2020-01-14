@@ -7,6 +7,7 @@ const typeDefs = gql`
       resultsPerPage: Int!
       startingPopularity: Int!
     ): [Person]!
+    peopleCount(query: String!): Int!
     person(id: ID!): Person
   }
 

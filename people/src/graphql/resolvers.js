@@ -11,7 +11,9 @@ module.exports = {
         query,
         resultsPerPage,
         startingPopularity
-      )
+      ),
+    peopleCount: async (_, { query }, { dataSources }) =>
+      dataSources.peopleDataSource.getPeopleCount(query)
   },
   Mutation: {
     createPerson: async (_, { person }, { dataSources }) =>

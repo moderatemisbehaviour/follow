@@ -37,6 +37,11 @@ a:focus > .search-result {
   background-color: #dfdfdf;
 }
 
+.search-results-count {
+  color: gray;
+  font-style: italic;
+}
+
 .search-results-navigator button {
   border-color: hsl(210, 80%, 50%);
   font-size: 0.62rem;

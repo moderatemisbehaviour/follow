@@ -22,6 +22,7 @@ function Search(props) {
   const [touched, setTouched] = useState()
   const [inputValue, setInputValue] = useState('')
   const [query, setQuery] = useState('')
+  const [pageNumber, setPageNumber] = useState(1)
 
   const location = useLocation()
   if (!touched && location.search) {
@@ -48,12 +49,20 @@ function Search(props) {
     if (query) document.title = `Searching for ${query}`
   })
 
-  const { loading, error, data, fetchMore } = useQuery(GET_PEOPLE, {
+  const getPeopleResult = useQuery(GET_PEOPLE, {
     variables: {
       query,
       resultsPerPage: props.resultsPerPage,
-      startingPopularity: 0
+      startingPopularity: calculateStartingPopularity(
+        props.resultsPerPage,
+        pageNumber
+      )
     },
+    skip: !query
+  })
+
+  const getPeopleCountResult = useQuery(GET_PEOPLE_COUNT, {
+    variables: { query },
     skip: !query
   })
 
@@ -71,36 +80,23 @@ function Search(props) {
       {query && (
         <SearchResults
           resultsPerPage={props.resultsPerPage}
-          searchResults={data ? data.people : null}
+          searchResults={
+            getPeopleResult.data ? getPeopleResult.data.people : null
+          }
         >
-          {loading ? <li>Loading...</li> : undefined}
-          {error ? <li>Error :(</li> : undefined}
+          {getPeopleResult.loading ? <li>Loading...</li> : undefined}
+          {getPeopleResult.error ? <li>Error :(</li> : undefined}
+
           <CreatePersonPrompt personName={query} />
-          {!loading && !error && !!data.people.length ? (
+
+          {!getPeopleCountResult.loading &&
+          !getPeopleCountResult.error &&
+          !!getPeopleCountResult.data ? (
             <SearchResultsNavigator
-              currentPage={1}
+              currentPage={pageNumber}
               resultsPerPage={props.resultsPerPage}
-              numberOfResults={data.people.length}
-              onNavigation={pageNumber => {
-                fetchMore({
-                  query: GET_PEOPLE,
-                  variables: {
-                    query,
-                    resultsPerPage: props.resultsPerPage,
-                    startingPopularity: calculateStartingPopularity(
-                      props.resultsPerPage,
-                      pageNumber
-                    )
-                  },
-                  updateQuery: (previousResult, { fetchMoreResult }) => {
-                    return {
-                      people: previousResult.people.concat(
-                        fetchMoreResult.people
-                      )
-                    }
-                  }
-                })
-              }}
+              numberOfResults={getPeopleCountResult.data.peopleCount}
+              onNavigation={pageNumber => setPageNumber(pageNumber)}
             />
           ) : (
             undefined
@@ -134,6 +130,12 @@ const GET_PEOPLE = gql`
       name
       image
     }
+  }
+`
+
+const GET_PEOPLE_COUNT = gql`
+  query PeopleCount($query: String!) {
+    peopleCount(query: $query)
   }
 `
 

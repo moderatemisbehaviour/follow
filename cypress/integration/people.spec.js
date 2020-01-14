@@ -86,7 +86,7 @@ describe('searching for a person', function() {
     })
   })
 
-  describe('contacting the server', function() {
+  describe('performance', function() {
     beforeEach(function() {
       cy.task('createPerson').as('person')
     })
@@ -101,9 +101,13 @@ describe('searching for a person', function() {
         .type('Siob')
         .get('.search-results')
       cy.window().then(window => {
-        expect(window.fetch).to.be.calledOnce
+        // TODO: Why doesn't the Cypress ESLint plugin take care of this?
+        // eslint-disable-next-line no-unused-expressions
+        expect(window.fetch).to.be.calledTwice
       })
     })
+
+    it.skip('hits the cache for pages of search results that have already been loaded', function() {})
   })
 
   describe('one or more search results', function() {
@@ -130,14 +134,47 @@ describe('searching for a person', function() {
         .should('have.attr', 'src', this.people[0].image)
     })
 
-    it.only('provides buttons for navigating through pages of search results', function() {
+    it('provides buttons for navigating through pages of search results', function() {
+      cy.get('.page').should('have.length', 3)
+
       cy.get('.search-result')
         .eq(0)
         .should('have.text', 'Siobhan Wilson 1')
-      cy.get('.more').click()
+
+      cy.get('.page')
+        .contains('2')
+        .click()
       cy.get('.search-result')
-        .eq(5)
+        .eq(0)
         .should('have.text', 'Siobhan Wilson 6')
+
+      cy.get('.page')
+        .contains('3')
+        .click()
+      cy.get('.search-result')
+        .eq(0)
+        .should('have.text', 'Siobhan Wilson 11')
+
+      cy.get('.page')
+        .contains('1')
+        .click()
+      cy.get('.search-result')
+        .eq(0)
+        .should('have.text', 'Siobhan Wilson 1')
+
+      cy.get('.page')
+        .contains('2')
+        .click()
+      cy.get('.search-result')
+        .eq(0)
+        .should('have.text', 'Siobhan Wilson 6')
+    })
+
+    it("navigates to the person's profile when a search result is clicked", function() {
+      cy.get('.search-result')
+        .first()
+        .click()
+      cy.url().should('match', /.+\/person\/\d+/)
     })
   })
 
@@ -148,54 +185,56 @@ describe('searching for a person', function() {
       cy.get('.search-result').should('not.exist')
     })
 
-    it('displays a placeholder message if there are no search results', function() {
-      cy.get('.search-results').contains('No people found.')
+    it('displays a message that there are 0 search results', function() {
+      cy.get('.search-results').contains('0 search results')
     })
 
     it('does not display the search results navigator', function() {
-      cy.get('.search-results').contains('No people found.')
       cy.get('.search-results-navigator').should('not.exist')
     })
   })
 
-  // TODO: Use PayPal dropdown component?
-  it.skip('allows the user to select a search result with the keyboard.', function() {
-    cy.get('.search input')
-      .type('Si')
-      .type('{downarrow}')
-    cy.focused().should('have.text', 'Siobhan Wilson')
-    cy.get('.search-result')
-      .first()
-      .click() // TODO: Find out how to simulate user pressing {enter}
-    cy.location('pathname').should('eq', '/person/1')
+  describe('end of search results', function() {
+    it('')
   })
 
-  it('closes the search results when one is selected', function() {
-    cy.get('.search input').type('Si') // TODO: Use #the-input selector instead
-    cy.get('.search-result')
-      .first()
-      .click()
-    cy.get('.search-results').should('have.length', 0)
-  })
+  describe('the search input', () => {
+    beforeEach(() => {
+      cy.visit('/')
+      cy.task('createPerson').as('person')
+    })
 
-  it('stops displaying search results when text is cleared from the search input.', function() {
-    cy.get('.search input')
-      .type('Si')
-      .should('have.value', 'Si')
-    cy.get('.search input')
-      .clear()
-      .should('have.value', '')
-    cy.get('.search-result').should('have.length', 0)
-  })
+    // TODO: Use PayPal dropdown component?
+    it.skip('allows the user to select a search result with the keyboard.', function() {
+      cy.get('.search input')
+        .type('Si')
+        .type('{downarrow}')
+      cy.focused().should('have.text', 'Siobhan Wilson')
+      cy.get('.search-result')
+        .first()
+        .click() // TODO: Find out how to simulate user pressing {enter}
+      cy.location('pathname').should('eq', '/person/1')
+    })
 
-  it.skip('closes the search results when the search input loses focus', function() {})
+    it('closes the search results when one is selected', function() {
+      cy.get('.search input').type('Si') // TODO: Use #the-input selector instead
+      cy.get('.search-result')
+        .first()
+        .click()
+      cy.get('.search-results').should('have.length', 0)
+    })
 
-  it("navigates to the person's profile when a search result is clicked", function() {
-    cy.get('#the-input').type('Si')
-    cy.get('.search-result')
-      .first()
-      .click()
-    cy.url().should('match', /.+\/person\/\d+/)
+    it('stops displaying search results when text is cleared from the search input.', function() {
+      cy.get('.search input')
+        .type('Si')
+        .should('have.value', 'Si')
+      cy.get('.search input')
+        .clear()
+        .should('have.value', '')
+      cy.get('.search-result').should('have.length', 0)
+    })
+
+    it.skip('closes the search results when the search input loses focus', function() {})
   })
 })
 
