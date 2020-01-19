@@ -171,7 +171,7 @@ describe('searching for a person', function() {
     })
 
     it("navigates to the person's profile when a search result is clicked", function() {
-      cy.get('.search-result')
+      cy.get('.search-result li')
         .first()
         .click()
       cy.url().should('match', /.+\/person\/\d+/)
@@ -180,6 +180,7 @@ describe('searching for a person', function() {
 
   describe('no search results', function() {
     beforeEach(function() {
+      cy.visit('/')
       cy.get('#the-input').type('xfh')
       cy.get('.search-results')
       cy.get('.search-result').should('not.exist')
@@ -188,10 +189,6 @@ describe('searching for a person', function() {
     it('displays a message that there are 0 search results', function() {
       cy.get('.search-results').contains('0 search results')
     })
-
-    it('does not display the search results navigator', function() {
-      cy.get('.search-results-navigator').should('not.exist')
-    })
   })
 
   describe('end of search results', function() {
@@ -199,26 +196,15 @@ describe('searching for a person', function() {
   })
 
   describe('the search input', () => {
-    beforeEach(() => {
+    beforeEach(function() {
+      cy.task('resetDatabase')
+      cy.task('createPeople')
       cy.visit('/')
-      cy.task('createPerson').as('person')
-    })
-
-    // TODO: Use PayPal dropdown component?
-    it.skip('allows the user to select a search result with the keyboard.', function() {
-      cy.get('.search input')
-        .type('Si')
-        .type('{downarrow}')
-      cy.focused().should('have.text', 'Siobhan Wilson')
-      cy.get('.search-result')
-        .first()
-        .click() // TODO: Find out how to simulate user pressing {enter}
-      cy.location('pathname').should('eq', '/person/1')
     })
 
     it('closes the search results when one is selected', function() {
       cy.get('.search input').type('Si') // TODO: Use #the-input selector instead
-      cy.get('.search-result')
+      cy.get('.search-result li')
         .first()
         .click()
       cy.get('.search-results').should('have.length', 0)
@@ -235,6 +221,45 @@ describe('searching for a person', function() {
     })
 
     it.skip('closes the search results when the search input loses focus', function() {})
+  })
+
+  describe('keyboard shortcuts', () => {
+    beforeEach(() => {
+      cy.task('resetDatabase')
+      cy.task('createPeople')
+      cy.visit('/')
+    })
+
+    it('allows the user to navigate between the search input and search results with the arrow keys', function() {
+      cy.get('.search input').type('Si')
+
+      cy.get('.search-result')
+      cy.get('.search input').type('{downarrow}')
+      cy.focused().should('have.text', 'Siobhan Wilson 1')
+
+      cy.focused().type('{downarrow}')
+      cy.focused().should('have.text', 'Siobhan Wilson 2')
+
+      cy.focused().type('{downarrow}')
+      cy.focused().type('{downarrow}')
+      cy.focused().type('{downarrow}')
+      cy.focused().type('{downarrow}')
+      cy.focused().type('{downarrow}')
+      cy.focused().should('have.text', 'Siobhan Wilson 5')
+
+      cy.focused().type('{uparrow}')
+      cy.focused().should('have.text', 'Siobhan Wilson 4')
+
+      cy.focused().type('{uparrow}')
+      cy.focused().should('have.text', 'Siobhan Wilson 3')
+
+      cy.focused().type('{uparrow}')
+      cy.focused().type('{uparrow}')
+      cy.focused().should('have.text', 'Siobhan Wilson 1')
+
+      cy.focused().type('{uparrow}')
+      cy.focused().should('have.value', 'Si')
+    })
   })
 })
 

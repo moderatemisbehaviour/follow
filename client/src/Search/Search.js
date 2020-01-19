@@ -8,7 +8,6 @@ import Input from '../common/Input'
 import CreatePersonPrompt from '../Person/CreatePersonPrompt'
 import './Search.css'
 import SearchResults from './SearchResults'
-import SearchResultsNavigator from './SearchResultsNavigator'
 
 Search.propTypes = {
   resultsPerPage: PropTypes.number
@@ -66,41 +65,50 @@ function Search(props) {
     skip: !query
   })
 
+  const searchInputRef = React.createRef()
+  const searchResultsRef = React.createRef()
+  function focusSearchInput() {
+    searchInputRef.current.focus()
+  }
+  function focusSearchResults(event) {
+    if (event.key === 'ArrowDown') searchResultsRef.current.focus()
+  }
+
   return (
-    <div className="search">
+    <div
+      className="search"
+      onKeyUp={getPeopleResult.data ? focusSearchResults : undefined}
+    >
       <Input
         onChange={event => {
+          if (event.key === 'ArrowDown') return
           setInputValue(event.target.value)
           setQueryDebounced(setQuery, event.target.value)
         }}
         prompt="Type a person's name."
+        inputRef={searchInputRef}
         type="search"
         value={inputValue}
       />
       {query && (
         <SearchResults
+          onNavigation={setPageNumber}
+          onArrowUpBlur={focusSearchInput}
+          ref={searchResultsRef}
           resultsPerPage={props.resultsPerPage}
           searchResults={
-            getPeopleResult.data ? getPeopleResult.data.people : null
+            getPeopleResult.data ? getPeopleResult.data.people : undefined
+          }
+          searchResultsCount={
+            getPeopleCountResult.data
+              ? getPeopleCountResult.data.peopleCount
+              : undefined
           }
         >
           {getPeopleResult.loading ? <li>Loading...</li> : undefined}
           {getPeopleResult.error ? <li>Error :(</li> : undefined}
 
           <CreatePersonPrompt personName={query} />
-
-          {!getPeopleCountResult.loading &&
-          !getPeopleCountResult.error &&
-          !!getPeopleCountResult.data ? (
-            <SearchResultsNavigator
-              currentPage={pageNumber}
-              resultsPerPage={props.resultsPerPage}
-              numberOfResults={getPeopleCountResult.data.peopleCount}
-              onNavigation={pageNumber => setPageNumber(pageNumber)}
-            />
-          ) : (
-            undefined
-          )}
         </SearchResults>
       )}
     </div>

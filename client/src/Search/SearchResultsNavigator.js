@@ -4,12 +4,14 @@ import React from 'react'
 SearchResultsNavigator.propTypes = {
   currentPage: PropTypes.number.isRequired,
   resultsPerPage: PropTypes.number.isRequired,
-  numberOfResults: PropTypes.number.isRequired,
+  searchResultsCount: PropTypes.number.isRequired,
   onNavigation: PropTypes.func.isRequired
 }
 
 function SearchResultsNavigator(props) {
-  const numberOfPages = Math.ceil(props.numberOfResults / props.resultsPerPage)
+  const numberOfPages = Math.ceil(
+    props.searchResultsCount / props.resultsPerPage
+  )
 
   return (
     <div
@@ -28,7 +30,7 @@ function SearchResultsNavigator(props) {
         </button>
       ))}
       <span className="search-results-count">
-        {props.numberOfResults} search results
+        {props.searchResultsCount} search results
       </span>
     </div>
   )
