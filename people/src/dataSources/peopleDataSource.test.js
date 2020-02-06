@@ -46,7 +46,7 @@ describe('create person', () => {
       expect(actualResponse.id).toMatch(/[\d\w]{24}/)
     })
 
-    it.only('assigns the person a popularity', async () => {
+    it('assigns the person a popularity', async () => {
       expect(siobhan.popularity).toBeFalsy()
       expect(elon.popularity).toBeFalsy()
 
@@ -92,6 +92,12 @@ describe('create person', () => {
 })
 
 describe('get people', () => {
+  beforeEach(async () => {
+    await db
+      .collection('people')
+      .insertMany([{ ...siobhan, popularity: 1 }, { ...elon, popularity: 2 }])
+  })
+
   describe('when the query matches the name', () => {
     describe('when the query matches the first 2 letters', () => {
       it('should return the person', async () => {

@@ -38,7 +38,7 @@ class PeopleDataSource extends DataSource {
     }
   }
 
-  async getPeople(query, resultsPerPage, startingPopularity) {
+  async getPeople(query, resultsPerPage = 5, startingPopularity = 1) {
     // TODO: This doesn't work if multiple people have the same popularity
     // as then there are more than 5 results per page but the extras are missed.
     const cursor = await this.collection
