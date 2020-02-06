@@ -1,20 +1,19 @@
 const fs = require('fs')
 const path = require('path')
-const setupDatabaseAndGetClient = require('follow-database')
+const DatabaseClient = require('follow-database/src/DatabaseClient')
 const resetDatabase = require('follow-database/src/resetDatabase')
 const PeopleDataSource = require('./peopleDataSource')
 
 let databaseClient
 let db
-let peopleCollection
 let peopleDataSource
 let elon
 let siobhan
 
 beforeAll(async () => {
-  databaseClient = await setupDatabaseAndGetClient()
+  databaseClient = new DatabaseClient(process.env.MONGODB_URI)
+  await databaseClient.connect()
   db = databaseClient.db
-  peopleCollection = db.collection('people')
   peopleDataSource = new PeopleDataSource(db)
 })
 
@@ -36,7 +35,6 @@ beforeEach(async () => {
       'utf8'
     )
   )
-  await peopleCollection.insertMany([{ ...siobhan }, { ...elon }])
 })
 
 describe('create person', () => {
@@ -46,6 +44,17 @@ describe('create person', () => {
       await peopleDataSource.createPerson(siobhan)
       expect(actualResponse).toMatchObject(siobhan)
       expect(actualResponse.id).toMatch(/[\d\w]{24}/)
+    })
+
+    it.only('assigns the person a popularity', async () => {
+      expect(siobhan.popularity).toBeFalsy()
+      expect(elon.popularity).toBeFalsy()
+
+      const updatedSiobhan = await peopleDataSource.createPerson(siobhan)
+      const updatedElon = await peopleDataSource.createPerson(elon)
+
+      expect(updatedSiobhan.popularity).toBe(1)
+      expect(updatedElon.popularity).toBe(2)
     })
   })
 

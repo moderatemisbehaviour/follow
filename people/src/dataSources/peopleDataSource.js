@@ -10,7 +10,20 @@ class PeopleDataSource extends DataSource {
   }
 
   async createPerson(person) {
-    const result = await this.collection.insertOne({ ...person }) // Have to shallow clone the object because insertOne mutates the original to add _id.
+    const {
+      value: { counter: nextLowestPopularity }
+    } = await this.db
+      .collection('popularityCounter')
+      .findOneAndUpdate(
+        { _id: 'popularityCounter' },
+        { $inc: { counter: 1 } },
+        { returnOriginal: false }
+      )
+
+    const result = await this.collection.insertOne({
+      ...person,
+      popularity: nextLowestPopularity
+    }) // Have to shallow clone the object because insertOne mutates the original to add _id.
     const createdPerson = result.ops[0]
 
     return PeopleDataSource.replaceMongoIdWithApplicationId(createdPerson)
@@ -34,6 +47,8 @@ class PeopleDataSource extends DataSource {
   }
 
   async getPeople(query, resultsPerPage, startingPopularity) {
+    // TODO: This doesn't work if multiple people have the same popularity
+    // as then there are more than 5 results per page but the extras are missed.
     const cursor = await this.collection
       .find({
         name: { $regex: query, $options: 'i' },
@@ -50,7 +65,6 @@ class PeopleDataSource extends DataSource {
       name: { $regex: query, $options: 'i' }
     })
     const count = await cursor.count()
-    console.log(count)
     return count
   }
 

@@ -28,5 +28,11 @@ module.exports = async function(db) {
       }
     }
   })
-  await db.collection('people').createIndex('popularity')
+  await db.collection('people').createIndex('popularity', { unique: true })
+
+  await db.createCollection('popularityCounter')
+  await db.collection('popularityCounter').insertOne({
+    _id: 'popularityCounter',
+    counter: 0
+  })
 }
