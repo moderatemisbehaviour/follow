@@ -10,19 +10,11 @@ class PeopleDataSource extends DataSource {
   }
 
   async createPerson(person) {
-    const {
-      value: { counter: nextLowestPopularity }
-    } = await this.db
-      .collection('popularityCounter')
-      .findOneAndUpdate(
-        { _id: 'popularityCounter' },
-        { $inc: { counter: 1 } },
-        { returnOriginal: false }
-      )
+    const numberOfPeople = await this.collection.countDocuments()
 
     const result = await this.collection.insertOne({
       ...person,
-      popularity: nextLowestPopularity
+      popularity: numberOfPeople + 1
     }) // Have to shallow clone the object because insertOne mutates the original to add _id.
     const createdPerson = result.ops[0]
 
