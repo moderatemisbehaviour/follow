@@ -5,8 +5,6 @@ import createPersonIcon from './createPerson.svg'
 import './CreatePersonPrompt.css'
 import Name from './Name'
 
-
-
 function CreatePersonPrompt(props) {
   return (
     <li id="create-person">

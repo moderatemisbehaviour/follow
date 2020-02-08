@@ -60,6 +60,10 @@ describe('every page other than the home page', function() {
 })
 
 describe('searching for a person', function() {
+  beforeEach(function() {
+    cy.task('resetDatabase')
+  })
+
   describe('state on page load', function() {
     beforeEach(function() {
       cy.task('createPerson').as('person')
@@ -134,7 +138,7 @@ describe('searching for a person', function() {
         .should('have.attr', 'src', this.people[0].image)
     })
 
-    it('provides buttons for navigating through pages of search results', function() {
+    it.only('provides buttons for navigating through pages of search results', function() {
       cy.get('.page').should('have.length', 3)
 
       cy.get('.search-result')
@@ -145,6 +149,7 @@ describe('searching for a person', function() {
         .contains('2')
         .click()
       cy.get('.search-result')
+        .should('have.length', 5)
         .eq(0)
         .should('have.text', 'Siobhan Wilson 6')
 
@@ -152,6 +157,7 @@ describe('searching for a person', function() {
         .contains('3')
         .click()
       cy.get('.search-result')
+        .should('have.length', 3)
         .eq(0)
         .should('have.text', 'Siobhan Wilson 11')
 
@@ -159,6 +165,7 @@ describe('searching for a person', function() {
         .contains('1')
         .click()
       cy.get('.search-result')
+        .should('have.length', 5)
         .eq(0)
         .should('have.text', 'Siobhan Wilson 1')
 
@@ -166,6 +173,7 @@ describe('searching for a person', function() {
         .contains('2')
         .click()
       cy.get('.search-result')
+        .should('have.length', 5)
         .eq(0)
         .should('have.text', 'Siobhan Wilson 6')
     })
@@ -518,6 +526,7 @@ describe('creating a person', function() {
 
 describe('viewing a person', function() {
   beforeEach(function() {
+    cy.task('resetDatabase')
     cy.task('createPerson')
       .as('person')
       .then(person => {
@@ -578,7 +587,7 @@ describe('viewing a person', function() {
       cy.fixture('siobhan.json')
         .then(siobhan => {
           delete siobhan.image
-          return cy.task('createPerson', siobhan)
+          return cy.task('createPerson', { ...siobhan, popularity: 2 })
         })
         .then(person => {
           cy.visit(`/person/${person._id}`)
@@ -595,6 +604,7 @@ describe('viewing a person', function() {
 
 describe('editing a person', function() {
   beforeEach(function() {
+    cy.task('resetDatabase')
     cy.task('createPerson')
       .as('person')
       .then(person => {

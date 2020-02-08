@@ -1,7 +1,7 @@
-import React from 'react'
 import { shallow } from 'enzyme'
-import SearchResults from './SearchResults'
+import React from 'react'
 import SearchResult from './SearchResult'
+import SearchResults from './SearchResults'
 
 const validSearchResults = [
   {
@@ -38,7 +38,11 @@ const validSearchResults = [
 
 it('renders an li element for each result', () => {
   const wrapper = shallow(
-    <SearchResults resultsPerPage={5} searchResults={validSearchResults} />
+    <SearchResults
+      resultsPerPage={5}
+      searchResults={validSearchResults}
+      searchResultsCount={5}
+    />
   )
   expect(wrapper.find(SearchResult)).toHaveLength(5)
 })

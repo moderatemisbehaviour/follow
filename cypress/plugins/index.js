@@ -28,11 +28,17 @@ module.exports = async (on, config) => {
       return null // Tell Cypress we do not intend to yield a value.
     },
     async createPerson(fixture) {
-      fixture =
-        fixture ||
-        JSON.parse(fs.readFileSync('cypress/fixtures/siobhan.json', 'utf8'))
+      if (!fixture) {
+        const siobhan = JSON.parse(
+          fs.readFileSync('cypress/fixtures/siobhan.json', 'utf8')
+        )
+        siobhan.popularity = 1
+        fixture = siobhan
+      }
+
       const result = await peopleCollection.insertOne(fixture)
       const person = result.ops[0]
+
       return person
     },
     async createPeople() {
