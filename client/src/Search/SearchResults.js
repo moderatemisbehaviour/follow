@@ -40,7 +40,7 @@ const SearchResults = React.forwardRef((props, ref) => {
   return (
     <ul
       className="search-results"
-      onKeyUp={searchResults.length ? e => onKeyUp(e) : undefined}
+      onKeyUp={searchResults.length ? e => onKeyUp(e) : null}
     >
       <React.Fragment>
         {searchResults &&
@@ -56,15 +56,17 @@ const SearchResults = React.forwardRef((props, ref) => {
 
         {props.children}
 
-        <SearchResultsNavigator
-          currentPage={pageNumber}
-          onNavigation={pageNumber => {
-            props.onNavigation(pageNumber)
-            setPageNumber(pageNumber)
-          }}
-          resultsPerPage={props.resultsPerPage}
-          searchResultsCount={searchResultsCount}
-        />
+        {searchResultsCount === undefined ? null : (
+          <SearchResultsNavigator
+            currentPage={pageNumber}
+            onNavigation={pageNumber => {
+              props.onNavigation(pageNumber)
+              setPageNumber(pageNumber)
+            }}
+            resultsPerPage={props.resultsPerPage}
+            searchResultsCount={searchResultsCount}
+          />
+        )}
       </React.Fragment>
     </ul>
   )
