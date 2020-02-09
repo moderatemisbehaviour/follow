@@ -30,6 +30,9 @@
     "jest": "^23.6.0"
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "searchPerformance.test.js"
+    ]
   }
 }
