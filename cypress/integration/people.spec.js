@@ -138,7 +138,7 @@ describe('searching for a person', function() {
         .should('have.attr', 'src', this.people[0].image)
     })
 
-    it.only('provides buttons for navigating through pages of search results', function() {
+    it('provides buttons for navigating through pages of search results', function() {
       cy.get('.page').should('have.length', 3)
 
       cy.get('.search-result').contains('Siobhan Wilson 1')
