@@ -11,6 +11,7 @@
 const resetDatabase = require('../../database/src/resetDatabase')
 const DatabaseClient = require('../../database/src/DatabaseClient')
 const fs = require('fs')
+const createPeople = require('./createPeople')
 
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
@@ -42,23 +43,7 @@ module.exports = async (on, config) => {
       return person
     },
     async createPeople() {
-      const numberOfPeople = 13
-      const siobhan = JSON.parse(
-        fs.readFileSync('cypress/fixtures/siobhan.json', 'utf8')
-      )
-
-      const siobhans = []
-      for (let i = 1; i <= numberOfPeople; i++) {
-        siobhans.push({
-          ...siobhan,
-          name: `${siobhan.name} ${i}`,
-          popularity: i
-        })
-      }
-      const result = await peopleCollection.insertMany(siobhans)
-      const people = result.ops
-
-      return people
+      return createPeople(databaseClient)
     }
   })
 
