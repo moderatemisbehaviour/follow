@@ -23,6 +23,11 @@ module.exports = async function(db) {
           image: {
             type: 'string',
             description: 'An image representing the person.'
+          },
+          popularity: {
+            bsonType: 'int',
+            minimum: 1,
+            description: '1 is the most popular person.'
           }
         }
       }
