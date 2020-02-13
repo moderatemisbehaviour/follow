@@ -11,6 +11,6 @@ set -a
 # If running Jest it will lose its colored output unless we set this.
 FORCE_COLOR=true
 # Load the dot env file.
-source $DOT_ENV_FILE_PATH
+. $DOT_ENV_FILE_PATH
 # Execute the command.
 exec $@
