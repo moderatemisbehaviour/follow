@@ -27,17 +27,15 @@ li .name {
 }
 
 .image {
-  flex-grow: 0.62;
-  /* TODO: Come up with a better solution for shrinking the image. */
-  height: 20vmax;
-  max-height: 20vmax;
-  width: auto;
+  flex-grow: 1;
+  margin: 1rem;
+  overflow: hidden;
 }
 
 li .image {
   flex-grow: 0;
   height: 1.5rem;
-  margin-right: 0.5rem;
+  margin: 0 0.5rem 0 0;
 }
 
 .image img {
