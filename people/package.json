@@ -9,9 +9,11 @@
   "scripts": {
     "start": "../habitat.sh -f ../.env node src/index.js",
     "start:dev": "../habitat.sh -f ../.env nodemon src/index.js",
-    "test": "../habitat.sh -f ../.env jest"
+    "test": "../habitat.sh -f ../.env jest",
+    "update-popularities": "../habitat.sh -f ../.env node src/updatePopularities"
   },
   "dependencies": {
+    "@google-cloud/bigquery": "^4.7.0",
     "apollo-datasource": "^0.6.3",
     "apollo-server": "^2.2.2",
     "apollo-server-express": "^2.2.2",

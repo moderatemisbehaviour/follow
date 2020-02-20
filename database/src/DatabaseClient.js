@@ -13,6 +13,7 @@ class DatabaseClient {
   async connect() {
     await this.client.connect()
     console.info(`Successfully connected to database at ${this.hosts[0].host}`)
+    return this
   }
 
   async close() {
