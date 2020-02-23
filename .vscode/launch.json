@@ -15,7 +15,7 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "dev server",
+      "name": "Dev server",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run-script", "start:dev"],
       "port": 9229,
@@ -24,8 +24,8 @@
     {
       "type": "chrome",
       "request": "launch",
-      "name": "dev client",
-      "url": "http://localhost:4001/person/create?name=Siob",
+      "name": "Dev client",
+      "url": "http://localhost:4001/",
       "webRoot": "${workspaceFolder}/client/src"
     },
     {

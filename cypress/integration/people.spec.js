@@ -138,7 +138,7 @@ describe('searching for a person', function() {
         .should('have.attr', 'src', this.people[0].image)
     })
 
-    it.only('provides buttons for navigating through pages of search results', function() {
+    it('provides buttons for navigating through pages of search results', function() {
       cy.get('.page').should('have.length', 3)
 
       cy.get('.search-result').contains('Siobhan Wilson 1')
@@ -211,7 +211,20 @@ describe('searching for a person', function() {
       cy.visit('/')
     })
 
-    it('closes the search results when one is selected', function() {
+    it('closes the search results when a search result is selected', function() {
+      cy.get('.search input').type('Si') // TODO: Use #the-input selector instead
+      cy.get('.search-result li')
+        .first()
+        .click()
+      cy.get('.search-results').should('have.length', 0)
+
+      // Check it also works for cached search results
+      cy.get('.search input').type('Si') // TODO: Use #the-input selector instead
+      cy.get('.search-result li')
+        .last()
+        .click()
+      cy.get('.search-results').should('have.length', 0)
+
       cy.get('.search input').type('Si') // TODO: Use #the-input selector instead
       cy.get('.search-result li')
         .first()

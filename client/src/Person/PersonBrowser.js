@@ -14,24 +14,28 @@ PersonBrowser.propTypes = {
 function PersonBrowser(props) {
   const { id } = props
 
-  const { loading, error, data } = useQuery(GET_PERSON, {
+  const { error, data } = useQuery(GET_PERSON, {
     variables: { id }
   })
 
   if (error) return <p>ERROR</p>
-  if (loading) return <Person name="Loading..." />
 
-  const {
-    person: { name, image, profiles }
-  } = data
+  const person = (data && data.person) || {}
 
+  console.log(person)
   return (
     <React.Fragment>
-      <Person name={name} image={image || undefined} profiles={profiles} />
+      <Person
+        name={person.name}
+        image={person.image || undefined}
+        profiles={person.profiles}
+      />
       <Search />
-      <Link to={`/person/${id}/edit`}>
-        <NextOption label={`Edit ${name}`} id={`edit-person`} />
-      </Link>
+      {person && (
+        <Link to={`/person/${id}/edit`}>
+          <NextOption label={`Edit ${person.name}`} id={`edit-person`} />
+        </Link>
+      )}
     </React.Fragment>
   )
 }

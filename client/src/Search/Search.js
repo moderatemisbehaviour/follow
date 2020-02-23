@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/react-hooks'
 import { debounce } from 'debounce'
 import gql from 'graphql-tag'
 import PropTypes from 'prop-types'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import Input from '../common/Input'
 import CreatePersonPrompt from '../Person/CreatePersonPrompt'
@@ -18,18 +18,16 @@ Search.defaultProps = {
 }
 
 function Search(props) {
-  const [touched, setTouched] = useState()
   const [inputValue, setInputValue] = useState('')
   const [query, setQuery] = useState('')
   const [pageNumber, setPageNumber] = useState(1)
 
   const location = useLocation()
-  if (!touched && location.search) {
-    setTouched(true)
-    const queryFromParam = location.search.split('?')[1]
+  useLayoutEffect(() => {
+    const queryFromParam = location.search.split('?')[1] || ''
     setInputValue(queryFromParam)
     setQuery(queryFromParam)
-  }
+  }, [location.pathname])
 
   const history = useHistory()
   useEffect(
