@@ -13,10 +13,17 @@ if (require.main === module) {
 }
 
 async function getPersonVisits() {
-  const bigquery = new BigQuery({
-    keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS,
-    projectId: 'people-not-platforms'
-  })
+  const options = { projectId: 'people-not-platforms' }
+  if (process.env.NODE_ENV === 'development') {
+    options.keyFilename =
+      process.env.BIG_QUERY_UPDATE_POPULARITIES_KEY_FILE_PATH
+  } else {
+    options.credentials = {
+      client_email: process.env.BIG_QUERY_UPDATE_POPULARITIES_EMAIL,
+      private_key: process.env.BIG_QUERY_UPDATE_POPULARITIES_PRIVATE_KEY
+    }
+  }
+  const bigquery = new BigQuery(options)
 
   const query = `SELECT *
     FROM \`people-not-platforms.staging.person_visits\`
