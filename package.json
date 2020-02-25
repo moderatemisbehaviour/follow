@@ -29,7 +29,7 @@
     "start": "cd people && npm start",
     "start:dev": "concurrently \"cd people && npm run start:dev\" \"cd client && npm start\"",
     "lint": "eslint client/src people/src database/src",
-    "test": "npm run cypress:run",
+    "test": "npm run cypress:run --record",
     "test:dev": "npm run cypress:open",
     "jest": "(cd database && npm test) && (cd people && npm test) && (cd client && npm test)",
     "ci": "start-server-and-test heroku-like http://localhost:4000",
