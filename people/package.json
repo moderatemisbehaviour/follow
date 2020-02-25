@@ -7,7 +7,7 @@
     "url": "http://danielmetcalfe.rocks/"
   },
   "scripts": {
-    "start": "../habitat.sh -f ../.env node src/index.js",
+    "start": "node src/index.js",
     "start:dev": "../habitat.sh -f ../.env nodemon src/index.js",
     "test": "../habitat.sh -f ../.env jest",
     "update-popularities": "../habitat.sh -f ../.env node src/updatePopularities"
