@@ -1,3 +1,3 @@
-export const paths = {
+module.exports = {
   person: /\/person\/[\d\w]{24}$/
 }

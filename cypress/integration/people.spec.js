@@ -1,8 +1,7 @@
-const BASE_URL = Cypress.config('baseUrl')
+import messages from '../../client/src/messages'
+import pathRegexes from '../../people/src/pathRegexes'
 
-const personUrlRegex = /.+\/person\/[\d\w]{24}$/
-// TODO: Move to a meta package or root package.json?
-const slogan = 'Follow people, not platforms'
+const BASE_URL = Cypress.config('baseUrl')
 
 before(function() {
   cy.task('resetDatabase')
@@ -14,15 +13,15 @@ describe('the home page.', function() {
   })
 
   it('displays the slogan even after coming back from another page', function() {
-    cy.title().should('eq', slogan)
+    cy.title().should('eq', messages.slogan)
     cy.visit('/person/create')
-    cy.title().should('not.eq', slogan)
+    cy.title().should('not.eq', messages.slogan)
     cy.visit('/')
-    cy.title().should('eq', slogan)
+    cy.title().should('eq', messages.slogan)
   })
 
   it('has the slogan as the page title', function() {
-    cy.title().should('eq', slogan)
+    cy.title().should('eq', messages.slogan)
   })
 
   it('displays the logo.', function() {
@@ -138,7 +137,7 @@ describe('searching for a person', function() {
         .should('have.attr', 'src', this.people[0].image)
     })
 
-    it.only('provides buttons for navigating through pages of search results', function() {
+    it('provides buttons for navigating through pages of search results', function() {
       cy.get('.page').should('have.length', 3)
 
       cy.get('.search-result')
@@ -497,7 +496,7 @@ describe('creating a person', function() {
     it('views the person after a successful save', function() {
       cy.get('.save').click()
 
-      cy.url().should('match', personUrlRegex)
+      cy.url().should('match', pathRegexes.person)
       cy.get('.profile').should('have.length', 2)
       cy.get('.person img')
         .should('have.attr', 'src')
@@ -509,7 +508,7 @@ describe('creating a person', function() {
         cy.get('.add-profile').click()
         cy.get('.save').click()
 
-        cy.url().should('match', personUrlRegex)
+        cy.url().should('match', pathRegexes.person)
         cy.get('.profile').should('have.length', 2)
         cy.get('.person img')
           .should('have.attr', 'src')
@@ -696,7 +695,7 @@ describe('editing a person', function() {
           .type(newTwitterProfileUrl)
         cy.get('.save').click()
 
-        cy.url().should('match', personUrlRegex)
+        cy.url().should('match', pathRegexes.person)
 
         cy.get('.name').should('have.text', newName)
         cy.get('.image img').should('have.attr', 'src', this.person.image)
@@ -721,7 +720,7 @@ describe('editing a person', function() {
           cy.get('.add-profile').click()
           cy.get('.save').click()
 
-          cy.url().should('match', personUrlRegex)
+          cy.url().should('match', pathRegexes.person)
           cy.get('.profile').should('have.length', 3)
         })
       })
@@ -732,7 +731,7 @@ describe('editing a person', function() {
           cy.get('.edit-profile-2').click()
 
           cy.get('.save').click()
-          cy.url().should('match', personUrlRegex)
+          cy.url().should('match', pathRegexes.person)
           cy.get('.profile').should('have.length', 3)
         })
       })
@@ -748,7 +747,7 @@ describe('editing a person', function() {
             .type('https://google.com')
 
           cy.get('.save').click()
-          cy.url().should('match', personUrlRegex)
+          cy.url().should('match', pathRegexes.person)
           cy.get('.profile').should('have.length', 4)
         })
       })
