@@ -221,3 +221,23 @@ describe('keyboard shortcuts', () => {
     cy.focused().should('have.value', 'Si')
   })
 })
+
+describe('the cache', () => {
+  it('is updated after a new person is created', () => {
+    cy.visit('/')
+
+    cy.get('.search input').type('Si')
+    cy.get('.search-results-count').contains(0)
+    cy.get('.search-result').should('have.length', 0)
+
+    cy.fixture('siobhan.json').then(siobhan => {
+      cy.task('createPerson', siobhan)
+    })
+
+    cy.get('.search input').clear()
+    cy.get('.search-results').should('not.exist')
+    cy.get('.search input').type('Si')
+    cy.get('.search-result').should('have.length', 1)
+    cy.get('.search-results-count').contains(1)
+  })
+})

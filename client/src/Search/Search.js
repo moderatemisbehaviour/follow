@@ -55,11 +55,13 @@ function Search(props) {
         pageNumber
       )
     },
+    fetchPolicy: 'cache-and-network',
     skip: !query
   })
 
   const getPeopleCountResult = useQuery(GET_PEOPLE_COUNT, {
     variables: { query },
+    fetchPolicy: 'cache-and-network',
     skip: !query
   })
 

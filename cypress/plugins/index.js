@@ -33,9 +33,10 @@ module.exports = async (on, config) => {
         const siobhan = JSON.parse(
           fs.readFileSync('cypress/fixtures/siobhan.json', 'utf8')
         )
-        siobhan.popularity = 1
         fixture = siobhan
       }
+
+      fixture.popularity = 1
 
       const result = await peopleCollection.insertOne(fixture)
       const person = result.ops[0]
