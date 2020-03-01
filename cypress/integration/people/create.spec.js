@@ -1,223 +1,247 @@
+import pathRegexes from '../../../people/src/pathRegexes'
+
 beforeEach(function() {
-  cy.task('resetDatabase')
+  cy.visit('/person/create')
+})
+
+it("updates the document title, using the 'name' query param if it exists", function() {
+  cy.title().should('eq', 'Create person')
+  cy.visit('/person/create?name=Siobhan')
+  cy.title().should('eq', 'Create Siobhan')
+})
+
+it('highlights the property currently being edited', function() {
+  cy.get('.edit-name').should('have.class', 'currently-being-edited')
+  cy.get('.add-profile').click()
+  cy.get('.edit-profile-0').should('have.class', 'currently-being-edited')
+})
+
+describe('getting to the create person page', function() {
+  beforeEach(function() {
+    cy.visit('/')
+  })
+
+  it('has options for creating a person in the bottom search result', function() {
+    cy.get('#the-input').type('Siob')
+    cy.get('.search-result') // Wait until search results appear to avoid Cypress failing because li with loading message gets detached from the DOM.
+    cy.get('li')
+      .last()
+      .should('have.id', 'create-person')
+    cy.get('#create-person').should('have.text', 'Create Siob or someone else.')
+  })
+
+  it('has a create person link based on the current search query', function() {
+    cy.get('#the-input').type('Siob')
+    cy.get('#create-suggested-person').click()
+    cy.url().should('contain', `/person/create?name=Siob`)
+  })
+
+  it('has a create person link for a new person', function() {
+    cy.get('#the-input').type('Siob')
+    cy.get('#create-new-person').click()
+    cy.url().should('contain', `/person/create`)
+  })
 })
 
 describe('state on page load', function() {
-  beforeEach(function() {
-    cy.task('createPerson').as('person')
-    cy.visit('/')
+  it('focuses the input', function() {
+    cy.focused().should('have.id', 'the-input')
   })
 
-  it('updates the document title to "Searching for [query]', function() {
-    cy.get('.search input')
-      .type('Si')
-      .should('have.value', 'Si')
-    cy.title().should('eq', 'Searching for Si')
+  it('disables the save button', function() {
+    cy.get('.save').should('have.attr', 'disabled')
   })
 
-  it('updates the search query param', function() {
-    cy.get('.search input')
-      .type('Si')
-      .should('have.value', 'Si')
-    cy.url().should('match', /\/?Si/)
+  it("prompts for the person's name in the input", function() {
+    cy.get('#the-input').should(
+      'have.attr',
+      'placeholder',
+      "Enter the person's name"
+    )
   })
 
-  it('uses the query param if there is nothing in the input', function() {
-    cy.visit('/?Si')
-    cy.get('.search input').should('have.value', 'Si')
+  it('has an add property buttons in the same order as they appear on the person', function() {
+    cy.get('.next')
+      .eq(0)
+      .should('have.class', 'edit-name')
+    cy.get('.next')
+      .eq(1)
+      .should('have.class', 'add-image')
+    cy.get('.next')
+      .eq(2)
+      .should('have.class', 'add-profile')
   })
 })
 
-describe('performance', function() {
+describe('adding the first profile URL', function() {
   beforeEach(function() {
-    cy.task('createPerson').as('person')
+    cy.get('#the-input').type('Siobhan Wilson')
+    cy.get('.add-profile').click()
   })
 
-  it('debounces the searching to save on network requests', function() {
-    cy.visit('/', {
-      onBeforeLoad(win) {
-        cy.spy(win, 'fetch')
-      }
+  it('clears the input when the next button is clicked', function() {
+    cy.get('#the-input').should('have.value', '')
+  })
+
+  it('should have add and edit property buttons in the same order as they appear on the person', function() {
+    cy.get('.next')
+      .eq(0)
+      .should('have.class', 'edit-name')
+    cy.get('.next')
+      .eq(1)
+      .should('have.class', 'add-image')
+    cy.get('.next')
+      .eq(2)
+      .should('have.class', 'edit-profiles')
+    cy.get('.next')
+      .eq(3)
+      .should('have.class', 'add-profile')
+  })
+
+  it("prompts for the person's first profile URL", function() {
+    cy.get('#the-input').should(
+      'have.attr',
+      'placeholder',
+      "Copy-paste the person's profile URL"
+    )
+  })
+
+  it('enables the save button once the first profile URL is added', function() {
+    cy.get('.save').should('have.attr', 'disabled')
+    cy.get('#the-input').type('https://twitter.com/siobhanisback')
+    cy.get('.add-profile').click()
+    cy.get('.save').should('not.have.attr', 'disabled')
+  })
+})
+
+describe('adding more information', function() {
+  beforeEach(function() {
+    cy.get('#the-input').type('Siobhan Wilson')
+    cy.get('.add-profile').click()
+    cy.get('#the-input').type('https://twitter.com/siobhanisback')
+  })
+
+  it('allows a second profile URL and image to be added', function() {
+    cy.get('.add-profile').click()
+    cy.get('#the-input').type('https://www.youtube.com/user/siobhanwilsonmusic')
+    cy.get('.profile')
+      .eq('1')
+      .find('a')
+      .should(
+        'have.attr',
+        'href',
+        'https://www.youtube.com/user/siobhanwilsonmusic'
+      )
+
+    cy.get('.add-image').click()
+    cy.get('#the-input').type(
+      'https://pbs.twimg.com/profile_images/1102783358973677569/qEt61Ej8_400x400.jpg'
+    )
+    cy.get('.person img').should(
+      'have.attr',
+      'src',
+      'https://pbs.twimg.com/profile_images/1102783358973677569/qEt61Ej8_400x400.jpg'
+    )
+  })
+
+  it('discards blank profiles or images currently being edited when the user decides to edit something else', function() {
+    cy.get('.add-profile').click()
+    // Leave input blank
+    cy.get('.profile').should('have.length', 2)
+    cy.get('.add-image').click()
+    cy.get('.profile').should('have.length', 1)
+    // Leave input blank
+    cy.get('.person img')
+      .should('have.attr', 'src')
+      .and('match', /\/static\/media\/placeholderPersonImage..*.svg/)
+  })
+})
+
+describe('editing properties that have already been created', function() {
+  beforeEach(function() {
+    cy.fixture('siobhan.json')
+      .as('siobhan')
+      .then(siobhan => {
+        cy.get('#the-input').type(siobhan.name)
+        cy.get('.add-profile').click()
+        cy.get('#the-input').type(siobhan.profiles[0])
+        cy.get('.add-profile').click()
+        cy.get('#the-input').type(siobhan.profiles[1])
+        cy.get('.add-profile').click()
+        cy.get('#the-input').type(siobhan.profiles[2])
+        cy.get('.add-image').click()
+      })
+  })
+
+  describe('editing profiles that have already been created', function() {
+    it('has an edit profiles button that prompts for the profile number to edit', function() {
+      cy.get('.edit-profile-0').should('not.exist')
+      cy.get('.edit-profile-1').should('not.exist')
+      cy.get('.edit-profile-2').should('not.exist')
+
+      cy.get('.edit-profiles').click()
+
+      cy.get('.edit-profile-0')
+      cy.get('.edit-profile-1')
+      cy.get('.edit-profile-2')
     })
+  })
+})
+
+describe('saving the person', function() {
+  beforeEach(function() {
+    cy.fixture('siobhan.json')
+      .as('siobhan')
+      .then(siobhan => {
+        cy.get('#the-input').type(siobhan.name)
+        cy.get('.add-profile').click()
+        cy.get('#the-input').type(siobhan.profiles[0])
+        cy.get('.add-image').click()
+        cy.get('#the-input').type(siobhan.image)
+        cy.get('.add-profile').click()
+        cy.get('#the-input').type(siobhan.profiles[1])
+      })
+  })
+
+  it('views the person after a successful save', function() {
+    cy.get('.save').click()
+
+    cy.url().should('match', pathRegexes.person)
+    cy.get('.profile').should('have.length', 2)
+    cy.get('.person img')
+      .should('have.attr', 'src')
+      .and('eq', this.siobhan.image)
+  })
+
+  describe('blank profile being edited', function() {
+    it('discards the blank profile before saving', function() {
+      cy.get('.add-profile').click()
+      cy.get('.save').click()
+
+      cy.url().should('match', pathRegexes.person)
+      cy.get('.profile').should('have.length', 2)
+      cy.get('.person img')
+        .should('have.attr', 'src')
+        .and('eq', this.siobhan.image)
+    })
+  })
+})
+
+describe('validating URLs', function() {
+  it('gives the input the invalid style', function() {
     cy.get('#the-input')
-      .type('Siob')
-      .get('.search-results')
-    cy.window().then(window => {
-      // TODO: Why doesn't the Cypress ESLint plugin take care of this?
-      // eslint-disable-next-line no-unused-expressions
-      expect(window.fetch).to.be.calledTwice
-    })
-  })
+      .type('Siobhan Wilson')
+      .should('not.have.class', 'invalid')
+    cy.get('.add-profile').click()
 
-  it.skip('hits the cache for pages of search results that have already been loaded', function() {})
-})
+    cy.get('#the-input')
+      .should('not.have.class', 'invalid')
+      .type('invalid URL')
+      .should('have.class', 'invalid')
 
-describe('one or more search results', function() {
-  beforeEach(function() {
-    // TODO: Find a way to use before.
-    cy.task('resetDatabase')
-    cy.task('createPeople').as('people')
-    cy.visit('/')
-    cy.get('#the-input').type('Si')
-  })
-
-  it('displays search results when text is entered into the search input.', function() {
-    cy.get('.search-result').should('not.have.length', 0)
-  })
-
-  it('displays no more than 5 results at a time.', function() {
-    cy.get('.search-result').should('have.length', 5)
-  })
-
-  it('displays mini person images in the search results', function() {
-    cy.get('.search-result')
-      .first()
-      .find('img')
-      .should('have.attr', 'src', this.people[0].image)
-  })
-
-  it('provides buttons for navigating through pages of search results', function() {
-    cy.get('.page').should('have.length', 3)
-
-    cy.get('.search-result')
-      .should('have.length', 5)
-      .eq(0)
-      .should('have.text', 'Siobhan Wilson 1')
-
-    cy.get('.page')
-      .contains('2')
-      .click()
-    cy.get('.search-result')
-      .should('have.length', 5) // Necessary to add these 'guards' to avoid errors because stale search results are removed from DOM after being picked up by the cy.get
-      .eq(0)
-      .should('have.text', 'Siobhan Wilson 6')
-
-    cy.get('.page')
-      .contains('3')
-      .click()
-    cy.get('.search-result')
-      .should('have.length', 3)
-      .eq(0)
-      .should('have.text', 'Siobhan Wilson 11')
-
-    cy.get('.page')
-      .contains('1')
-      .click()
-    cy.get('.search-result')
-      .should('have.length', 5)
-      .eq(0)
-      .should('have.text', 'Siobhan Wilson 1')
-
-    cy.get('.page')
-      .contains('2')
-      .click()
-    cy.get('.search-result')
-      .should('have.length', 5)
-      .eq(0)
-      .should('have.text', 'Siobhan Wilson 6')
-  })
-
-  it("navigates to the person's profile when a search result is clicked", function() {
-    cy.get('.search-result li')
-      .first()
-      .click()
-    cy.url().should('match', /.+\/person\/\d+/)
-  })
-})
-
-describe('no search results', function() {
-  beforeEach(function() {
-    cy.visit('/')
-    cy.get('#the-input').type('xfh')
-    cy.get('.search-results')
-    cy.get('.search-result').should('not.exist')
-  })
-
-  it('displays a message that there are 0 search results', function() {
-    cy.get('.search-results').contains('0 search results')
-  })
-})
-
-describe('end of search results', function() {
-  it('')
-})
-
-describe('the search input', () => {
-  beforeEach(function() {
-    cy.task('resetDatabase')
-    cy.task('createPeople')
-    cy.visit('/')
-  })
-
-  it('closes the search results when a search result is selected', function() {
-    cy.get('.search input').type('Si') // TODO: Use #the-input selector instead
-    cy.get('.search-result li')
-      .first()
-      .click()
-    cy.get('.search-results').should('have.length', 0)
-
-    // Check it also works for cached search results
-    cy.get('.search input').type('Si') // TODO: Use #the-input selector instead
-    cy.get('.search-result li')
-      .last()
-      .click()
-    cy.get('.search-results').should('have.length', 0)
-
-    cy.get('.search input').type('Si') // TODO: Use #the-input selector instead
-    cy.get('.search-result li')
-      .first()
-      .click()
-    cy.get('.search-results').should('have.length', 0)
-  })
-
-  it('stops displaying search results when text is cleared from the search input.', function() {
-    cy.get('.search input')
-      .type('Si')
-      .should('have.value', 'Si')
-    cy.get('.search input')
+    cy.get('#the-input')
       .clear()
-      .should('have.value', '')
-    cy.get('.search-result').should('have.length', 0)
-  })
-
-  it.skip('closes the search results when the search input loses focus', function() {})
-})
-
-describe('keyboard shortcuts', () => {
-  beforeEach(() => {
-    cy.task('resetDatabase')
-    cy.task('createPeople')
-    cy.visit('/')
-  })
-
-  it('allows the user to navigate between the search input and search results with the arrow keys', function() {
-    cy.get('.search input').type('Si')
-
-    cy.get('.search-result')
-    cy.get('.search input').type('{downarrow}')
-    cy.focused().should('have.text', 'Siobhan Wilson 1')
-
-    cy.focused().type('{downarrow}')
-    cy.focused().should('have.text', 'Siobhan Wilson 2')
-
-    cy.focused().type('{downarrow}')
-    cy.focused().type('{downarrow}')
-    cy.focused().type('{downarrow}')
-    cy.focused().type('{downarrow}')
-    cy.focused().type('{downarrow}')
-    cy.focused().should('have.text', 'Siobhan Wilson 5')
-
-    cy.focused().type('{uparrow}')
-    cy.focused().should('have.text', 'Siobhan Wilson 4')
-
-    cy.focused().type('{uparrow}')
-    cy.focused().should('have.text', 'Siobhan Wilson 3')
-
-    cy.focused().type('{uparrow}')
-    cy.focused().type('{uparrow}')
-    cy.focused().should('have.text', 'Siobhan Wilson 1')
-
-    cy.focused().type('{uparrow}')
-    cy.focused().should('have.value', 'Si')
+      .type('http://example.com')
+      .should('not.have.class', 'invalid')
   })
 })
