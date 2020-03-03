@@ -39,6 +39,8 @@ module.exports = async (on, config) => {
         fixture = siobhan
       }
 
+      if (!fixture.popularity) fixture.popularity = 1
+
       const result = await peopleCollection.insertOne(fixture)
       const person = result.ops[0]
 
