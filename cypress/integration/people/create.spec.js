@@ -1,6 +1,7 @@
 import pathRegexes from '../../../people/src/pathRegexes'
 
 beforeEach(function() {
+  cy.task('resetDatabase')
   cy.visit('/person/create')
 })
 
@@ -23,7 +24,6 @@ describe('getting to the create person page', function() {
 
   it('has options for creating a person in the bottom search result', function() {
     cy.get('#the-input').type('Siob')
-    cy.get('.search-result') // Wait until search results appear to avoid Cypress failing because li with loading message gets detached from the DOM.
     cy.get('li')
       .last()
       .should('have.id', 'create-person')
