@@ -22,7 +22,6 @@ function PersonBrowser(props) {
 
   const person = (data && data.person) || {}
 
-  console.log(person)
   return (
     <React.Fragment>
       <Person

@@ -12,6 +12,7 @@ const resetDatabase = require('../../database/src/resetDatabase')
 const DatabaseClient = require('../../database/src/DatabaseClient')
 const fs = require('fs')
 const createPeople = require('./createPeople')
+const PeopleDataSource = require('../../people/src/dataSources/peopleDataSource')
 
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
@@ -19,9 +20,11 @@ module.exports = async (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
 
-  const databaseClient = new DatabaseClient(process.env.MONGODB_URI)
-  await databaseClient.connect()
+  const databaseClient = await new DatabaseClient(
+    process.env.MONGODB_URI
+  ).connect()
   const peopleCollection = databaseClient.db.collection('people')
+  const peopleDataSource = new PeopleDataSource(databaseClient.db)
 
   on('task', {
     async resetDatabase() {
@@ -36,12 +39,17 @@ module.exports = async (on, config) => {
         fixture = siobhan
       }
 
-      fixture.popularity = 1
-
       const result = await peopleCollection.insertOne(fixture)
       const person = result.ops[0]
 
       return person
+    },
+    async createPersonApi() {
+      const siobhan = JSON.parse(
+        fs.readFileSync('cypress/fixtures/siobhan.json', 'utf8')
+      )
+
+      return peopleDataSource.createPerson(siobhan)
     },
     async createPeople() {
       return createPeople(databaseClient)

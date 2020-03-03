@@ -1,9 +1,9 @@
 beforeEach(function() {
   cy.task('resetDatabase')
-  cy.task('createPerson')
+  cy.task('createPersonApi')
     .as('person')
     .then(person => {
-      cy.visit(`/person/${person._id}`)
+      cy.visit(`/person/${person.id}`)
     })
 })
 

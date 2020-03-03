@@ -2,10 +2,10 @@ import pathRegexes from '../../../people/src/pathRegexes'
 
 beforeEach(function() {
   cy.task('resetDatabase')
-  cy.task('createPerson')
+  cy.task('createPersonApi')
     .as('person')
     .then(person => {
-      cy.visit(`/person/${person._id}/edit`)
+      cy.visit(`/person/${person.id}/edit`)
     })
 })
 

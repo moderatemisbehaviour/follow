@@ -23,6 +23,7 @@ afterAll(async () => {
 
 beforeEach(async () => {
   await resetDatabase()
+
   siobhan = JSON.parse(
     fs.readFileSync(
       path.resolve(`${__dirname}/../../../cypress/fixtures/siobhan.json`),
@@ -152,6 +153,7 @@ describe('get people', () => {
 describe('edit person', () => {
   describe('when the object is valid', () => {
     it('returns an object', async () => {
+      siobhan.popularity = 1
       const peopleCollection = databaseClient.db.collection('people')
       const { insertedId } = await peopleCollection.insertOne({ ...siobhan })
       siobhan.name = 'Siob'
