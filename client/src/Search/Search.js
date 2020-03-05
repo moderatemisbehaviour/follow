@@ -105,7 +105,11 @@ function Search(props) {
               : undefined
           }
         >
-          {getPeopleResult.loading ? <li>Loading...</li> : undefined}
+          {getPeopleResult.loading && !getPeopleResult.data ? (
+            <li>Loading...</li>
+          ) : (
+            undefined
+          )}
           {getPeopleResult.error ? <li>Error :(</li> : undefined}
 
           <CreatePersonPrompt personName={query} />
