@@ -56,3 +56,5 @@ blocks:
             - sem-service start mongodb
             - npm run reset-database
             - npm run ci
+      secrets:
+        - name: cypress-record-key

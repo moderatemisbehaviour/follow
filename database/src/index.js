@@ -2,11 +2,11 @@ const DatabaseClient = require('./DatabaseClient')
 const setupDatabase = require('./setupDatabase')
 
 async function setupDatabaseAndGetClient() {
-  const database = await new DatabaseClient(
-    process.env.MONGODB_URI
-  ).connectAndGetDatabase()
-  await setupDatabase(database)
-  return database
+  const databaseClient = new DatabaseClient(process.env.MONGODB_URI)
+  await databaseClient.connect()
+  const { db } = databaseClient
+  await setupDatabase(db)
+  return databaseClient
 }
 
 module.exports = setupDatabaseAndGetClient

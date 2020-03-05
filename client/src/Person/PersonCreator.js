@@ -1,50 +1,42 @@
-import React, { useEffect } from 'react'
-import PropTypes from 'prop-types'
-import { Mutation } from 'react-apollo'
-import { Redirect } from 'react-router-dom'
+import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
-
-import PersonBuilder from './PersonBuilder'
+import PropTypes from 'prop-types'
+import React, { useEffect } from 'react'
+import { Redirect } from 'react-router-dom'
 import Save from '../common/Save'
+import PersonBuilder from './PersonBuilder'
+
+PersonCreator.propTypes = {
+  id: PropTypes.string,
+  person: PropTypes.object
+}
 
 function PersonCreator(props) {
   useEffect(() => {
     document.title = `Create ${props.person.name || 'person'}`
   })
+  const [createPerson, { data }] = useMutation(CREATE_PERSON)
+
+  if (data) {
+    const id = data.createPerson.id
+    window.analytics.track('Created person', { id })
+    return <Redirect to={`/person/${id}`} />
+  }
 
   return (
     <PersonBuilder person={props.person}>
-      {(getPerson, isValid) => {
-        return (
-          <Mutation mutation={CREATE_PERSON}>
-            {(createPerson, { data, error, loading }) => {
-              if (data) {
-                const id = data.createPerson.id
-                window.analytics.track('Created person', { id })
-                return <Redirect to={`/person/${id}`} />
-              }
-
-              return (
-                <Save
-                  disabled={!isValid}
-                  onClick={async e => {
-                    await createPerson({
-                      variables: { person: await getPerson() }
-                    })
-                  }}
-                />
-              )
-            }}
-          </Mutation>
-        )
-      }}
+      {(getPerson, isValid) => (
+        <Save
+          disabled={!isValid}
+          onClick={async e => {
+            await createPerson({
+              variables: { person: await getPerson() }
+            })
+          }}
+        />
+      )}
     </PersonBuilder>
   )
-}
-
-PersonCreator.propTypes = {
-  id: PropTypes.string,
-  person: PropTypes.object
 }
 
 const CREATE_PERSON = gql`

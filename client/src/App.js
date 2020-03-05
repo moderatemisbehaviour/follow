@@ -1,12 +1,13 @@
 import { createBrowserHistory } from 'history'
 import React, { Component } from 'react'
-import { Router, Route, Switch } from 'react-router-dom'
-
+import { Route, Router, Switch } from 'react-router-dom'
 import './App.css'
 import Footer from './common/Footer'
+import Home from './common/Home'
 import PersonBrowser from './Person/PersonBrowser'
 import PersonCreator from './Person/PersonCreator'
 import PersonEditor from './Person/PersonEditor'
+import Search from './Search/Search'
 
 const history = createBrowserHistory()
 history.listen(() => {
@@ -59,10 +60,10 @@ class App extends Component {
             }}
           </Route>
           <Route>
-            {({ location }) => (
+            {() => (
               <React.Fragment>
-                <PersonBrowser />
-                <Footer location={location} />
+                <Home />
+                <Search />
               </React.Fragment>
             )}
           </Route>

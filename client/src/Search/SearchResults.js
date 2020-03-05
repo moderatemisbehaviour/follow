@@ -1,41 +1,88 @@
-import React from 'react'
 import PropTypes from 'prop-types'
-
-import CreatePersonButton from '../Person/CreatePersonButton'
+import React, { useState } from 'react'
 import Person from '../Person/Person'
 import SearchResult from './SearchResult'
+import SearchResultsNavigator from './SearchResultsNavigator'
 
-function SearchResults(props) {
-  const {
-    query,
-    results: { data, loading, error }
-  } = props
+const SearchResults = React.forwardRef((props, ref) => {
+  const { searchResults, searchResultsCount } = props
+
+  const searchResultRefs = searchResults.map(_ => React.createRef())
+  searchResultRefs[0] = ref
+  const [pageNumber, setPageNumber] = useState(1)
+
+  function onKeyUp(event) {
+    event.stopPropagation()
+
+    let newPageNumber = pageNumber
+
+    if (event.key === 'ArrowUp') {
+      const previousSearchResult = document.activeElement.previousSibling
+      if (previousSearchResult) {
+        previousSearchResult.focus()
+      } else {
+        props.onArrowUpBlur()
+      }
+    } else if (event.key === 'ArrowDown') {
+      const nextSearchResult = document.activeElement.nextSibling
+      nextSearchResult && nextSearchResult.focus()
+    } else if (event.key === 'ArrowLeft') {
+      newPageNumber = pageNumber - 1
+      setPageNumber(newPageNumber)
+      props.onNavigation(newPageNumber)
+    } else if (event.key === 'ArrowRight') {
+      newPageNumber = pageNumber - 1
+      setPageNumber(newPageNumber)
+      props.onNavigation(newPageNumber)
+    }
+  }
 
   return (
-    <ul className="SearchResults">
-      {loading && <li>Loading...</li>}
-      {error && <li>Error :(</li>}
-      {data && data.people && (
-        <React.Fragment>
-          {data.people.map(person => (
-            <SearchResult key={person.id} id={person.id}>
-              <Person {...person} />
+    <ul
+      className="search-results"
+      onKeyUp={searchResults.length ? e => onKeyUp(e) : null}
+    >
+      <React.Fragment>
+        {searchResults &&
+          searchResults.map((searchResult, index) => (
+            <SearchResult
+              key={searchResult.id}
+              id={searchResult.id}
+              ref={searchResultRefs[index]}
+            >
+              <Person {...searchResult} />
             </SearchResult>
           ))}
-          <CreatePersonButton personName={query} />
-        </React.Fragment>
-      )}
+
+        {props.children}
+
+        {searchResultsCount === undefined ? null : (
+          <SearchResultsNavigator
+            currentPage={pageNumber}
+            onNavigation={pageNumber => {
+              props.onNavigation(pageNumber)
+              setPageNumber(pageNumber)
+            }}
+            resultsPerPage={props.resultsPerPage}
+            searchResultsCount={searchResultsCount}
+          />
+        )}
+      </React.Fragment>
     </ul>
   )
-}
+})
 
 SearchResults.propTypes = {
-  query: PropTypes.string,
-  results: PropTypes.shape({})
+  children: PropTypes.arrayOf(PropTypes.shape({})),
+  onArrowUpBlur: PropTypes.func,
+  onNavigation: PropTypes.func,
+  resultsPerPage: PropTypes.number.isRequired,
+  searchResults: PropTypes.arrayOf(PropTypes.shape({})),
+  searchResultsCount: PropTypes.number
 }
 
 SearchResults.defaultProps = {
-  results: {}
+  searchResults: []
 }
 
 export default SearchResults

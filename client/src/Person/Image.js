@@ -1,6 +1,5 @@
-import React from 'react'
 import PropTypes from 'prop-types'
-
+import React from 'react'
 import './Image.css'
 import placeholderPersonImage from './placeholderPersonImage.svg'
 

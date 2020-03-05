@@ -8,7 +8,8 @@ const applyApolloServerMiddleware = require('./applyApolloServerMiddleware')
 const configureExpressToHandleUrlPaths = require('./configureExpressToHandleUrlPaths')
 
 const expressServer = createExpressServerForStaticContent()
-databaseClient().then(db => {
+databaseClient().then(databaseClient => {
+  const { db } = databaseClient
   const apolloServer = applyApolloServerMiddleware(expressServer, db)
 
   const port = process.env.PORT || 4000

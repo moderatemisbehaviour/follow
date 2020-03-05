@@ -1,3 +1,6 @@
 {
-  "eslint.nodePath": "./node_modules/eslint/"
+  "eslint.nodePath": "./node_modules/eslint/",
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  }
 }

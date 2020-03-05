@@ -59,3 +59,7 @@ input:disabled {
   filter: grayscale(100%);
   cursor: not-allowed;
 }
+
+.placeholder {
+  color: lightgrey;
+}
