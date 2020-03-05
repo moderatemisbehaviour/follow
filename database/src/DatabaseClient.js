@@ -10,18 +10,18 @@ class DatabaseClient {
     this.client = new MongoClient(this.uriConnectionString)
   }
 
-  async connectAndGetDatabase() {
+  async connect() {
     await this.client.connect()
-    console.log(`Successfully connected to database at ${this.hosts[0].host}`)
-    return this.db
-  }
-
-  get db() {
-    return this.client.db(this.database)
+    console.info(`Successfully connected to database at ${this.hosts[0].host}`)
+    return this
   }
 
   async close() {
     await this.client.close()
+  }
+
+  get db() {
+    return this.client.db(this.database)
   }
 }
 

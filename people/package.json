@@ -7,11 +7,14 @@
     "url": "http://danielmetcalfe.rocks/"
   },
   "scripts": {
-    "start": "nodenv --E ../.env src/index.js",
-    "start:dev": "nodemon -w ../database/ --exec 'nodenv --E ../.env' src/index.js",
-    "test": "jest"
+    "start": "node src/index.js",
+    "start:dev": "../habitat.sh -f ../.env nodemon src/index.js",
+    "test": "../habitat.sh -f ../.env jest",
+    "update-popularities": "../habitat.sh -f ../.env node src/updatePopularities"
   },
   "dependencies": {
+    "@google-cloud/bigquery": "^4.7.0",
+    "apollo-datasource": "^0.6.3",
     "apollo-server": "^2.2.2",
     "apollo-server-express": "^2.2.2",
     "express": "^4.16.4",
@@ -19,7 +22,7 @@
     "follow-database": "file:../database",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.10.0",
-    "node-env-run": "^3.0.2",
+    "mongodb": "^3.4.0",
     "passport": "^0.4.0",
     "passport-twitter": "^1.0.4",
     "twitter": "^1.7.1"
@@ -28,6 +31,9 @@
     "jest": "^23.6.0"
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "searchPerformance.test.js"
+    ]
   }
 }

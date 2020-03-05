@@ -1,13 +1,10 @@
-const fs = require('fs')
-const path = require('path')
-
 module.exports = async function(db) {
   await db.createCollection('people')
   await db.command({
     collMod: 'people',
     validator: {
       $jsonSchema: {
-        required: ['name', 'profiles'],
+        required: ['name', 'popularity', 'profiles'],
         properties: {
           name: {
             type: 'string',
@@ -26,22 +23,15 @@ module.exports = async function(db) {
           image: {
             type: 'string',
             description: 'An image representing the person.'
+          },
+          popularity: {
+            bsonType: 'int',
+            minimum: 1,
+            description: '1 is the most popular person.'
           }
         }
       }
     }
   })
-  const siobhan = JSON.parse(
-    fs.readFileSync(
-      path.resolve(`${__dirname}/../../cypress/fixtures/siobhan.json`),
-      'utf8'
-    )
-  )
-  const elon = JSON.parse(
-    fs.readFileSync(
-      path.resolve(`${__dirname}/../../cypress/fixtures/elon.json`),
-      'utf8'
-    )
-  )
-  await db.collection('people').insertMany([siobhan, elon])
+  await db.collection('people').createIndex('popularity', { unique: true })
 }

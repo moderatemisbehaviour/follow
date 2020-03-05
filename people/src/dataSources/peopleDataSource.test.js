@@ -1,9 +1,8 @@
 const fs = require('fs')
 const path = require('path')
-
-const DatabaseClient = require('../DatabaseClient')
+const DatabaseClient = require('follow-database/src/DatabaseClient')
+const resetDatabase = require('follow-database/src/resetDatabase')
 const PeopleDataSource = require('./peopleDataSource')
-const resetDatabase = require('../resetDatabase')
 
 let databaseClient
 let db
@@ -12,8 +11,9 @@ let elon
 let siobhan
 
 beforeAll(async () => {
-  databaseClient = await new DatabaseClient(process.env.MONGODB_URI)
-  db = await databaseClient.connectAndGetDatabase()
+  databaseClient = new DatabaseClient(process.env.MONGODB_URI)
+  await databaseClient.connect()
+  db = databaseClient.db
   peopleDataSource = new PeopleDataSource(db)
 })
 
@@ -21,7 +21,9 @@ afterAll(async () => {
   await databaseClient.close()
 })
 
-beforeEach(() => {
+beforeEach(async () => {
+  await resetDatabase()
+
   siobhan = JSON.parse(
     fs.readFileSync(
       path.resolve(`${__dirname}/../../../cypress/fixtures/siobhan.json`),
@@ -43,6 +45,17 @@ describe('create person', () => {
       await peopleDataSource.createPerson(siobhan)
       expect(actualResponse).toMatchObject(siobhan)
       expect(actualResponse.id).toMatch(/[\d\w]{24}/)
+    })
+
+    it('assigns the person a popularity', async () => {
+      expect(siobhan.popularity).toBeFalsy()
+      expect(elon.popularity).toBeFalsy()
+
+      const updatedSiobhan = await peopleDataSource.createPerson(siobhan)
+      const updatedElon = await peopleDataSource.createPerson(elon)
+
+      expect(updatedSiobhan.popularity).toBe(1)
+      expect(updatedElon.popularity).toBe(2)
     })
   })
 
@@ -81,7 +94,9 @@ describe('create person', () => {
 
 describe('get people', () => {
   beforeEach(async () => {
-    await resetDatabase()
+    await db
+      .collection('people')
+      .insertMany([{ ...siobhan, popularity: 1 }, { ...elon, popularity: 2 }])
   })
 
   describe('when the query matches the name', () => {
@@ -136,13 +151,10 @@ describe('get people', () => {
 })
 
 describe('edit person', () => {
-  beforeEach(async () => {
-    await resetDatabase()
-  })
-
   describe('when the object is valid', () => {
     it('returns an object', async () => {
-      const peopleCollection = db.collection('people')
+      siobhan.popularity = 1
+      const peopleCollection = databaseClient.db.collection('people')
       const { insertedId } = await peopleCollection.insertOne({ ...siobhan })
       siobhan.name = 'Siob'
 

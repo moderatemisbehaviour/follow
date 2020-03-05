@@ -1,11 +1,11 @@
-.Search {
+.search {
   margin: 0.5rem;
   max-width: 900px;
   /* Had to add this in combination with 'align-items: center' otherwise the input width went really small. */
   width: 100%;
 }
 
-.SearchResults {
+.search-results {
   background-color: white;
   border: 1px solid #aaa;
   border-radius: 0.2rem;
@@ -15,24 +15,52 @@
   z-index: 1;
 }
 
-.SearchResult {
+.search-result {
   list-style-type: none;
 }
 
-.SearchResults a {
+.search-results a {
   text-decoration: none;
   color: black;
 }
 
-.SearchResults li {
+.search-results li {
   list-style-type: none;
 }
 
 
-.SearchResult:hover {
+.search-result:hover {
   background-color: #eee;
 }
 
-a:focus > .SearchResult {
+a:focus > .search-result {
   background-color: #dfdfdf;
+}
+
+.search-results-count {
+  color: gray;
+  font-style: italic;
+}
+
+.search-results-navigator button {
+  border-color: hsl(210, 80%, 50%);
+  font-size: 0.62rem;
+  margin: 0.31rem;
+}
+
+.search-results-navigator .page {
+  border-radius: 50%;
+  padding: 0;
+  height: 1rem;
+  width: 1rem;
+}
+
+.search-results-navigator .current-page {
+  background-color: hsl(210, 80%, 50%);
+  color: white;
+}
+
+.search-results-navigator .more {
+  border-radius: 0.2rem;
+  padding: 0.1rem;
 }
