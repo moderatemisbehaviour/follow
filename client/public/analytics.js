@@ -1,13 +1,33 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-unused-vars */
-function createAnalyticsGlobal(environment, segmentWriteKey) {
-  if (environment === 'staging' || environment === 'production') {
+
+const segmentWriteKeyStaging = 'SmeyXETt2A7rO0qVdRJVghXd9xF2sM3l'
+const segmentWriteKeyProduction = 'FM6eePV3diQfRH3SHWB7999ydcbcPHRj'
+
+function createAnalyticsGlobal() {
+  const environment = getEnvironment()
+
+  if (environment === 'staging') {
     console.log(`Environment is ${environment} so using Segment analytics.`)
-    useSegment(segmentWriteKey)
+    useSegment(segmentWriteKeyStaging)
+  } else if (environment === 'production') {
+    console.log(`Environment is ${environment} so using Segment analytics.`)
+    useSegment(segmentWriteKeyProduction)
   } else {
     console.log(`Environment is ${environment} so using mock analytics.`)
     useMockAnalytics()
   }
+}
+
+function getEnvironment() {
+  const { hostname } = document.location
+  if (hostname === 'peoplenotplatforms.com') {
+    return 'production'
+  }
+  if (hostname === 'peoplenotplatforms-staging.herokuapp.com') {
+    return 'staging'
+  }
+  return 'development'
 }
 
 function useMockAnalytics() {
