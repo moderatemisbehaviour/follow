@@ -26,7 +26,7 @@ async function getPersonVisits() {
   const bigquery = new BigQuery(options)
 
   const query = `SELECT *
-    FROM \`people-not-platforms.staging.person_visits\`
+    FROM \`people-not-platforms.${process.env.NODE_ENV}.person_visits\`
     `
 
   const [job] = await bigquery.createQueryJob({

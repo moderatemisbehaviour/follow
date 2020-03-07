@@ -27,6 +27,7 @@ function Search(props) {
     const queryFromParam = location.search.split('?')[1] || ''
     setInputValue(queryFromParam)
     setQuery(queryFromParam)
+    // eslint-disable-next-line
   }, [location.pathname])
 
   const history = useHistory()
