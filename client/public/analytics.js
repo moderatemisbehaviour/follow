@@ -90,7 +90,6 @@ function useSegment(segmentWriteKey) {
         }
         analytics.SNIPPET_VERSION = '4.1.0'
         analytics.load(segmentWriteKey)
-        analytics.page()
       }
   })()
 }
