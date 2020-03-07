@@ -26,6 +26,8 @@ function PersonEditor(props) {
   if (getPersonResult.loading) return <Person name="Loading..." />
   // TODO: Try mutation onCompleted callback instead?
   if (editPersonResult.data) {
+    const id = editPersonResult.data.editPerson.id
+    window.analytics.track('Edited person', { id })
     return <Redirect to={`/person/${id}`} />
   }
 
