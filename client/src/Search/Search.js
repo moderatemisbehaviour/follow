@@ -33,8 +33,10 @@ function Search(props) {
   const history = useHistory()
   useEffect(
     () => {
-      document.title = `Searching for ${query}`
-      history.push({ search: query })
+      if (query) {
+        document.title = `Searching for ${query}`
+        history.push({ search: query })
+      }
     },
     // Only update when query changes otherwise history push re-renders cause an infinite loop!
     [history, query]
