@@ -8,7 +8,7 @@ describe('state on page load', function() {
     cy.visit('/')
   })
 
-  it('updates the document title to "Searching for [query]', function() {
+  it('updates the document title to "Searching for [query]"', function() {
     cy.get('.search input')
       .type('Si')
       .should('have.value', 'Si')
@@ -79,40 +79,44 @@ describe('one or more search results', function() {
   it('provides buttons for navigating through pages of search results', function() {
     cy.get('.page').should('have.length', 3)
 
+    cy.get('.current-page').should('have.text', '1')
+    cy.contains('Siobhan Wilson 1')
     cy.get('.search-result')
-      .should('have.length', 5)
       .eq(0)
       .should('have.text', 'Siobhan Wilson 1')
 
     cy.get('.page')
       .contains('2')
       .click()
+    cy.get('.current-page').should('have.text', '2')
+    cy.contains('Siobhan Wilson 6')
     cy.get('.search-result')
-      .should('have.length', 5) // Necessary to add these 'guards' to avoid errors because stale search results are removed from DOM after being picked up by the cy.get
       .eq(0)
       .should('have.text', 'Siobhan Wilson 6')
 
     cy.get('.page')
       .contains('3')
       .click()
+    cy.get('.current-page').should('have.text', '3')
+    cy.contains('Siobhan Wilson 11')
     cy.get('.search-result')
-      .should('have.length', 3)
       .eq(0)
       .should('have.text', 'Siobhan Wilson 11')
 
     cy.get('.page')
       .contains('1')
       .click()
+    cy.get('.current-page').should('have.text', '1')
     cy.get('.search-result')
-      .should('have.length', 5)
       .eq(0)
       .should('have.text', 'Siobhan Wilson 1')
 
     cy.get('.page')
       .contains('2')
       .click()
+    cy.get('.current-page').should('have.text', '2')
+    cy.contains('Siobhan Wilson 6')
     cy.get('.search-result')
-      .should('have.length', 5)
       .eq(0)
       .should('have.text', 'Siobhan Wilson 6')
   })
