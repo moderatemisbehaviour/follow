@@ -8,13 +8,13 @@ function createAnalyticsGlobal() {
   const environment = getEnvironment()
 
   if (environment === 'staging') {
-    console.log(`Environment is ${environment} so using Segment analytics.`)
+    console.info(`Environment is ${environment} so using Segment analytics.`)
     useSegment(segmentWriteKeyStaging)
   } else if (environment === 'production') {
-    console.log(`Environment is ${environment} so using Segment analytics.`)
+    console.info(`Environment is ${environment} so using Segment analytics.`)
     useSegment(segmentWriteKeyProduction)
   } else {
-    console.log(`Environment is ${environment} so using mock analytics.`)
+    console.info(`Environment is ${environment} so using mock analytics.`)
     useMockAnalytics()
   }
 }
