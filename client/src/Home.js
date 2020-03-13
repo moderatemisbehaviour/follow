@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
-import '../App.css'
-import logo from '../common/icons/logo.png'
-import Image from '../Person/Image'
-import Name from '../Person/Name'
-import '../Person/Person.css'
-import Announcement from './Announcement'
+import './App.css'
+import Announcement from './common/Announcement'
+import logo from './common/icons/logo.png'
+import Image from './Person/Image'
+import Name from './Person/Name'
+import './Person/Person.css'
 
 function Home() {
   useEffect(() => {

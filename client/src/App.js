@@ -1,9 +1,10 @@
 import { createBrowserHistory } from 'history'
 import React, { Component } from 'react'
 import { Route, Router, Switch } from 'react-router-dom'
+import About from './About'
 import './App.css'
 import Footer from './common/Footer'
-import Home from './common/Home'
+import Home from './Home'
 import PersonBrowser from './Person/PersonBrowser'
 import PersonCreator from './Person/PersonCreator'
 import PersonEditor from './Person/PersonEditor'
@@ -26,6 +27,7 @@ class App extends Component {
     return (
       <Router history={history}>
         <Switch>
+          <Route path={'/about'} component={About} />
           <Route path={'/person/create'}>
             {({ location }) => {
               const name = location.search.replace('?name=', '')
