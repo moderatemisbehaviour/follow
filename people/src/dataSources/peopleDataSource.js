@@ -27,7 +27,6 @@ class PeopleDataSource extends DataSource {
       { $set: { ...person } },
       { returnOriginal: false }
     )
-    console.log(result)
 
     if (result.modifiedCount < 1) {
       throw new Error('The edit had no effect!')

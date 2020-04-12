@@ -18,6 +18,10 @@ a:focus > #create-person {
   margin-left: 0.5rem;
 }
 
+#create-suggested-person .name {
+  font-size: 1rem; /* TODO: Find out why this is necessary, it didn't used to be. */
+}
+
 /* Find a more elegant way to unset this without screwing up SearchResult styles. */
 #create-person a {
   text-decoration: underline;

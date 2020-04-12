@@ -7,7 +7,7 @@ import Name from './Name'
 
 function CreatePersonPrompt(props) {
   return (
-    <li id="create-person">
+    <span id="create-person">
       <img src={createPersonIcon} alt="create person icon" />
       <span>Create </span>
       <Link to={`/person/create?name=${props.personName}`}>
@@ -19,7 +19,7 @@ function CreatePersonPrompt(props) {
       <Link to="/person/create">
         <span id="create-new-person">someone else.</span>
       </Link>
-    </li>
+    </span>
   )
 }
 

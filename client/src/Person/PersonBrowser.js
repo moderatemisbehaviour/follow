@@ -4,8 +4,10 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import NextOption from '../common/nextSteps/NextOption'
-import Search from '../Search/Search'
+import Omnibox from '../common/Omnibox'
+import CommandResults from '../common/Omnibox/CommandResults'
 import Person from './Person'
+import PersonResults from './PersonResults'
 
 PersonBrowser.propTypes = {
   id: PropTypes.string.isRequired
@@ -29,7 +31,11 @@ function PersonBrowser(props) {
         image={person.image || undefined}
         profiles={person.profiles}
       />
-      <Search />
+      <Omnibox
+        getResultsProvider={query =>
+          query.startsWith('/') ? CommandResults : PersonResults
+        }
+      />
       {person && (
         <Link to={`/person/${id}/edit`}>
           <NextOption label={`Edit ${person.name}`} id={`edit-person`} />

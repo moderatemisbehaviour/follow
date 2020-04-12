@@ -4,11 +4,13 @@ import { Route, Router, Switch } from 'react-router-dom'
 import About from './About'
 import './App.css'
 import Footer from './common/Footer'
+import Omnibox from './common/Omnibox'
+import CommandResults from './common/Omnibox/CommandResults'
 import Home from './Home'
 import PersonBrowser from './Person/PersonBrowser'
 import PersonCreator from './Person/PersonCreator'
 import PersonEditor from './Person/PersonEditor'
-import Search from './Search/Search'
+import PersonResults from './Person/PersonResults'
 
 const history = createBrowserHistory()
 history.listen(() => {
@@ -65,7 +67,11 @@ class App extends Component {
             {() => (
               <React.Fragment>
                 <Home />
-                <Search />
+                <Omnibox
+                  getResultsComponent={query =>
+                    query.startsWith('/') ? CommandResults : PersonResults
+                  }
+                />
               </React.Fragment>
             )}
           </Route>

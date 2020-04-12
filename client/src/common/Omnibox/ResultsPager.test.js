@@ -1,11 +1,11 @@
 import { shallow } from 'enzyme'
 import React from 'react'
-import SearchResultsNavigator from './SearchResultsNavigator'
+import ResultsPager from './ResultsPager'
 
 describe('page buttons', () => {
   it('displays one button for one page of results', () => {
     const wrapper = shallow(
-      <SearchResultsNavigator
+      <ResultsPager
         currentPage={1}
         resultsPerPage={5}
         searchResultsCount={5}
@@ -21,7 +21,7 @@ describe('page buttons', () => {
 
   it('displays two buttons for two pages of results', () => {
     const wrapper = shallow(
-      <SearchResultsNavigator
+      <ResultsPager
         currentPage={1}
         resultsPerPage={5}
         searchResultsCount={10}
@@ -37,7 +37,7 @@ describe('page buttons', () => {
 
   it('displays three buttons for three pages of results', () => {
     const wrapper = shallow(
-      <SearchResultsNavigator
+      <ResultsPager
         currentPage={1}
         resultsPerPage={5}
         searchResultsCount={15}
@@ -53,7 +53,7 @@ describe('page buttons', () => {
 
   it('displays one button for one partial page', () => {
     const wrapper = shallow(
-      <SearchResultsNavigator
+      <ResultsPager
         currentPage={1}
         resultsPerPage={5}
         searchResultsCount={1}
@@ -69,7 +69,7 @@ describe('page buttons', () => {
 
   it('displays 2 buttons for one full page and one partial page', () => {
     const wrapper = shallow(
-      <SearchResultsNavigator
+      <ResultsPager
         currentPage={1}
         resultsPerPage={5}
         searchResultsCount={8}
@@ -87,7 +87,7 @@ describe('page buttons', () => {
 describe('highlighting the current page', () => {
   it('sets the current-page class on the first button', () => {
     const wrapper = shallow(
-      <SearchResultsNavigator
+      <ResultsPager
         currentPage={1}
         resultsPerPage={5}
         searchResultsCount={5}
@@ -100,7 +100,7 @@ describe('highlighting the current page', () => {
 
   it('sets the current-page class on the second button', () => {
     const wrapper = shallow(
-      <SearchResultsNavigator
+      <ResultsPager
         currentPage={2}
         resultsPerPage={5}
         searchResultsCount={10}
@@ -113,7 +113,7 @@ describe('highlighting the current page', () => {
 
   it('sets the current-page class on the third button', () => {
     const wrapper = shallow(
-      <SearchResultsNavigator
+      <ResultsPager
         currentPage={3}
         resultsPerPage={5}
         searchResultsCount={15}
