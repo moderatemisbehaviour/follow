@@ -9,14 +9,14 @@ describe('state on page load', function() {
   })
 
   it('updates the document title to "Searching for [query]"', function() {
-    cy.get('.search input')
+    cy.get('#omnibox input')
       .type('Si')
       .should('have.value', 'Si')
     cy.title().should('eq', 'Searching for Si')
   })
 
   it('updates the search query param', function() {
-    cy.get('.search input')
+    cy.get('#omnibox input')
       .type('Si')
       .should('have.value', 'Si')
     cy.url().should('match', /\/?Si/)
@@ -24,7 +24,7 @@ describe('state on page load', function() {
 
   it('uses the query param if there is nothing in the input', function() {
     cy.visit('/?Si')
-    cy.get('.search input').should('have.value', 'Si')
+    cy.get('#omnibox input').should('have.value', 'Si')
   })
 })
 
@@ -41,7 +41,7 @@ describe('performance', function() {
     })
     cy.get('#the-input')
       .type('Siob')
-      .get('.search-results')
+      .get('.results')
     cy.window().then(window => {
       // TODO: Why doesn't the Cypress ESLint plugin take care of this?
       // eslint-disable-next-line no-unused-expressions
@@ -62,15 +62,15 @@ describe('one or more search results', function() {
   })
 
   it('displays search results when text is entered into the search input.', function() {
-    cy.get('.search-result').should('not.have.length', 0)
+    cy.get('.result').should('not.have.length', 0)
   })
 
   it('displays no more than 5 results at a time.', function() {
-    cy.get('.search-result').should('have.length', 5)
+    cy.get('.result').should('have.length', 5)
   })
 
   it('displays mini person images in the search results', function() {
-    cy.get('.search-result')
+    cy.get('.result')
       .first()
       .find('img')
       .should('have.attr', 'src', this.people[0].image)
@@ -81,7 +81,7 @@ describe('one or more search results', function() {
 
     cy.get('.current-page').should('have.text', '1')
     cy.contains('Siobhan Wilson 1')
-    cy.get('.search-result')
+    cy.get('.result')
       .eq(0)
       .should('have.text', 'Siobhan Wilson 1')
 
@@ -90,7 +90,7 @@ describe('one or more search results', function() {
       .click()
     cy.get('.current-page').should('have.text', '2')
     cy.contains('Siobhan Wilson 6')
-    cy.get('.search-result')
+    cy.get('.result')
       .eq(0)
       .should('have.text', 'Siobhan Wilson 6')
 
@@ -99,7 +99,7 @@ describe('one or more search results', function() {
       .click()
     cy.get('.current-page').should('have.text', '3')
     cy.contains('Siobhan Wilson 11')
-    cy.get('.search-result')
+    cy.get('.result')
       .eq(0)
       .should('have.text', 'Siobhan Wilson 11')
 
@@ -107,7 +107,7 @@ describe('one or more search results', function() {
       .contains('1')
       .click()
     cy.get('.current-page').should('have.text', '1')
-    cy.get('.search-result')
+    cy.get('.result')
       .eq(0)
       .should('have.text', 'Siobhan Wilson 1')
 
@@ -116,13 +116,13 @@ describe('one or more search results', function() {
       .click()
     cy.get('.current-page').should('have.text', '2')
     cy.contains('Siobhan Wilson 6')
-    cy.get('.search-result')
+    cy.get('.result')
       .eq(0)
       .should('have.text', 'Siobhan Wilson 6')
   })
 
   it("navigates to the person's profile when a search result is clicked", function() {
-    cy.get('.search-result li')
+    cy.get('.result')
       .first()
       .click()
     cy.url().should('match', /.+\/person\/\d+/)
@@ -133,12 +133,12 @@ describe('no search results', function() {
   beforeEach(function() {
     cy.visit('/')
     cy.get('#the-input').type('xfh')
-    cy.get('.search-results')
-    cy.get('.search-result').should('not.exist')
+    cy.get('.results')
+    cy.get('.result').should('not.exist')
   })
 
   it('displays a message that there are 0 search results', function() {
-    cy.get('.search-results').contains('0 search results')
+    cy.get('.results').contains('0 search results')
   })
 })
 
@@ -154,34 +154,34 @@ describe('the search input', () => {
   })
 
   it('closes the search results when a search result is selected', function() {
-    cy.get('.search input').type('Si') // TODO: Use #the-input selector instead
-    cy.get('.search-result li')
+    cy.get('#omnibox input').type('Si') // TODO: Use #the-input selector instead
+    cy.get('.result')
       .first()
       .click()
-    cy.get('.search-results').should('have.length', 0)
+    cy.get('.results').should('have.length', 0)
 
     // Check it also works for cached search results
-    cy.get('.search input').type('Si') // TODO: Use #the-input selector instead
-    cy.get('.search-result li')
+    cy.get('#omnibox input').type('Si') // TODO: Use #the-input selector instead
+    cy.get('.result')
       .last()
       .click()
-    cy.get('.search-results').should('have.length', 0)
+    cy.get('.results').should('have.length', 0)
 
-    cy.get('.search input').type('Si') // TODO: Use #the-input selector instead
-    cy.get('.search-result li')
+    cy.get('#omnibox input').type('Si') // TODO: Use #the-input selector instead
+    cy.get('.result')
       .first()
       .click()
-    cy.get('.search-results').should('have.length', 0)
+    cy.get('.results').should('have.length', 0)
   })
 
   it('stops displaying search results when text is cleared from the search input.', function() {
-    cy.get('.search input')
+    cy.get('#omnibox input')
       .type('Si')
       .should('have.value', 'Si')
-    cy.get('.search input')
+    cy.get('#omnibox input')
       .clear()
       .should('have.value', '')
-    cy.get('.search-result').should('have.length', 0)
+    cy.get('.result').should('have.length', 0)
   })
 
   it.skip('closes the search results when the search input loses focus', function() {})
@@ -195,10 +195,10 @@ describe('keyboard shortcuts', () => {
   })
 
   it('allows the user to navigate between the search input and search results with the arrow keys', function() {
-    cy.get('.search input').type('Si')
+    cy.get('#omnibox input').type('Si')
 
-    cy.get('.search-result')
-    cy.get('.search input').type('{downarrow}')
+    cy.get('.result')
+    cy.get('#omnibox input').type('{downarrow}')
     cy.focused().should('have.text', 'Siobhan Wilson 1')
 
     cy.focused().type('{downarrow}')
@@ -230,18 +230,18 @@ describe('the cache', () => {
   it('is updated after a new person is created', () => {
     cy.visit('/')
 
-    cy.get('.search input').type('Si')
-    cy.get('.search-results-count').contains(0)
-    cy.get('.search-result').should('have.length', 0)
+    cy.get('#omnibox input').type('Si')
+    cy.get('.results-count').contains(0)
+    cy.get('.result').should('have.length', 0)
 
     cy.fixture('siobhan.json').then(siobhan => {
       cy.task('createPerson', siobhan)
     })
 
-    cy.get('.search input').clear()
-    cy.get('.search-results').should('not.exist')
-    cy.get('.search input').type('Si')
-    cy.get('.search-result').should('have.length', 1)
-    cy.get('.search-results-count').contains(1)
+    cy.get('#omnibox input').clear()
+    cy.get('.results').should('not.exist')
+    cy.get('#omnibox input').type('Si')
+    cy.get('.result').should('have.length', 1)
+    cy.get('.results-count').contains(1)
   })
 })

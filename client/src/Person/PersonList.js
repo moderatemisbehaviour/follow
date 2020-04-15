@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import Result from '../common/Omnibox/Result'
 import Person from './Person'
 
 PersonList.propTypes = {
@@ -8,10 +9,6 @@ PersonList.propTypes = {
   onKeyUp: PropTypes.func,
   people: PropTypes.arrayOf(PropTypes.object).isRequired,
   refs: PropTypes.arrayOf(PropTypes.object)
-}
-
-PersonList.defaultProps = {
-  currentlySelectedIndex: null
 }
 
 function PersonList(props) {
@@ -23,18 +20,11 @@ function PersonList(props) {
   return (
     <ul onKeyUp={props.onKeyUp}>
       {props.people.map((person, index) => (
-        <Link
-          className="search-result"
-          data-id={person.id}
-          key={person.id}
-          ref={props.refs[index]}
-          tabIndex={0}
-          to={`/person/${person.id}`}
-        >
-          <li>
+        <Result id={person.id} key={person.id} ref={props.refs[index]}>
+          <Link to={`/person/${person.id}`}>
             <Person {...person} />
-          </li>
-        </Link>
+          </Link>
+        </Result>
       ))}
     </ul>
   )

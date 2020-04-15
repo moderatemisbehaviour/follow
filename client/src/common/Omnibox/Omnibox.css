@@ -15,7 +15,7 @@
   z-index: 1;
 }
 
-.search-result {
+.result {
   list-style-type: none;
 }
 
@@ -25,15 +25,16 @@
 }
 
 .results ul li {
+  cursor: pointer;
   list-style-type: none;
 }
 
 
-.search-result:hover {
+.result:hover {
   background-color: #eee;
 }
 
-a:focus > .search-result {
+a:focus > .result {
   background-color: #dfdfdf;
 }
 

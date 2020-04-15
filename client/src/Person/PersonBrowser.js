@@ -32,7 +32,7 @@ function PersonBrowser(props) {
         profiles={person.profiles}
       />
       <Omnibox
-        getResultsProvider={query =>
+        getResultsComponent={query =>
           query.startsWith('/') ? CommandResults : PersonResults
         }
       />

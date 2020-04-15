@@ -22,14 +22,19 @@ PersonResults.defaultProps = {
 
 function PersonResults(props) {
   const [currentlySelectedIndex, setCurrentlySelectedIndex] = useState(null)
+
   const [pageNumber, setPageNumber] = useState(1)
   const resultRefs = useMemo(
     () =>
       Array.from({ length: props.resultsPerPage }, (_, index) =>
         index === 0 ? props.firstResultRef : React.createRef()
       ),
-    [props.resultsPerPage]
+    [props.firstResultRef, props.resultsPerPage]
   )
+  const history = useHistory()
+  const onSelect = personId => {
+    history.push(`/person/${personId}`)
+  }
 
   const getPeopleResult = useQuery(GET_PEOPLE, {
     variables: {
@@ -50,24 +55,23 @@ function PersonResults(props) {
     skip: !props.query
   })
 
-  const history = useHistory()
-  const onSelect = personId => {
-    history.push(`/person/${personId}`)
-  }
-
   return (
-    <div className="results">
+    <React.Fragment>
       {getPeopleResult.loading ? (
-        'Loading...'
+        <div>Loading results...</div>
       ) : getPeopleResult.error ? (
-        'Error :('
-      ) : (
+        <div>Error getting results :(</div>
+      ) : getPeopleResult.data.people.length ? (
         <React.Fragment>
           <PersonList
-            currentlySelectedIndex={Math.min(
-              currentlySelectedIndex,
-              getPeopleResult.data.people.length - 1
-            )}
+            currentlySelectedIndex={
+              currentlySelectedIndex === null
+                ? null
+                : Math.min(
+                    currentlySelectedIndex,
+                    getPeopleResult.data.people.length - 1
+                  )
+            }
             people={getPeopleResult.data.people}
             onKeyUp={event => {
               makeResultsKeyboardNavigationEventHandler(
@@ -89,17 +93,15 @@ function PersonResults(props) {
             }}
             refs={resultRefs}
           />
-          <CreatePersonPrompt
-            key="create-person-prompt"
-            personName={props.query}
-          />
         </React.Fragment>
-      )}
+      ) : null}
+
+      <CreatePersonPrompt key="create-person-prompt" personName={props.query} />
 
       {getPeopleCountResult.loading ? (
-        'Loading...'
+        <div>Loading results count...</div>
       ) : getPeopleCountResult.error ? (
-        'Error :('
+        <div>Error loading results count :(</div>
       ) : (
         <ResultsPager
           currentPage={pageNumber}
@@ -111,7 +113,7 @@ function PersonResults(props) {
           resultsCount={getPeopleCountResult.data.peopleCount}
         />
       )}
-    </div>
+    </React.Fragment>
   )
 }
 

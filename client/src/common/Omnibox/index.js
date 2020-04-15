@@ -60,11 +60,17 @@ function Omnibox(props) {
         value={inputValue}
       />
       {query && (
-        <ResultsComponent
-          firstResultOnKeyUp={focusInput}
-          firstResultRef={firstResultRef}
-          query={query}
-        />
+        <div className="results">
+          <ResultsComponent
+            firstResultOnKeyUp={focusInput}
+            firstResultRef={firstResultRef}
+            query={query}
+            setQuery={query => {
+              setInputValue(query)
+              setQuery(query)
+            }}
+          />
+        </div>
       )}
     </div>
   )

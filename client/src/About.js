@@ -26,7 +26,12 @@ function About() {
       <p>
         With <em>this</em>:
       </p>
-      <img src={logo} width={100} height={100}></img>
+      <img
+        alt="People Not Platforms logo"
+        src={logo}
+        width={100}
+        height={100}
+      ></img>
       <p>
         Because we think that following people you care about on the platforms
         you like should be as easy as a single click!

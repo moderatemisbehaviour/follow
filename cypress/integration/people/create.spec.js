@@ -24,9 +24,6 @@ describe('getting to the create person page', function() {
 
   it('has options for creating a person in the bottom search result', function() {
     cy.get('#the-input').type('Siob')
-    cy.get('li')
-      .last()
-      .should('have.id', 'create-person')
     cy.get('#create-person').should('have.text', 'Create Siob or someone else.')
   })
 
