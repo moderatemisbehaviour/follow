@@ -1,3 +1,4 @@
+import Emoji from 'a11y-react-emoji'
 import PropTypes from 'prop-types'
 import React, { useEffect, useMemo, useState } from 'react'
 import makeResultsKeyboardNavigationEventHandler from './makeResultsKeyboardNavigationEventHandler'
@@ -38,13 +39,16 @@ function CommandResults(props) {
     results = (
       <React.Fragment>
         <Result key="submit-a-feature-request" ref={resultRefs[0]}>
-          💡Submit a feature request
+          <Emoji symbol="💡" label="light bulb" />
+          Submit a feature request
         </Result>
         <Result key="report-a-bug" ref={resultRefs[1]}>
-          🐛Report a bug
+          <Emoji symbol="🐛" label="bug" />
+          Report a bug
         </Result>
         <Result key="make-a-general-enquiry" ref={resultRefs[2]}>
-          🗣Make a general enquiry
+          <Emoji symbol="🗣" label="speaking silhouette head" />
+          Make a general enquiry
         </Result>
       </React.Fragment>
     )
