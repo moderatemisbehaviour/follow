@@ -1,7 +1,7 @@
 import { useLayoutEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
-function useSearchParamAsQueryOnLoad (setInputValue, setQuery) {
+function useSearchParamAsQueryOnLoad(setInputValue, setQuery) {
   const location = useLocation()
   useLayoutEffect(() => {
     const queryFromParam = location.search.split('?')[1] || ''

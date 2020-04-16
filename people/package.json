@@ -33,7 +33,8 @@
   "jest": {
     "testEnvironment": "node",
     "testPathIgnorePatterns": [
-      "searchPerformance.test.js"
+      "searchPerformance.test.js",
+      "updatePopularities/index.test.js"
     ]
   }
 }

@@ -7,8 +7,8 @@ describe('page buttons', () => {
     const wrapper = shallow(
       <ResultsPager
         currentPage={1}
-        resultsPerPage={5}
-        searchResultsCount={5}
+        numberOfPages={1}
+        resultsCount={5}
         onNavigation={() => null}
       />
     )
@@ -23,8 +23,8 @@ describe('page buttons', () => {
     const wrapper = shallow(
       <ResultsPager
         currentPage={1}
-        resultsPerPage={5}
-        searchResultsCount={10}
+        numberOfPages={2}
+        resultsCount={10}
         onNavigation={() => null}
       />
     )
@@ -39,8 +39,8 @@ describe('page buttons', () => {
     const wrapper = shallow(
       <ResultsPager
         currentPage={1}
-        resultsPerPage={5}
-        searchResultsCount={15}
+        numberOfPages={3}
+        resultsCount={15}
         onNavigation={() => null}
       />
     )
@@ -55,8 +55,8 @@ describe('page buttons', () => {
     const wrapper = shallow(
       <ResultsPager
         currentPage={1}
-        resultsPerPage={5}
-        searchResultsCount={1}
+        numberOfPages={1}
+        resultsCount={1}
         onNavigation={() => null}
       />
     )
@@ -67,12 +67,12 @@ describe('page buttons', () => {
     ).toEqual(['1'])
   })
 
-  it('displays 2 buttons for one full page and one partial page', () => {
+  it('displays two buttons for one full page and one partial page', () => {
     const wrapper = shallow(
       <ResultsPager
         currentPage={1}
-        resultsPerPage={5}
-        searchResultsCount={8}
+        numberOfPages={2}
+        resultsCount={8}
         onNavigation={() => null}
       />
     )
@@ -89,8 +89,8 @@ describe('highlighting the current page', () => {
     const wrapper = shallow(
       <ResultsPager
         currentPage={1}
-        resultsPerPage={5}
-        searchResultsCount={5}
+        numberOfPages={5}
+        resultsCount={5}
         onNavigation={() => null}
       />
     )
@@ -102,8 +102,8 @@ describe('highlighting the current page', () => {
     const wrapper = shallow(
       <ResultsPager
         currentPage={2}
-        resultsPerPage={5}
-        searchResultsCount={10}
+        numberOfPages={5}
+        resultsCount={10}
         onNavigation={() => null}
       />
     )
@@ -115,8 +115,8 @@ describe('highlighting the current page', () => {
     const wrapper = shallow(
       <ResultsPager
         currentPage={3}
-        resultsPerPage={5}
-        searchResultsCount={15}
+        numberOfPages={5}
+        resultsCount={15}
         onNavigation={() => null}
       />
     )

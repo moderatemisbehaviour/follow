@@ -85,7 +85,7 @@ function PersonResults(props) {
               makeResultsPagerKeyboardNavigationEventHandler(
                 pageNumber,
                 setPageNumber,
-                calculateNumberofPages(
+                calculateNumberOfPages(
                   getPeopleCountResult.data.peopleCount,
                   props.resultsPerPage
                 )
@@ -106,7 +106,7 @@ function PersonResults(props) {
         <ResultsPager
           currentPage={pageNumber}
           onNavigation={setPageNumber}
-          numberOfPages={calculateNumberofPages(
+          numberOfPages={calculateNumberOfPages(
             getPeopleCountResult.data.peopleCount,
             props.resultsPerPage
           )}
@@ -121,7 +121,7 @@ function calculateStartingPopularity(resultsPerPage, pageNumber) {
   return resultsPerPage * (pageNumber - 1) + 1
 }
 
-function calculateNumberofPages(resultsCount, resultsPerPage) {
+function calculateNumberOfPages(resultsCount, resultsPerPage) {
   return Math.ceil(resultsCount / resultsPerPage)
 }
 

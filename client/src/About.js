@@ -33,20 +33,21 @@ function About() {
         height={100}
       ></img>
       <p>
-        Because we think that following people you care about on the platforms
-        you like should be as easy as a single click!
+        {`Because we think that following people you care about on the platforms
+        you like should be as easy as a single click!`}
       </p>
       <p>
-        What you're using right now is just an early iteration of our product.
+        {`What you're using right now is just an early iteration of our product.
         We've not achieved the one-click dream just yet, but if you think you'd
         benefit from our mission then we'd love you to help us shape this
-        product and build it with us!
+        product and build it with us!`}
       </p>
       <p>
-        The easiest way you can do this is by voting on our{' '}
-        <Link to="/roadmap">roadmap</Link>. You can also support us by using the
+        {'The easiest way you can do this is by voting on our '}
+        <Link to="/roadmap">roadmap</Link>
+        {`. You can also support us by using the
         app, creating profiles, and providing any other feedback you have using
-        the contact information in the footer at the bottom of this page 👇
+        the contact information in the footer at the bottom of this page 👇`}
       </p>
       <Footer />
     </React.Fragment>

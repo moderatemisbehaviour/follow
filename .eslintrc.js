@@ -14,5 +14,10 @@ module.exports = {
   },
   rules: {
     'object-curly-spacing': 'off'
+  },
+  settings: {
+    react: {
+      version: 'detect'
+    }
   }
 }
