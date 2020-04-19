@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import PropTypes from 'prop-types'
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import makeResultsKeyboardNavigationEventHandler from '../common/Omnibox/makeResultsKeyboardNavigationEventHandler'
 import makeResultsPagerKeyboardNavigationEventHandler from '../common/Omnibox/makeResultsPagerKeyboardNavigationEventHandler'
@@ -21,9 +21,6 @@ PersonResults.defaultProps = {
 }
 
 function PersonResults(props) {
-  const [currentlySelectedIndex, setCurrentlySelectedIndex] = useState(null)
-
-  const [pageNumber, setPageNumber] = useState(1)
   const resultRefs = useMemo(
     () =>
       Array.from({ length: props.resultsPerPage }, (_, index) =>
@@ -31,6 +28,21 @@ function PersonResults(props) {
       ),
     [props.firstResultRef, props.resultsPerPage]
   )
+  const [currentlySelectedIndex, setCurrentlySelectedIndex] = useState(null)
+
+  const [pageNumber, setPageNumber] = useState(1)
+  useEffect(() => {
+    const resultRefsCurrent = resultRefs.filter(
+      resultRef => !!resultRef.current
+    )
+    if (resultRefsCurrent.length && currentlySelectedIndex !== null) {
+      const resultIndexToFocus = Math.min(
+        currentlySelectedIndex,
+        resultRefsCurrent.length - 1
+      )
+      resultRefsCurrent[resultIndexToFocus].current.focus()
+    }
+  })
   const history = useHistory()
   const onSelect = personId => {
     history.push(`/person/${personId}`)
@@ -62,38 +74,37 @@ function PersonResults(props) {
       ) : getPeopleResult.error ? (
         <div>Error getting results :(</div>
       ) : getPeopleResult.data.people.length ? (
-        <React.Fragment>
-          <PersonList
-            currentlySelectedIndex={
-              currentlySelectedIndex === null
-                ? null
-                : Math.min(
-                    currentlySelectedIndex,
-                    getPeopleResult.data.people.length - 1
-                  )
-            }
-            people={getPeopleResult.data.people}
-            onKeyUp={event => {
-              makeResultsKeyboardNavigationEventHandler(
-                resultRefs,
-                onSelect,
-                props.firstResultOnKeyUp,
-                currentlySelectedIndex,
-                setCurrentlySelectedIndex
-              )(event)
+        <div
+          onBlur={event => {
+            const resultsLostFocus =
+              !event.relatedTarget ||
+              !event.relatedTarget.classList.contains('result')
+            if (resultsLostFocus) setCurrentlySelectedIndex(null)
+          }}
+          onFocus={() => {
+            if (currentlySelectedIndex === null) setCurrentlySelectedIndex(0)
+          }}
+          onKeyUp={event => {
+            makeResultsKeyboardNavigationEventHandler(
+              resultRefs,
+              onSelect,
+              props.firstResultOnKeyUp,
+              currentlySelectedIndex,
+              setCurrentlySelectedIndex
+            )(event)
 
-              makeResultsPagerKeyboardNavigationEventHandler(
-                pageNumber,
-                setPageNumber,
-                calculateNumberOfPages(
-                  getPeopleCountResult.data.peopleCount,
-                  props.resultsPerPage
-                )
-              )(event)
-            }}
-            refs={resultRefs}
-          />
-        </React.Fragment>
+            makeResultsPagerKeyboardNavigationEventHandler(
+              pageNumber,
+              setPageNumber,
+              calculateNumberOfPages(
+                getPeopleCountResult.data.peopleCount,
+                props.resultsPerPage
+              )
+            )(event)
+          }}
+        >
+          <PersonList people={getPeopleResult.data.people} refs={resultRefs} />
+        </div>
       ) : null}
 
       <CreatePersonPrompt key="create-person-prompt" personName={props.query} />

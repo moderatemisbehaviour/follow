@@ -15,12 +15,13 @@ function useResultsKeyboardNavigation(
         setCurrentlySelectedIndex(currentlySelectedIndex - 1)
       }
     } else if (event.key === 'ArrowDown') {
-      const lastResultIndex = resultRefs.length - 1
+      const lastResultIndex =
+        resultRefs.filter(result => !!result.current).length - 1
       setCurrentlySelectedIndex(
         Math.min(currentlySelectedIndex + 1, lastResultIndex)
       )
     } else if (event.key === 'Enter') {
-      onSelect(event.target.dataset.id)
+      onSelect(event)
     }
   }
 
