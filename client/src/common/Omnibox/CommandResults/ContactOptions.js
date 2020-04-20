@@ -9,7 +9,7 @@ ContactOptions.propTypes = {
 
 function ContactOptions(props) {
   return (
-    <React.Fragment>
+    <ol>
       <Result key="submit-a-feature-request">
         <a
           href="mailto:features@peoplenotplatforms.com"
@@ -43,7 +43,7 @@ function ContactOptions(props) {
           Make a general enquiry
         </a>
       </Result>
-    </React.Fragment>
+    </ol>
   )
 }
 

@@ -11,7 +11,7 @@ PersonList.propTypes = {
 
 function PersonList(props) {
   return (
-    <ul>
+    <ol>
       {props.people.map((person, index) => (
         <Result id={person.id} key={person.id} ref={props.refs[index]}>
           <Link to={`/person/${person.id}`}>
@@ -19,7 +19,7 @@ function PersonList(props) {
           </Link>
         </Result>
       ))}
-    </ul>
+    </ol>
   )
 }
 

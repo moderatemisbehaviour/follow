@@ -19,12 +19,12 @@
   list-style-type: none;
 }
 
-.results ul a {
+.results ol a {
   text-decoration: none;
   color: black;
 }
 
-.results ul li {
+.results ol li {
   cursor: pointer;
   list-style-type: none;
 }

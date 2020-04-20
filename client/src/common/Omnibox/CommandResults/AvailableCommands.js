@@ -16,13 +16,13 @@ function AvailableCommands(props) {
   const commandsToRender = matchingCommands.length ? matchingCommands : commands
 
   return (
-    <React.Fragment>
+    <ol>
       {commandsToRender.map((command, index) => (
         <Result key={command} ref={props.refs[index]}>
           {command}
         </Result>
       ))}
-    </React.Fragment>
+    </ol>
   )
 }
 

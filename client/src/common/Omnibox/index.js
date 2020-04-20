@@ -1,13 +1,21 @@
 import { debounce } from 'debounce'
 import PropTypes from 'prop-types'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import Input from '../Input'
+import makeResultsKeyboardNavigationEventHandler from './makeResultsKeyboardNavigationEventHandler'
+import makeResultsPagerKeyboardNavigationEventHandler from './makeResultsPagerKeyboardNavigationEventHandler'
 import './Omnibox.css'
+import ResultsPager from './ResultsPager'
 import useSearchParamAsQueryOnLoad from './useSearchParamAsQueryOnLoad'
 
 Omnibox.propTypes = {
-  getResultsComponent: PropTypes.func.isRequired
+  getResultsComponent: PropTypes.func.isRequired,
+  resultsPerPage: PropTypes.number
+}
+
+Omnibox.defaultProps = {
+  resultsPerPage: 5
 }
 
 function Omnibox(props) {
@@ -36,13 +44,21 @@ function Omnibox(props) {
   })
 
   const inputRef = useRef()
-  const firstResultRef = useRef()
+  const resultRefs = useMemo(
+    () => Array.from({ length: props.resultsPerPage }, _ => React.createRef()),
+    [props.resultsPerPage]
+  )
   function focusInput() {
     inputRef.current.focus()
   }
   function focusResults(event) {
-    if (event.key === 'ArrowDown') firstResultRef.current.focus()
+    if (event.key === 'ArrowDown') resultRefs[0].current.focus()
   }
+
+  const [currentlySelectedIndex, setCurrentlySelectedIndex] = useState(null)
+  const [resultsCount, setResultsCount] = useState(null)
+  const [pageNumber, setPageNumber] = useState(1)
+  const onSelectRef = useRef()
 
   const ResultsComponent = props.getResultsComponent(query)
 
@@ -60,20 +76,84 @@ function Omnibox(props) {
         value={inputValue}
       />
       {query && (
-        <div className="results">
+        <div
+          className="results"
+          onBlur={event => {
+            const newlyFocusedElement = event.relatedTarget
+            const resultsLostFocus = !resultRefs
+              .map(resultRef => resultRef.current)
+              .includes(newlyFocusedElement)
+
+            if (resultsLostFocus) setCurrentlySelectedIndex(null)
+          }}
+          onFocus={() => {
+            if (currentlySelectedIndex === null) setCurrentlySelectedIndex(0)
+          }}
+          onKeyUp={event => {
+            makeResultsKeyboardNavigationEventHandler(
+              resultRefs,
+              onSelectRef.current,
+              focusInput,
+              currentlySelectedIndex,
+              setCurrentlySelectedIndex
+            )(event)
+
+            if (resultsCount) {
+              makeResultsPagerKeyboardNavigationEventHandler(
+                pageNumber,
+                setPageNumber,
+                calculateNumberOfPages(resultsCount, props.resultsPerPage)
+              )(event)
+            }
+          }}
+        >
           <ResultsComponent
-            firstResultOnKeyUp={focusInput}
-            firstResultRef={firstResultRef}
+            effect={focusSelectedResult}
+            onSelectRef={onSelectRef}
+            pageNumber={pageNumber}
             query={query}
+            resultsPerPage={props.resultsPerPage}
+            resultRefs={resultRefs}
             setQuery={query => {
               setInputValue(query)
               setQuery(query)
             }}
+            setResultsCount={setResultsCount}
           />
+          {resultsCount !== null ? (
+            <ResultsPager
+              currentPage={pageNumber}
+              onNavigation={setPageNumber}
+              numberOfPages={calculateNumberOfPages(
+                resultsCount,
+                props.resultsPerPage
+              )}
+              resultsCount={resultsCount}
+            />
+          ) : null}
         </div>
       )}
     </div>
   )
+
+  function focusSelectedResult() {
+    const resultRefsCurrent = resultRefs.filter(
+      resultRef => !!resultRef.current
+    )
+
+    if (resultRefsCurrent.length && currentlySelectedIndex !== null) {
+      const resultIndexToFocus = Math.min(
+        currentlySelectedIndex,
+        resultRefsCurrent.length - 1
+      )
+      console.log(resultIndexToFocus, currentlySelectedIndex)
+      resultRefsCurrent[resultIndexToFocus].current.focus()
+    }
+  }
+}
+
+function calculateNumberOfPages(resultsCount, resultsPerPage) {
+  return Math.ceil(resultsCount / resultsPerPage)
 }
 
 const setQueryDebounced = debounce((setQuery, query) => {

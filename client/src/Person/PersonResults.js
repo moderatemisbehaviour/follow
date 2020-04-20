@@ -1,52 +1,30 @@
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import PropTypes from 'prop-types'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import makeResultsKeyboardNavigationEventHandler from '../common/Omnibox/makeResultsKeyboardNavigationEventHandler'
-import makeResultsPagerKeyboardNavigationEventHandler from '../common/Omnibox/makeResultsPagerKeyboardNavigationEventHandler'
-import ResultsPager from '../common/Omnibox/ResultsPager'
 import PersonList from '../Person/PersonList'
 import CreatePersonPrompt from './CreatePersonPrompt'
 
 PersonResults.propTypes = {
-  firstResultOnKeyUp: PropTypes.func.isRequired,
-  firstResultRef: PropTypes.object.isRequired,
+  effect: PropTypes.func.isRequired,
+  pageNumber: PropTypes.number.isRequired,
   query: PropTypes.string.isRequired,
-  resultsPerPage: PropTypes.number
-}
-
-PersonResults.defaultProps = {
-  resultsPerPage: 5
+  resultsPerPage: PropTypes.number.isRequired,
+  resultRefs: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onSelectRef: PropTypes.object.isRequired,
+  setResultsCount: PropTypes.func.isRequired
 }
 
 function PersonResults(props) {
-  const resultRefs = useMemo(
-    () =>
-      Array.from({ length: props.resultsPerPage }, (_, index) =>
-        index === 0 ? props.firstResultRef : React.createRef()
-      ),
-    [props.firstResultRef, props.resultsPerPage]
-  )
-  const [currentlySelectedIndex, setCurrentlySelectedIndex] = useState(null)
+  useEffect(props.effect)
 
-  const [pageNumber, setPageNumber] = useState(1)
-  useEffect(() => {
-    const resultRefsCurrent = resultRefs.filter(
-      resultRef => !!resultRef.current
-    )
-    if (resultRefsCurrent.length && currentlySelectedIndex !== null) {
-      const resultIndexToFocus = Math.min(
-        currentlySelectedIndex,
-        resultRefsCurrent.length - 1
-      )
-      resultRefsCurrent[resultIndexToFocus].current.focus()
-    }
-  })
   const history = useHistory()
-  const onSelect = personId => {
+  const onSelect = event => {
+    const personId = event.target.dataset.id
     history.push(`/person/${personId}`)
   }
+  props.onSelectRef.current = onSelect
 
   const getPeopleResult = useQuery(GET_PEOPLE, {
     variables: {
@@ -54,7 +32,7 @@ function PersonResults(props) {
       resultsPerPage: props.resultsPerPage,
       startingPopularity: calculateStartingPopularity(
         props.resultsPerPage,
-        pageNumber
+        props.pageNumber
       )
     },
     fetchPolicy: 'cache-and-network',
@@ -66,6 +44,11 @@ function PersonResults(props) {
     fetchPolicy: 'cache-and-network',
     skip: !props.query
   })
+  props.setResultsCount(
+    !getPeopleCountResult.loading && !getPeopleCountResult.error
+      ? getPeopleCountResult.data.peopleCount
+      : null
+  )
 
   return (
     <React.Fragment>
@@ -74,66 +57,19 @@ function PersonResults(props) {
       ) : getPeopleResult.error ? (
         <div>Error getting results :(</div>
       ) : getPeopleResult.data.people.length ? (
-        <div
-          onBlur={event => {
-            const resultsLostFocus =
-              !event.relatedTarget ||
-              !event.relatedTarget.classList.contains('result')
-            if (resultsLostFocus) setCurrentlySelectedIndex(null)
-          }}
-          onFocus={() => {
-            if (currentlySelectedIndex === null) setCurrentlySelectedIndex(0)
-          }}
-          onKeyUp={event => {
-            makeResultsKeyboardNavigationEventHandler(
-              resultRefs,
-              onSelect,
-              props.firstResultOnKeyUp,
-              currentlySelectedIndex,
-              setCurrentlySelectedIndex
-            )(event)
-
-            makeResultsPagerKeyboardNavigationEventHandler(
-              pageNumber,
-              setPageNumber,
-              calculateNumberOfPages(
-                getPeopleCountResult.data.peopleCount,
-                props.resultsPerPage
-              )
-            )(event)
-          }}
-        >
-          <PersonList people={getPeopleResult.data.people} refs={resultRefs} />
-        </div>
+        <PersonList
+          people={getPeopleResult.data.people}
+          refs={props.resultRefs}
+        />
       ) : null}
 
       <CreatePersonPrompt key="create-person-prompt" personName={props.query} />
-
-      {getPeopleCountResult.loading ? (
-        <div>Loading results count...</div>
-      ) : getPeopleCountResult.error ? (
-        <div>Error loading results count :(</div>
-      ) : (
-        <ResultsPager
-          currentPage={pageNumber}
-          onNavigation={setPageNumber}
-          numberOfPages={calculateNumberOfPages(
-            getPeopleCountResult.data.peopleCount,
-            props.resultsPerPage
-          )}
-          resultsCount={getPeopleCountResult.data.peopleCount}
-        />
-      )}
     </React.Fragment>
   )
 }
 
 function calculateStartingPopularity(resultsPerPage, pageNumber) {
   return resultsPerPage * (pageNumber - 1) + 1
-}
-
-function calculateNumberOfPages(resultsCount, resultsPerPage) {
-  return Math.ceil(resultsCount / resultsPerPage)
 }
 
 const GET_PEOPLE = gql`
