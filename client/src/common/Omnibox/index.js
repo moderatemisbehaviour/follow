@@ -41,6 +41,7 @@ function Omnibox(props) {
   // always running whereas this one was waiting for query to change.
   useEffect(() => {
     if (query) document.title = `Searching for ${query}`
+    else focusInput()
   })
 
   const inputRef = useRef()
@@ -52,7 +53,8 @@ function Omnibox(props) {
     inputRef.current.focus()
   }
   function focusResults(event) {
-    if (event.key === 'ArrowDown') resultRefs[0].current.focus()
+    const firstResult = resultRefs[0].current
+    if (event.key === 'ArrowDown' && firstResult) firstResult.focus()
   }
 
   const [currentlySelectedIndex, setCurrentlySelectedIndex] = useState(null)
@@ -84,7 +86,9 @@ function Omnibox(props) {
               .map(resultRef => resultRef.current)
               .includes(newlyFocusedElement)
 
-            if (resultsLostFocus) setCurrentlySelectedIndex(null)
+            if (resultsLostFocus) {
+              setCurrentlySelectedIndex(null)
+            }
           }}
           onFocus={() => {
             if (currentlySelectedIndex === null) setCurrentlySelectedIndex(0)
@@ -146,7 +150,6 @@ function Omnibox(props) {
         currentlySelectedIndex,
         resultRefsCurrent.length - 1
       )
-      console.log(resultIndexToFocus, currentlySelectedIndex)
       resultRefsCurrent[resultIndexToFocus].current.focus()
     }
   }

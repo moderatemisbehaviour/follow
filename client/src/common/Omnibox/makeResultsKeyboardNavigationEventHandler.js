@@ -17,7 +17,6 @@ function useResultsKeyboardNavigation(
     } else if (event.key === 'ArrowDown') {
       const lastResultIndex =
         resultRefs.filter(result => !!result.current).length - 1
-      console.log(lastResultIndex, currentlySelectedIndex)
       setCurrentlySelectedIndex(
         Math.min(currentlySelectedIndex + 1, lastResultIndex)
       )

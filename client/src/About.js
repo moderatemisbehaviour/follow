@@ -3,15 +3,16 @@ import { Link } from 'react-router-dom'
 import './About.css'
 import Footer from './common/Footer'
 import logo from './common/icons/logo.png'
+import ContactOptions from './common/Omnibox/CommandResults/ContactOptions'
 import Name from './Person/Name'
 import Profiles from './Profiles/Profiles'
 
 function About() {
   return (
-    <React.Fragment>
+    <div id="about">
       <Name name="Follow people, not platforms" />
       <p>
-        Our mission is to replace <em>this</em>:
+        Our mission is to replace <em>these</em>:
       </p>
       <Profiles
         profiles={[
@@ -34,23 +35,25 @@ function About() {
       ></img>
       <p>
         {`Because we think that following people you care about on the platforms
-        you like should be as easy as a single click!`}
+        you use should be as easy as a single click!`}
       </p>
+      <h1>This is just the beginning</h1>
       <p>
-        {`What you're using right now is just an early iteration of our product.
-        We've not achieved the one-click dream just yet, but if you think you'd
-        benefit from our mission then we'd love you to help us shape this
-        product and build it with us!`}
+        {`What you're using right now is just an early iteration of our product, you can think of it a bit like a digital business card that encapsulates your online presence and gives you a single link to share with others.
+        Whil we've not achieved the one-click dream just yet, this is an important stepping stone on that path.`}
       </p>
+      <h1>Let us know what you think</h1>
       <p>
-        {'The easiest way you can do this is by voting on our '}
+        {`If you think you'd benefit from our mission then we'd love you to help us shape the
+        product and build it with us! The easiest way you can do this is by voting on our `}
         <Link to="/roadmap">roadmap</Link>
         {`. You can also support us by using the
         app, creating profiles, and providing any other feedback you have using
-        the contact information in the footer at the bottom of this page 👇`}
+        the contact information below 👇`}
       </p>
+      <ContactOptions />
       <Footer />
-    </React.Fragment>
+    </div>
   )
 }
 

@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import './App.css'
 import Announcement from './common/Announcement'
 import logo from './common/icons/logo.png'
 import Image from './Person/Image'
