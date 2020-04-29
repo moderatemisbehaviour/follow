@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  padding: 1rem 0;
   justify-content: space-between;
 }
 
@@ -22,8 +21,9 @@ li .person {
 
 li .name {
   flex-grow: 1;
-  font-size: unset;
+  font-size: 1rem;
   text-align: left;
+  line-height: 3vh; /* Hack to vertically align text based on the image size which determines the li height. */
 }
 
 .image {
@@ -34,7 +34,7 @@ li .name {
 
 li .image {
   flex-grow: 0;
-  height: 1.5rem;
+  height: 3vh;
   margin: 0 0.5rem 0 0;
 }
 

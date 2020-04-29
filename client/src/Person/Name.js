@@ -1,12 +1,12 @@
-import React from 'react'
 import PropTypes from 'prop-types'
+import React from 'react'
 
 function Name(props) {
   return (
     <h1
       className={`name ${props.name === 'Awesome Person' ? 'placeholder' : ''}`}
     >
-      <span>{props.name}</span>
+      {props.name}
     </h1>
   )
 }

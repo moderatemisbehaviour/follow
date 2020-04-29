@@ -16,12 +16,12 @@ function About() {
       </p>
       <Profiles
         profiles={[
-          'https://twitter.com/siobhanisback',
           'https://www.youtube.com/user/siobhanwilsonmusic',
-          'https://www.facebook.com/siobhanwilsonmusic',
           'https://instagram.com',
-          'https://foo.com',
-          'https://bar.com'
+          'https://www.facebook.com/siobhanwilsonmusic',
+          'https://linkedin.com',
+          'https://twitter.com/siobhanisback',
+          'https://github.com'
         ]}
       />
       <p>
@@ -34,13 +34,13 @@ function About() {
         height={100}
       ></img>
       <p>
-        {`Because we think that following people you care about on the platforms
+        {`Because we think that following the people you care about on the platforms
         you use should be as easy as a single click!`}
       </p>
       <h1>This is just the beginning</h1>
       <p>
         {`What you're using right now is just an early iteration of our product, you can think of it a bit like a digital business card that encapsulates your online presence and gives you a single link to share with others.
-        Whil we've not achieved the one-click dream just yet, this is an important stepping stone on that path.`}
+        While we've not achieved the one-click dream just yet, this is an important stepping stone on that path.`}
       </p>
       <h1>Let us know what you think</h1>
       <p>
