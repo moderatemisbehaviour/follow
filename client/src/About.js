@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import './About.css'
 import Footer from './common/Footer'
 import logo from './common/icons/logo.png'
@@ -45,9 +44,7 @@ function About() {
       <h1>Let us know what you think</h1>
       <p>
         {`If you think you'd benefit from our mission then we'd love you to help us shape the
-        product and build it with us! The easiest way you can do this is by voting on our `}
-        <Link to="/roadmap">roadmap</Link>
-        {`. You can also support us by using the
+        product and build it with us! The easiest way you can do this is by using the
         app, creating profiles, and providing any other feedback you have using
         the contact information below 👇`}
       </p>

@@ -29,23 +29,11 @@ li .name {
 .image {
   flex-grow: 1;
   margin: 1rem;
-  overflow: hidden;
 }
 
 li .image {
   flex-grow: 0;
   height: 3vh;
   margin: 0 0.5rem 0 0;
-}
-
-.image img {
-  border-radius: 50%;
-  display: block;
-  height: 100%;
-  width: auto;
-  margin: 0 auto;
-}
-
-#facebook img {
-  border-radius: 50%;
+  width: 3vh;
 }

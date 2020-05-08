@@ -4,11 +4,17 @@ import './Image.css'
 import placeholderPersonImage from './placeholderPersonImage.svg'
 
 function Image(props) {
-  const { src } = props
   return (
-    <div className="image">
-      <img src={src} alt="logo" />
-    </div>
+    <div
+      className="image"
+      style={{
+        backgroundImage: `url(${props.src})`,
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'contain',
+        clipPath: 'circle()'
+      }}
+    />
   )
 }
 
