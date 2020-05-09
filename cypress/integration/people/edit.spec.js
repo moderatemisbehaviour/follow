@@ -16,7 +16,11 @@ it("updates the document title using the person's name", function() {
 describe('the state on page load', function() {
   it('displays the person in their current state', function() {
     cy.get('.name').should('have.text', this.person.name)
-    cy.get('.image img').should('have.attr', 'src', this.person.image)
+    cy.get('.image').should(
+      'have.css',
+      'background-image',
+      `url("${this.person.image}")`
+    )
     cy.get('.profile-0 a').should('have.attr', 'href', this.person.profiles[0])
     cy.get('.profile-1 a').should('have.attr', 'href', this.person.profiles[1])
     cy.get('.profile-2 a').should('have.attr', 'href', this.person.profiles[2])
@@ -70,7 +74,11 @@ describe('editing properties and saving', function() {
       cy.url().should('match', pathRegexes.person)
 
       cy.get('.name').should('have.text', newName)
-      cy.get('.image img').should('have.attr', 'src', this.person.image)
+      cy.get('.image').should(
+        'have.css',
+        'background-image',
+        `url("${this.person.image}")`
+      )
       cy.get('.profile-0 a').should('have.attr', 'href', newTwitterProfileUrl)
       cy.get('.profile-1 a').should(
         'have.attr',

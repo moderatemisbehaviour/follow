@@ -134,10 +134,10 @@ describe('adding more information', function() {
     cy.get('#the-input').type(
       'https://pbs.twimg.com/profile_images/1102783358973677569/qEt61Ej8_400x400.jpg'
     )
-    cy.get('.person img').should(
-      'have.attr',
-      'src',
-      'https://pbs.twimg.com/profile_images/1102783358973677569/qEt61Ej8_400x400.jpg'
+    cy.get('.image').should(
+      'have.css',
+      'background-image',
+      'url("https://pbs.twimg.com/profile_images/1102783358973677569/qEt61Ej8_400x400.jpg")'
     )
   })
 
@@ -148,8 +148,8 @@ describe('adding more information', function() {
     cy.get('.add-image').click()
     cy.get('.profile').should('have.length', 1)
     // Leave input blank
-    cy.get('.person img')
-      .should('have.attr', 'src')
+    cy.get('.image')
+      .should('have.css', 'background-image')
       .and('match', /\/static\/media\/placeholderPersonImage..*.svg/)
   })
 })
@@ -205,9 +205,11 @@ describe('saving the person', function() {
 
     cy.url().should('match', pathRegexes.person)
     cy.get('.profile').should('have.length', 2)
-    cy.get('.person img')
-      .should('have.attr', 'src')
-      .and('eq', this.siobhan.image)
+    cy.get('.image').should(
+      'have.css',
+      'background-image',
+      `url("${this.siobhan.image}")`
+    )
   })
 
   describe('blank profile being edited', function() {
@@ -217,9 +219,11 @@ describe('saving the person', function() {
 
       cy.url().should('match', pathRegexes.person)
       cy.get('.profile').should('have.length', 2)
-      cy.get('.person img')
-        .should('have.attr', 'src')
-        .and('eq', this.siobhan.image)
+      cy.get('.image').should(
+        'have.css',
+        'background-image',
+        `url("${this.siobhan.image}")`
+      )
     })
   })
 })

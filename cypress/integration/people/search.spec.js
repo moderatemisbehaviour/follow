@@ -72,8 +72,8 @@ describe('one or more search results', function() {
   it('displays mini person images in the search results', function() {
     cy.get('.result')
       .first()
-      .find('img')
-      .should('have.attr', 'src', this.people[0].image)
+      .find('.image')
+      .should('have.css', 'background-image', `url("${this.people[0].image}")`)
   })
 
   it('provides buttons for navigating through pages of search results', function() {
