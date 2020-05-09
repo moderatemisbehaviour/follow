@@ -1,3 +1,7 @@
+#create-person {
+  padding: 0.5rem;
+}
+
 #create-person img {
   height: 1.3rem;
 }
@@ -16,6 +20,10 @@ a:focus > #create-person {
 
 #create-suggested-person {
   margin-left: 0.5rem;
+}
+
+#create-suggested-person .name {
+  font-size: 1rem; /* TODO: Find out why this is necessary, it didn't used to be. */
 }
 
 /* Find a more elegant way to unset this without screwing up SearchResult styles. */

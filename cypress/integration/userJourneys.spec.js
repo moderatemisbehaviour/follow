@@ -28,11 +28,10 @@ describe('User journeys', function() {
       cy.url().should('match', /person\/[\d\w]+/)
       cy.get('.name').should('have.text', 'Siobhan Wilson')
       cy.get('.profile').should('have.length', 3)
-      cy.get('.person img')
 
       cy.visit('/')
       cy.get('#the-input').type('Si')
-      cy.get('.search-result')
+      cy.get('.result')
         .its('length')
         .should('be.greaterThan', 0)
     })

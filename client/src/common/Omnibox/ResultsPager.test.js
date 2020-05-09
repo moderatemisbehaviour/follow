@@ -1,14 +1,14 @@
 import { shallow } from 'enzyme'
 import React from 'react'
-import SearchResultsNavigator from './SearchResultsNavigator'
+import ResultsPager from './ResultsPager'
 
 describe('page buttons', () => {
   it('displays one button for one page of results', () => {
     const wrapper = shallow(
-      <SearchResultsNavigator
+      <ResultsPager
         currentPage={1}
-        resultsPerPage={5}
-        searchResultsCount={5}
+        numberOfPages={1}
+        resultsCount={5}
         onNavigation={() => null}
       />
     )
@@ -21,10 +21,10 @@ describe('page buttons', () => {
 
   it('displays two buttons for two pages of results', () => {
     const wrapper = shallow(
-      <SearchResultsNavigator
+      <ResultsPager
         currentPage={1}
-        resultsPerPage={5}
-        searchResultsCount={10}
+        numberOfPages={2}
+        resultsCount={10}
         onNavigation={() => null}
       />
     )
@@ -37,10 +37,10 @@ describe('page buttons', () => {
 
   it('displays three buttons for three pages of results', () => {
     const wrapper = shallow(
-      <SearchResultsNavigator
+      <ResultsPager
         currentPage={1}
-        resultsPerPage={5}
-        searchResultsCount={15}
+        numberOfPages={3}
+        resultsCount={15}
         onNavigation={() => null}
       />
     )
@@ -53,10 +53,10 @@ describe('page buttons', () => {
 
   it('displays one button for one partial page', () => {
     const wrapper = shallow(
-      <SearchResultsNavigator
+      <ResultsPager
         currentPage={1}
-        resultsPerPage={5}
-        searchResultsCount={1}
+        numberOfPages={1}
+        resultsCount={1}
         onNavigation={() => null}
       />
     )
@@ -67,12 +67,12 @@ describe('page buttons', () => {
     ).toEqual(['1'])
   })
 
-  it('displays 2 buttons for one full page and one partial page', () => {
+  it('displays two buttons for one full page and one partial page', () => {
     const wrapper = shallow(
-      <SearchResultsNavigator
+      <ResultsPager
         currentPage={1}
-        resultsPerPage={5}
-        searchResultsCount={8}
+        numberOfPages={2}
+        resultsCount={8}
         onNavigation={() => null}
       />
     )
@@ -87,10 +87,10 @@ describe('page buttons', () => {
 describe('highlighting the current page', () => {
   it('sets the current-page class on the first button', () => {
     const wrapper = shallow(
-      <SearchResultsNavigator
+      <ResultsPager
         currentPage={1}
-        resultsPerPage={5}
-        searchResultsCount={5}
+        numberOfPages={5}
+        resultsCount={5}
         onNavigation={() => null}
       />
     )
@@ -100,10 +100,10 @@ describe('highlighting the current page', () => {
 
   it('sets the current-page class on the second button', () => {
     const wrapper = shallow(
-      <SearchResultsNavigator
+      <ResultsPager
         currentPage={2}
-        resultsPerPage={5}
-        searchResultsCount={10}
+        numberOfPages={5}
+        resultsCount={10}
         onNavigation={() => null}
       />
     )
@@ -113,10 +113,10 @@ describe('highlighting the current page', () => {
 
   it('sets the current-page class on the third button', () => {
     const wrapper = shallow(
-      <SearchResultsNavigator
+      <ResultsPager
         currentPage={3}
-        resultsPerPage={5}
-        searchResultsCount={15}
+        numberOfPages={5}
+        resultsCount={15}
         onNavigation={() => null}
       />
     )

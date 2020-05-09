@@ -1,0 +1,26 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "start:dev",
+			"path": "people/",
+			"problemMatcher": [],
+			"label": "npm: start:dev - people",
+			"detail": "../habitat.sh -f ../.env nodemon src/index.js"
+		},
+		{
+			"type": "npm",
+			"script": "start",
+			"path": "client/",
+			"problemMatcher": [],
+			"label": "npm: start - client",
+			"detail": "react-scripts start"
+		},
+		{
+			"dependsOn":["npm: start:dev - people", "npm: start - client"],
+			"label": "Dev",
+			"problemMatcher": []
+		}
+	]
+}

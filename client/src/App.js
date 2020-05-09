@@ -1,13 +1,15 @@
 import { createBrowserHistory } from 'history'
 import React, { Component } from 'react'
 import { Route, Router, Switch } from 'react-router-dom'
-import './App.css'
+import About from './About'
 import Footer from './common/Footer'
-import Home from './common/Home'
+import Omnibox from './common/Omnibox'
+import CommandResults from './common/Omnibox/CommandResults'
+import Home from './Home'
 import PersonBrowser from './Person/PersonBrowser'
 import PersonCreator from './Person/PersonCreator'
 import PersonEditor from './Person/PersonEditor'
-import Search from './Search/Search'
+import PersonResults from './Person/PersonResults'
 
 const history = createBrowserHistory()
 history.listen(() => {
@@ -26,6 +28,7 @@ class App extends Component {
     return (
       <Router history={history}>
         <Switch>
+          <Route path={'/about'} component={About} />
           <Route path={'/person/create'}>
             {({ location }) => {
               const name = location.search.replace('?name=', '')
@@ -63,7 +66,11 @@ class App extends Component {
             {() => (
               <React.Fragment>
                 <Home />
-                <Search />
+                <Omnibox
+                  getResultsComponent={query =>
+                    query.startsWith('/') ? CommandResults : PersonResults
+                  }
+                />
               </React.Fragment>
             )}
           </Route>

@@ -1,10 +1,10 @@
 import React from 'react'
-
+import { Link } from 'react-router-dom'
 import './Announcement.css'
 
 const Announcement = () => (
   <p className="announcement">
-    <a href="google.com">Learn more</a> about our mission
+    <Link to="/about">Learn more</Link> about our mission
   </p>
 )
 

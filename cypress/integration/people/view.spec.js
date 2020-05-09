@@ -20,9 +20,11 @@ it('has an edit button below the input', function() {
 
 describe('that has all optional properties', function() {
   it("shows the person's profile image.", function() {
-    cy.get('.image img')
-      .should('have.attr', 'src')
-      .and('eq', this.person.image)
+    cy.get('.image').should(
+      'have.css',
+      'background-image',
+      `url("${this.person.image}")`
+    )
   })
 
   it("shows links to the person's profiles", function() {
@@ -42,9 +44,7 @@ describe('that has all optional properties', function() {
   })
 
   it("masks the person's image to create a circular frame", function() {
-    cy.get('.image img')
-      .should('have.css', 'border-radius')
-      .should('equal', '50%')
+    cy.get('.image').should('have.css', 'clip-path', 'circle(at 50% 50%)')
   })
 
   it("displays a 'return home' button at the bottom of the page", function() {
@@ -68,8 +68,8 @@ describe('that has no profile image', function() {
   })
 
   it('fallsback to the placeholder profile image', function() {
-    cy.get('.image img')
-      .should('have.attr', 'src')
+    cy.get('.image')
+      .should('have.css', 'background-image')
       .and('contains', 'placeholderPersonImage')
   })
 })

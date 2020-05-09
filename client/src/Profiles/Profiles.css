@@ -1,11 +1,10 @@
 .profiles {
   display: flex;
-  justify-content: space-evenly;
-  margin: 1rem;
+  justify-content: center;
 }
 
 .profile {
-  flex-grow: 1;
+  margin: 1rem 2rem;
 }
 
 .profile img {

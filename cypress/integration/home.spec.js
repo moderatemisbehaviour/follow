@@ -26,11 +26,11 @@ describe('the home page.', function() {
   })
 
   it('displays a search box.', function() {
-    cy.get('.search input')
+    cy.get('#omnibox input')
   })
 
   it('focuses the search box.', function() {
-    cy.get('.search input').focused()
+    cy.get('#omnibox input').focused()
   })
 
   it("displays a 'learn more' button in the content area", () => {

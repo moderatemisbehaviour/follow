@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-import '../App.css'
 import Profiles from '../Profiles/Profiles'
 import Image from './Image'
 import Name from './Name'

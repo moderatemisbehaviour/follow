@@ -1,14 +1,10 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-
+import { useLocation } from 'react-router-dom'
 import HomeLink from './HomeLink'
 
-Footer.propTypes = {
-  location: PropTypes.shape().isRequired
-}
-
-function Footer(props) {
-  return props.location.pathname === '/' ? null : <HomeLink />
+function Footer() {
+  const location = useLocation()
+  return location.pathname === '/' ? null : <HomeLink />
 }
 
 export default Footer

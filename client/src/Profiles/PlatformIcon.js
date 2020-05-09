@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-
 import KnownPlatformIcon from './KnownPlatformIcon'
 import UnknownPlatformIcon from './UnknownPlatformIcon'
 
@@ -18,6 +17,13 @@ function PlatformIcon(props) {
   )
 }
 
-const knownPlatforms = ['twitter', 'youtube', 'facebook']
+const knownPlatforms = [
+  'twitter',
+  'youtube',
+  'facebook',
+  'instagram',
+  'github',
+  'linkedin'
+]
 
 export default PlatformIcon

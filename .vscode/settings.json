@@ -2,5 +2,8 @@
   "eslint.nodePath": "./node_modules/eslint/",
   "editor.codeActionsOnSave": {
     "source.organizeImports": true
+  },
+  "files.exclude": {
+    "**/build": true
   }
 }

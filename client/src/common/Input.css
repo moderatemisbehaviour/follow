@@ -3,6 +3,6 @@
   outline: none;
   /* Inherited margin: 1rem auto from input styling but this caused it to meet left and right edges in Search. */
   margin: 0.5rem 0;
-  width: 100vw;
+  width: 100%;
   max-width: 900px;
 }

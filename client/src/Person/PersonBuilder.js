@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-
 import EditorInput from '../common/EditorInput'
 import NextSteps from '../common/nextSteps/NextSteps'
-import './PersonBuilder.css'
 import Person from './Person'
+import './PersonBuilder.css'
 
 // TODO: Make this work with any type of object not just people.
 // Sure there's a clever way to do this using JSON schema and / or JSON path.
@@ -259,7 +258,7 @@ class PersonBuilder extends Component {
     const prompt = this.state.propertyBeingEdited.prompt
 
     return (
-      <div className="person-builder">
+      <React.Fragment>
         <Person
           name={this.state.person.name || null}
           image={this.state.person.image ? this.state.person.image : undefined}
@@ -279,7 +278,7 @@ class PersonBuilder extends Component {
           nextOptions={this.nextOptions}
         />
         {this.props.children(() => this.getPerson(), this.personValid)}
-      </div>
+      </React.Fragment>
     )
   }
 }
