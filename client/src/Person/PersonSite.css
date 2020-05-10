@@ -1,0 +1,11 @@
+#person-site {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 1rem;
+}
+
+#person-site > .person {
+  max-height: 50%;
+}

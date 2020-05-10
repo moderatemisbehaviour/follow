@@ -23,7 +23,7 @@ function Person(props) {
   })
 
   return (
-    <div className="person">
+    <div className="person" style={{}}>
       <Name name={name || undefined} />
       <Image src={image} />
       {profiles && <Profiles profiles={profiles} />}

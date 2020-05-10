@@ -1,6 +1,5 @@
-import React from 'react'
 import PropTypes from 'prop-types'
-
+import React from 'react'
 import PlatformIcon from './PlatformIcon'
 
 Profile.propTypes = {
@@ -30,7 +29,12 @@ function Profile(props) {
 
   return (
     <div className={`profile ${invalid ? 'invalid' : null} ${className}`}>
-      <a href={url} onClick={trackAction(url, platformName)}>
+      <a
+        href={url}
+        onClick={trackAction(url, platformName)}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <PlatformIcon platformName={platformName} />
       </a>
     </div>

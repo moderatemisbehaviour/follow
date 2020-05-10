@@ -3,6 +3,7 @@
   flex-direction: column;
   flex-grow: 1;
   justify-content: space-between;
+  height: 100%;
   width: 100%; /* Without this the width of the Person was determined by the contents, usually be the length of the name. This meant the length of the name affected the width of the Image. */
 }
 

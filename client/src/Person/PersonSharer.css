@@ -1,0 +1,11 @@
+iframe {
+  width: 100%;
+  max-width: 900px;
+  height: 100%;
+  border: 1px solid #aaa;
+  border-radius: 0.2rem;
+}
+
+#sharing-link {
+  word-break: break-word;
+}

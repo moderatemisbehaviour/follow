@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import EditorInput from '../common/EditorInput'
-import NextSteps from '../common/nextSteps/NextSteps'
+import NextSteps from '../common/NextSteps'
 import Person from './Person'
 import './PersonBuilder.css'
 
