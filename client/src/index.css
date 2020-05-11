@@ -18,6 +18,29 @@ body {
   margin: 0;
 }
 
+@media (min-aspect-ratio: 21/9) {
+  #person-viewer {
+    min-height: 0px;
+  }
+
+  .person {
+    flex-direction: row;
+    padding: 0;
+  }
+
+  .name {
+    order: 1;
+  }
+
+  .image {
+    order: 0;
+  }
+
+  .profiles {
+    order: 2;
+  }
+}
+
 button {
   background-color: white;
   border-radius: 0.2rem;

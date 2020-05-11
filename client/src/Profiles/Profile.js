@@ -28,7 +28,7 @@ function Profile(props) {
   }
 
   return (
-    <div className={`profile ${invalid ? 'invalid' : null} ${className}`}>
+    <div className={`profile${invalid ? ' invalid' : ''} ${className}`}>
       <a
         href={url}
         onClick={trackAction(url, platformName)}

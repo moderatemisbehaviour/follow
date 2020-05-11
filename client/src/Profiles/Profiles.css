@@ -1,5 +1,6 @@
 .profiles {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
 }
 
@@ -8,10 +9,7 @@
 }
 
 .profile img {
-  display: block;
-  height: 5vh;
-  margin: auto;
-  width: auto;
+  height: 2.59rem;
 }
 
 .profile svg {

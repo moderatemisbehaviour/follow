@@ -18,11 +18,7 @@ function App(props) {
         <Route path={'/person/:id/view'}>
           {({ match }) => {
             const id = match === null ? null : match.params.id
-            return (
-              <div id="person-viewer">
-                <PersonViewer id={id} />
-              </div>
-            )
+            return <PersonViewer id={id} />
           }}
         </Route>
         <Route>
