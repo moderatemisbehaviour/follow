@@ -29,9 +29,11 @@ function Person(props) {
 
   return (
     <div className="person" style={props.style}>
-      <Name name={name || undefined} />
       <Image src={image} />
-      {profiles && <Profiles profiles={profiles} />}
+      <div className="person-details">
+        <Name name={name || undefined} />
+        {profiles && <Profiles profiles={profiles} />}
+      </div>
     </div>
   )
 }

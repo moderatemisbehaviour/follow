@@ -28,16 +28,9 @@ body {
     padding: 0;
   }
 
-  .name {
-    order: 1;
-  }
-
-  .image {
-    order: 0;
-  }
-
   .profiles {
-    order: 2;
+    flex-grow: 0;
+    flex-basis: 2rem;
   }
 }
 
