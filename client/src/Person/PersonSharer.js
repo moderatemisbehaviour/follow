@@ -29,7 +29,10 @@ function PersonSharer(props) {
         They'll see a stripped down version of the profile that looks like this{' '}
         <Emoji symbol="👇" />
       </p>
-      <iframe src={`${document.location.origin}/person/${id}/view`}></iframe>
+      <iframe
+        src={`${document.location.origin}/person/${id}/view`}
+        title="share preview"
+      ></iframe>
     </React.Fragment>
   )
 }

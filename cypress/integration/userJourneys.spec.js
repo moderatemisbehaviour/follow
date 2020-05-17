@@ -5,7 +5,7 @@ describe('User journeys', function() {
     cy.visit('/')
   })
 
-  describe('Create a new person then search for them', function() {
+  describe('Create a new person, search for them, then share them', function() {
     it('Happy path with mouse', function() {
       cy.get('#the-input')
         .type('Si')
@@ -34,6 +34,22 @@ describe('User journeys', function() {
       cy.get('.result')
         .its('length')
         .should('be.greaterThan', 0)
+
+      cy.get('.result')
+        .first()
+        .click()
+
+      cy.get('#share').click()
+
+      cy.get('#sharing-link')
+        .invoke('text')
+        .should('match', /person\/[\d\w]+\/view/)
+      cy.get('.copy').click()
+      cy.contains('Copied')
+
+      cy.get('#configure-preview-controls').find('fullscreen')
+      cy.get('#configure-preview-controls').find('card')
+      cy.get('#configure-preview-controls').find('banner')
     })
 
     it.skip('Happy path with keyboard', () => {})
