@@ -86,6 +86,7 @@ const GET_PEOPLE = gql`
       id
       name
       image
+      profiles
     }
   }
 `

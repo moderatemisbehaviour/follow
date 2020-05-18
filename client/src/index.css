@@ -42,7 +42,6 @@ body {
   .person-details {
     display: flex;
     flex-direction: column;
-    /* flex-grow: 1; */
     justify-content: center;
   }
 
@@ -52,12 +51,7 @@ body {
   }
 
   .profile {
-    /* flex-grow: 1; */
     margin: 1vw;
-  }
-
-  .profile img {
-    /* height: 10vh; */
   }
 }
 
@@ -66,7 +60,7 @@ button {
   border-radius: 0.2rem;
   font-size: 1rem;
   margin: 1rem auto;
-  padding: 0.5rem;
+  padding: 0.62rem;
   cursor: pointer;
 }
 
@@ -77,7 +71,7 @@ h1 {
 input {
   background-color: white;
   font-size: 1rem;
-  padding: 0.5rem;
+  padding: 0.62rem;
   display: block;
   margin: 1rem auto;
   min-width: 10rem;
@@ -101,7 +95,7 @@ input:disabled {
 
 li {
   list-style-type: none;
-  padding: 0.5rem;
+  padding: 0.62rem;
 }
 
 .placeholder {

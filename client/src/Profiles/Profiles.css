@@ -4,12 +4,24 @@
   justify-content: center;
 }
 
+li .profiles {
+  align-self: flex-end;
+}
+
 .profile {
-  margin: 1rem 2rem;
+  margin: 1rem;
+}
+
+li .profile {
+  margin: 0 0.62rem;
 }
 
 .profile img {
   height: 2.59rem;
+}
+
+li .profile img {
+  height: 3vh;
 }
 
 .profile svg {
@@ -25,8 +37,4 @@
   padding: 5px 20px;
   border-radius: 50%;
   font-size: 35px;
-}
-
-li .profiles {
-  display: none;
 }

@@ -41,15 +41,12 @@ describe('User journeys', function() {
 
       cy.get('#share').click()
 
-      cy.get('#sharing-link')
-        .invoke('text')
+      cy.get('#sharing-link input')
+        .should('have.attr', 'value')
         .should('match', /person\/[\d\w]+\/view/)
-      cy.get('.copy').click()
-      cy.contains('Copied')
+      cy.get('#copy-button').click()
 
-      cy.get('#configure-preview-controls').find('fullscreen')
-      cy.get('#configure-preview-controls').find('card')
-      cy.get('#configure-preview-controls').find('banner')
+      cy.get('#sharing-link input').should('have.attr', 'value', 'Copied!')
     })
 
     it.skip('Happy path with keyboard', () => {})

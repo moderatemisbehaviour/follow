@@ -11,6 +11,27 @@ iframe {
   border: 1px solid hsl(140, 60%, 50%);
   border-radius: 0.2rem;
   color: hsl(140, 60%, 50%);
-  padding: 0.5rem;
-  word-break: break-word;
+}
+
+#sharing-link input {
+  border: 0;
+  display: unset;
+  text-align: center;
+}
+
+#url {
+  padding: 0.62rem;
+  margin: 0;
+}
+
+#copy-button {
+  margin: 0;
+  border: 0;
+  border-left: 1px solid hsl(140, 60%, 50%);
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.copied {
+  color: hsl(140, 60%, 50%);
 }

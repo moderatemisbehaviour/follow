@@ -1,5 +1,5 @@
 #create-person {
-  padding: 0.5rem;
+  padding: 0.62rem;
 }
 
 #create-person img {
@@ -19,7 +19,7 @@ a:focus > #create-person {
 }
 
 #create-suggested-person {
-  margin-left: 0.5rem;
+  margin-left: 0.62rem;
 }
 
 #create-suggested-person .name {

@@ -1,6 +1,7 @@
 import Emoji from 'a11y-react-emoji'
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { useRef, useState } from 'react'
+import copyIcon from '../common/icons/copy.svg'
 import './PersonSharer.css'
 
 // TODO: Remove duplication between here and PersonBrowser.
@@ -10,17 +11,32 @@ PersonSharer.propTypes = {
 
 function PersonSharer(props) {
   const { id } = props
-  // const { error, data } = useQuery(GET_PERSON, {
-  //   variables: { id }
-  // })
+  const sharingLink = `${document.location.origin}/person/${id}/view`
+  const [linkCopied, setLinkCopied] = useState()
+  const sharingLinkRef = useRef()
 
-  // if (error) return <p>ERROR</p>
-
-  // const person = (data && data.person) || {}
+  function copySharingLink(event) {
+    sharingLinkRef.current.select()
+    document.execCommand('copy')
+    setLinkCopied(true)
+    setTimeout(() => setLinkCopied(false), 2000)
+  }
 
   return (
     <React.Fragment>
-      <p id="sharing-link">{`${document.location.origin}/person/${id}/view`}</p>
+      <div id="sharing-link">
+        <input
+          className={linkCopied ? 'copied' : ''}
+          id="url"
+          readOnly
+          ref={sharingLinkRef}
+          type="text"
+          value={linkCopied ? 'Copied!' : sharingLink}
+        />
+        <button id="copy-button" onClick={copySharingLink}>
+          <img src={copyIcon} />
+        </button>
+      </div>
       <p>
         <Emoji symbol="☝️" />
         Copy this link and share it with whomever you like.

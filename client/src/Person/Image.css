@@ -5,8 +5,9 @@
 }
 
 li .image {
+  flex-basis: unset;
   flex-grow: 0;
   height: 3vh;
-  margin: 0 0.5rem 0 0;
+  margin: 0 0.62rem 0 0;
   width: 3vh;
 }
