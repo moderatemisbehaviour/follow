@@ -39,7 +39,7 @@ function PersonSharer(props) {
           <input id="copied-message" readOnly type="text" value="Copied!" />
         </span>
         <button id="copy-button" onClick={copySharingLink}>
-          <img src={copyIcon} />
+          <img alt="copy icon" src={copyIcon} />
         </button>
       </div>
       <p>

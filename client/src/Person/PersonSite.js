@@ -8,6 +8,7 @@ import Home from '../Home'
 import PersonBrowser from './PersonBrowser'
 import PersonCreator from './PersonCreator'
 import PersonEditor from './PersonEditor'
+import PersonEmbedder from './PersonEmbedder'
 import PersonResults from './PersonResults'
 import PersonSharer from './PersonSharer'
 import './PersonSite.css'
@@ -47,6 +48,17 @@ function PersonSite(props) {
             return (
               <React.Fragment>
                 <PersonSharer id={id} />
+                <Footer location={location} />
+              </React.Fragment>
+            )
+          }}
+        </Route>
+        <Route path={'/person/:id/embed'}>
+          {({ location, match }) => {
+            const id = match === null ? null : match.params.id
+            return (
+              <React.Fragment>
+                <PersonEmbedder id={id} />
                 <Footer location={location} />
               </React.Fragment>
             )

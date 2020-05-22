@@ -45,6 +45,12 @@ function PersonBrowser(props) {
                 label: 'Share',
                 id: 'share',
                 onClick: () => history.push(`/person/${id}/share`)
+              },
+              {
+                className: 'continue',
+                label: 'Embed',
+                id: 'embed',
+                onClick: () => history.push(`/person/${id}/embed`)
               }
             ],
             [
