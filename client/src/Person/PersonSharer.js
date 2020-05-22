@@ -25,14 +25,19 @@ function PersonSharer(props) {
   return (
     <React.Fragment>
       <div id="sharing-link">
-        <input
-          className={linkCopied ? 'copied' : ''}
-          id="url"
-          readOnly
-          ref={sharingLinkRef}
-          type="text"
-          value={linkCopied ? 'Copied!' : sharingLink}
-        />
+        <span
+          id="sharing-link-text"
+          className={linkCopied ? 'copied' : undefined}
+        >
+          <input
+            id="url"
+            readOnly
+            ref={sharingLinkRef}
+            type="text"
+            value={sharingLink}
+          />
+          <input id="copied-message" readOnly type="text" value="Copied!" />
+        </span>
         <button id="copy-button" onClick={copySharingLink}>
           <img src={copyIcon} />
         </button>

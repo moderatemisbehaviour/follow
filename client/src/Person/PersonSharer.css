@@ -11,17 +11,32 @@ iframe {
   border: 1px solid hsl(140, 60%, 50%);
   border-radius: 0.2rem;
   color: hsl(140, 60%, 50%);
+  height: 3.6rem;
+  overflow: hidden;
+}
+
+#sharing-link :focus {
+  outline: none;
 }
 
 #sharing-link input {
+  padding: 0.62rem;
+  margin: 0;
   border: 0;
-  display: unset;
   text-align: center;
 }
 
-#url {
-  padding: 0.62rem;
-  margin: 0;
+#sharing-link-text {
+  bottom: 0;
+  display: inline-grid;
+  position: relative;
+  transition-property: bottom;
+  transition-duration: 0.2s;
+  transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#sharing-link-text.copied {
+  bottom: 2.5rem;
 }
 
 #copy-button {
@@ -32,6 +47,6 @@ iframe {
   border-bottom-left-radius: 0;
 }
 
-.copied {
+#copied-message {
   color: hsl(140, 60%, 50%);
 }

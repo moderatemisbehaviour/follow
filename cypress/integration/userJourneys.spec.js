@@ -41,12 +41,14 @@ describe('User journeys', function() {
 
       cy.get('#share').click()
 
-      cy.get('#sharing-link input')
+      cy.get('#sharing-link  input')
+        .eq(0)
         .should('have.attr', 'value')
         .should('match', /person\/[\d\w]+\/view/)
+      cy.get('#sharing-link  input')
+        .eq(1)
+        .should('have.attr', 'value', 'Copied!')
       cy.get('#copy-button').click()
-
-      cy.get('#sharing-link input').should('have.attr', 'value', 'Copied!')
     })
 
     it.skip('Happy path with keyboard', () => {})
