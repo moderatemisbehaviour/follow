@@ -47,8 +47,8 @@ function PersonSharer(props) {
         Copy this link and share it with whomever you like.
       </p>
       <p>
-        They'll see a stripped down version of the profile that looks like this{' '}
-        <Emoji symbol="👇" />
+        They&apos;ll see a stripped down version of the profile that looks like
+        this <Emoji symbol="👇" />
       </p>
       <iframe
         src={`${document.location.origin}/person/${id}/view`}
