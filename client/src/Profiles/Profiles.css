@@ -31,6 +31,10 @@ li .profile img {
   width: auto;
 }
 
+li .profile svg {
+  height: 3vh;
+}
+
 .profile span {
   background: black;
   color: #fff;
