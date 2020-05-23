@@ -7,8 +7,8 @@ beforeEach(function() {
 
 it("updates the document title, using the 'name' query param if it exists", function() {
   cy.title().should('eq', 'Create person')
-  cy.visit('/person/create?name=Siobhan')
-  cy.title().should('eq', 'Create Siobhan')
+  cy.visit('/person/create?name=Daniel')
+  cy.title().should('eq', 'Create Daniel')
 })
 
 it('highlights the property currently being edited', function() {
@@ -23,18 +23,18 @@ describe('getting to the create person page', function() {
   })
 
   it('has options for creating a person in the bottom search result', function() {
-    cy.get('#the-input').type('Siob')
-    cy.get('#create-person').should('have.text', 'Create Siob or someone else.')
+    cy.get('#the-input').type('Dan')
+    cy.get('#create-person').should('have.text', 'Create Dan or someone else.')
   })
 
   it('has a create person link based on the current search query', function() {
-    cy.get('#the-input').type('Siob')
+    cy.get('#the-input').type('Dan')
     cy.get('#create-suggested-person').click()
-    cy.url().should('contain', `/person/create?name=Siob`)
+    cy.url().should('contain', `/person/create?name=Dan`)
   })
 
   it('has a create person link for a new person', function() {
-    cy.get('#the-input').type('Siob')
+    cy.get('#the-input').type('Dan')
     cy.get('#create-new-person').click()
     cy.url().should('contain', `/person/create`)
   })
@@ -72,7 +72,7 @@ describe('state on page load', function() {
 
 describe('adding the first profile URL', function() {
   beforeEach(function() {
-    cy.get('#the-input').type('Siobhan Wilson')
+    cy.get('#the-input').type('Daniel Metcalfe')
     cy.get('.add-profile').click()
   })
 
@@ -105,7 +105,7 @@ describe('adding the first profile URL', function() {
 
   it('enables the save button once the first profile URL is added', function() {
     cy.get('.save').should('have.attr', 'disabled')
-    cy.get('#the-input').type('https://twitter.com/siobhanisback')
+    cy.get('#the-input').type('https://twitter.com/mrdanmetcalfe')
     cy.get('.add-profile').click()
     cy.get('.save').should('not.have.attr', 'disabled')
   })
@@ -113,31 +113,27 @@ describe('adding the first profile URL', function() {
 
 describe('adding more information', function() {
   beforeEach(function() {
-    cy.get('#the-input').type('Siobhan Wilson')
+    cy.get('#the-input').type('Daniel Metcalfe')
     cy.get('.add-profile').click()
-    cy.get('#the-input').type('https://twitter.com/siobhanisback')
+    cy.get('#the-input').type('https://twitter.com/mrdanmetcalfe')
   })
 
   it('allows a second profile URL and image to be added', function() {
     cy.get('.add-profile').click()
-    cy.get('#the-input').type('https://www.youtube.com/user/siobhanwilsonmusic')
+    cy.get('#the-input').type('https://danielmetcalfe.rocks')
     cy.get('.profile')
       .eq('1')
       .find('a')
-      .should(
-        'have.attr',
-        'href',
-        'https://www.youtube.com/user/siobhanwilsonmusic'
-      )
+      .should('have.attr', 'href', 'https://danielmetcalfe.rocks')
 
     cy.get('.add-image').click()
     cy.get('#the-input').type(
-      'https://pbs.twimg.com/profile_images/1102783358973677569/qEt61Ej8_400x400.jpg'
+      'https://www.gravatar.com/avatar/d35e305d07d4e8fe7bf844d17bec5e1e?s=1000'
     )
     cy.get('.image').should(
       'have.css',
       'background-image',
-      'url("https://pbs.twimg.com/profile_images/1102783358973677569/qEt61Ej8_400x400.jpg")'
+      'url("https://www.gravatar.com/avatar/d35e305d07d4e8fe7bf844d17bec5e1e?s=1000")'
     )
   })
 
@@ -156,16 +152,16 @@ describe('adding more information', function() {
 
 describe('editing properties that have already been created', function() {
   beforeEach(function() {
-    cy.fixture('siobhan.json')
-      .as('siobhan')
-      .then(siobhan => {
-        cy.get('#the-input').type(siobhan.name)
+    cy.fixture('dan.json')
+      .as('dan')
+      .then(dan => {
+        cy.get('#the-input').type(dan.name)
         cy.get('.add-profile').click()
-        cy.get('#the-input').type(siobhan.profiles[0])
+        cy.get('#the-input').type(dan.profiles[0])
         cy.get('.add-profile').click()
-        cy.get('#the-input').type(siobhan.profiles[1])
+        cy.get('#the-input').type(dan.profiles[1])
         cy.get('.add-profile').click()
-        cy.get('#the-input').type(siobhan.profiles[2])
+        cy.get('#the-input').type(dan.profiles[2])
         cy.get('.add-image').click()
       })
   })
@@ -187,16 +183,16 @@ describe('editing properties that have already been created', function() {
 
 describe('saving the person', function() {
   beforeEach(function() {
-    cy.fixture('siobhan.json')
-      .as('siobhan')
-      .then(siobhan => {
-        cy.get('#the-input').type(siobhan.name)
+    cy.fixture('dan.json')
+      .as('dan')
+      .then(dan => {
+        cy.get('#the-input').type(dan.name)
         cy.get('.add-profile').click()
-        cy.get('#the-input').type(siobhan.profiles[0])
+        cy.get('#the-input').type(dan.profiles[0])
         cy.get('.add-image').click()
-        cy.get('#the-input').type(siobhan.image)
+        cy.get('#the-input').type(dan.image)
         cy.get('.add-profile').click()
-        cy.get('#the-input').type(siobhan.profiles[1])
+        cy.get('#the-input').type(dan.profiles[1])
       })
   })
 
@@ -208,7 +204,7 @@ describe('saving the person', function() {
     cy.get('.image').should(
       'have.css',
       'background-image',
-      `url("${this.siobhan.image}")`
+      `url("${this.dan.image}")`
     )
   })
 
@@ -222,7 +218,7 @@ describe('saving the person', function() {
       cy.get('.image').should(
         'have.css',
         'background-image',
-        `url("${this.siobhan.image}")`
+        `url("${this.dan.image}")`
       )
     })
   })
@@ -231,7 +227,7 @@ describe('saving the person', function() {
 describe('validating URLs', function() {
   it('gives the input the invalid style', function() {
     cy.get('#the-input')
-      .type('Siobhan Wilson')
+      .type('Daniel Metcalfe')
       .should('not.have.class', 'invalid')
     cy.get('.add-profile').click()
 

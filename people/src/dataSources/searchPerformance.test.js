@@ -3,7 +3,7 @@ const setupDatabaseAndGetClient = require('follow-database')
 // Run this with MONGODB_URI=mongodb://localhost:27017/follow npx jest searchPerformance --watch --verbose=false
 
 describe('Database search performance', () => {
-  const query = 'Siob'
+  const query = 'Dan'
   let db
   let peopleCollection
   let hrstart
@@ -21,14 +21,14 @@ describe('Database search performance', () => {
     const people = []
     for (let i = 1; i <= 100000; i++) {
       people.push({
-        name: `Siobhan Wilson ${i}`,
+        name: `Daniel Metcalfe ${i}`,
         image:
-          'https://pbs.twimg.com/profile_images/1155313320339103747/MrTMPR_o_400x400.jpg',
+          'https://www.gravatar.com/avatar/d35e305d07d4e8fe7bf844d17bec5e1e?s=1000',
         popularity: i,
         profiles: [
-          'https://twitter.com/siobhanisback',
-          'https://www.youtube.com/user/siobhanwilsonmusic',
-          'https://www.facebook.com/siobhanwilsonmusic'
+          'https://danielmetcalfe.rocks',
+          'https://stackoverflow.com/story/mrdanielmetcalfe',
+          'https://github.com/moderatemisbehaviour'
         ]
       })
     }

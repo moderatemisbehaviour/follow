@@ -15,14 +15,14 @@ beforeAll(async () => {
   const people = []
   for (let i = 1; i <= 10; i++) {
     people.push({
-      name: `Siobhan Wilson ${i}`,
+      name: `Daniel Metcalfe ${i}`,
       image:
-        'https://pbs.twimg.com/profile_images/1155313320339103747/MrTMPR_o_400x400.jpg',
+        'https://www.gravatar.com/avatar/d35e305d07d4e8fe7bf844d17bec5e1e?s=1000',
       popularity: i,
       profiles: [
-        'https://twitter.com/siobhanisback',
-        'https://www.youtube.com/user/siobhanwilsonmusic',
-        'https://www.facebook.com/siobhanwilsonmusic'
+        'https://danielmetcalfe.rocks',
+        'https://stackoverflow.com/story/mrdanielmetcalfe',
+        'https://github.com/moderatemisbehaviour'
       ]
     })
   }

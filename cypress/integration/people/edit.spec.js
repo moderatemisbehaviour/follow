@@ -56,8 +56,8 @@ describe('the state on page load', function() {
 describe('editing properties and saving', function() {
   describe('editing name and existing profiles', function() {
     it('views the updated person after saving', function() {
-      const newName = 'Siobhan Wilson 2.0'
-      const newTwitterProfileUrl = 'https://twitter.com/siobhansnewprofile'
+      const newName = 'Daniel Metcalfe 2.0'
+      const newTwitterProfileUrl = 'https://twitter.com/dansnewprofile'
 
       cy.get('.edit-name').click()
       cy.get('#the-input')
@@ -65,7 +65,7 @@ describe('editing properties and saving', function() {
         .type(newName)
 
       cy.get('.edit-profiles').click()
-      cy.get('.edit-profile-0').click()
+      cy.get('.edit-profile-3').click()
       cy.get('#the-input')
         .clear()
         .type(newTwitterProfileUrl)
@@ -74,23 +74,7 @@ describe('editing properties and saving', function() {
       cy.url().should('match', pathRegexes.person)
 
       cy.get('.name').should('have.text', newName)
-      cy.get('.image').should(
-        'have.css',
-        'background-image',
-        `url("${this.person.image}")`
-      )
-      cy.get('.profile-0 a').should('have.attr', 'href', newTwitterProfileUrl)
-      cy.get('.profile-1 a').should(
-        'have.attr',
-        'href',
-        this.person.profiles[1]
-      )
-      cy.get('.profile-2 a').should(
-        'have.attr',
-        'href',
-        this.person.profiles[2]
-      )
-      cy.get('.profile-3 a').should('not.exist')
+      cy.get('.profile-3 a').should('have.attr', 'href', newTwitterProfileUrl)
     })
   })
 
@@ -101,7 +85,7 @@ describe('editing properties and saving', function() {
         cy.get('.save').click()
 
         cy.url().should('match', pathRegexes.person)
-        cy.get('.profile').should('have.length', 3)
+        cy.get('.profile').should('have.length', 7)
       })
     })
 
@@ -112,7 +96,7 @@ describe('editing properties and saving', function() {
 
         cy.get('.save').click()
         cy.url().should('match', pathRegexes.person)
-        cy.get('.profile').should('have.length', 3)
+        cy.get('.profile').should('have.length', 7)
       })
     })
 
@@ -128,7 +112,7 @@ describe('editing properties and saving', function() {
 
         cy.get('.save').click()
         cy.url().should('match', pathRegexes.person)
-        cy.get('.profile').should('have.length', 4)
+        cy.get('.profile').should('have.length', 8)
       })
     })
   })
