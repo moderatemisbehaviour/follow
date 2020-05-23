@@ -13,7 +13,7 @@ function NextOption(props) {
   return (
     <input
       id={props.id}
-      className={`next ${props.className}`}
+      className={`next ${props.className ? props.className : 'configure'}`}
       disabled={props.disabled}
       onClick={props.onClick}
       type="button"

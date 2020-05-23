@@ -1,13 +1,10 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-
-import './NextSteps.css'
 import NextOption from './NextOption'
+import './NextSteps.css'
 
 NextSteps.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.element),
   className: PropTypes.string,
-  disabled: PropTypes.bool,
   invalid: PropTypes.bool,
   invalidMessage: PropTypes.string,
   message: PropTypes.string,
@@ -25,7 +22,7 @@ function NextSteps(props) {
           <div key={index}>
             {rowOfNextOptions.map(nextOption => (
               <NextOption
-                key={nextOption.key}
+                key={nextOption.id}
                 {...nextOption}
                 className={`${nextOption.className} ${
                   index === 0 ? 'primary' : 'secondary'

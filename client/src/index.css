@@ -18,16 +18,41 @@ body {
   margin: 0;
 }
 
-#root {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  padding: 1rem;
-}
+@media (min-aspect-ratio: 21/9) {
+  .image {
+    flex-grow: 0;
+  }
 
-#root > .person {
-  max-height: 50%;
+  .name {
+    margin: 1vw;
+    text-align: left;
+  }
+
+  #person-viewer {
+    justify-content: center;
+    min-height: 0px;
+  }
+
+  .person {
+    flex-direction: row;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .person-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .profiles {
+    flex-grow: 0;
+    justify-content: start;
+  }
+
+  .profile {
+    margin: 1vw;
+  }
 }
 
 button {
@@ -35,7 +60,7 @@ button {
   border-radius: 0.2rem;
   font-size: 1rem;
   margin: 1rem auto;
-  padding: 0.5rem;
+  padding: 0.62rem;
   cursor: pointer;
 }
 
@@ -46,7 +71,7 @@ h1 {
 input {
   background-color: white;
   font-size: 1rem;
-  padding: 0.5rem;
+  padding: 0.62rem;
   display: block;
   margin: 1rem auto;
   min-width: 10rem;
@@ -70,7 +95,7 @@ input:disabled {
 
 li {
   list-style-type: none;
-  padding: 0.5rem;
+  padding: 0.62rem;
 }
 
 .placeholder {

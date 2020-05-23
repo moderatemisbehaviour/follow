@@ -1,0 +1,12 @@
+#person-site {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  min-height: 560px;
+  padding: 1rem;
+}
+
+#person-site > .person {
+  flex-basis: 50%;
+}

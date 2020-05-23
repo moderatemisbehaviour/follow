@@ -2,8 +2,8 @@ import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Link } from 'react-router-dom'
-import NextOption from '../common/nextSteps/NextOption'
+import { useHistory } from 'react-router-dom'
+import NextSteps from '../common/NextSteps'
 import Omnibox from '../common/Omnibox'
 import CommandResults from '../common/Omnibox/CommandResults'
 import Person from './Person'
@@ -14,8 +14,8 @@ PersonBrowser.propTypes = {
 }
 
 function PersonBrowser(props) {
+  const history = useHistory()
   const { id } = props
-
   const { error, data } = useQuery(GET_PERSON, {
     variables: { id }
   })
@@ -37,9 +37,32 @@ function PersonBrowser(props) {
         }
       />
       {person && (
-        <Link to={`/person/${id}/edit`}>
-          <NextOption label={`Edit ${person.name}`} id={`edit-person`} />
-        </Link>
+        <NextSteps
+          nextOptions={[
+            [
+              {
+                className: 'continue',
+                label: 'Share',
+                id: 'share',
+                onClick: () => history.push(`/person/${id}/share`)
+              },
+              {
+                className: 'continue',
+                label: 'Embed',
+                id: 'embed',
+                onClick: () => history.push(`/person/${id}/embed`)
+              }
+            ],
+            [
+              {
+                className: 'configure',
+                label: `Edit ${person.name}`,
+                id: 'edit-person',
+                onClick: () => history.push(`/person/${id}/edit`)
+              }
+            ]
+          ]}
+        />
       )}
     </React.Fragment>
   )

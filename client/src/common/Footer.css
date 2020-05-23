@@ -1,0 +1,10 @@
+#footer {
+  margin-top: auto;
+  padding: 0.62rem;
+  text-align: center;
+  width: 100%;
+}
+
+#footer button {
+  margin: 0;
+}

@@ -1,24 +1,38 @@
 .profiles {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
 }
 
+li .profiles {
+  align-self: flex-end;
+}
+
 .profile {
-  margin: 1rem 2rem;
+  margin: 1rem;
+}
+
+li .profile {
+  margin: 0 0.62rem;
 }
 
 .profile img {
-  display: block;
-  height: 5vh;
-  margin: auto;
-  width: auto;
+  height: 2.59rem;
+}
+
+li .profile img {
+  height: 3vh;
 }
 
 .profile svg {
   display: block;
-  height: 5vh;
+  height: 2.59rem;
   margin: auto;
   width: auto;
+}
+
+li .profile svg {
+  height: 3vh;
 }
 
 .profile span {
@@ -27,8 +41,4 @@
   padding: 5px 20px;
   border-radius: 50%;
   font-size: 35px;
-}
-
-li .profiles {
-  display: none;
 }

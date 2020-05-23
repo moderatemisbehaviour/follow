@@ -9,7 +9,12 @@ import './Person.css'
 Person.propTypes = {
   name: PropTypes.string,
   image: PropTypes.string,
-  profiles: PropTypes.arrayOf(PropTypes.string.isRequired)
+  profiles: PropTypes.arrayOf(PropTypes.string.isRequired),
+  style: PropTypes.object
+}
+
+Person.defaultProps = {
+  stlye: {}
 }
 
 function Person(props) {
@@ -23,10 +28,12 @@ function Person(props) {
   })
 
   return (
-    <div className="person">
-      <Name name={name || undefined} />
+    <div className="person" style={props.style}>
       <Image src={image} />
-      {profiles && <Profiles profiles={profiles} />}
+      <div className="person-details">
+        <Name name={name || undefined} />
+        {profiles && <Profiles profiles={profiles} />}
+      </div>
     </div>
   )
 }

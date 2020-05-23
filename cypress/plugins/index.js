@@ -33,10 +33,10 @@ module.exports = async (on, config) => {
     },
     async createPerson(fixture) {
       if (!fixture) {
-        const siobhan = JSON.parse(
-          fs.readFileSync('cypress/fixtures/siobhan.json', 'utf8')
+        const dan = JSON.parse(
+          fs.readFileSync('cypress/fixtures/dan.json', 'utf8')
         )
-        fixture = siobhan
+        fixture = dan
       }
 
       if (!fixture.popularity) fixture.popularity = 1
@@ -47,11 +47,11 @@ module.exports = async (on, config) => {
       return person
     },
     async createPersonApi() {
-      const siobhan = JSON.parse(
-        fs.readFileSync('cypress/fixtures/siobhan.json', 'utf8')
+      const dan = JSON.parse(
+        fs.readFileSync('cypress/fixtures/dan.json', 'utf8')
       )
 
-      return peopleDataSource.createPerson(siobhan)
+      return peopleDataSource.createPerson(dan)
     },
     async createPeople() {
       return createPeople(databaseClient)

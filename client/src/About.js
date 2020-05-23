@@ -15,12 +15,12 @@ function About() {
       </p>
       <Profiles
         profiles={[
-          'https://www.youtube.com/user/siobhanwilsonmusic',
+          'https://www.youtube.com/channel/UCaWhrUvqBbsFbo23_dE2maw',
           'https://instagram.com',
-          'https://www.facebook.com/siobhanwilsonmusic',
-          'https://linkedin.com',
-          'https://twitter.com/siobhanisback',
-          'https://github.com'
+          'https://www.facebook.com/moderatemisbehaviour',
+          'https://uk.linkedin.com/in/mrdanielmetcalfe',
+          'https://twitter.com/mrdanmetcalfe',
+          'https://github.com/moderatemisbehaviour'
         ]}
       />
       <p>
