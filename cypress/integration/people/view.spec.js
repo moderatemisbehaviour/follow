@@ -48,7 +48,7 @@ describe('that has all optional properties', function() {
   })
 
   it("displays a 'return home' button at the bottom of the page", function() {
-    cy.get('.HomeLink')
+    cy.get('#home')
       .should('have.length', 1)
       .click()
     cy.location('pathname').should('eq', '/')
