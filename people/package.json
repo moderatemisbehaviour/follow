@@ -1,6 +1,7 @@
 {
-  "name": "follow-people",
+  "name": "@peoplenotplatforms/people",
   "version": "0.1.0",
+  "private": true,
   "author": {
     "name": "Daniel Metcalfe",
     "email": "mrdanielmetcalfe@gmail.com",
@@ -10,17 +11,17 @@
     "start": "node src/index.js",
     "start:dev": "../habitat.sh -f ../.env nodemon src/index.js",
     "test": "../habitat.sh -f ../.env jest",
-    "update-popularities": "../habitat.sh -f ../.env node src/updatePopularities"
+    "update-popularities": "node src/updatePopularities"
   },
   "dependencies": {
     "@google-cloud/bigquery": "^4.7.0",
+    "@peoplenotplatforms/database": "^0.1.0",
     "apollo-datasource": "^0.6.3",
     "apollo-server": "^2.2.2",
     "apollo-server-express": "^2.2.2",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
-    "follow-database": "file:../database",
-    "graphql": "^14.0.2",
+    "graphql": "^15.0.0",
     "graphql-tag": "^2.10.0",
     "mongodb": "^3.4.0",
     "passport": "^0.4.0",

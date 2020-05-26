@@ -37,7 +37,9 @@ describe('when a valid Heroku mLab MongoDB URI is passed in', () => {
     let clientOptions
 
     beforeAll(() => {
-      clientOptions = parseMongoDbUri('mongodb://localhost:27017/follow')
+      clientOptions = parseMongoDbUri(
+        'mongodb://localhost:27017/peoplenotplatforms'
+      )
     })
 
     it('returns the scheme', () => {
@@ -57,7 +59,7 @@ describe('when a valid Heroku mLab MongoDB URI is passed in', () => {
     })
 
     it('returns the database', () => {
-      expect(clientOptions.database).toEqual('follow')
+      expect(clientOptions.database).toEqual('peoplenotplatforms')
     })
   })
 })

@@ -1,6 +1,6 @@
-const setupDatabaseAndGetClient = require('follow-database')
+const setupDatabaseAndGetClient = require('@peoplenotplatforms/database')
 
-// Run this with MONGODB_URI=mongodb://localhost:27017/follow npx jest searchPerformance --watch --verbose=false
+// Run this with MONGODB_URI=mongodb://localhost:27017/peoplenotplatforms npx jest searchPerformance --watch --verbose=false
 
 describe('Database search performance', () => {
   const query = 'Dan'

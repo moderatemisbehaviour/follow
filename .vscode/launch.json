@@ -38,7 +38,7 @@
         "--runInBand",
         "peopleDataSource"
       ],
-      "env": {"MONGODB_URI": "mongodb://localhost:27017/follow"},
+      "env": {"MONGODB_URI": "mongodb://localhost:27017/peoplenotplatforms"},
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
       "port": 9229

@@ -1,7 +1,13 @@
 {
-  "name": "follow",
+  "name": "@peoplenotplatforms/root",
   "version": "0.1.0",
+  "private": true,
   "description": "Follow people, not platforms.",
+  "workspaces": [
+    "client/",
+    "database/",
+    "people/"
+  ],
   "keywords": [
     "follow",
     "oauth",
@@ -10,9 +16,9 @@
     "youtube",
     "facebook"
   ],
-  "homepage": "https://github.com/moderatemisbehaviour/follow/",
+  "homepage": "https://github.com/moderatemisbehaviour/peoplenotplatforms/",
   "bugs": {
-    "url": "https://github.com/moderatemisbehaviour/follow/issues"
+    "url": "https://github.com/moderatemisbehaviour/peoplenotplatforms/issues"
   },
   "license": "UNLICENSED",
   "author": {
@@ -21,7 +27,6 @@
     "url": "http://danielmetcalfe.rocks/"
   },
   "scripts": {
-    "postinstall": "(cd people && npm install) && (cd database && npm install) && (cd client && npm install)",
     "build": "cd client && npm run build",
     "create-people": "./habitat.sh node cypress/plugins/fixtureCreator.js createPeople",
     "start": "cd people && npm start",
@@ -34,7 +39,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/moderatemisbehaviour/follow.git"
+    "url": "git+https://github.com/moderatemisbehaviour/peoplenotplatforms.git"
   },
   "devDependencies": {
     "cypress": "^3.4.1",
@@ -50,6 +55,5 @@
     "eslint-plugin-standard": "^4.0.0",
     "prettier": "1.18.2",
     "start-server-and-test": "^1.7.11"
-  },
-  "dependencies": {}
+  }
 }

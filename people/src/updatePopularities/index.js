@@ -1,6 +1,6 @@
 // Import the Google Cloud client library using default credentials
 const { BigQuery } = require('@google-cloud/bigquery')
-const DatabaseClient = require('follow-database/src/DatabaseClient')
+const DatabaseClient = require('@peoplenotplatforms/database/src/DatabaseClient')
 
 if (require.main === module) {
   getPersonVisits()
