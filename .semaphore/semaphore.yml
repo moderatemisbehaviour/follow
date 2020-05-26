@@ -23,7 +23,7 @@ blocks:
             - checkout
             - nvm use
             - yarn --frozen-lockfile
-            - yarn build
+            - yarn workspace @peoplenotplatforms/client build
             - cache store node-modules-root-$(checksum yarn.lock) node_modules/
             - cache store node-modules-database-$(checksum database/yarn.lock) database/node_modules/
             - cache store node-modules-people-$(checksum people/yarn.lock) people/node_modules/

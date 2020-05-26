@@ -27,15 +27,14 @@
     "url": "http://danielmetcalfe.rocks/"
   },
   "scripts": {
-    "build": "cd client && npm run build",
+    "ci": "yarn workspace @peoplenotplatforms/client build && yarn lint && CI=true yarn workspaces run test && CI=true start-server-and-test heroku-like http://localhost:4000",
     "create-people": "./habitat.sh node cypress/plugins/fixtureCreator.js createPeople",
-    "start": "cd people && npm start",
+    "heroku-postbuild": "yarn workspace @peoplenotplatforms/client build",
+    "heroku-like": "heroku local",
     "lint": "eslint client/src people/src database/src",
+    "start": "yarn workspace @peoplenotplatforms/people start",
     "test": "./habitat.sh cypress run --config baseUrl=http://localhost:4000",
-    "test:dev": "./habitat.sh cypress open",
-    "jest": "(cd database && npm test) && (cd people && npm test) && (cd client && npm test)",
-    "ci": "(npm run build) && (npm run lint) && (CI=true npm run jest) && (CI=true start-server-and-test heroku-like http://localhost:4000)",
-    "heroku-like": "heroku local"
+    "test:dev": "./habitat.sh cypress open"
   },
   "repository": {
     "type": "git",
