@@ -6,5 +6,10 @@ For the private key to be used it needs to be deserialised. This could be done b
 but it is easier to do this when setting the environment variable in the first place.
 
 When using Heroku config vars to set the environment variable this can be done by manually replacing the escaped
-newlines with actual new lines in an editor and then copy-pasting it into the config vars web GUI provided in the
-settings page of a Heroku app.
+newlines with actual new lines in an editor and then setting using the heroku CLI.
+
+You can replace `\n` with an actual new line in VS Code by using the find and replace feature and typing
+`command + enter` in the *replace* field.
+
+If you ever need to enter a private key directly into a `.env` file (perhaps for local testing) then surround the
+entire key with single quotes to make it a string literal and therefore escape the new line characters.
