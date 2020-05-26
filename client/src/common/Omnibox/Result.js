@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
+// eslint-disable-next-line react/display-name
 const Result = React.forwardRef((props, ref) => {
   return (
     <li

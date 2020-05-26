@@ -1,7 +1,7 @@
 console.log('NODE_ENV is', process.env.NODE_ENV)
 console.log('CI is', process.env.CI)
 
-const databaseClient = require('follow-database')
+const databaseClient = require('@peoplenotplatforms/database')
 
 const createExpressServerForStaticContent = require('./createExpressServerForStaticContent')
 const applyApolloServerMiddleware = require('./applyApolloServerMiddleware')

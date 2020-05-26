@@ -1,7 +1,13 @@
 {
-  "name": "follow",
+  "name": "@peoplenotplatforms/root",
   "version": "0.1.0",
+  "private": true,
   "description": "Follow people, not platforms.",
+  "workspaces": [
+    "client/",
+    "database/",
+    "people/"
+  ],
   "keywords": [
     "follow",
     "oauth",
@@ -10,9 +16,9 @@
     "youtube",
     "facebook"
   ],
-  "homepage": "https://github.com/moderatemisbehaviour/follow/",
+  "homepage": "https://github.com/moderatemisbehaviour/peoplenotplatforms/",
   "bugs": {
-    "url": "https://github.com/moderatemisbehaviour/follow/issues"
+    "url": "https://github.com/moderatemisbehaviour/peoplenotplatforms/issues"
   },
   "license": "UNLICENSED",
   "author": {
@@ -21,28 +27,21 @@
     "url": "http://danielmetcalfe.rocks/"
   },
   "scripts": {
-    "postinstall": "(cd people && npm install) && (cd database && npm install) && (cd client && npm install)",
-    "build": "cd client && npm run build",
-    "dev": "concurrently 'npm run start:dev' 'npm run test:dev'",
-    "reset-database": "cd database && npm run reset-database",
+    "ci-like": "yarn workspace @peoplenotplatforms/client build && yarn lint && CI=true yarn workspaces run test && CI=true start-server-and-test heroku-like http://localhost:4000",
     "create-people": "./habitat.sh node cypress/plugins/fixtureCreator.js createPeople",
-    "start": "cd people && npm start",
-    "start:dev": "concurrently \"cd people && npm run start:dev\" \"cd client && npm start\"",
-    "lint": "eslint client/src people/src database/src",
-    "test": "npm run cypress:run",
-    "test:dev": "npm run cypress:open",
-    "jest": "(cd database && npm test) && (cd people && npm test) && (cd client && npm test)",
-    "ci": "(npm run build) && (npm run lint) && (CI=true npm run jest) && (CI=true start-server-and-test heroku-like http://localhost:4000)",
+    "e2e": "start-server-and-test heroku-like http://localhost:4000",
+    "heroku-postbuild": "yarn workspace @peoplenotplatforms/client build",
     "heroku-like": "heroku local",
-    "cypress:open": "./habitat.sh cypress open",
-    "cypress:run": "./habitat.sh cypress run --config baseUrl=http://localhost:4000"
+    "lint": "eslint client/src people/src database/src",
+    "start": "yarn workspace @peoplenotplatforms/people start",
+    "test": "./habitat.sh cypress run --config baseUrl=http://localhost:4000",
+    "test:dev": "./habitat.sh cypress open"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/moderatemisbehaviour/follow.git"
+    "url": "git+https://github.com/moderatemisbehaviour/peoplenotplatforms.git"
   },
   "devDependencies": {
-    "concurrently": "^3.6.0",
     "cypress": "^3.4.1",
     "eslint": "^6.6.0",
     "eslint-config-prettier": "^6.3.0",
@@ -56,6 +55,5 @@
     "eslint-plugin-standard": "^4.0.0",
     "prettier": "1.18.2",
     "start-server-and-test": "^1.7.11"
-  },
-  "dependencies": {}
+  }
 }

@@ -1,6 +1,7 @@
 {
-  "name": "follow-database",
+  "name": "@peoplenotplatforms/database",
   "version": "0.1.0",
+  "private": true,
   "description": "",
   "main": "src/index.js",
   "scripts": {

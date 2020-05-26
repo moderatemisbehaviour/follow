@@ -1,5 +1,5 @@
-const DatabaseClient = require('follow-database/src/DatabaseClient')
-const resetDatabase = require('follow-database/src/resetDatabase')
+const DatabaseClient = require('@peoplenotplatforms/database/src/DatabaseClient')
+const resetDatabase = require('@peoplenotplatforms/database/src/resetDatabase')
 
 const { updatePopularities } = require('.')
 

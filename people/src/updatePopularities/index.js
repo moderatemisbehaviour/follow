@@ -1,6 +1,6 @@
 // Import the Google Cloud client library using default credentials
 const { BigQuery } = require('@google-cloud/bigquery')
-const DatabaseClient = require('follow-database/src/DatabaseClient')
+const DatabaseClient = require('@peoplenotplatforms/database/src/DatabaseClient')
 
 if (require.main === module) {
   getPersonVisits()
@@ -13,7 +13,7 @@ if (require.main === module) {
 }
 
 async function getPersonVisits() {
-  const options = { projectId: 'people-not-platforms' }
+  const options = { projectId: 'peoplenotplatforms' }
   if (process.env.NODE_ENV === 'development') {
     options.keyFilename =
       process.env.BIG_QUERY_UPDATE_POPULARITIES_KEY_FILE_PATH
