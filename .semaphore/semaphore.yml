@@ -56,6 +56,6 @@ blocks:
             - sudo apt -y install libgtk2.0-0
             - sem-service start mongodb
             - yarn workspace @peoplenotplatforms/database reset-database
-            - yarn test
+            - yarn e2e
       secrets:
         - name: cypress-record-key
