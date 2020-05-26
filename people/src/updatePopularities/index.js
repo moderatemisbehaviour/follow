@@ -13,7 +13,7 @@ if (require.main === module) {
 }
 
 async function getPersonVisits() {
-  const options = { projectId: 'people-not-platforms' }
+  const options = { projectId: 'peoplenotplatforms' }
   if (process.env.NODE_ENV === 'development') {
     options.keyFilename =
       process.env.BIG_QUERY_UPDATE_POPULARITIES_KEY_FILE_PATH

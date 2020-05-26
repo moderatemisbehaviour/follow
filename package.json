@@ -27,7 +27,8 @@
     "url": "http://danielmetcalfe.rocks/"
   },
   "scripts": {
-    "ci": "yarn workspace @peoplenotplatforms/client build && yarn lint && CI=true yarn workspaces run test && CI=true start-server-and-test heroku-like http://localhost:4000",
+    "ci": "start-server-and-test heroku-like http://localhost:4000",
+    "ci-like": "yarn workspace @peoplenotplatforms/client build && yarn lint && CI=true yarn workspaces run test && CI=true start-server-and-test heroku-like http://localhost:4000",
     "create-people": "./habitat.sh node cypress/plugins/fixtureCreator.js createPeople",
     "heroku-postbuild": "yarn workspace @peoplenotplatforms/client build",
     "heroku-like": "heroku local",
