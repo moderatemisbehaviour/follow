@@ -6,14 +6,15 @@ import instagramLogo from '../common/icons/instagram.svg'
 import linkedinLogo from '../common/icons/linkedin.svg'
 import twitterLogo from '../common/icons/twitter.svg'
 import youtubeLogo from '../common/icons/youtube.png'
+import usePlatformName from './usePlatformName'
 
 KnownPlatformIcon.propTypes = {
-  platformName: PropTypes.string.isRequired,
-  url: PropTypes.string
+  url: PropTypes.object.isRequired
 }
 
 function KnownPlatformIcon(props) {
-  const platformIconUrl = nameToIconMap[props.platformName]
+  const platformName = usePlatformName(props.url)
+  const platformIconUrl = nameToIconMap[platformName]
   return <img src={platformIconUrl} alt="platform icon" />
 }
 

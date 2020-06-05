@@ -2,18 +2,20 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import KnownPlatformIcon from './KnownPlatformIcon'
 import UnknownPlatformIcon from './UnknownPlatformIcon'
+import usePlatformName from './usePlatformName'
 
 PlatformIcon.propTypes = {
-  platformName: PropTypes.string
+  url: PropTypes.object
 }
 
 function PlatformIcon(props) {
-  const { platformName } = props
+  const platformName = usePlatformName(props.url)
   const knownPlatform = knownPlatforms.includes(platformName)
+
   return knownPlatform ? (
-    <KnownPlatformIcon platformName={platformName} />
+    <KnownPlatformIcon url={props.url} />
   ) : (
-    <UnknownPlatformIcon platformName={platformName} />
+    <UnknownPlatformIcon url={props.url} />
   )
 }
 
