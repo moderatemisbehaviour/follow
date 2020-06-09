@@ -14,14 +14,20 @@ blocks:
         # TODO: Cache yarn cache dir instead of node modules
         - name: install and cache
           commands:
-            - cache restore
+            - cache restore node-modules-root-$(checksum yarn.lock),node-modules-root
+            - cache restore node-modules-database-$(checksum database/yarn.lock),node-modules-database
+            - cache restore node-modules-people-$(checksum people/yarn.lock),node-modules-people
+            - cache restore node-modules-client-$(checksum client/yarn.lock),node-modules-client
             - cache restore user-cache-$SEMAPHORE_GIT_SHA,user-cache
             - cache restore client-build-$SEMAPHORE_GIT_SHA,client-build
             - checkout
             - nvm use
             - yarn --frozen-lockfile
             - yarn workspace @peoplenotplatforms/client build
-            - cache store
+            - cache store node-modules-root-$(checksum yarn.lock) node_modules/
+            - cache store node-modules-database-$(checksum database/yarn.lock) database/node_modules/
+            - cache store node-modules-people-$(checksum people/yarn.lock) people/node_modules/
+            - cache store node-modules-client-$(checksum client/yarn.lock) client/node_modules/
             - cache store user-cache-$SEMAPHORE_GIT_SHA ~/.cache/
             - cache store client-build-$SEMAPHORE_GIT_SHA client/build
   - name: quality
@@ -30,7 +36,10 @@ blocks:
         commands:
           - checkout
           - nvm use
-          - cache restore
+          - cache restore node-modules-root-$(checksum yarn.lock),node-modules-root
+          - cache restore node-modules-database-$(checksum database/yarn.lock),node-modules-database
+          - cache restore node-modules-people-$(checksum people/yarn.lock),node-modules-people
+          - cache restore node-modules-client-$(checksum client/yarn.lock),node-modules-client
           - cache restore user-cache-$SEMAPHORE_GIT_SHA,user-cache
           - cache restore client-build-$SEMAPHORE_GIT_SHA,client-build
       jobs:
