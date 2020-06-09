@@ -23,7 +23,13 @@ function UnknownPlatformIcon(props) {
           palette.Muted
         const colour = swatch ? swatch.getHex() : 'black'
         setIconColour(colour)
+        return null // Necessary to avoid warning logged by Vibrant.
       })
+      .catch(() =>
+        console.debug(
+          `Unable to determine an icon colour for ${props.url}. This is most likely caused by Clearbit returning a 404 for http://logo.clearbit.com/${props.url.hostname}.`
+        )
+      )
   })
 
   return (

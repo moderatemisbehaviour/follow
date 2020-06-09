@@ -3,7 +3,7 @@ import CharacterInACircle from '../common/CharacterInACircle'
 
 function InvalidProfile(props) {
   return (
-    <div className="profile invalid">
+    <div className="invalid">
       <CharacterInACircle character="?" />
     </div>
   )

@@ -5,6 +5,7 @@ import PlatformIcon from './PlatformIcon'
 import usePlatformName from './usePlatformName'
 
 ValidProfile.propTypes = {
+  className: PropTypes.string,
   url: PropTypes.object.isRequired
 }
 
@@ -13,7 +14,7 @@ function ValidProfile(props) {
   const email = props.url.protocol === 'mailto:'
 
   return (
-    <div className="profile" title={props.url.href}>
+    <React.Fragment>
       <a
         href={props.url.href}
         onClick={trackAction(props.url.href, platformName)}
@@ -22,7 +23,7 @@ function ValidProfile(props) {
       >
         {email ? <MailIcon /> : <PlatformIcon url={props.url} />}
       </a>
-    </div>
+    </React.Fragment>
   )
 }
 

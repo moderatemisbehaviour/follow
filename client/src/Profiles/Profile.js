@@ -4,6 +4,7 @@ import InvalidProfile from './InvalidProfile'
 import ValidProfile from './ValidProfile'
 
 Profile.propTypes = {
+  className: PropTypes.string,
   url: PropTypes.string.isRequired
 }
 
@@ -14,7 +15,18 @@ function Profile(props) {
     validUrl = new URL(props.url)
   } catch (e) {}
 
-  return validUrl ? <ValidProfile url={validUrl} /> : <InvalidProfile />
+  return (
+    <div
+      className={`profile${props.className ? ` ${props.className}` : ''}`}
+      title={props.url}
+    >
+      {validUrl ? (
+        <ValidProfile className={props.className} url={validUrl} />
+      ) : (
+        <InvalidProfile />
+      )}
+    </div>
+  )
 }
 
 export default Profile
