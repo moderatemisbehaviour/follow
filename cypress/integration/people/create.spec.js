@@ -120,11 +120,11 @@ describe('adding more information', function() {
 
   it('allows a second profile URL and image to be added', function() {
     cy.get('.add-profile').click()
-    cy.get('#the-input').type('https://danielmetcalfe.rocks')
+    cy.get('#the-input').type('https://danielmetcalfe.rocks/')
     cy.get('.profile')
       .eq('1')
       .find('a')
-      .should('have.attr', 'href', 'https://danielmetcalfe.rocks')
+      .should('have.attr', 'href', 'https://danielmetcalfe.rocks/')
 
     cy.get('.add-image').click()
     cy.get('#the-input').type(

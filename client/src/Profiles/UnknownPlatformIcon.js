@@ -1,28 +1,39 @@
+import * as Vibrant from 'node-vibrant'
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import CharacterInACircle from '../common/CharacterInACircle'
+import usePlatformName from './usePlatformName'
 
 UnknownPlatformIcon.propTypes = {
-  platformName: PropTypes.string
+  url: PropTypes.object.isRequired
 }
 
 function UnknownPlatformIcon(props) {
-  const { platformName } = props
-  const text = platformName ? platformName.charAt(0) : '?'
+  const platformName = usePlatformName(props.url)
+  const [iconColour, setIconColour] = useState()
+
+  useEffect(() => {
+    Vibrant.from(`http://logo.clearbit.com/${props.url.hostname}`)
+      .getPalette()
+      .then(palette => {
+        const swatch =
+          palette.DarkVibrant ||
+          palette.DarkMuted ||
+          palette.Vibrant ||
+          palette.Muted
+        const colour = swatch ? swatch.getHex() : 'black'
+        setIconColour(colour)
+        return null // Necessary to avoid warning logged by Vibrant.
+      })
+      .catch(() =>
+        console.debug(
+          `Unable to determine an icon colour for ${props.url}. This is most likely caused by Clearbit returning a 404 for http://logo.clearbit.com/${props.url.hostname}.`
+        )
+      )
+  })
 
   return (
-    <svg viewBox="0 0 100 100" height="100%">
-      <circle cx="50" cy="50" r="50" fill="black" />
-      <text
-        x="50"
-        y="55"
-        fill="white"
-        fontSize="70"
-        dominantBaseline="middle"
-        textAnchor="middle"
-      >
-        {text}
-      </text>
-    </svg>
+    <CharacterInACircle character={platformName.charAt(0)} fill={iconColour} />
   )
 }
 
