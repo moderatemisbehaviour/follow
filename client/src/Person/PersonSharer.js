@@ -38,7 +38,13 @@ function PersonSharer(props) {
           />
           <input id="copied-message" readOnly type="text" value="Copied!" />
         </span>
-        <button id="copy-button" onClick={copySharingLink}>
+        <button
+          id="copy-button"
+          onClick={() => {
+            copySharingLink()
+            window.analytics.track('Copied link', { id })
+          }}
+        >
           <img alt="copy icon" src={copyIcon} />
         </button>
       </div>
