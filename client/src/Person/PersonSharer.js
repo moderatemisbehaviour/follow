@@ -42,7 +42,7 @@ function PersonSharer(props) {
           id="copy-button"
           onClick={() => {
             copySharingLink()
-            window.analytics.track('Copied link', { id })
+            window.analytics.track('Copied sharing link', { id })
           }}
         >
           <img alt="copy icon" src={copyIcon} />
