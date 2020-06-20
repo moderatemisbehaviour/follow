@@ -5,9 +5,7 @@ import home from '../common/icons/home.svg'
 function HomeLink(props) {
   return (
     <Link to="/">
-      <button id="home">
-        <img src={home} alt="home button"></img>
-      </button>
+      <img id="home" src={home} alt="home button"></img>
     </Link>
   )
 }

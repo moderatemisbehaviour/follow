@@ -2,6 +2,7 @@ import { createBrowserHistory } from 'history'
 import React from 'react'
 import { Route, Router, Switch } from 'react-router-dom'
 import About from './About'
+import Attributions from './Attributions'
 import PersonSite from './Person/PersonSite'
 import PersonViewer from './Person/PersonViewer'
 
@@ -15,6 +16,7 @@ function App(props) {
     <Router history={history}>
       <Switch>
         <Route path={'/about'} component={About} />
+        <Route path={'/attributions'} component={Attributions} />
         <Route path={'/person/:id/view'}>
           {({ match }) => {
             const id = match === null ? null : match.params.id
