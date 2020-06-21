@@ -1,3 +1,4 @@
+import Emoji from 'a11y-react-emoji'
 import React from 'react'
 import './About.css'
 import Footer from './common/Footer'
@@ -50,7 +51,8 @@ function About() {
         If you think you&apos;d benefit from our mission then we&apos;d love you
         to help us shape the product and build it with us! The easiest way you
         can do this is by using the app, creating profiles, and providing any
-        other feedback you have using the contact information below 👇
+        other feedback you have using the contact information below{' '}
+        <Emoji symbol="👇" label="finger pointing down" /> open-source.
       </p>
       <ContactOptions />
       <Footer />
