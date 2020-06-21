@@ -36,10 +36,6 @@ describe('the home page.', function() {
   it("displays a 'learn more' button in the content area", () => {
     cy.get('a').contains('Learn more')
   })
-
-  it('does not display a home icon button', function() {
-    cy.get('#home').should('not.exist')
-  })
 })
 
 describe('every page other than the home page', function() {
