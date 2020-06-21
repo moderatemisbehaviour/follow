@@ -1,31 +1,25 @@
 #footer {
-  align-items: center;
-  /* background-color: #424242; */
-  /* color: white; */
   display: flex;
-  justify-content: center;
   margin-top: auto;
   padding-top: 1.61rem;
-  text-align: center;
   width: 100%;
 }
 
+.left, .right {
+  flex-basis: 0;
+  flex-grow: 1;
+}
+
+.left {
+  text-align: end;
+}
+
+.right {
+  text-align: start;
+}
+
 #footer a {
-  /* height: 3rem; */
   margin: 0 0.5rem;
   text-decoration: none;
   color: unset;
-  /* width: 7rem; */
-}
-
-/* #footer a::after {
-  content: " \00b7";
-}
-
-#footer a:last-child::after {
-  content: none;
-} */
-
-#home {
-  width: auto;
 }
