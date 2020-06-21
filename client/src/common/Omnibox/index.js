@@ -72,7 +72,7 @@ function Omnibox(props) {
           setInputValue(event.target.value)
           setQueryDebounced(setQuery, event.target.value)
         }}
-        prompt="Type a person's name or / to see available commands"
+        prompt="Type a person's name"
         inputRef={inputRef}
         type="search"
         value={inputValue}

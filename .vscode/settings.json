@@ -4,6 +4,7 @@
     "source.organizeImports": true
   },
   "files.exclude": {
+    ".yarn/releases": true,
     "**/build": true
   }
 }

@@ -1,12 +1,22 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import './Footer.css'
 import HomeLink from './HomeLink'
 
 function Footer() {
   const location = useLocation()
   return (
-    <div id="footer">{location.pathname === '/' ? null : <HomeLink />}</div>
+    <div id="footer">
+      <Link to="/attributions">Attributions</Link>
+      <span>&#183;</span>
+      {location.pathname === '/' ? null : (
+        <React.Fragment>
+          <HomeLink />
+          <span>&#183;</span>
+        </React.Fragment>
+      )}
+      <Link to="/contact">Contact</Link>
+    </div>
   )
 }
 

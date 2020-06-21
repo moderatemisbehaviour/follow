@@ -42,13 +42,15 @@ function PersonResults(props) {
   const getPeopleCountResult = useQuery(GET_PEOPLE_COUNT, {
     variables: { query: props.query },
     fetchPolicy: 'cache-and-network',
+    // TODO: Was necessary to call callback here rather than at the top level of the component because React hooks does it was triggering a setState in Omnibox during its render which React hooks does not like.
+    onCompleted: data =>
+      props.setResultsCount(
+        !data.loading && !data.error
+          ? getPeopleCountResult.data.peopleCount
+          : null
+      ),
     skip: !props.query
   })
-  props.setResultsCount(
-    !getPeopleCountResult.loading && !getPeopleCountResult.error
-      ? getPeopleCountResult.data.peopleCount
-      : null
-  )
 
   return (
     <React.Fragment>
@@ -86,7 +88,7 @@ const GET_PEOPLE = gql`
       id
       name
       image
-      profiles
+      # profiles TODO: Figure out how to avoid error due to the link for the profile being nested in the link for the result.
     }
   }
 `

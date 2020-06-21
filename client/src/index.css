@@ -58,6 +58,7 @@ body {
 button {
   background-color: white;
   border-radius: 0.2rem;
+  border-width: 1px;
   font-size: 1rem;
   margin: 1rem auto;
   padding: 0.62rem;
@@ -65,7 +66,12 @@ button {
 }
 
 h1 {
-  margin: 1rem;
+  font-size: 2.59rem;
+  margin: 1rem 0;
+}
+
+h2 {
+  font-size: 1.61rem;
 }
 
 input {

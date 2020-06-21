@@ -49,7 +49,6 @@ describe('every page other than the home page', function() {
 
   it('displays a home icon button', function() {
     cy.get('#home')
-      .find('img')
       .should('have.attr', 'src')
       .and('contains', 'home')
   })

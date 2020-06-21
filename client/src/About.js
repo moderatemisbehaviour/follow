@@ -1,22 +1,26 @@
+import Emoji from 'a11y-react-emoji'
 import React from 'react'
 import './About.css'
 import Footer from './common/Footer'
-import logo from './common/icons/logo.png'
 import ContactOptions from './common/Omnibox/CommandResults/ContactOptions'
-import Name from './Person/Name'
 import Profiles from './Profiles/Profiles'
 
 function About() {
   return (
     <div id="about">
-      <Name name="Follow people, not platforms" />
+      <h1>About</h1>
       <p>
-        Our mission is to replace <em>these</em>:
+        Our mission is to bring people closer by making the platforms they use
+        an unimportant detail.
+      </p>
+      <p>
+        How many times have you seen something like this on a person&apos;s
+        website?
       </p>
       <Profiles
         profiles={[
           'https://www.youtube.com/channel/UCaWhrUvqBbsFbo23_dE2maw',
-          'https://instagram.com',
+          'https://www.instagram.com/moderatemisbehaviour/',
           'https://www.facebook.com/moderatemisbehaviour',
           'https://uk.linkedin.com/in/mrdanielmetcalfe',
           'https://twitter.com/mrdanmetcalfe',
@@ -24,29 +28,31 @@ function About() {
         ]}
       />
       <p>
-        With <em>this</em>:
+        Why can&apos;t you just follow the person you are interested in on the
+        platforms you use with a single click?
       </p>
-      <img
-        alt="People Not Platforms logo"
-        src={logo}
-        width={100}
-        height={100}
-      ></img>
+      <h2>This is just the beginning</h2>
       <p>
-        {`Because we think that following the people you care about on the platforms
-        you use should be as easy as a single click!`}
+        What you&apos;re using right now is just an early iteration of our
+        product, you can think of it a bit like a digital business card that
+        encapsulates your online presence and gives you a single link to share
+        with others.
       </p>
-      <h1>This is just the beginning</h1>
+      <iframe
+        src="https://peoplenotplatforms.com/person/5eef2e0fa1f40f00213627d9/view"
+        title="Example profile"
+      ></iframe>
       <p>
-        {`What you're using right now is just an early iteration of our product, you can think of it a bit like a digital business card that encapsulates your online presence and gives you a single link to share with others.
-        While we've not achieved the one-click dream just yet, this is an important stepping stone on that path.`}
+        While we&apos;ve not achieved the one-click dream just yet, this is an
+        important stepping stone on that path.
       </p>
-      <h1>Let us know what you think</h1>
+      <h2>Let us know what you think</h2>
       <p>
-        {`If you think you'd benefit from our mission then we'd love you to help us shape the
-        product and build it with us! The easiest way you can do this is by using the
-        app, creating profiles, and providing any other feedback you have using
-        the contact information below 👇`}
+        If you think you&apos;d benefit from our mission then we&apos;d love you
+        to help us shape the product and build it with us! The easiest way you
+        can do this is by using the app, creating profiles, and providing any
+        other feedback you have using the contact information below{' '}
+        <Emoji symbol="👇" label="finger pointing down" /> open-source.
       </p>
       <ContactOptions />
       <Footer />

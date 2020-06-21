@@ -22,57 +22,32 @@ function PersonSite(props) {
         <Route path={'/person/create'}>
           {({ location }) => {
             const name = location.search.replace('?name=', '')
-            return (
-              <React.Fragment>
-                <PersonCreator person={{ name }} />
-                <Footer location={location} />
-              </React.Fragment>
-            )
+            return <PersonCreator person={{ name }} />
           }}
         </Route>
         <Route path={'/person/:id/edit'}>
-          {({ location, match }) => {
+          {({ match }) => {
             const id = match === null ? null : match.params.id
-            return (
-              <React.Fragment>
-                <PersonEditor id={id} />
-                <Footer location={location} />
-              </React.Fragment>
-            )
+            return <PersonEditor id={id} />
           }}
         </Route>
         {/* TODO: Ditch switch so you can just change the appropriate bit. */}
         <Route path={'/person/:id/share'}>
-          {({ location, match }) => {
+          {({ match }) => {
             const id = match === null ? null : match.params.id
-            return (
-              <React.Fragment>
-                <PersonSharer id={id} />
-                <Footer location={location} />
-              </React.Fragment>
-            )
+            return <PersonSharer id={id} />
           }}
         </Route>
         <Route path={'/person/:id/embed'}>
-          {({ location, match }) => {
+          {({ match }) => {
             const id = match === null ? null : match.params.id
-            return (
-              <React.Fragment>
-                <PersonEmbedder id={id} />
-                <Footer location={location} />
-              </React.Fragment>
-            )
+            return <PersonEmbedder id={id} />
           }}
         </Route>
         <Route path={'/person/:id'}>
-          {({ location, match }) => {
+          {({ match }) => {
             const id = match === null ? null : match.params.id
-            return (
-              <React.Fragment>
-                <PersonBrowser id={id} />
-                <Footer location={location} />
-              </React.Fragment>
-            )
+            return <PersonBrowser id={id} />
           }}
         </Route>
         <Route>
@@ -93,6 +68,7 @@ function PersonSite(props) {
           )}
         </Route>
       </Switch>
+      <Route component={Footer} />
     </div>
   )
 }
