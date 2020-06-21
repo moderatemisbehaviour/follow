@@ -4,14 +4,13 @@
   margin: 0 auto;
   min-height: 100vh;
   max-width: 825px;
-  min-width: 500px;
   padding: 1rem;
   text-align: center;
 }
 
 /* TODO: Make this unnecessary, get it to resize dynamically in all situations. */
 #about iframe {
-  height: 200px;
+  height: 600px;
   margin: 1rem auto;
-  width: 500px;
+  width: 375px;
 }

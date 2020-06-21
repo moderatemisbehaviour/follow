@@ -38,6 +38,8 @@ function About() {
         encapsulates your online presence and gives you a single link to share
         with others.
       </p>
+      <p>Here&apos;s an example!</p>
+      {/* TODO: Fix this for smaller sizes */}
       <iframe
         src="https://peoplenotplatforms.com/person/5eef2e0fa1f40f00213627d9/view"
         title="Example profile"
@@ -52,7 +54,7 @@ function About() {
         to help us shape the product and build it with us! The easiest way you
         can do this is by using the app, creating profiles, and providing any
         other feedback you have using the contact information below{' '}
-        <Emoji symbol="👇" label="finger pointing down" /> open-source.
+        <Emoji symbol="👇" label="finger pointing down" />.
       </p>
       <ContactOptions />
       <Footer />
