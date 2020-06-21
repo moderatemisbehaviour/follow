@@ -19,7 +19,7 @@ function About() {
       <Profiles
         profiles={[
           'https://www.youtube.com/channel/UCaWhrUvqBbsFbo23_dE2maw',
-          'https://instagram.com',
+          'https://www.instagram.com/moderatemisbehaviour/',
           'https://www.facebook.com/moderatemisbehaviour',
           'https://uk.linkedin.com/in/mrdanielmetcalfe',
           'https://twitter.com/mrdanmetcalfe',
@@ -27,8 +27,7 @@ function About() {
         ]}
       />
       <p>
-        Some of these platforms you&apos;ll use and some you won&apos;t. Why
-        can&apos;t you just follow the person you are interested in on the
+        Why can&apos;t you just follow the person you are interested in on the
         platforms you use with a single click?
       </p>
       <h2>This is just the beginning</h2>
@@ -36,8 +35,15 @@ function About() {
         What you&apos;re using right now is just an early iteration of our
         product, you can think of it a bit like a digital business card that
         encapsulates your online presence and gives you a single link to share
-        with others. While we&apos;ve not achieved the one-click dream just yet,
-        this is an important stepping stone on that path.
+        with others.
+      </p>
+      <iframe
+        src="https://peoplenotplatforms.com/person/5eef2e0fa1f40f00213627d9/view"
+        title="Example profile"
+      ></iframe>
+      <p>
+        While we&apos;ve not achieved the one-click dream just yet, this is an
+        important stepping stone on that path.
       </p>
       <h2>Let us know what you think</h2>
       <p>

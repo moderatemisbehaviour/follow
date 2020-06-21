@@ -1,3 +1,4 @@
+import Emoji from 'a11y-react-emoji'
 import React from 'react'
 import './Attributions.css'
 import Footer from './common/Footer'
@@ -6,14 +7,25 @@ function Attributions(props) {
   return (
     <div id="attributions">
       <h1>Attributions</h1>
-      <p>Many fantastic projects make People Not Platforms possible.</p>
+      <p>
+        We&apos;re very lucky to live in an age with so much high-quality, free
+        software available to help us build the next generation of apps. Like so
+        many other projects, People Not Platforms is just a thin layer of icing
+        on top of a huge open-source cake. A great deal is owed to the hard work
+        and dedication of people who donate their work for the greater good.
+      </p>
+      <p>
+        We <Emoji symbol="❤️" label="love" /> open-source.
+      </p>
       <h2>Icons</h2>
       <ul>
         <li>
-          <a href="https://clearbit.com">Logos provided by Clearbit</a>. Logos
-          are not displayed directly but they are fetched and used to calculate
-          a background colour for the &apos;letter-in-circle&apos; style
-          platform icons.
+          <a href="https://clearbit.com">Logos provided by Clearbit</a>.{' '}
+          <em>
+            Logos are not displayed directly but they are fetched and used to
+            calculate a background colour for the &apos;letter-in-circle&apos;
+            style platform icons.
+          </em>
         </li>
         <li>
           <a href="https://www.iconfinder.com/icons/1632517/circle_instagram_photos_round_icon_social_media_social_network_icon">
@@ -77,8 +89,17 @@ function Attributions(props) {
       </ul>
       <h2>Software</h2>
       <ul>
+        <li>Apollo</li>
         <li>Cypress</li>
+        <li>Enzyme</li>
+        <li>ESLint</li>
         <li>Jest</li>
+        <li>MongoDB</li>
+        <li>Node.js</li>
+        <li>React</li>
+        <li>VS Code</li>
+        <li>Yarn</li>
+        <li>...and more!</li>
       </ul>
       <Footer />
     </div>
