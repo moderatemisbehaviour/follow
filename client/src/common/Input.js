@@ -1,7 +1,7 @@
-import React from 'react'
 import PropTypes from 'prop-types'
-
+import React from 'react'
 import './Input.css'
+
 
 Input.propTypes = {
   inputRef: PropTypes.shape({}),
@@ -16,7 +16,6 @@ Input.propTypes = {
 function Input(props) {
   return (
     <input
-      autoFocus
       id="the-input"
       className={`${props.invalid ? ' invalid' : ''}`} // TODO: Remove this
       onChange={props.onChange}
