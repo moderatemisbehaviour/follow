@@ -2,7 +2,6 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import './Input.css'
 
-
 Input.propTypes = {
   inputRef: PropTypes.shape({}),
   invalid: PropTypes.bool,

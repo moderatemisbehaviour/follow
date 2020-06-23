@@ -7,6 +7,7 @@
     "a11y-react-emoji": "^1.1.2",
     "apollo-boost": "^0.4.7",
     "debounce": "^1.2.0",
+    "feature-js": "^0.0.1",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.10.0",
     "node-vibrant": "3.0.0",

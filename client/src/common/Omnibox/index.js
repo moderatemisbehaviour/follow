@@ -1,4 +1,5 @@
 import { debounce } from 'debounce'
+import feature from 'feature-js'
 import PropTypes from 'prop-types'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom'
@@ -41,7 +42,7 @@ function Omnibox(props) {
   // always running whereas this one was waiting for query to change.
   useEffect(() => {
     if (query) document.title = `Searching for ${query}`
-    else focusInput()
+    else if (!feature.touch) focusInput()
   })
 
   const inputRef = useRef()
