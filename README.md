@@ -108,6 +108,10 @@ An entity that consumes content created by a _publisher_.
 A service used by _puslishers_ for distributing their content.
 E.g. Twitter, YouTube, Facebook.
 
+### Profile
+
+A representation of a person's online presence that encapsulates all the platforms they use.
+
 # Code quality and style
 ESLint is used to enforce quality and Prettier is used to enforce style.
 The **eslint-config-prettier~** package is used to disable all formatting-related ESLint rules so that Prettier can do its thing.
