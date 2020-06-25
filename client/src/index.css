@@ -100,8 +100,21 @@ input:disabled {
 }
 
 li {
-  list-style-type: none;
   padding: 0.62rem;
+}
+
+ol li {
+  list-style-type: none;
+}
+
+ul li {
+  padding: 0;
+  margin: 1rem 0;
+  list-style-type: unset;
+}
+
+ul {
+  margin-left: 1rem;
 }
 
 .placeholder {
@@ -109,6 +122,6 @@ li {
 }
 
 p {
-  margin: 1rem auto;
+  margin: 1rem 0;
   max-width: 900px;
 }
