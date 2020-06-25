@@ -16,7 +16,7 @@ Input.propTypes = {
 function Input(props) {
   useEffect(() => {
     if (!feature.touch) props.inputRef.current.focus()
-  }, [])
+  }, [props.inputRef])
 
   return (
     <input
