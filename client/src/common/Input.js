@@ -1,9 +1,10 @@
+import feature from 'feature-js'
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { useEffect } from 'react'
 import './Input.css'
 
 Input.propTypes = {
-  inputRef: PropTypes.shape({}),
+  inputRef: PropTypes.object,
   invalid: PropTypes.bool,
   onChange: PropTypes.func,
   onKeyDown: PropTypes.func,
@@ -13,6 +14,10 @@ Input.propTypes = {
 }
 
 function Input(props) {
+  useEffect(() => {
+    if (!feature.touch) props.inputRef.current.focus()
+  }, [])
+
   return (
     <input
       id="the-input"
