@@ -6,6 +6,7 @@ import Attributions from './Attributions'
 import Contact from './Contact'
 import PersonSite from './Person/PersonSite'
 import PersonViewer from './Person/PersonViewer'
+import Privacy from './Privacy'
 
 const history = createBrowserHistory()
 history.listen(() => {
@@ -25,6 +26,7 @@ function App(props) {
             return <PersonViewer id={id} />
           }}
         </Route>
+        <Route path={'/privacy'} component={Privacy} />
         <Route>
           <PersonSite />
         </Route>

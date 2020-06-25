@@ -7,6 +7,8 @@ function Footer() {
   return (
     <div id="footer">
       <div className="left">
+        <Link to="/about">About</Link>
+        <span>&#183;</span>
         <Link to="/attributions">Attributions</Link>
         <span>&#183;</span>
       </div>
@@ -16,6 +18,8 @@ function Footer() {
       <div className="right">
         <span>&#183;</span>
         <Link to="/contact">Contact</Link>
+        <span>&#183;</span>
+        <Link to="/privacy">Privacy</Link>
       </div>
     </div>
   )
