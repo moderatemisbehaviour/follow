@@ -1,5 +1,6 @@
 const { DataSource } = require('apollo-datasource')
 const { ObjectID } = require('mongodb') // TODO: Remove the need for this dependency
+const replaceMongoIdWithApplicationId = require('./replaceMongoIdWithApplicationId.js') // TODO: Use inheritance to avoid these imports duplicated in all Mongo data sources.
 
 // TODO: Replace with Mongo community data source
 class PeopleDataSource extends DataSource {
@@ -33,7 +34,7 @@ class PeopleDataSource extends DataSource {
     }
 
     const editedPerson = result.value
-    return PeopleDataSource.replaceMongoIdWithApplicationId(editedPerson)
+    return replaceMongoIdWithApplicationId(editedPerson)
   }
 
   async getPeople(query, resultsPerPage = 5, startingPopularity = 1) {
@@ -47,7 +48,7 @@ class PeopleDataSource extends DataSource {
       .sort({ popularity: 1 })
       .limit(resultsPerPage)
     const people = await cursor.toArray()
-    return people.map(PeopleDataSource.replaceMongoIdWithApplicationId)
+    return people.map(replaceMongoIdWithApplicationId)
   }
 
   async getPeopleCount(query) {
@@ -61,13 +62,7 @@ class PeopleDataSource extends DataSource {
   async getPerson(id) {
     const query = { _id: new ObjectID(id) }
     const person = await this.collection.findOne(query)
-    return PeopleDataSource.replaceMongoIdWithApplicationId(person)
-  }
-
-  static replaceMongoIdWithApplicationId(person) {
-    person.id = person._id.toHexString()
-    delete person._id
-    return person
+    return replaceMongoIdWithApplicationId(person)
   }
 }
 

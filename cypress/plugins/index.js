@@ -25,6 +25,7 @@ module.exports = async (on, config) => {
   ).connect()
   const peopleCollection = databaseClient.db.collection('people')
   const peopleDataSource = new PeopleDataSource(databaseClient.db)
+  const usersCollection = databaseClient.db.collection('users')
 
   on('task', {
     async resetDatabase() {
@@ -55,6 +56,9 @@ module.exports = async (on, config) => {
     },
     async createPeople() {
       return createPeople(databaseClient)
+    },
+    async findUser(email) {
+      return usersCollection.findOne({ email })
     }
   })
 

@@ -251,8 +251,8 @@ describe('the cache', () => {
     cy.get('.results-count').contains(0)
     cy.get('.result').should('have.length', 0)
 
-    cy.fixture('dan.json').then(Danhan => {
-      cy.task('createPerson', Danhan)
+    cy.fixture('dan.json').then(dan => {
+      cy.task('createPerson', dan)
     })
 
     cy.get('#omnibox input').clear()

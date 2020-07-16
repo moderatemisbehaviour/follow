@@ -1,21 +1,15 @@
 import React from 'react'
-import { Route, Switch, useHistory } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import Footer from '../common/Footer'
-import NextOption from '../common/NextSteps/NextOption'
-import Omnibox from '../common/Omnibox'
-import CommandResults from '../common/Omnibox/CommandResults'
-import Home from '../Home'
+import LandingPage from '../LandingPage'
 import PersonBrowser from './PersonBrowser'
 import PersonCreator from './PersonCreator'
 import PersonEditor from './PersonEditor'
 import PersonEmbedder from './PersonEmbedder'
-import PersonResults from './PersonResults'
 import PersonSharer from './PersonSharer'
 import './PersonSite.css'
 
 function PersonSite(props) {
-  const history = useHistory()
-
   return (
     <div id="person-site">
       <Switch>
@@ -50,23 +44,7 @@ function PersonSite(props) {
             return <PersonBrowser id={id} />
           }}
         </Route>
-        <Route>
-          {() => (
-            <React.Fragment>
-              <Home />
-              <Omnibox
-                getResultsComponent={query =>
-                  query.startsWith('/') ? CommandResults : PersonResults
-                }
-              />
-              <NextOption
-                className="continue"
-                label="Create a profile"
-                onClick={() => history.push('/person/create')}
-              />
-            </React.Fragment>
-          )}
-        </Route>
+        <Route component={LandingPage} />
       </Switch>
       <Route component={Footer} />
     </div>

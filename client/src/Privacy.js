@@ -25,7 +25,7 @@ function Privacy(props) {
         visitor closes their browser and comes back later we know its the same
         individual (or at least another individual using the same browser).
       </p>
-      <p>Here are some examples of data we collect about anonymous visitors</p>
+      <p>Here are some examples of data we collect about anonymous visitors.</p>
       <ul>
         <li>
           <b>Page visits</b>, e.g. Anonymous visitor 7edm3k5 visited{' '}

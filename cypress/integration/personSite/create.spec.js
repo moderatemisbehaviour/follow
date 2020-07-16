@@ -5,6 +5,10 @@ beforeEach(function() {
   cy.visit('/person/create')
 })
 
+it("doesn't allow profile creation when the user is not logged in", function() {
+  // TODO: Implemenr this.
+})
+
 it("updates the document title, using the 'name' query param if it exists", function() {
   cy.title().should('eq', 'Create person')
   cy.visit('/person/create?name=Daniel')

@@ -9,6 +9,13 @@ const typeDefs = gql`
     ): [Person]!
     peopleCount(query: String!): Int!
     person(id: ID!): Person
+    user: User!
+  }
+
+  type Mutation {
+    createPerson(person: PersonInput!): Person
+    editPerson(id: ID!, person: PersonInput!): Person
+    upsertUser(user: UserInput!): User
   }
 
   type Person {
@@ -24,9 +31,16 @@ const typeDefs = gql`
     image: String
   }
 
-  type Mutation {
-    createPerson(person: PersonInput!): Person
-    editPerson(id: ID!, person: PersonInput!): Person
+  type User {
+    email: String!
+    image: String
+    name: String!
+  }
+
+  input UserInput {
+    email: String!
+    image: String
+    name: String!
   }
 `
 
