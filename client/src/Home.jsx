@@ -6,19 +6,22 @@ import { useHistory } from 'react-router-dom'
 import Footer from './common/Footer'
 import NextOption from './common/NextSteps/NextOption'
 import './Home.css'
-import isLoggedIn from './isLoggedIn'
 import ResponsiveContainer from './layout/ResponsiveContainer'
+import { useCookies } from 'react-cookie'
 
 function Home(props) {
   const history = useHistory()
   const { loading, error, data } = useQuery(GET_USER)
+  const [cookies] = useCookies(['isLoggedIn'])
 
   return (
     <ResponsiveContainer>
       <div id="home" style={{ textAlign: 'center' }}>
-        <h1>Welcome{!loading && !error ? ` ${data.user.name}` : ''}!</h1>
+        <h1>
+          Welcome{!loading && !error && data.user ? ` ${data.user.name}` : ''}!
+        </h1>
         <div className="content">
-          {isLoggedIn() ? (
+          {cookies.isLoggedIn ? (
             <div className="create-profile-prompt">
               <p>
                 To get started create a profile that you can share with others

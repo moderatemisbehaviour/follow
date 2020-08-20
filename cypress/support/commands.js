@@ -24,5 +24,17 @@
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 Cypress.Commands.add('login', () => {
-  cy.setCookie('isLoggedIn', 'true')
+  cy.fixture('users/dan.json')
+    .then(dan => {
+      const userId = 'fakeUserId'
+      cy.task('createUser', {
+        _id: userId,
+        ...dan
+      })
+      cy.task('createSession', { userId })
+    })
+    .then(signed => {
+      cy.setCookie('isLoggedIn', 'true')
+      cy.setCookie('connect.sid', signed)
+    })
 })

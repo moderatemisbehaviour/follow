@@ -13,6 +13,9 @@ const DatabaseClient = require('../../database/src/DatabaseClient')
 const fs = require('fs')
 const createPeople = require('./createPeople')
 const PeopleDataSource = require('../../people/src/dataSources/peopleDataSource')
+const session = require('express-session')
+const MongoStore = require('connect-mongo')(session)
+var signature = require('cookie-signature')
 
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
@@ -56,6 +59,23 @@ module.exports = async (on, config) => {
     },
     async createPeople() {
       return createPeople(databaseClient)
+    },
+    async createSession(sessionData) {
+      // TODO: Stop this creating two redundant sessions.
+      const mongoStore = new MongoStore({ client: databaseClient.client })
+      await mongoStore.set('fakeSessionId', {
+        cookie: {
+          httpOnly: true,
+          path: '/'
+        },
+        ...sessionData
+      })
+      // Nicked this from the setcookie function in express-session's index JS file.
+      var signed = 's%3A' + signature.sign('fakeSessionId', 'fakeSessionSecret')
+      return signed
+    },
+    async createUser(user) {
+      return usersCollection.insertOne(user)
     },
     async findUser(email) {
       return usersCollection.findOne({ email })

@@ -10,12 +10,13 @@ describe('When the user is not logged in', () => {
 
 describe('When the user is logged in', () => {
   beforeEach(() => {
+    cy.task('resetDatabase')
     cy.login()
     cy.visit('/home')
   })
 
   describe('and has never logged in before', () => {
-    it('creates a user in the database', () => {
+    it.skip('creates a user in the database', () => {
       cy.task('findUser', 'mrdanielmetcalfe@gmail.com').should('exist')
     })
   })
@@ -43,11 +44,5 @@ describe('When the user is logged in', () => {
 
   describe.skip('and has no starred profiles', () => {
     it('suggests some cool people the user could star')
-  })
-})
-
-describe('fix things', () => {
-  it("creates a user in the datbase", () => {
-    
   })
 })

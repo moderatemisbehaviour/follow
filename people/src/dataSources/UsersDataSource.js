@@ -1,6 +1,4 @@
 const { DataSource } = require('apollo-datasource')
-const { ObjectID } = require('mongodb')
-const replaceMongoIdWithApplicationId = require('./replaceMongoIdWithApplicationId.js')
 
 // TODO: Replace with Mongo community data source
 class UsersDataSource extends DataSource {
@@ -11,9 +9,9 @@ class UsersDataSource extends DataSource {
   }
 
   async getUser(id) {
-    const query = { _id: new ObjectID(id) }
+    const query = { _id: id }
     const user = await this.collection.findOne(query)
-    return replaceMongoIdWithApplicationId(user)
+    return user
   }
 
   async upsertUser(user) {

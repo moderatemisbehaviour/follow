@@ -15,7 +15,7 @@ function createLoginRoute(databaseClient) {
 
       const user = {
         email: payload.email,
-        image: payload.imageUrl,
+        image: payload.picture,
         name: payload.name
       }
       const upsertedUser = await upsertUser(user)

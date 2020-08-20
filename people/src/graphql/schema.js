@@ -9,7 +9,7 @@ const typeDefs = gql`
     ): [Person]!
     peopleCount(query: String!): Int!
     person(id: ID!): Person
-    user: User!
+    user: User
   }
 
   type Mutation {

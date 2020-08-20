@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import home from '../common/icons/home.svg'
 
-function HomeLink(props) {
+function LoggedOutHomeLink(props) {
   return (
     <Link id="home" to="/">
       <img src={home} alt="home button"></img>
@@ -10,4 +10,4 @@ function HomeLink(props) {
   )
 }
 
-export default HomeLink
+export default LoggedOutHomeLink

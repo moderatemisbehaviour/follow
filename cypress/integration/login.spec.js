@@ -36,5 +36,33 @@ describe('When there is no session for the user', () => {
 })
 
 describe('When there is a session for the user', () => {
+  beforeEach(() => {
+    cy.task('resetDatabase')
+    cy.login()
+    cy.fixture('users/dan.json').as('dan')
+    cy.visit('/')
+  })
+
+  it('replaces the home icon with the user image that acts as a link to the home page', function() {
+    cy.get('#user-home')
+      .find('.image')
+      .should('have.css', 'background-image', `url("${this.dan.image}")`)
+    cy.get('#user-home')
+      .find('.image')
+      .click()
+    cy.location('pathname').should('eq', '/home')
+  })
+
+  // TODO: Figure out how to test this without actual token and Google OAuth API.
   it.skip('refreshes the expiration of the session and tells the browser', () => {})
+
+  it('displays a sign out button underneath the user image', function() {
+    cy.get('#signout')
+      .should('have.text', 'Sign out')
+      .click()
+    cy.get('#user-home').should('not.exist')
+    cy.get('#home').should('exist')
+    cy.getCookie('isLoggedIn').should('be.null')
+    cy.getCookie('connect.sid').should('be.null')
+  })
 })
