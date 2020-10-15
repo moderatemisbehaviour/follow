@@ -105,7 +105,7 @@ An entity that consumes content created by a _publisher_.
 
 ### Platform
 
-A service used by _puslishers_ for distributing their content.
+A service used by _publishers_ for distributing their content.
 E.g. Twitter, YouTube, Facebook.
 
 ### Profile

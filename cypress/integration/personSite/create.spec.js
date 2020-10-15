@@ -156,7 +156,7 @@ describe('adding more information', function() {
 
 describe('editing properties that have already been created', function() {
   beforeEach(function() {
-    cy.fixture('dan.json')
+    cy.fixture('people/dan.json')
       .as('dan')
       .then(dan => {
         cy.get('#the-input').type(dan.name)
@@ -187,7 +187,7 @@ describe('editing properties that have already been created', function() {
 
 describe('saving the person', function() {
   beforeEach(function() {
-    cy.fixture('dan.json')
+    cy.fixture('people/dan.json')
       .as('dan')
       .then(dan => {
         cy.get('#the-input').type(dan.name)

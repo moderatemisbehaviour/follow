@@ -57,7 +57,7 @@ describe('that has all optional properties', function() {
 
 describe('that has no profile image', function() {
   beforeEach(function() {
-    cy.fixture('dan.json')
+    cy.fixture('people/dan.json')
       .then(dan => {
         delete dan.image
         return cy.task('createPerson', { ...dan, popularity: 2 })

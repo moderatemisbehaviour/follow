@@ -26,13 +26,13 @@ beforeEach(async () => {
 
   dan = JSON.parse(
     fs.readFileSync(
-      path.resolve(`${__dirname}/../../../cypress/fixtures/dan.json`),
+      path.resolve(`${__dirname}/../../../cypress/fixtures/people/dan.json`),
       'utf8'
     )
   )
   elon = JSON.parse(
     fs.readFileSync(
-      path.resolve(`${__dirname}/../../../cypress/fixtures/elon.json`),
+      path.resolve(`${__dirname}/../../../cypress/fixtures/people/elon.json`),
       'utf8'
     )
   )
@@ -41,8 +41,10 @@ beforeEach(async () => {
 describe('create person', () => {
   describe('when the object is valid', () => {
     it('returns an object', async () => {
-      const actualResponse = await peopleDataSource.createPerson(dan)
-      await peopleDataSource.createPerson(dan)
+      const actualResponse = await peopleDataSource.createPerson(
+        dan,
+        'fakeUserId'
+      )
       expect(actualResponse).toMatchObject(dan)
       expect(actualResponse.id).toMatch(/[\d\w]{24}/)
     })
@@ -56,6 +58,14 @@ describe('create person', () => {
 
       expect(updatedDan.popularity).toBe(1)
       expect(updatedElon.popularity).toBe(2)
+    })
+
+    it('records the user who created the person', async () => {
+      const actualResponse = await peopleDataSource.createPerson(
+        dan,
+        'fakeUserId'
+      )
+      expect(actualResponse.creator).toEqual('fakeUserId')
     })
   })
 

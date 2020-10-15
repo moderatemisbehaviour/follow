@@ -15,8 +15,11 @@ function PersonSite(props) {
       <Switch>
         <Route path={'/person/create'}>
           {({ location }) => {
-            const name = location.search.replace('?name=', '')
-            return <PersonCreator person={{ name }} />
+            const searchParams = new URLSearchParams(location.search)
+            const name = searchParams.get('name')
+            const image = searchParams.get('image')
+            const profiles = searchParams.getAll('profile')
+            return <PersonCreator person={{ name, image, profiles }} />
           }}
         </Route>
         <Route path={'/person/:id/edit'}>

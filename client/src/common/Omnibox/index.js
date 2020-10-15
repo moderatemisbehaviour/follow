@@ -3,6 +3,7 @@ import feature from 'feature-js'
 import PropTypes from 'prop-types'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import CreatePersonPrompt from '../../Person/CreatePersonPrompt'
 import Input from '../Input'
 import makeResultsKeyboardNavigationEventHandler from './makeResultsKeyboardNavigationEventHandler'
 import makeResultsPagerKeyboardNavigationEventHandler from './makeResultsPagerKeyboardNavigationEventHandler'
@@ -124,7 +125,9 @@ function Omnibox(props) {
               setQuery(query)
             }}
             setResultsCount={setResultsCount}
-          />
+          >
+            <CreatePersonPrompt key="create-person-prompt" personName={query} />
+          </ResultsComponent>
           {resultsCount !== null ? (
             <ResultsPager
               currentPage={pageNumber}

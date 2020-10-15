@@ -18,8 +18,8 @@ module.exports = {
       dataSources.usersDataSource.getUser(req.session.userId)
   },
   Mutation: {
-    createPerson: async (_, { person }, { dataSources }) =>
-      dataSources.peopleDataSource.createPerson(person),
+    createPerson: async (_, { person }, { dataSources, req }) =>
+      dataSources.peopleDataSource.createPerson(person, req.session.userId),
     editPerson: async (_, { id, person }, { dataSources }) =>
       dataSources.peopleDataSource.editPerson(id, person),
     upsertUser: async (_, { user }, { dataSources, req }) => {

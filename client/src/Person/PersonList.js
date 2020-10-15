@@ -13,7 +13,11 @@ function PersonList(props) {
   return (
     <ol>
       {props.people.map((person, index) => (
-        <Result id={person.id} key={person.id} ref={props.refs[index]}>
+        <Result
+          id={person.id}
+          key={person.id}
+          ref={props.refs ? props.refs[index] : undefined}
+        >
           <Link to={`/person/${person.id}`}>
             <Person {...person} />
           </Link>

@@ -10,16 +10,17 @@ class PeopleDataSource extends DataSource {
     this.collection = this.db.collection('people')
   }
 
-  async createPerson(person) {
+  async createPerson(person, userId) {
     const numberOfPeople = await this.collection.countDocuments()
 
     const result = await this.collection.insertOne({
       ...person,
-      popularity: numberOfPeople + 1
+      popularity: numberOfPeople + 1,
+      creator: userId
     }) // Have to shallow clone the object because insertOne mutates the original to add _id.
     const createdPerson = result.ops[0]
 
-    return PeopleDataSource.replaceMongoIdWithApplicationId(createdPerson)
+    return replaceMongoIdWithApplicationId(createdPerson)
   }
 
   async editPerson(id, person) {
@@ -37,16 +38,22 @@ class PeopleDataSource extends DataSource {
     return replaceMongoIdWithApplicationId(editedPerson)
   }
 
-  async getPeople(query, resultsPerPage = 5, startingPopularity = 1) {
+  async getPeople(query, resultsPerPage, startingPopularity = 1) {
+    const mongoQuery = query.includes(':')
+      ? { creator: query.split(':')[1].trim() }
+      : { name: { $regex: query, $options: 'i' } }
+
     // TODO: This doesn't work if multiple people have the same popularity
     // as then there are more than 5 results per page but the extras are missed.
-    const cursor = await this.collection
+    const cursor = this.collection
       .find({
-        name: { $regex: query, $options: 'i' },
+        ...mongoQuery,
         popularity: { $gte: startingPopularity }
       })
       .sort({ popularity: 1 })
-      .limit(resultsPerPage)
+
+    if (resultsPerPage) cursor.limit(resultsPerPage)
+
     const people = await cursor.toArray()
     return people.map(replaceMongoIdWithApplicationId)
   }

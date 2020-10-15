@@ -38,7 +38,7 @@ module.exports = async (on, config) => {
     async createPerson(fixture) {
       if (!fixture) {
         const dan = JSON.parse(
-          fs.readFileSync('cypress/fixtures/dan.json', 'utf8')
+          fs.readFileSync('cypress/fixtures/people/dan.json', 'utf8')
         )
         fixture = dan
       }
@@ -52,7 +52,7 @@ module.exports = async (on, config) => {
     },
     async createPersonApi() {
       const dan = JSON.parse(
-        fs.readFileSync('cypress/fixtures/dan.json', 'utf8')
+        fs.readFileSync('cypress/fixtures/people/dan.json', 'utf8')
       )
 
       return peopleDataSource.createPerson(dan)
