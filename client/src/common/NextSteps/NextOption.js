@@ -18,6 +18,7 @@ function NextOption(props) {
       onClick={props.onClick}
       type="button"
       value={props.label}
+      {...props}
     />
   )
 }

@@ -37,7 +37,7 @@ function LoggedInHomeLink() {
   )
 }
 
-export const GET_USER_IMAGE = gql`
+const GET_USER_IMAGE = gql`
   query GetUser {
     user {
       image

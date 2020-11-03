@@ -23,20 +23,30 @@
 //
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
-Cypress.Commands.add('login', () => {
-  cy.fixture('users/dan.json')
-    .as('dan')
-    .then(dan => {
-      const userId = 'fakeUserId'
-      cy.task('createUser', {
-        _id: userId,
-        ...dan
+Cypress.Commands.add('login', { prevSubject: 'optional' }, subject => {
+  if (subject) {
+    cy.wrap(subject)
+      .as('user')
+      .then(user => {
+        cy.task('createUser', user)
       })
-      cy.task('createSession', { userId })
-    })
-    .then(signed => {
-      cy.setCookie('isLoggedIn', 'true')
-      cy.setCookie('connect.sid', signed)
-    })
-  cy.get('@dan')
+      .then(user => cy.task('createSession', { userId: user._id }))
+      .then(signed => {
+        cy.setCookie('isLoggedIn', 'true')
+        cy.setCookie('connect.sid', signed)
+      })
+    cy.get('@user')
+  } else {
+    cy.fixture('users/dan.json')
+      .then(dan => {
+        cy.task('createUser', dan)
+      })
+      .as('dan')
+      .then(dan => cy.task('createSession', { userId: dan._id }))
+      .then(signed => {
+        cy.setCookie('isLoggedIn', 'true')
+        cy.setCookie('connect.sid', signed)
+      })
+    cy.get('@dan')
+  }
 })

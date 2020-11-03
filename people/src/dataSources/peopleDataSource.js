@@ -67,6 +67,9 @@ class PeopleDataSource extends DataSource {
   }
 
   async getPerson(id) {
+    // TODO: Decide whether to keep using this.
+    // Doesn't work with non-Mongo IDs like fakeUserId used in tests
+    // replaceMongoIdWithApplicationId also doesn't work with non-Mongo IDs
     const query = { _id: new ObjectID(id) }
     const person = await this.collection.findOne(query)
     return replaceMongoIdWithApplicationId(person)

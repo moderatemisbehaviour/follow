@@ -1,4 +1,5 @@
 const { DataSource } = require('apollo-datasource')
+const { ObjectID } = require('mongodb') // TODO: Remove the need for this dependency
 
 // TODO: Replace with Mongo community data source
 class UsersDataSource extends DataSource {
@@ -9,9 +10,9 @@ class UsersDataSource extends DataSource {
   }
 
   async getUser(id) {
-    const query = { _id: id }
+    const query = { _id: new ObjectID(id) }
     const user = await this.collection.findOne(query)
-    return user
+    return user ? { id: user._id, ...user } : null
   }
 
   async upsertUser(user) {

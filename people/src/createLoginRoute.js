@@ -43,7 +43,10 @@ function createLoginRoute(databaseClient) {
       const result = await usersCollection.findOneAndReplace(
         { email: user.email },
         { ...user },
-        { upsert: true }
+        {
+          returnOriginal: false, // Without this null is returned when the document does not already exist.
+          upsert: true
+        }
       ) // Have to shallow clone the object because insertOne mutates the original to add _id.
 
       return result.value

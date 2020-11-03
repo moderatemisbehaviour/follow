@@ -16,13 +16,23 @@ PersonBrowser.propTypes = {
 function PersonBrowser(props) {
   const history = useHistory()
   const { id } = props
-  const { error, data } = useQuery(GET_PERSON, {
+
+  const getPersonResult = useQuery(GET_PERSON, {
     variables: { id }
   })
+  const person = (getPersonResult.data && getPersonResult.data.person) || {}
+  const getUserResult = useQuery(GET_USER, {
+    skip: !person
+  })
 
-  if (error) return <p>ERROR</p>
+  const userIsCreator =
+    getUserResult.data &&
+    getUserResult.data.user &&
+    getUserResult.data.user.id === person.creator
 
-  const person = (data && data.person) || {}
+  console.log(getUserResult, person)
+
+  if (getPersonResult.error) return <p>ERROR</p>
 
   return (
     <React.Fragment>
@@ -56,9 +66,13 @@ function PersonBrowser(props) {
             [
               {
                 className: 'configure',
+                disabled: !userIsCreator,
                 label: `Edit ${person.name}`,
                 id: 'edit-person',
-                onClick: () => history.push(`/person/${id}/edit`)
+                onClick: () => history.push(`/person/${id}/edit`),
+                title: userIsCreator
+                  ? undefined
+                  : 'You cannot edit this person because you did not create them.'
               }
             ]
           ]}
@@ -72,9 +86,21 @@ const GET_PERSON = gql`
   query GetPerson($id: ID!) {
     person(id: $id) {
       id
+      creator
       name
       image
       profiles
+    }
+  }
+`
+
+const GET_USER = gql`
+  query GetUser {
+    user {
+      id
+      email
+      image
+      name
     }
   }
 `

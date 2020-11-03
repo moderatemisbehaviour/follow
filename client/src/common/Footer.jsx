@@ -1,13 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { useCookies } from 'react-cookie'
 import UnderlineButton from './buttons/UnderlineButton'
 import './Footer.css'
 import LoggedInHomeLink from './LoggedInHomeLink'
 import LoggedOutHomeLink from './LoggedOutHomeLink'
+import useUser from './useUser'
 
 function Footer() {
-  const [cookies] = useCookies(['isLoggedIn'])
+  const user = useUser()
 
   return (
     <div id="footer">
@@ -22,7 +22,7 @@ function Footer() {
         <span>&#183;</span>
       </div>
       <div className="centre">
-        {cookies.isLoggedIn ? <LoggedInHomeLink /> : <LoggedOutHomeLink />}
+        {user ? <LoggedInHomeLink /> : <LoggedOutHomeLink />}
       </div>
       <div className="right">
         <span>&#183;</span>

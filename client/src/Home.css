@@ -1,3 +1,8 @@
+.create-profile-prompt {
+  margin: 1rem;
+  justify-content: center;
+}
+
 #home {
   display: flex;
   flex-direction: column;
@@ -5,16 +10,19 @@
 }
 
 #home .content {
-  border: 1px solid #aaa;
-  border-radius: 1.37%;
   display: flex;
   font-size: 1.61rem;
   flex-direction: column;
   flex-grow: 1;
-  justify-content: center;
+  max-width: 900px;
 }
 
 #home p {
   padding: 1rem;
   margin: 0;
+}
+
+.created-profiles .person {
+  margin: 1rem auto;
+  width: 500px;
 }

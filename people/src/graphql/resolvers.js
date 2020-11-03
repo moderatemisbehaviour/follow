@@ -22,7 +22,7 @@ module.exports = {
       dataSources.peopleDataSource.createPerson(person, req.session.userId),
     editPerson: async (_, { id, person }, { dataSources }) =>
       dataSources.peopleDataSource.editPerson(id, person),
-    upsertUser: async (_, { user }, { dataSources, req }) => {
+    upsertUser: async (_, { user }, { dataSources }) => {
       const upsertedUser = await dataSources.usersDataSource.upsertUser(user)
       // TODO: Update session object here. Seems a bit wrong for GraphQL to have to care about this auth detail though.
       return upsertedUser

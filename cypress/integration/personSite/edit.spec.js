@@ -1,19 +1,140 @@
 import pathRegexes from '../../../people/src/pathRegexes'
 
-beforeEach(function() {
-  cy.task('resetDatabase')
-  cy.task('createPersonApi')
-    .as('person')
-    .then(person => {
-      cy.visit(`/person/${person.id}/edit`)
-    })
-})
+describe.only('Authorisation', function() {
+  beforeEach(function() {
+    cy.task('resetDatabase')
+  })
 
-it("updates the document title using the person's name", function() {
-  cy.title().should('eq', `Edit ${this.person.name}`)
+  context('When the user is not logged in', function() {
+    it('does not allow them to edit anyone', function() {
+      cy.task('createPersonApi', 'fakeUserId').then(person => {
+        cy.visit(`/person/${person.id}`)
+      })
+
+      cy.get('#edit-person').should('have.attr', 'disabled')
+      cy.get('#edit-person').should(
+        'have.attr',
+        'title',
+        'You cannot edit this person because you did not create them.'
+      )
+
+      cy.request('POST', '/graphql', {
+        operationName: 'EditPerson',
+        variables: {
+          id: '5f9e096d9a46eab82fe724f3',
+          person: {
+            name: 'Daniel Metcalfey',
+            profiles: [
+              'https://danielmetcalfe.rocks/',
+              'https://stackoverflow.com/story/mrdanielmetcalfe',
+              'https://github.com/moderatemisbehaviour',
+              'https://twitter.com/mrdanmetcalfe',
+              'https://medium.com/@moderatemisbehaviour',
+              'https://uk.linkedin.com/in/mrdanielmetcalfe',
+              'mailto:mrdanielmetcalfe@gmail.com'
+            ],
+            image:
+              'https://www.gravatar.com/avatar/d35e305d07d4e8fe7bf844d17bec5e1e?s=1000'
+          }
+        },
+        query:
+          'mutation EditPerson($id: ID!, $person: PersonInput!) {\n  editPerson(id: $id, person: $person) {\n    id\n    name\n    image\n    profiles\n    __typename\n  }\n}\n'
+      })
+        .its('body.errors')
+        .its('0')
+        .its('extensions.code')
+        .should('eq', 'UNAUTHENTICATED')
+    })
+  })
+
+  context('When the user is logged in', function() {
+    context('but did not create the person', function() {
+      it('does not allow them to edit', function() {
+        // TODO: Update this to be the wrong user
+        cy.fixture('users/dave.json')
+          .login()
+          .fixture('users/dan.json')
+          .then(dan => {
+            cy.task('createUser', dan)
+          })
+          .then(dan => {
+            cy.task('createPersonApi', dan.id)
+          })
+          .then(person => {
+            cy.visit(`/person/${person.id}`)
+          })
+
+        cy.get('#edit-person').should('have.attr', 'disabled')
+        cy.get('#edit-person').should(
+          'have.attr',
+          'title',
+          'You cannot edit this person because you did not create them.'
+        )
+
+        cy.request('POST', '/graphql', {
+          operationName: 'EditPerson',
+          variables: {
+            id: '5f9e096d9a46eab82fe724f3',
+            person: {
+              name: 'Daniel Metcalfey',
+              profiles: [
+                'https://danielmetcalfe.rocks/',
+                'https://stackoverflow.com/story/mrdanielmetcalfe',
+                'https://github.com/moderatemisbehaviour',
+                'https://twitter.com/mrdanmetcalfe',
+                'https://medium.com/@moderatemisbehaviour',
+                'https://uk.linkedin.com/in/mrdanielmetcalfe',
+                'mailto:mrdanielmetcalfe@gmail.com'
+              ],
+              image:
+                'https://www.gravatar.com/avatar/d35e305d07d4e8fe7bf844d17bec5e1e?s=1000'
+            }
+          },
+          query:
+            'mutation EditPerson($id: ID!, $person: PersonInput!) {\n  editPerson(id: $id, person: $person) {\n    id\n    name\n    image\n    profiles\n    __typename\n  }\n}\n'
+        })
+          .its('body.errors')
+          .its('0')
+          .its('extensions.code')
+          .should('eq', 'FORBIDDEN')
+      })
+    })
+
+    context('they created the person', function() {
+      it('allows them to edit', function() {
+        cy.login()
+          .as('user')
+          .then(user => {
+            cy.task('createPersonApi', user.id)
+          })
+          .then(person => {
+            cy.visit(`/person/${person.id}`)
+          })
+        cy.get('#edit-person').should('not.have.attr', 'disabled')
+        cy.get('#edit-person').should(
+          'not.have.attr',
+          'title',
+          'You cannot edit this person because you did not create them.'
+        )
+      })
+    })
+  })
 })
 
 describe('the state on page load', function() {
+  beforeEach(function() {
+    cy.task('resetDatabase')
+    cy.task('createPersonApi')
+      .as('person')
+      .then(person => {
+        cy.visit(`/person/${person.id}/edit`)
+      })
+  })
+
+  it("updates the document title using the person's name", function() {
+    cy.title().should('eq', `Edit ${this.person.name}`)
+  })
+
   it('displays the person in their current state', function() {
     cy.get('.name').should('have.text', this.person.name)
     cy.get('.image').should(

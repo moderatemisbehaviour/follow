@@ -1,5 +1,6 @@
 const fs = require('fs')
 
+// TODO: Update this to take an argument and create a user and update VS Code tasks to prompt for it.
 async function createPeople(databaseClient) {
   const numberOfPeople = 13
   const dan = JSON.parse(
