@@ -4,7 +4,7 @@ before(function() {
   cy.task('resetDatabase')
 })
 
-describe('the home page.', function() {
+describe('the landing page.', function() {
   before(function() {
     cy.visit('/')
   })
@@ -38,7 +38,7 @@ describe('the home page.', function() {
   })
 })
 
-describe('every page other than the home page', function() {
+describe('every page other than the landing page', function() {
   before(function() {
     cy.visit('/person/create')
   })

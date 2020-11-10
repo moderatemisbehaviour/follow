@@ -1,6 +1,7 @@
 describe('User journeys', function() {
   beforeEach(function() {
     cy.task('resetDatabase')
+    cy.login()
     cy.fixture('people/dan.json').as('dan')
     cy.visit('/')
   })

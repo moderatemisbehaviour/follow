@@ -2,11 +2,12 @@ import pathRegexes from '../../../people/src/pathRegexes'
 
 beforeEach(function() {
   cy.task('resetDatabase')
+  cy.login()
   cy.visit('/person/create')
 })
 
 it("doesn't allow profile creation when the user is not logged in", function() {
-  // TODO: Implemenr this.
+  // TODO: Implement this.
 })
 
 it("updates the document title, using the 'name' query param if it exists", function() {

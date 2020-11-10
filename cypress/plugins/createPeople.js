@@ -11,6 +11,7 @@ async function createPeople(databaseClient) {
   for (let i = 1; i <= numberOfPeople; i++) {
     dans.push({
       ...dan,
+      creator: 'fakeUserId',
       name: `${dan.name} ${i}`,
       popularity: i
     })

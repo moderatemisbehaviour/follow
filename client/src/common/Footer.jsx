@@ -7,7 +7,7 @@ import LoggedOutHomeLink from './LoggedOutHomeLink'
 import useUser from './useUser'
 
 function Footer() {
-  const user = useUser()
+  const [user, refetch] = useUser()
 
   return (
     <div id="footer">
@@ -22,7 +22,11 @@ function Footer() {
         <span>&#183;</span>
       </div>
       <div className="centre">
-        {user ? <LoggedInHomeLink /> : <LoggedOutHomeLink />}
+        {user ? (
+          <LoggedInHomeLink refetch={refetch} user={user} />
+        ) : (
+          <LoggedOutHomeLink />
+        )}
       </div>
       <div className="right">
         <span>&#183;</span>

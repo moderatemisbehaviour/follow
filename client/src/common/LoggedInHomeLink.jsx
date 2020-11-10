@@ -1,33 +1,26 @@
-import { useQuery } from '@apollo/react-hooks'
-import gql from 'graphql-tag'
+import PropTypes from 'prop-types'
 import React from 'react'
-import { useCookies } from 'react-cookie'
 import { Link } from 'react-router-dom'
 import Image from '../Person/Image'
 import UnderlineButton from './buttons/UnderlineButton'
 import './LoggedInHomeLink.css'
 
-function LoggedInHomeLink() {
-  const { loading, error, data } = useQuery(GET_USER_IMAGE)
-  const [, , removeCookies] = useCookies(['isLoggedIn'])
+LoggedInHomeLink.propTypes = {
+  user: PropTypes.object.isRequired,
+  refetch: PropTypes.func.isRequired
+}
 
-  if (loading) {
-    return <p>LOADING!</p>
-  }
-  if (error) {
-    return <p>ERROR!</p>
-  }
-
+function LoggedInHomeLink(props) {
   return (
     <span id="user-home">
       <Link to="/home">
-        <Image src={data.user.image} />
+        <Image src={props.user.image} />
       </Link>
       <UnderlineButton
         id="signout"
         onClick={() => {
-          removeCookies('isLoggedIn')
           fetch('/logout', { method: 'POST' })
+          props.refetch()
         }}
         style={{ color: 'hsl(0, 100%, 68%)' }}
       >
@@ -36,13 +29,5 @@ function LoggedInHomeLink() {
     </span>
   )
 }
-
-const GET_USER_IMAGE = gql`
-  query GetUser {
-    user {
-      image
-    }
-  }
-`
 
 export default LoggedInHomeLink

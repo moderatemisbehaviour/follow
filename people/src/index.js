@@ -33,12 +33,12 @@ databaseClient().then(databaseClient => {
     databaseClient.db
   )
 
-  configureExpressToHandleUrlPaths(expressServer)
   applyStaticHostingMiddleware(expressServer)
+  configureExpressToHandleUrlPaths(expressServer)
 
   const port = process.env.PORT || 4000
   expressServer.listen({ port }, () =>
-    console.log(
+    console.info(
       `🚀 Server ready at http://localhost:${port}${apolloServer.graphqlPath}`
     )
   )
@@ -52,5 +52,6 @@ function configureExpressToHandleUrlPaths(expressServer) {
 }
 
 function applyStaticHostingMiddleware(expressServer) {
-  expressServer.use(express.static('../client/build')) // TODO: Only do this if env is not dev.
+  const clientBuildPath = path.resolve(`${__dirname}/../../client/build/`)
+  expressServer.use(express.static(clientBuildPath)) // TODO: Only do this if env is not dev.
 }

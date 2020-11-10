@@ -35,8 +35,8 @@ describe('performance', function() {
 
   it('debounces the searching to save on network requests', function() {
     cy.visit('/', {
-      onBeforeLoad(win) {
-        cy.spy(win, 'fetch')
+      onBeforeLoad(window) {
+        cy.spy(window, 'fetch')
       }
     })
     cy.get('#the-input')
@@ -45,7 +45,7 @@ describe('performance', function() {
     cy.window().then(window => {
       // TODO: Why doesn't the Cypress ESLint plugin take care of this?
       // eslint-disable-next-line no-unused-expressions
-      expect(window.fetch).to.be.calledTwice
+      expect(window.fetch).to.be.calledThrice // Includes one call to get user.
     })
   })
 

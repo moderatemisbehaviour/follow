@@ -51,12 +51,16 @@ module.exports = async (on, config) => {
       return person
     },
     // TODO: Upgrade to 5.3.0 and use default arg: https://github.com/cypress-io/cypress/issues/5913
-    async createPersonApi(userId) {
-      const dan = JSON.parse(
-        fs.readFileSync('cypress/fixtures/people/dan.json', 'utf8')
-      )
+    async createPersonApi(args) {
+      // TODO: Replace with default arg after upgrading Cypress
+      if (!args) args = {}
 
-      return peopleDataSource.createPerson(dan, userId)
+      const personToCreate =
+        args.person ||
+        JSON.parse(fs.readFileSync('cypress/fixtures/people/dan.json', 'utf8'))
+      const userId = args.userId || 'fakeUserId'
+
+      return peopleDataSource.createPerson(personToCreate, userId)
     },
     async createPeople() {
       return createPeople(databaseClient)

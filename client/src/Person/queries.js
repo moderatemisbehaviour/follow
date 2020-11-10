@@ -14,7 +14,7 @@ const GET_PEOPLE = gql`
       id
       name
       image
-      # profiles TODO: Figure out how to avoid error due to the link for the profile being nested in the link for the result.
+      # profiles
     }
   }
 `

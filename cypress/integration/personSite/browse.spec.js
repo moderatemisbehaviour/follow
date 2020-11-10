@@ -1,6 +1,6 @@
 beforeEach(function() {
   cy.task('resetDatabase')
-  cy.task('createPersonApi')
+    .task('createPersonApi')
     .as('person')
     .then(person => {
       cy.visit(`/person/${person.id}`)
@@ -12,10 +12,7 @@ it("updates the document title to the person's name", function() {
 })
 
 it('has an edit button below the input', function() {
-  cy.get('#edit-person')
-    .should('have.attr', 'value', 'Edit Daniel Metcalfe')
-    .click()
-  cy.url().should('match', /\/person\/\w+\/edit/)
+  cy.get('#edit-person').should('have.attr', 'value', 'Edit Daniel Metcalfe')
 })
 
 describe('that has all optional properties', function() {
@@ -60,14 +57,14 @@ describe('that has no profile image', function() {
     cy.fixture('people/dan.json')
       .then(dan => {
         delete dan.image
-        return cy.task('createPerson', { ...dan, popularity: 2 })
+        return cy.task('createPersonApi', { person: dan })
       })
       .then(person => {
-        cy.visit(`/person/${person._id}`)
+        cy.visit(`/person/${person.id}`)
       })
   })
 
-  it('fallsback to the placeholder profile image', function() {
+  it('falls back to the placeholder profile image', function() {
     cy.get('.image')
       .should('have.css', 'background-image')
       .and('contains', 'placeholderPersonImage')

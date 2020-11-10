@@ -2,9 +2,9 @@ import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 
 function useUser() {
-  const { data } = useQuery(GET_USER)
+  const { data, refetch } = useQuery(GET_USER)
   const userExists = data && data.user
-  return userExists ? data.user : null
+  return [userExists ? data.user : null, refetch]
 }
 
 const GET_USER = gql`

@@ -12,7 +12,7 @@ import PersonList from './Person/PersonList'
 import { GET_PEOPLE } from './Person/queries'
 
 function Home() {
-  const user = useUser()
+  const [user] = useUser()
 
   return (
     <ResponsiveContainer>

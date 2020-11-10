@@ -30,8 +30,6 @@ function PersonBrowser(props) {
     getUserResult.data.user &&
     getUserResult.data.user.id === person.creator
 
-  console.log(getUserResult, person)
-
   if (getPersonResult.error) return <p>ERROR</p>
 
   return (

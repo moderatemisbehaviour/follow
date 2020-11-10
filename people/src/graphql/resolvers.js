@@ -18,6 +18,7 @@ module.exports = {
       dataSources.usersDataSource.getUser(req.session.userId)
   },
   Mutation: {
+    // TODO: Return a better error if no user
     createPerson: async (_, { person }, { dataSources, req }) =>
       dataSources.peopleDataSource.createPerson(person, req.session.userId),
     editPerson: async (_, { id, person }, { dataSources }) =>
