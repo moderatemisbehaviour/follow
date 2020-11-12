@@ -10,11 +10,13 @@ Person.propTypes = {
   name: PropTypes.string,
   image: PropTypes.string,
   profiles: PropTypes.arrayOf(PropTypes.string.isRequired),
+  renderLinks: PropTypes.bool,
   style: PropTypes.object
 }
 
 Person.defaultProps = {
-  stlye: {}
+  renderLinks: true,
+  style: {}
 }
 
 function Person(props) {
@@ -32,7 +34,9 @@ function Person(props) {
       <Image src={image} />
       <div className="person-details">
         <Name name={name || undefined} />
-        {profiles && <Profiles profiles={profiles} />}
+        {profiles && (
+          <Profiles profiles={profiles} renderLinks={props.renderLinks} />
+        )}
       </div>
     </div>
   )

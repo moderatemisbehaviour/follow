@@ -19,7 +19,7 @@ function PersonList(props) {
           ref={props.refs ? props.refs[index] : undefined}
         >
           <Link to={`/person/${person.id}`}>
-            <Person {...person} />
+            <Person {...person} renderLinks={false} />
           </Link>
         </Result>
       ))}

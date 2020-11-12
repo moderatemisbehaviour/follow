@@ -1,15 +1,16 @@
-import React from 'react'
 import PropTypes from 'prop-types'
-
-import './Profiles.css'
+import React from 'react'
 import Profile from './Profile'
+import './Profiles.css'
 
 Profiles.propTypes = {
-  profiles: PropTypes.arrayOf(PropTypes.string.isRequired)
+  profiles: PropTypes.arrayOf(PropTypes.string.isRequired),
+  renderLinks: PropTypes.bool
 }
 
 Profiles.defaultProps = {
-  profiles: []
+  profiles: [],
+  renderLinks: true
 }
 
 function Profiles(props) {
@@ -20,6 +21,7 @@ function Profiles(props) {
         <Profile
           key={`profile-${index}`}
           className={`profile-${index}`}
+          renderLinks={props.renderLinks}
           url={url}
         />
       ))}
