@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import Image from '../Person/Image'
 import UnderlineButton from './buttons/UnderlineButton'
 import './LoggedInHomeLink.css'
@@ -11,6 +11,8 @@ LoggedInHomeLink.propTypes = {
 }
 
 function LoggedInHomeLink(props) {
+  const history = useHistory()
+
   return (
     <span id="user-home">
       <Link to="/home">
@@ -18,9 +20,10 @@ function LoggedInHomeLink(props) {
       </Link>
       <UnderlineButton
         id="signout"
-        onClick={() => {
-          fetch('/logout', { method: 'POST' })
-          props.refetch()
+        onClick={async () => {
+          await fetch('/logout', { method: 'POST' })
+          await props.refetch()
+          history.push('/')
         }}
         style={{ color: 'hsl(0, 100%, 68%)' }}
       >

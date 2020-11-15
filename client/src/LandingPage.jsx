@@ -5,6 +5,7 @@ import Announcement from './common/Announcement'
 import logo from './common/icons/logo.png'
 import Omnibox from './common/Omnibox'
 import CommandResults from './common/Omnibox/CommandResults'
+import useUser from './common/useUser'
 import Image from './Person/Image'
 import Name from './Person/Name'
 import './Person/Person.css'
@@ -19,6 +20,7 @@ function LandingPage(props) {
     document.title = 'Follow people, not platforms'
   })
   const history = useHistory()
+  const [, refetch] = useUser()
 
   return (
     <React.Fragment>
@@ -40,6 +42,9 @@ function LandingPage(props) {
             headers: { 'Content-Type': 'application/json' },
             method: 'POST'
           })
+
+          // Reset cache so that newly created user is picked up when we arrive on the home page.
+          await refetch()
 
           history.push('/home')
         }}
