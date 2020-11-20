@@ -14,7 +14,7 @@ ContactOptions.defaultProps = {
 function ContactOptions(props) {
   return (
     <ol>
-      <Result key="submit-a-feature-request" tabbable={false}>
+      <Result key="submit-a-feature-request">
         <a
           href="mailto:features@peoplenotplatforms.com"
           ref={props.refs[0]}
@@ -25,7 +25,7 @@ function ContactOptions(props) {
           Submit a feature request
         </a>
       </Result>
-      <Result key="report-a-bug" tabbable={false}>
+      <Result key="report-a-bug">
         <a
           href="mailto:bugs@peoplenotplatforms.com"
           ref={props.refs[1]}
@@ -36,7 +36,7 @@ function ContactOptions(props) {
           Report a bug
         </a>
       </Result>
-      <Result key="make-a-general-enquiry" tabbable={false}>
+      <Result key="make-a-general-enquiry">
         <a
           href="mailto:support@peoplenotplatforms.com"
           ref={props.refs[2]}
