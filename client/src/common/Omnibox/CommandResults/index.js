@@ -12,7 +12,9 @@ CommandResults.propTypes = {
 
 function CommandResults(props) {
   useLayoutEffect(() => props.setResultsCount(null))
-  useEffect(props.effect())
+  useEffect(() => {
+    props.effect()
+  })
 
   let results
   if (props.query === '/contact') {
