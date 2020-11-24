@@ -9,7 +9,7 @@ function useSearchParamAsQuery(setInputValue, setQuery) {
     setInputValue(queryFromParam)
     setQuery(queryFromParam)
     // We also depend on location key so that even if the same query is pushed twice it will still trigger the effect.
-  }, [location.key, location.search])
+  }, [location.key, location.search, setInputValue, setQuery])
 }
 
 export default useSearchParamAsQuery
