@@ -1,6 +1,5 @@
 function useResultsKeyboardNavigation(
   resultRefs,
-  onSelect,
   firstResultOnKeyUp,
   currentlySelectedIndex,
   setCurrentlySelectedIndex
@@ -20,8 +19,6 @@ function useResultsKeyboardNavigation(
       setCurrentlySelectedIndex(
         Math.min(currentlySelectedIndex + 1, lastResultIndex)
       )
-    } else if (event.key === 'Enter') {
-      onSelect(event)
     }
   }
 

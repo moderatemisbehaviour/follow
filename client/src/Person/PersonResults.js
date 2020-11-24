@@ -1,7 +1,6 @@
 import { useQuery } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
 import React, { useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
 import PersonList from '../Person/PersonList'
 import { GET_PEOPLE, GET_PEOPLE_COUNT } from './queries'
 
@@ -12,19 +11,11 @@ PersonResults.propTypes = {
   query: PropTypes.string.isRequired,
   resultsPerPage: PropTypes.number.isRequired,
   resultRefs: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onSelectRef: PropTypes.object.isRequired,
   setResultsCount: PropTypes.func.isRequired
 }
 
 function PersonResults(props) {
   useEffect(props.effect)
-
-  const history = useHistory()
-  const onSelect = event => {
-    const personId = event.target.dataset.id
-    history.push(`/person/${personId}`)
-  }
-  props.onSelectRef.current = onSelect
 
   const getPeopleResult = useQuery(GET_PEOPLE, {
     variables: {
