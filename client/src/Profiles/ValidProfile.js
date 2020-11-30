@@ -6,24 +6,33 @@ import usePlatformName from './usePlatformName'
 
 ValidProfile.propTypes = {
   className: PropTypes.string,
+  renderLinks: PropTypes.bool,
   url: PropTypes.object.isRequired
+}
+
+ValidProfile.defaultProps = {
+  renderLinks: true
 }
 
 function ValidProfile(props) {
   const platformName = usePlatformName(props.url)
   const email = props.url.protocol === 'mailto:'
 
-  return (
-    <React.Fragment>
+  const profileIcon = email ? <MailIcon /> : <PlatformIcon url={props.url} />
+
+  return props.renderLinks ? (
+    <>
       <a
         href={props.url.href}
         onClick={trackAction(props.url.href, platformName)}
         target="_blank"
         rel="noopener noreferrer"
       >
-        {email ? <MailIcon /> : <PlatformIcon url={props.url} />}
+        {profileIcon}
       </a>
-    </React.Fragment>
+    </>
+  ) : (
+    profileIcon
   )
 }
 

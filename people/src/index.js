@@ -1,23 +1,57 @@
-console.log('NODE_ENV is', process.env.NODE_ENV)
-console.log('CI is', process.env.CI)
-
 const databaseClient = require('@peoplenotplatforms/database')
-
-const createExpressServerForStaticContent = require('./createExpressServerForStaticContent')
 const applyApolloServerMiddleware = require('./applyApolloServerMiddleware')
-const configureExpressToHandleUrlPaths = require('./configureExpressToHandleUrlPaths')
+const session = require('express-session')
+const MongoStore = require('connect-mongo')(session)
+const express = require('express')
+const path = require('path')
+const createLoginRoute = require('./createLoginRoute')
 
-const expressServer = createExpressServerForStaticContent()
 databaseClient().then(databaseClient => {
-  const { db } = databaseClient
-  const apolloServer = applyApolloServerMiddleware(expressServer, db)
+  const expressServer = express()
+
+  expressServer.use(
+    session({
+      resave: false,
+      saveUninitialized: true,
+      secret: process.env.SESSION_SECRET,
+      store: new MongoStore({
+        client: databaseClient.client
+      })
+    })
+  )
+  expressServer.use(express.json())
+  expressServer.post('/login', createLoginRoute(databaseClient))
+  expressServer.post('/logout', async (req, res) => {
+    await req.session.destroy()
+    res.clearCookie('connect.sid')
+    res.clearCookie('isLoggedIn')
+    res.send()
+  })
+
+  const apolloServer = applyApolloServerMiddleware(
+    expressServer,
+    databaseClient.db
+  )
+
+  applyStaticHostingMiddleware(expressServer)
+  configureExpressToHandleUrlPaths(expressServer)
 
   const port = process.env.PORT || 4000
   expressServer.listen({ port }, () =>
-    console.log(
+    console.info(
       `🚀 Server ready at http://localhost:${port}${apolloServer.graphqlPath}`
     )
   )
-
-  configureExpressToHandleUrlPaths(expressServer)
 })
+
+function configureExpressToHandleUrlPaths(expressServer) {
+  const indexHtmlPath = path.resolve(
+    `${__dirname}/../../client/build/index.html`
+  )
+  expressServer.use('*', (_, res) => res.sendFile(indexHtmlPath))
+}
+
+function applyStaticHostingMiddleware(expressServer) {
+  const clientBuildPath = path.resolve(`${__dirname}/../../client/build/`)
+  expressServer.use(express.static(clientBuildPath)) // TODO: Only do this if env is not dev.
+}

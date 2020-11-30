@@ -5,7 +5,12 @@ import ValidProfile from './ValidProfile'
 
 Profile.propTypes = {
   className: PropTypes.string,
-  url: PropTypes.string.isRequired
+  url: PropTypes.string.isRequired,
+  renderLinks: PropTypes.bool
+}
+
+Profile.defaultProps = {
+  renderLinks: true
 }
 
 function Profile(props) {
@@ -21,7 +26,11 @@ function Profile(props) {
       title={props.url}
     >
       {validUrl ? (
-        <ValidProfile className={props.className} url={validUrl} />
+        <ValidProfile
+          className={props.className}
+          renderLinks={props.renderLinks}
+          url={validUrl}
+        />
       ) : (
         <InvalidProfile />
       )}

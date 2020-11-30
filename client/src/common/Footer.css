@@ -1,7 +1,9 @@
 #footer {
+  align-items: center;
   display: flex;
   margin-top: auto;
   padding-top: 1.61rem;
+  padding-bottom: 1rem;
   width: 100%;
 }
 
@@ -22,4 +24,9 @@
   margin: 0 0.5rem;
   text-decoration: none;
   color: unset;
+}
+
+#footer .image {
+  height: 2.59rem;
+  width: 2.59rem;
 }

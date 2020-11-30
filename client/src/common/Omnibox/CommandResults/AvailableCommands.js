@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import { Link } from 'react-router-dom'
 import Result from '../Result'
 
 AvailableCommands.propTypes = {
@@ -18,8 +19,10 @@ function AvailableCommands(props) {
   return (
     <ol>
       {commandsToRender.map((command, index) => (
-        <Result key={command} ref={props.refs[index]}>
-          {command}
+        <Result key={command}>
+          <Link to={`?${command}`} ref={props.refs[index]}>
+            {command}
+          </Link>
         </Result>
       ))}
     </ol>

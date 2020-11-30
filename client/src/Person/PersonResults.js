@@ -1,30 +1,21 @@
 import { useQuery } from '@apollo/react-hooks'
-import gql from 'graphql-tag'
 import PropTypes from 'prop-types'
 import React, { useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
 import PersonList from '../Person/PersonList'
-import CreatePersonPrompt from './CreatePersonPrompt'
+import { GET_PEOPLE, GET_PEOPLE_COUNT } from './queries'
 
 PersonResults.propTypes = {
+  children: PropTypes.element,
   effect: PropTypes.func.isRequired,
   pageNumber: PropTypes.number.isRequired,
   query: PropTypes.string.isRequired,
   resultsPerPage: PropTypes.number.isRequired,
   resultRefs: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onSelectRef: PropTypes.object.isRequired,
   setResultsCount: PropTypes.func.isRequired
 }
 
 function PersonResults(props) {
   useEffect(props.effect)
-
-  const history = useHistory()
-  const onSelect = event => {
-    const personId = event.target.dataset.id
-    history.push(`/person/${personId}`)
-  }
-  props.onSelectRef.current = onSelect
 
   const getPeopleResult = useQuery(GET_PEOPLE, {
     variables: {
@@ -64,8 +55,7 @@ function PersonResults(props) {
           refs={props.resultRefs}
         />
       ) : null}
-
-      <CreatePersonPrompt key="create-person-prompt" personName={props.query} />
+      {props.children}
     </React.Fragment>
   )
 }
@@ -73,30 +63,5 @@ function PersonResults(props) {
 function calculateStartingPopularity(resultsPerPage, pageNumber) {
   return resultsPerPage * (pageNumber - 1) + 1
 }
-
-const GET_PEOPLE = gql`
-  query People(
-    $query: String!
-    $resultsPerPage: Int!
-    $startingPopularity: Int!
-  ) {
-    people(
-      query: $query
-      resultsPerPage: $resultsPerPage
-      startingPopularity: $startingPopularity
-    ) {
-      id
-      name
-      image
-      # profiles TODO: Figure out how to avoid error due to the link for the profile being nested in the link for the result.
-    }
-  }
-`
-
-const GET_PEOPLE_COUNT = gql`
-  query PeopleCount($query: String!) {
-    peopleCount(query: $query)
-  }
-`
 
 export default PersonResults

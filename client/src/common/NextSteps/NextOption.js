@@ -12,6 +12,7 @@ NextOption.propTypes = {
 function NextOption(props) {
   return (
     <input
+      {...props}
       id={props.id}
       className={`next ${props.className ? props.className : 'configure'}`}
       disabled={props.disabled}

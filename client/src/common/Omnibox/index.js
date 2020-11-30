@@ -2,13 +2,13 @@ import { debounce } from 'debounce'
 import feature from 'feature-js'
 import PropTypes from 'prop-types'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import CreatePersonPrompt from '../../Person/CreatePersonPrompt'
 import Input from '../Input'
 import makeResultsKeyboardNavigationEventHandler from './makeResultsKeyboardNavigationEventHandler'
 import makeResultsPagerKeyboardNavigationEventHandler from './makeResultsPagerKeyboardNavigationEventHandler'
 import './Omnibox.css'
 import ResultsPager from './ResultsPager'
-import useSearchParamAsQueryOnLoad from './useSearchParamAsQueryOnLoad'
+import useSearchParamAsQuery from './useSearchParamAsQuery'
 
 Omnibox.propTypes = {
   getResultsComponent: PropTypes.func.isRequired,
@@ -23,18 +23,14 @@ function Omnibox(props) {
   const [inputValue, setInputValue] = useState('')
   const [query, setQuery] = useState('')
 
-  useSearchParamAsQueryOnLoad(setInputValue, setQuery)
+  useSearchParamAsQuery(setInputValue, setQuery)
 
-  const history = useHistory()
   useEffect(
     () => {
-      if (query) {
-        document.title = `Searching for ${query}`
-        history.push({ search: query })
-      }
+      if (query) document.title = `Searching for ${query}`
     },
     // Only update when query changes otherwise history push re-renders cause an infinite loop!
-    [history, query]
+    [query]
   )
   // TODO: Make it so this update only happens when the query changes.
   //
@@ -61,7 +57,6 @@ function Omnibox(props) {
   const [currentlySelectedIndex, setCurrentlySelectedIndex] = useState(null)
   const [resultsCount, setResultsCount] = useState(null)
   const [pageNumber, setPageNumber] = useState(1)
-  const onSelectRef = useRef()
 
   const ResultsComponent = props.getResultsComponent(query)
 
@@ -97,7 +92,6 @@ function Omnibox(props) {
           onKeyUp={event => {
             makeResultsKeyboardNavigationEventHandler(
               resultRefs,
-              onSelectRef.current,
               focusInput,
               currentlySelectedIndex,
               setCurrentlySelectedIndex
@@ -114,17 +108,14 @@ function Omnibox(props) {
         >
           <ResultsComponent
             effect={focusSelectedResult}
-            onSelectRef={onSelectRef}
             pageNumber={pageNumber}
             query={query}
             resultsPerPage={props.resultsPerPage}
             resultRefs={resultRefs}
-            setQuery={query => {
-              setInputValue(query)
-              setQuery(query)
-            }}
             setResultsCount={setResultsCount}
-          />
+          >
+            <CreatePersonPrompt key="create-person-prompt" personName={query} />
+          </ResultsComponent>
           {resultsCount !== null ? (
             <ResultsPager
               currentPage={pageNumber}

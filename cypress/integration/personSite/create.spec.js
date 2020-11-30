@@ -2,7 +2,12 @@ import pathRegexes from '../../../people/src/pathRegexes'
 
 beforeEach(function() {
   cy.task('resetDatabase')
+  cy.login()
   cy.visit('/person/create')
+})
+
+it("doesn't allow profile creation when the user is not logged in", function() {
+  // TODO: Implement this.
 })
 
 it("updates the document title, using the 'name' query param if it exists", function() {
@@ -152,7 +157,7 @@ describe('adding more information', function() {
 
 describe('editing properties that have already been created', function() {
   beforeEach(function() {
-    cy.fixture('dan.json')
+    cy.fixture('people/dan.json')
       .as('dan')
       .then(dan => {
         cy.get('#the-input').type(dan.name)
@@ -183,7 +188,7 @@ describe('editing properties that have already been created', function() {
 
 describe('saving the person', function() {
   beforeEach(function() {
-    cy.fixture('dan.json')
+    cy.fixture('people/dan.json')
       .as('dan')
       .then(dan => {
         cy.get('#the-input').type(dan.name)
