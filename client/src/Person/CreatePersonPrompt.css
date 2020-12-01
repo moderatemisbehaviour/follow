@@ -18,10 +18,6 @@ a:focus > #create-person {
   background-color: #dfdfdf;
 }
 
-#create-suggested-person {
-  margin-left: 0.62rem;
-}
-
 #create-suggested-person .name {
   font-size: 1rem; /* TODO: Find out why this is necessary, it didn't used to be. */
 }
