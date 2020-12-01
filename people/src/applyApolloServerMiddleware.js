@@ -1,7 +1,7 @@
 const { ApolloServer } = require('apollo-server-express')
 
 const typeDefs = require('./graphql/schema')
-const PeopleDataSource = require('./dataSources/peopleDataSource')
+const PeopleDataSource = require('./dataSources/PeopleDataSource')
 const resolvers = require('./graphql/resolvers')
 const UsersDataSource = require('./dataSources/UsersDataSource')
 const Auth = require('./graphql/schema-directives/Auth')

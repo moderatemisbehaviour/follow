@@ -36,7 +36,7 @@
         "--inspect-brk",
         "${workspaceRoot}/people/node_modules/.bin/jest",
         "--runInBand",
-        "peopleDataSource"
+        "PeopleDataSource"
       ],
       "env": {"MONGODB_URI": "mongodb://localhost:27017/peoplenotplatforms"},
       "console": "integratedTerminal",

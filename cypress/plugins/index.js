@@ -12,10 +12,10 @@ const resetDatabase = require('../../database/src/resetDatabase')
 const DatabaseClient = require('../../database/src/DatabaseClient')
 const fs = require('fs')
 const createPeople = require('./createPeople')
-const PeopleDataSource = require('../../people/src/dataSources/peopleDataSource')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
 var signature = require('cookie-signature')
+const PeopleDataSource = require('../../people/src/dataSources/PeopleDataSource')
 
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
