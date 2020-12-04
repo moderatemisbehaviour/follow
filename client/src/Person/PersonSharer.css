@@ -11,7 +11,8 @@ iframe {
   border: 1px solid hsl(140, 60%, 50%);
   border-radius: 0.2rem;
   color: hsl(140, 60%, 50%);
-  height: 3.6rem;
+  flex-shrink: 0;
+  height: 2.8rem;
   overflow: hidden;
 }
 

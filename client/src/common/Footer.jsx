@@ -13,13 +13,11 @@ function Footer() {
     <div id="footer">
       <div className="left">
         <Link to="/about">
-          <UnderlineButton>About</UnderlineButton>
+          <UnderlineButton>About &#183;</UnderlineButton>
         </Link>
-        <span>&#183;</span>
         <Link to="/attributions">
-          <UnderlineButton>Attributions</UnderlineButton>
+          <UnderlineButton>Attributions &#183;</UnderlineButton>
         </Link>
-        <span>&#183;</span>
       </div>
       <div className="centre">
         {user ? (
@@ -29,13 +27,11 @@ function Footer() {
         )}
       </div>
       <div className="right">
-        <span>&#183;</span>
         <Link to="/contact">
-          <UnderlineButton>Contact</UnderlineButton>
+          <UnderlineButton>&#183; Contact</UnderlineButton>
         </Link>
-        <span>&#183;</span>
         <Link to="/privacy">
-          <UnderlineButton>Privacy</UnderlineButton>
+          <UnderlineButton>&#183; Privacy</UnderlineButton>
         </Link>
       </div>
     </div>
