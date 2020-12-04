@@ -5,9 +5,9 @@ import LandingPage from '../LandingPage'
 import PersonBrowser from './PersonBrowser'
 import PersonCreator from './PersonCreator'
 import PersonEditor from './PersonEditor'
-import PersonEmbedder from './PersonEmbedder'
-import PersonSharer from './PersonSharer'
 import './PersonSite.css'
+import PersonEmbedder from './sharing/PersonEmbedder'
+import PersonSharer from './sharing/PersonSharer'
 
 function PersonSite(props) {
   return (

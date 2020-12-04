@@ -6,7 +6,7 @@ describe('User journeys', function() {
     cy.visit('/')
   })
 
-  describe('Create a new person, search for them, then share them', function() {
+  describe('Create a new person, search for them, share them, embed them', function() {
     it('Happy path with mouse', function() {
       cy.get('#the-input')
         .type('Da')
@@ -45,6 +45,17 @@ describe('User journeys', function() {
         .should('have.attr', 'value')
         .should('match', /person\/[\d\w]+\/view/)
       cy.get('#sharing-link  input')
+        .eq(1)
+        .should('have.attr', 'value', 'Copied!')
+      cy.get('#copy-button').click()
+
+      cy.go('back')
+      cy.get('#embed').click()
+
+      cy.get('#embed-markup input')
+        .eq(0)
+        .should('have.attr', 'value')
+      cy.get('#embed-markup  input')
         .eq(1)
         .should('have.attr', 'value', 'Copied!')
       cy.get('#copy-button').click()
