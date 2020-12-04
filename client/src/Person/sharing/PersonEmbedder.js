@@ -54,6 +54,7 @@ function PersonEmbedder(props) {
   src="${sharingLink}"
   height="180px"
   width="300px"
+  title="People Not Platforms embed"
 ></iframe>`}</code>
       </pre>
       <p>
@@ -64,7 +65,12 @@ function PersonEmbedder(props) {
         It will display a stripped down version of the profile that looks like
         this <Emoji symbol="👇" />
       </p>
-      <iframe src={sharingLink} height="231px" width="600px"></iframe>
+      <iframe
+        src={sharingLink}
+        height="231px"
+        width="600px"
+        title="People Not Platforms embed"
+      ></iframe>
     </>
   )
 }
