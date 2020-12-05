@@ -40,25 +40,25 @@ describe('User journeys', function() {
 
       cy.get('#share').click()
 
-      cy.get('#sharing-link  input')
+      cy.get('.copy-widget  input')
         .eq(0)
         .should('have.attr', 'value')
         .should('match', /person\/[\d\w]+\/view/)
-      cy.get('#sharing-link  input')
+      cy.get('.copy-widget  input')
         .eq(1)
         .should('have.attr', 'value', 'Copied!')
-      cy.get('#copy-button').click()
+      cy.get('.copy-button').click()
 
       cy.go('back')
       cy.get('#embed').click()
 
-      cy.get('#embed-markup input')
+      cy.get('.copy-widget input')
         .eq(0)
         .should('have.attr', 'value')
-      cy.get('#embed-markup  input')
+      cy.get('.copy-widget  input')
         .eq(1)
         .should('have.attr', 'value', 'Copied!')
-      cy.get('#copy-button').click()
+      cy.get('.copy-button').click()
     })
 
     it.skip('Happy path with keyboard', () => {})
