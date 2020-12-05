@@ -52,8 +52,8 @@ function PersonEmbedder(props) {
       <pre>
         <code ref={sharingLinkRef}>{`<iframe
   src="${sharingLink}"
-  height="180px"
-  width="300px"
+  height="231px"
+  width="600px"
   title="People Not Platforms embed"
 ></iframe>`}</code>
       </pre>
