@@ -1,13 +1,10 @@
 iframe {
   border: 1px solid #aaa;
   border-radius: 0.2rem;
-  height: 100%;
-  max-width: 900px;
   resize: both;
-  width: 100%;
 }
 
-#sharing-link {
+.copy-widget {
   border: 1px solid hsl(140, 60%, 50%);
   border-radius: 0.2rem;
   color: hsl(140, 60%, 50%);
@@ -16,18 +13,18 @@ iframe {
   overflow: hidden;
 }
 
-#sharing-link :focus {
+.copy-widget :focus {
   outline: none;
 }
 
-#sharing-link input {
+.copy-widget input {
   padding: 0.62rem;
   margin: 0;
   border: 0;
   text-align: center;
 }
 
-#sharing-link-text {
+.copy-widget-text {
   bottom: 0;
   display: inline-grid;
   position: relative;
@@ -36,11 +33,11 @@ iframe {
   transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-#sharing-link-text.copied {
+.copy-widget-text.copied {
   bottom: 2.5rem;
 }
 
-#copy-button {
+.copy-button {
   margin: 0;
   border: 0;
   border-left: 1px solid hsl(140, 60%, 50%);
@@ -48,6 +45,13 @@ iframe {
   border-bottom-left-radius: 0;
 }
 
-#copied-message {
+.copied-message {
   color: hsl(140, 60%, 50%);
+}
+
+pre {
+  border: 1px solid hsl(140, 60%, 50%);
+  border-radius: 0.2rem;
+  margin: 1rem;
+  padding: 1rem;
 }

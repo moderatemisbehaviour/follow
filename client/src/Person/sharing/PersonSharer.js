@@ -1,8 +1,8 @@
 import Emoji from 'a11y-react-emoji'
 import PropTypes from 'prop-types'
 import React, { useRef, useState } from 'react'
-import copyIcon from '../common/icons/copy.svg'
-import './PersonSharer.css'
+import copyIcon from '../../common/icons/copy.svg'
+import './sharing.css'
 
 // TODO: Remove duplication between here and PersonBrowser.
 PersonSharer.propTypes = {
@@ -24,22 +24,23 @@ function PersonSharer(props) {
 
   return (
     <React.Fragment>
-      <div id="sharing-link">
-        <span
-          id="sharing-link-text"
-          className={linkCopied ? 'copied' : undefined}
-        >
+      <div className="copy-widget">
+        <span className={`copy-widget-text${linkCopied ? ' copied' : ''}`}>
           <input
-            id="url"
             readOnly
             ref={sharingLinkRef}
             type="text"
             value={sharingLink}
           />
-          <input id="copied-message" readOnly type="text" value="Copied!" />
+          <input
+            className="copied-message"
+            readOnly
+            type="text"
+            value="Copied!"
+          />
         </span>
         <button
-          id="copy-button"
+          className="copy-button"
           onClick={() => {
             copySharingLink()
             window.analytics.track('Copied sharing link', { id })
@@ -57,8 +58,11 @@ function PersonSharer(props) {
         this <Emoji symbol="👇" />
       </p>
       <iframe
-        src={`${document.location.origin}/person/${id}/view`}
-        title="share preview"
+        src={sharingLink}
+        height="100%"
+        width="100%"
+        max-width="900px"
+        title="People Not Platforms embed"
       ></iframe>
     </React.Fragment>
   )
