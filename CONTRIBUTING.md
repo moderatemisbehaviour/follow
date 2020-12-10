@@ -1,5 +1,3 @@
-TODO: Add badges
-
 # Getting started
 
 1. Run `yarn install` to install the dependencies.
