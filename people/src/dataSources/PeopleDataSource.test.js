@@ -53,8 +53,11 @@ describe('create person', () => {
       expect(dan.popularity).toBeFalsy()
       expect(elon.popularity).toBeFalsy()
 
-      const updatedDan = await peopleDataSource.createPerson(dan)
-      const updatedElon = await peopleDataSource.createPerson(elon)
+      const updatedDan = await peopleDataSource.createPerson(dan, 'fakeUserId')
+      const updatedElon = await peopleDataSource.createPerson(
+        elon,
+        'fakeUserId'
+      )
 
       expect(updatedDan.popularity).toBe(1)
       expect(updatedElon.popularity).toBe(2)
@@ -74,9 +77,9 @@ describe('create person', () => {
       it('should throw a validation error', async () => {
         const danInvalid = { ...dan }
         delete danInvalid.name
-        await expect(peopleDataSource.createPerson(danInvalid)).rejects.toThrow(
-          Error
-        )
+        await expect(
+          peopleDataSource.createPerson(danInvalid, 'fakeUserId')
+        ).rejects.toThrow(Error)
       })
     })
 
@@ -84,9 +87,9 @@ describe('create person', () => {
       it('should throw a validation error', async () => {
         const danInvalid = { ...dan }
         delete danInvalid.profiles
-        await expect(peopleDataSource.createPerson(danInvalid)).rejects.toThrow(
-          Error
-        )
+        await expect(
+          peopleDataSource.createPerson(danInvalid, 'fakeUserId')
+        ).rejects.toThrow(Error)
       })
     })
 
@@ -94,9 +97,9 @@ describe('create person', () => {
       it('should throw a validation error', async () => {
         const danInvalid = { ...dan }
         danInvalid.profiles[0] = ''
-        await expect(peopleDataSource.createPerson(danInvalid)).rejects.toThrow(
-          Error
-        )
+        await expect(
+          peopleDataSource.createPerson(danInvalid, 'fakeUserId')
+        ).rejects.toThrow(Error)
       })
     })
   })
@@ -106,7 +109,10 @@ describe('get people', () => {
   beforeEach(async () => {
     await db
       .collection('people')
-      .insertMany([{ ...dan, popularity: 1 }, { ...elon, popularity: 2 }])
+      .insertMany([
+        { ...dan, creator: 'fakeUserId', popularity: 1 },
+        { ...elon, creator: 'fakeUserId', popularity: 2 }
+      ])
   })
 
   describe('when the query matches the name', () => {
@@ -165,7 +171,10 @@ describe('edit person', () => {
     it('returns an object', async () => {
       dan.popularity = 1
       const peopleCollection = databaseClient.db.collection('people')
-      const { insertedId } = await peopleCollection.insertOne({ ...dan })
+      const { insertedId } = await peopleCollection.insertOne({
+        ...dan,
+        creator: 'fakeUserId'
+      })
       dan.name = 'Dan'
 
       const personReturned = await peopleDataSource.editPerson(insertedId, dan)

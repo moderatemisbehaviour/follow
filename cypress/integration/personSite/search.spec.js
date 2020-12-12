@@ -4,7 +4,7 @@ beforeEach(function() {
 
 describe('state on page load', function() {
   beforeEach(function() {
-    cy.task('createPerson').as('person')
+    cy.task('createPersonApi').as('person')
     cy.visit('/')
   })
 
@@ -31,7 +31,7 @@ describe('state on page load', function() {
 
 describe('performance', function() {
   beforeEach(function() {
-    cy.task('createPerson').as('person')
+    cy.task('createPersonApi').as('person')
   })
 
   it('debounces the searching to save on network requests', function() {
@@ -254,7 +254,7 @@ describe('the cache', () => {
     cy.get('.result').should('have.length', 0)
 
     cy.fixture('people/dan.json').then(dan => {
-      cy.task('createPerson', dan)
+      cy.task('createPersonApi', dan)
     })
 
     cy.get('#omnibox input').clear()

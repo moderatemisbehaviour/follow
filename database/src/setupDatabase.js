@@ -4,8 +4,12 @@ module.exports = async function(db) {
     collMod: 'people',
     validator: {
       $jsonSchema: {
-        required: ['name', 'popularity', 'profiles'],
+        required: ['creator', 'name', 'popularity', 'profiles'],
         properties: {
+          creator: {
+            type: 'string',
+            description: 'ID of the user who created the person.'
+          },
           name: {
             type: 'string',
             description: 'The name of the person.'
