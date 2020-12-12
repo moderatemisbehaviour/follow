@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import CreatePersonPrompt from '../../Person/CreatePersonPrompt'
 import Input from '../Input'
+import useUser from '../useUser'
 import makeResultsKeyboardNavigationEventHandler from './makeResultsKeyboardNavigationEventHandler'
 import makeResultsPagerKeyboardNavigationEventHandler from './makeResultsPagerKeyboardNavigationEventHandler'
 import './Omnibox.css'
@@ -20,6 +21,8 @@ Omnibox.defaultProps = {
 }
 
 function Omnibox(props) {
+  const [user] = useUser()
+
   const [inputValue, setInputValue] = useState('')
   const [query, setQuery] = useState('')
 
@@ -114,7 +117,14 @@ function Omnibox(props) {
             resultRefs={resultRefs}
             setResultsCount={setResultsCount}
           >
-            <CreatePersonPrompt key="create-person-prompt" personName={query} />
+            {user ? (
+              <CreatePersonPrompt
+                key="create-person-prompt"
+                personName={query}
+              />
+            ) : (
+              undefined
+            )}
           </ResultsComponent>
           {resultsCount !== null ? (
             <ResultsPager
